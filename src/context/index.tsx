@@ -1,8 +1,10 @@
-// Implement various context managers and import here
-import React from 'react';
+import ClientsContextProvider, { useClientxCtx } from './clients_context';
 
-function index() {
-  return <div></div>;
-}
+// Context wrapper for all the context managers
+const ContextProvider = (props: WithChildren) => {
+  return <ClientsContextProvider>{props.children}</ClientsContextProvider>;
+};
 
-export default index;
+export { useClientxCtx };
+
+export default ContextProvider;

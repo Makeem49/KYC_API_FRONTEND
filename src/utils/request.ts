@@ -1,11 +1,9 @@
-import axios, { Axios } from "axios";
+import axios, { Axios } from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
-  const user = JSON.parse(
-    localStorage.getItem('workbench-loggedin-user') ?? '{}'
-  );
+  const user = JSON.parse(localStorage.getItem('cuddie-loggedin-user') ?? '{}');
 
   if (!user) return;
 
@@ -21,7 +19,7 @@ const apiRequest: Axios = axios.create({
   // timeout: 100000,
   headers: {
     ...setAuthHeader(),
-    "Content-Type": "application/json;charset=utf-8",
+    'Content-Type': 'application/json;charset=utf-8',
   },
 });
 
