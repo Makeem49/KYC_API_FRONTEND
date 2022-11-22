@@ -1,0 +1,64 @@
+@import url('https://fonts.cdnfonts.com/css/muli');
+* {
+  font-family: 'Muli', 'sans-serif';
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: 'Muli', 'sans-serif';
+  font-size: 14px !important;
+  color: #54565b;
+}
+
+@font-face {
+  font-family: 'Arkipelago';
+  src: url('../src/assets/font/Arkipelago.otf');
+}
+.svg-box2-active + ul {
+  display: block;
+}
+.svg-box2-active img {
+  transform: rotate(180deg);
+}
+.svg-box2:hover path {
+  fill: #54565b;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .actions-list li:hover {
+    @apply bg-afexgreen-lighter text-textgrey cursor-pointer;
+  }
+  .actions-list li {
+    @apply py-[6px] px-[9px];
+  }
+  .extras {
+    width: -webkit-fill-available;
+  }
+  .date-options li {
+    @apply py-[5px] px-[10px];
+  }
+  .date-options li:hover {
+    @apply text-afexgreen bg-afexgreen-lighter;
+  }
+
+  .date-column:hover .day {
+    @apply opacity-0;
+  }
+  .date-column:hover .time {
+    @apply opacity-100;
+  }
+  /* farm in farmers profile*/
+  .maps .gmnoprint {
+    @apply child:!rounded-3xl !top-10 !right-20 child:!w-[50px];
+  }
+  .maps .gmnoprint button {
+    @apply !w-[50px] !py-1;
+  }
+  .maps .gmnoprint button + div {
+    @apply !w-[40px];
+  }
+}

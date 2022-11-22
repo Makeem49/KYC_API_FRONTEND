@@ -1,0 +1,131 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 40px;
+  background-color: rgb(233, 230, 230);
+}
+
+::selection {
+  background: #38cb89;
+  color: #fff;
+}
+
+li.selected a {
+  color: #38cb89;
+}
+li.previous.disabled svg,
+li.next.disabled svg {
+  background-color: #f3f3f3;
+  color: #9fa19c;
+  cursor: not-allowed;
+}
+
+.mantine-Modal-modal {
+  padding: 0;
+  border-radius: 1.75rem;
+}
+
+.mantine-Modal-header {
+  color: #54565b;
+  font-size: 1.25rem;
+  text-transform: capitalize;
+  padding: 2rem 2rem 1rem 2rem;
+}
+.mantine-Calendar-day[data-selected='true'] {
+  background-color: #38cb89;
+}
+.mantine-Tabs-tab:hover {
+  border: none;
+}
+.mantine-Tabs-tab[data-active='true'] {
+  border: none !important;
+}
+.mantine-Tabs-tabsList {
+  padding-bottom: 8px;
+}
+.mantine-Tabs-tab[data-active='true']::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 2px;
+  background-color: #38cb89;
+}
+
+.mantine-Modal-overlay,
+.mantine-Drawer-overlay {
+  background-color: rgba(50, 59, 75, 0.8);
+}
+.mantine-Modal-root,
+.mantine-Drawer-root {
+  z-index: 9999;
+}
+
+.mantine-Popover-dropdown {
+  z-index: 3 !important;
+}
+
+a[aria-current='page'] svg path {
+  fill: #fff !important;
+}
+
+.checkbox {
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.checkbox:hover::before {
+  background-color: rgba(56, 203, 137, 0.2);
+}
+.checkbox::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 60%;
+  transform: translateY(-50%);
+  height: 22px;
+  width: 22px;
+  background-color: #f9f9fb;
+  border-radius: 5px;
+}
+.checkbox.white::before {
+  background-color: #fff;
+}
+.checkbox:checked::before {
+  background-color: #38cb89;
+  content: url('./assets/svgs/check.svg');
+  padding-top: 1px;
+  padding-left: 5px;
+}
+
+.mantine-Stepper-stepIcon[data-completed='true'] {
+  border-color: #38cb89 !important;
+  background-color: #fff;
+}
+
+.mantine-Stepper-stepIcon[data-completed='true']
+  .mantine-Stepper-stepCompletedIcon {
+  background-color: #fff;
+}
+.mantine-Stepper-stepIcon[data-completed='true']
+  .mantine-Stepper-stepCompletedIcon
+  svg {
+  fill: #38cb89;
+}
+.mantine-Stepper-step[data-completed='true'] .mantine-Stepper-stepLabel {
+  color: #38cb89;
+}
+
+.mantine-Tooltip-tooltip {
+  background: rgba(143, 92, 227, 1);
+  padding-bottom: 1.5rem;
+}
