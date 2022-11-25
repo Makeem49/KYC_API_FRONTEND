@@ -10,7 +10,7 @@ const Card = () => {
   return (
     <div className='flex gap-4'>
       {/* Card One */}
-      <div className='relative flex flex-col border-[#DECFF7] border border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7] border border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-semibold text-[#8F8E91]'>TOTAL USER</p>
           <UserSquare size='20' color='#a982ea' variant='Bulk' />
@@ -35,7 +35,7 @@ const Card = () => {
       </div>
 
       {/* Card Two */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-semibold text-[#8F8E91]'>TOTAL TRANSACTION</p>
           <Wallet1 size='20' color='#a982ea' variant='Bulk' />
@@ -49,7 +49,7 @@ const Card = () => {
       </div>
 
       {/* Card Three */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-semibold text-[#8F8E91]'>TOTAL VALUE</p>
           <Receipt size='20' color='#a982ea' variant='Bulk' />
@@ -64,7 +64,7 @@ const Card = () => {
       </div>
 
       {/* Card Four */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-semibold text-[#8F8E91]'>CHANNEL SOURCE</p>
           <Chart size='20' color='#a982ea' variant='Bulk' />

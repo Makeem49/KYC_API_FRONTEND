@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
   theme: {
     fontFamily: {
-      body: ['Muli', 'sans-serif'],
-      display: ['Muli', 'sans-serif'],
-      Arkipelago: ['Arkipelago', 'cursive'],
+      body: ['Switzer', 'sans-serif'],
+      display: ['Switzer', 'sans-serif'],
     },
     extend: {
       colors: {
@@ -29,4 +31,4 @@ module.exports = {
       addVariant('child-hover', '& > *:hover');
     },
   ],
-};
+});

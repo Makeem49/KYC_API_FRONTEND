@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-
-import { MantineProvider } from '@mantine/core';
+import { ThemeProvider } from '@material-tailwind/react';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,9 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <MantineProvider withNormalizeCSS withGlobalStyles>
+      <ThemeProvider>
         <App />
-      </MantineProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

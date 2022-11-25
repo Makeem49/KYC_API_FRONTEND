@@ -12,7 +12,7 @@ import WalletBallance from './wallet balance';
 const Dashboard = () => {
   return (
     <OpacityContainer>
-      <div className='w-full h-[100vh]  overflow-y-auto flex'>
+      <div className='w-full h-[100vh] overflow-y-auto flex'>
         {/* Left Section */}
         <div className='w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
           {/* Title */}
@@ -36,7 +36,7 @@ const Dashboard = () => {
         </div>
 
         {/* Right Section */}
-        <div className='bg-white flex flex-col gap-14 p-8 h-[100%] overflow-y-auto shadow w-[32%]'>
+        <div className='bg-white flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]'>
           <WalletBallance />
           <TransactionStatus />
           <ChanneSource />
