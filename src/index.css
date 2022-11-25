@@ -1,18 +1,18 @@
-@import url('https://fonts.cdnfonts.com/css/muli');
+@import url('https://www.fontshare.com/fonts/switzer');
 * {
-  font-family: 'Muli', 'sans-serif';
+  font-family: 'Switzer', 'sans-serif';
   margin: 0;
   padding: 0;
 }
 html {
-  font-family: 'Muli', 'sans-serif';
+  font-family: 'Switzer', 'sans-serif';
   font-size: 14px !important;
   color: #54565b;
 }
 
 @font-face {
-  font-family: 'Arkipelago';
-  src: url('../src/assets/font/Arkipelago.otf');
+  font-family: 'Switzer';
+  src: url('../src/assets/fonts/Switzer-Regular.otf');
 }
 .svg-box2-active + ul {
   display: block;

@@ -1,6 +1,7 @@
 import React from 'react';
 import OlvImg from '../../../../assets/images/olivia.svg';
 import olvImg2 from '../../../../assets/images/olyvia2.svg';
+import UserAction from '../drop down';
 
 const Table = () => {
   return (
@@ -69,9 +70,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
 
@@ -121,9 +120,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
 
@@ -173,9 +170,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
 
@@ -225,9 +220,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
 
@@ -277,9 +270,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
 
@@ -329,9 +320,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
 
@@ -381,9 +370,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium text-[] bg-[#F0F0F0] p-1 rounded '>
-                  Actions
-                </span>
+                <UserAction />
               </td>
             </tr>
           </tbody>

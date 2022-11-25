@@ -6,9 +6,9 @@ const Date = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items-center p-2 bg-[#F1EBFC] rounded-lg'>
+        <button className='flex w-full items-center px-2 py-3 text-[11px] text-[#F1EBFC] bg-[#7738DD] rounded-lg'>
           <span>Add User</span>
-          <Add size='18' color='#7738dd' variant='Bulk' />
+          <Add size='18' color='#F1EBFC' variant='Bulk' />
         </button>
       </Menu.Target>
     </Menu>

@@ -37,7 +37,7 @@ function Client() {
       </div>
 
       {/* Right Section */}
-      <div className='bg-white flex flex-col gap-14 p-8 h-[100%] overflow-y-auto shadow w-[32%]'>
+      <div className='bg-white flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]'>
         <RecentSearch />
         <TransactionCount />
         <TransactionValue />

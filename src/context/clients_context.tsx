@@ -62,6 +62,6 @@ const ClientsContextProvider = (props: WithChildren) => {
   );
 };
 
-export const useClientxCtx = () => useContext(ClientsContext);
+export const useClientsCtx = () => useContext(ClientsContext);
 
 export default ClientsContextProvider;

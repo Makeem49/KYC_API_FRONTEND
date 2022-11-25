@@ -5,7 +5,7 @@ import Chart1 from './chart1';
 
 const Chart = () => {
   return (
-    <div className='w-full p-4 bg-[#ffff] shadow rounded-lg'>
+    <div className='w-full p-4 bg-[#ffff] rounded-lg'>
       <div className='flex justify-between mb-6 items-center'>
         <p>Performance Overview</p>
         <div className='flex gap-3'>

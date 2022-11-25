@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Popover } from '@mantine/core';
+import { Logout, Notification, Setting2 } from 'iconsax-react';
 
 import {
   HomeHashtag,
@@ -12,6 +14,7 @@ import {
 
 import cuddieLogo from '../../assets/brand/Cuddie.svg';
 import profIcon from '../../assets/images/profile_img.svg';
+import NotificationModal from '../notification modal';
 import { Tooltip } from '@mantine/core';
 
 function Sidebar() {
@@ -64,7 +67,7 @@ function Sidebar() {
 
       {/* Dashboard Icons */}
 
-      <div className='absolute top-[19%]  w-full items-center flex flex-col'>
+      <div className='absolute top-[17%]  w-full gap-0 justify-between items-center flex flex-col'>
         {routes.map((route) => {
           return (
             <Tooltip
@@ -89,9 +92,49 @@ function Sidebar() {
         })}
       </div>
 
+      <div className='absolute bottom-[13%]'>
+        <NotificationModal />
+      </div>
+
       {/* Profile */}
-      <div className='absolute bottom-[2%]'>
-        <img src={profIcon} alt='user_icon' />
+      <div className='absolute bottom-[4%]'>
+        <Popover
+          width={250}
+          styles={{
+            dropdown: {
+              top: '-280% !important',
+              left: '160% !important',
+            },
+          }}>
+          <Popover.Target>
+            <img src={profIcon} alt='user_icon' />
+          </Popover.Target>
+          <Popover.Dropdown className='flex flex-col'>
+            <div className=' flex items-center text-[12px] text-[#000] font-semibold p-1 gap-2 border-b'>
+              <img src={profIcon} alt='user_icon' />
+              <p>
+                Adamu Adamu <br />{' '}
+                <span className=' text-[#bfbdc2]'>makanni@afexnigeria.com</span>
+              </p>
+            </div>
+            <div className='mt-1 p-2'>
+              <p className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                <Notification size='16' color='#8f8e91' variant='Bulk' />
+                Notification
+              </p>
+              <NavLink
+                to='/settings'
+                className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                <Setting2 size='16' color='#8f8e91' variant='Bulk' />
+                Settings
+              </NavLink>
+              <p className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                <Logout size='16' color='#8f8e91' variant='Bulk' />
+                Logout
+              </p>
+            </div>
+          </Popover.Dropdown>
+        </Popover>
       </div>
     </div>
   );

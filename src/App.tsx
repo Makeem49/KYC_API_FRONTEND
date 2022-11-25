@@ -12,6 +12,7 @@ import {
   ApiRequest,
   TrackerDashboard,
   SingleClient,
+  Settings,
 } from './pages';
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       <Sidebar />
 
       <div
-        className='w-[94%] bg-hero'
+        className='w-[94%] bg-hero bg-[#F5F5F5]'
         style={{ backgroundImage: `url(${bgImage})` }}>
         <Routes>
           <Route index element={<Dashboard />} />
@@ -35,6 +36,7 @@ function App() {
           <Route path='user_management' element={<UserManagement />} />
           <Route path='api_request' element={<ApiRequest />} />
           <Route path='tracker_dashboard' element={<TrackerDashboard />} />
+          <Route path='settings' element={<Settings />} />
         </Routes>
       </div>
     </div>
