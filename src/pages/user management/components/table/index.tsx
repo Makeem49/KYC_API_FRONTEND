@@ -5,9 +5,11 @@ import OlvImg from '../../../../assets/images/olivia.svg';
 import UserAction from '../drop down';
 import { Pagination } from '../../../../components';
 import { useUsersCtx } from '../../../../context';
+import { useSingleUserCtx } from '../context/single_user.ctx';
 
 const Table = () => {
   const { list } = useUsersCtx();
+  const { setData } = useSingleUserCtx();
 
   const [page, setPage] = useState<number>(1);
   const [itemsOffset, setItemsOffset] = useState<number>(0);
@@ -89,7 +91,7 @@ const Table = () => {
                   </span>
                 </td>
 
-                <td>
+                <td onClick={() => setData(user)}>
                   <UserAction />
                 </td>
               </tr>

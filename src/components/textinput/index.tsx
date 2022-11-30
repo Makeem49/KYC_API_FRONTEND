@@ -11,8 +11,14 @@ interface TextInputInterface {
   autocomplete?: string;
   autoFocus?: boolean;
   required?: boolean;
+  labelClass?: string;
+  inputClass?: string;
 }
-const TextInput = (props: TextInputInterface) => {
+const TextInput = ({
+  labelClass,
+  inputClass,
+  ...props
+}: TextInputInterface) => {
   const [field, meta] = useField(props);
   const [type, setType] = useState(props.type);
 
@@ -24,11 +30,11 @@ const TextInput = (props: TextInputInterface) => {
     }
   };
   return (
-    <div className='relative'>
+    <div className='relative w-full'>
       {props.label && (
         <label
           htmlFor={props.name || props.id}
-          className='block mb-5 text-base tracking-wide text-[#54565b] dark:text-wdark-50 capitalize'>
+          className={`${labelClass} block mb-5 text-base tracking-wide text-[#54565b] capitalize`}>
           {props.label}{' '}
           {props.required && <span className='text-red-400'>*</span>}
         </label>
@@ -38,7 +44,7 @@ const TextInput = (props: TextInputInterface) => {
         id={props.id}
         autoFocus={props.autoFocus}
         autoComplete={props.autocomplete}
-        className='block w-full appearance-none outline-none tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91]'
+        className={`block w-full appearance-none outline-none tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91] ${inputClass} `}
         placeholder={props.placeholder}
         {...field}
       />

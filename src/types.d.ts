@@ -54,6 +54,7 @@ type User = {
   email: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
   password?: string;
   permissions: number[];
   roles: number[];
@@ -82,4 +83,9 @@ interface GenericContextInterface<T> {
   list: T[];
   loading: boolean;
   refreshContext: () => void;
+}
+
+interface SingleEntityCtx<T> {
+  data: T;
+  setData: React.Dispatch<React.SetStateAction<T>>;
 }
