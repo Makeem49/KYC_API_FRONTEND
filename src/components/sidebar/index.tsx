@@ -27,42 +27,78 @@ function Sidebar() {
   const routes = [
     {
       to: '/dashboard',
-      icon: <HomeHashtag size='20' variant='Bulk' />,
+      icon: (
+        <HomeHashtag
+          variant='Bulk'
+          size='25'
+          // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
+        />
+      ),
       label: 'Dashboard',
     },
     {
       to: '/client',
-      icon: <People size='20' variant='Bulk' />,
+      icon: (
+        <People
+          variant='Bulk'
+          size='25'
+          // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
+        />
+      ),
       label: 'Client',
     },
     {
       to: '/transaction',
-      icon: <Book1 size='20' variant='Bulk' />,
+      icon: (
+        <Book1
+          variant='Bulk'
+          size='25'
+          // className='   w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
+        />
+      ),
       label: 'Transaction',
     },
     {
       to: '/user_management',
-      icon: <UserAdd size='20' variant='Bulk' />,
+      icon: (
+        <UserAdd
+          variant='Bulk'
+          size='25'
+          // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
+        />
+      ),
       label: 'User Management',
     },
 
     {
       to: '/api_request',
-      icon: <ArrowSwapHorizontal size='20' variant='Bulk' />,
+      icon: (
+        <ArrowSwapHorizontal
+          variant='Bulk'
+          size='25'
+          // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
+        />
+      ),
       label: 'Api Request',
     },
 
     {
       to: '/tracker_dashboard',
-      icon: <KeyboardOpen size='20' variant='Bulk' />,
+      icon: (
+        <KeyboardOpen
+          variant='Bulk'
+          size='25'
+          // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
+        />
+      ),
       label: 'Tracker Dashboard',
     },
   ];
 
   const activeStyle =
-    'bg-[#FAF8FF] flex items-center border-l-4 border-[#7738DD] text-[#7738DD] w-full p-8';
+    'bg-[#FAF8FF] flex justify-center items-center border-l-4 border-[#7738DD] text-[#7738DD] w-full p-8';
   const baseStyle =
-    'hover:bg-[#FAF8FF] flex items-center hover:text-[#7738DD] text-[#A982EA] opacity-0.5 p-8 w-full';
+    'hover:bg-[#FAF8FF] justify-center flex items-center hover:text-[#7738DD] text-[#A982EA] opacity-0.5 p-8 w-full';
 
   return (
     <div className=' relative flex flex-col items-center w-[6%] h-[100vh] text-gray-400 bg-[#FFFFF] shadow-xl p-5 rounded'>
@@ -85,6 +121,8 @@ function Sidebar() {
                 border: 0,
                 padding: 12,
                 color: '#fffff',
+                display: 'flex',
+                flexDirection: 'column',
               }}>
               <NavLink
                 to={route.to}

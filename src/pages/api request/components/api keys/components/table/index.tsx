@@ -6,7 +6,7 @@ const Table = () => {
       <div className='overflow-auto w-full '>
         <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className=' border-b child:cursor-default'>
+            <tr className=' border-b child:cursor-default child:py-3 text-[#C1C0C2] font-semibold text-[12px]'>
               <th>
                 <input type='checkbox' className='checkbox white' />
               </th>

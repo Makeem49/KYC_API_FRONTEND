@@ -27,7 +27,7 @@ const Table = () => {
       <div className='overflow-auto w-full pb-24 min-h-[36rem]'>
         <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className=' border-b child:cursor-default'>
+            <tr className=' border-b child:cursor-default text-[#C1C0C2] text-[12px] font-semibold'>
               <th>
                 <input type='checkbox' className='checkbox white' />
               </th>

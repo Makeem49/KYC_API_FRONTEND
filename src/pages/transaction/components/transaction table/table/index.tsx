@@ -6,7 +6,7 @@ const Table = () => {
       <div className='overflow-auto w-full '>
         <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className='child:py-4 border-b  child:px-2 child:cursor-default child:align-middle'>
+            <tr className='child:py-4 border-b text-[12px] text-[#C1C0C2] font-semibold child:px-2 child:cursor-default child:align-middle'>
               <th>
                 <input type='checkbox' className='checkbox white' />
               </th>
@@ -22,7 +22,7 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left child:py-4 child:px-2 border-b'>
+            <tr className=' text-left font-normal child:py-4 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'
@@ -32,33 +32,33 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium'>1</span>
+                <span className=''>1</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className=' '>May 1st 2021</span>
               </td>
 
               <td>
-                <span className='font-medium '>Ogundele Fatai</span>
+                <span className=' '>Ogundele Fatai</span>
               </td>
 
               <td>
-                <span className='font-medium '>WT-120434328</span>
+                <span className=' '>WT-120434328</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className=' '>N20,100.00</span>
               </td>
               <td>
-                <span className='font-medium '>Wallet transfer</span>
+                <span className=' '>Wallet transfer</span>
               </td>
               <td className='max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>True</span>
+                <span className=' '>True</span>
               </td>
 
               <td>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+                <span className=' px-3 py-2 bg-[#E7F9F0] rounded '>
                   Successful
                 </span>
               </td>
@@ -74,33 +74,33 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium'>2</span>
+                <span className=''>2</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className=' '>May 1st 2021</span>
               </td>
 
               <td>
-                <span className='font-medium '>Ogundele Fatai</span>
+                <span className=' '>Ogundele Fatai</span>
               </td>
 
               <td>
-                <span className='font-medium '>WT-120434328</span>
+                <span className=' '>WT-120434328</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className=' '>N20,100.00</span>
               </td>
               <td>
-                <span className='font-medium '>Wallet transfer</span>
+                <span className=' '>Wallet transfer</span>
               </td>
               <td className='max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>False</span>
+                <span className=' '>False</span>
               </td>
 
               <td>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+                <span className=' px-3 py-2 bg-[#E7F9F0] rounded '>
                   Successful
                 </span>
               </td>
@@ -116,35 +116,33 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium'>3</span>
+                <span className=''>3</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className=' '>May 1st 2021</span>
               </td>
 
               <td>
-                <span className='font-medium '>Ogundele Fatai</span>
+                <span className=' '>Ogundele Fatai</span>
               </td>
 
               <td>
-                <span className='font-medium '>WT-120434328</span>
+                <span className=' '>WT-120434328</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className=' '>N20,100.00</span>
               </td>
               <td>
-                <span className='font-medium '>Withdrawal</span>
+                <span className=' '>Withdrawal</span>
               </td>
               <td className='max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>True</span>
+                <span className=' '>True</span>
               </td>
 
               <td>
-                <span className='font-medium px-3 py-2 bg-[#FDEEEE] rounded '>
-                  Failed
-                </span>
+                <span className=' px-3 py-2 bg-[#FDEEEE] rounded '>Failed</span>
               </td>
             </tr>
 
@@ -158,33 +156,33 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium'>4</span>
+                <span className=''>4</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className=' '>May 1st 2021</span>
               </td>
 
               <td>
-                <span className='font-medium '>Ogundele Fatai</span>
+                <span className=' '>Ogundele Fatai</span>
               </td>
 
               <td>
-                <span className='font-medium '>WT-120434328</span>
+                <span className=' '>WT-120434328</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className=' '>N20,100.00</span>
               </td>
               <td>
-                <span className='font-medium '>Deposit</span>
+                <span className=' '>Deposit</span>
               </td>
               <td className='max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>False</span>
+                <span className=' '>False</span>
               </td>
 
               <td>
-                <span className='font-medium px-3 py-2 bg-[#E8F1FC] rounded '>
+                <span className=' px-3 py-2 bg-[#E8F1FC] rounded '>
                   Pending
                 </span>
               </td>
@@ -200,33 +198,33 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium'>5</span>
+                <span className=''>5</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className=' '>May 1st 2021</span>
               </td>
 
               <td>
-                <span className='font-medium '>Ogundele Fatai</span>
+                <span className=' '>Ogundele Fatai</span>
               </td>
 
               <td>
-                <span className='font-medium '>WT-120434328</span>
+                <span className=' '>WT-120434328</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className=' '>N20,100.00</span>
               </td>
               <td>
-                <span className='font-medium '>Wallet transfer</span>
+                <span className=' '>Wallet transfer</span>
               </td>
               <td className='max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>True</span>
+                <span className=' '>True</span>
               </td>
 
               <td>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+                <span className=' px-3 py-2 bg-[#E7F9F0] rounded '>
                   Successful
                 </span>
               </td>
@@ -242,33 +240,33 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='font-medium'>6</span>
+                <span className=''>6</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className=' '>May 1st 2021</span>
               </td>
 
               <td>
-                <span className='font-medium '>Ogundele Fatai</span>
+                <span className=' '>Ogundele Fatai</span>
               </td>
 
               <td>
-                <span className='font-medium '>WT-120434328</span>
+                <span className=' '>WT-120434328</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className=' '>N20,100.00</span>
               </td>
               <td>
-                <span className='font-medium '>Wallet transfer</span>
+                <span className=' '>Wallet transfer</span>
               </td>
               <td className='max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>True</span>
+                <span className=' '>True</span>
               </td>
 
               <td>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+                <span className=' px-3 py-2 bg-[#E7F9F0] rounded '>
                   Successful
                 </span>
               </td>

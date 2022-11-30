@@ -6,26 +6,28 @@ const WalletBallance = () => {
     <div className=' flex flex-col gap-2 border border-[#DAD9DA] rounded-lg p-5'>
       <div className='px-5 py-3 bg-afexpurple-lighter'>
         <span className=' text-afexpurple-light'>Total wallet balance</span>
-        <p className='text-xl text-afexpurple-dark font-bold'>N50,000,000.00</p>
+        <p className='text-xl text-afexpurple-regular font-semibold'>
+          N50,000,000.00
+        </p>
       </div>
 
       {/* Available Balances */}
-      <div className='w-full flex flex-col gap-2 border-b pb-4'>
+      <div className='w-full flex flex-col gap-4 py-2 border-b pb-4'>
         {' '}
         <div className='flex justify-between'>
-          <p>Number of Users</p>
+          <p className=' text-textgrey-normal'>Number of Users</p>
           <p>N3,0000</p>
         </div>
         <div className='flex justify-between'>
-          <p>Number of Users</p>
+          <p className=' text-textgrey-normal'>Open Balance</p>
           <p>N3,0000</p>
         </div>
         <div className='flex justify-between'>
-          <p>Number of Users</p>
+          <p className=' text-textgrey-normal'>Total Deposit</p>
           <p>N3,0000</p>
         </div>
         <div className='flex justify-between'>
-          <p>Number of Users</p>
+          <p className=' text-textgrey-normal'>Total Withdrawal</p>
           <p>N3,0000</p>
         </div>
       </div>
@@ -37,7 +39,7 @@ const WalletBallance = () => {
 
       <div className='relative flex gap-2 items-center'>
         <p>Audit Status</p>
-        <p className=' bg-[#E7F9F0] font-bold text-[#0DBF66] py-1 px-2 rounded'>
+        <p className=' bg-[#E7F9F0] font-semibold text-[#0DBF66] py-1 px-2 rounded'>
           Passed
         </p>
         <img
