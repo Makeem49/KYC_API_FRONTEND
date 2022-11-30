@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Popover } from '@mantine/core';
-import { Logout, Notification, Setting2 } from 'iconsax-react';
+import { Tooltip } from '@mantine/core';
 
 import {
   HomeHashtag,
@@ -10,14 +10,20 @@ import {
   UserAdd,
   ArrowSwapHorizontal,
   KeyboardOpen,
+  Logout,
+  Notification,
+  Setting2,
 } from 'iconsax-react';
+
+import { useAuthCtx } from '../../context';
 
 import cuddieLogo from '../../assets/brand/Cuddie.svg';
 import profIcon from '../../assets/images/profile_img.svg';
 import NotificationModal from '../notification modal';
-import { Tooltip } from '@mantine/core';
 
 function Sidebar() {
+  const { logout } = useAuthCtx();
+
   const routes = [
     {
       to: '/dashboard',
@@ -128,7 +134,9 @@ function Sidebar() {
                 <Setting2 size='16' color='#8f8e91' variant='Bulk' />
                 Settings
               </NavLink>
-              <p className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+              <p
+                className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'
+                onClick={logout}>
                 <Logout size='16' color='#8f8e91' variant='Bulk' />
                 Logout
               </p>

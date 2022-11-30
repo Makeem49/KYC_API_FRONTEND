@@ -15,11 +15,17 @@ import { apiRequest } from '../../utils';
  * @param username existing username
  * @param password password
  */
-export function login(
+export async function authenticate(
   username: string,
   password: string
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.post('auth/login', { username, password });
+): Promise<string | null> {
+  const resp = await apiRequest.post('auth/login', { username, password });
+
+  if (!resp.data) return null;
+
+  if (resp.data.message !== 'Authenticated') return null;
+
+  return resp.data.access_token;
 }
 
 export function register() {}

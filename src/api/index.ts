@@ -1,4 +1,9 @@
-export { forgot_password, login, register, reset_password } from './auth';
+export {
+  forgot_password,
+  authenticate,
+  register,
+  reset_password,
+} from './auth';
 
 export { create_client } from './clients';
 

@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+
 import OlvImg from '../../../../assets/images/olivia.svg';
-import olvImg2 from '../../../../assets/images/olyvia2.svg';
 import UserAction from '../drop down';
+import { Pagination } from '../../../../components';
+import { useUsersCtx } from '../../../../context';
 
 const Table = () => {
+  const { list } = useUsersCtx();
+
+  const [page, setPage] = useState<number>(1);
+  const [itemsOffset, setItemsOffset] = useState<number>(0);
+  const [currentItems, setCurrentItems] = useState<User[]>([]);
+
+  useEffect(() => {
+    // Handle Pagination on load
+    const endOffset = itemsOffset + 10;
+    setCurrentItems(list.slice(itemsOffset, endOffset));
+    setPage(Math.ceil(list.length / 10));
+  }, [itemsOffset, list]);
+
   return (
-    <div className='h-full pb-5'>
-      <div className='overflow-auto w-full '>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
+    <div className='h-full pb-5 relative'>
+      <div className='overflow-auto w-full pb-24'>
+        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px] min-h-[30rem]'>
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
             <tr className=' border-b child:cursor-default'>
               <th>
@@ -24,358 +40,70 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
+            {currentItems.map((user) => (
+              <tr className=' text-left  child:py-4 border-b'>
+                <td>
+                  <input
+                    type='checkbox'
+                    id='remember'
+                    className='checkbox white'
+                  />
+                </td>
 
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
+                <td>
+                  <span className='font-medium'>{list.indexOf(user) + 1}</span>
+                </td>
 
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={OlvImg} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                <td className='text-start '>
+                  {' '}
+                  <div className='flex gap-5'>
+                    <img src={OlvImg} alt='olvimg' />{' '}
+                    <span className='font-medium text-[14px]'>
+                      {user.firstName} {user.lastName}
+                      <br /> <small>{user.email}</small>
+                    </span>
+                  </div>
+                </td>
+
+                <td>
+                  <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
+                    {moment(new Date()).fromNow()}
                   </span>
-                </div>
-              </td>
+                </td>
 
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
-
-            <tr className=' text-left  child:py-3 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>2</span>
-              </td>
-
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={OlvImg} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                <td>
+                  <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
+                    {user.twoStepEnabled ? 'Enabled' : 'Disabled'}
                   </span>
-                </div>
-              </td>
+                </td>
 
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>3</span>
-              </td>
-
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={olvImg2} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                <td>
+                  <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
+                    {user.isActive ? 'Active' : 'Inactive'}
                   </span>
-                </div>
-              </td>
+                </td>
 
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>4</span>
-              </td>
-
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={olvImg2} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                <td>
+                  <span className='font-medium '>
+                    {user.createdAt.toString()}{' '}
                   </span>
-                </div>
-              </td>
+                </td>
 
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>5</span>
-              </td>
-
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={olvImg2} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
-                  </span>
-                </div>
-              </td>
-
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>6</span>
-              </td>
-
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={olvImg2} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
-                  </span>
-                </div>
-              </td>
-
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>7</span>
-              </td>
-
-              <td className='text-start '>
-                {' '}
-                <div className='flex gap-5'>
-                  <img src={olvImg2} alt='olvimg' />{' '}
-                  <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
-                  </span>
-                </div>
-              </td>
-
-              <td>
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
-                  4 days ago
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1 rounded '>
-                  Enabled
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium text-[#076D3A] bg-[#E7F9F0] p-1  rounded '>
-                  Active
-                </span>
-              </td>
-
-              <td>
-                <span className='font-medium '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <UserAction />
-              </td>
-            </tr>
+                <td>
+                  <UserAction />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
+      <Pagination
+        dataLength={list.length}
+        page={page}
+        itemsOffset={itemsOffset}
+        perPage={10}
+        setItemsOffset={setItemsOffset}
+      />
     </div>
   );
 };

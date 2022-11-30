@@ -1,10 +1,11 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { Sidebar } from './components';
 import bgImage from '../src/assets/svgs/bg-pattern.svg';
 
 import {
+  Authentication,
   Client,
   Dashboard,
   Transaction,
@@ -14,8 +15,21 @@ import {
   SingleClient,
   Settings,
 } from './pages';
+import { useAuthCtx } from './context';
 
 function App() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthCtx();
+  const token = localStorage.getItem('cuddie-access-token');
+
+  console.log({ isAuthenticated }, { token });
+
+  useEffect(() => {
+    if (!isAuthenticated || !token) {
+      return navigate('auth');
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
   return (
     <div className='flex bg-white text-[#54565B] text-sm xl:text-base'>
       <Sidebar />
@@ -26,6 +40,7 @@ function App() {
         <Routes>
           <Route index element={<Dashboard />} />
           <Route path='dashboard' element={<Dashboard />} />
+          <Route path='auth' element={<Authentication />} />
 
           <Route path='client'>
             <Route index element={<Client />} />

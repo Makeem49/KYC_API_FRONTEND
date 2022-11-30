@@ -1,6 +1,6 @@
 import React, { useContext, createContext, useEffect, useState } from 'react';
 
-import { clients_dummy_data } from '../assets/dummyData';
+import { clients_dummy_data } from '../assets/data';
 
 interface DayOnDay {
   current: number;
@@ -14,16 +14,24 @@ interface Summary {
   active: DayOnDay;
 }
 
-interface ClientsCtxInt {
+interface ClientsCtxInterface extends GenericContextInterface<Client> {
   summary: Summary;
-  list: Client[];
 }
 
-const ClientsContext = createContext<ClientsCtxInt>({} as ClientsCtxInt);
+const ClientsContext = createContext({} as ClientsCtxInterface);
 
 const ClientsContextProvider = (props: WithChildren) => {
   const [clients, setClients] = useState<Client[]>([]);
   const [summary, setSummary] = useState<Summary>({} as Summary);
+
+  const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const refreshContext = () => {
+    setLoading(true);
+    setRefresh((s) => !s);
+    setLoading(false);
+  };
 
   useEffect(() => {
     const fetchClientsList = () => {
@@ -53,10 +61,11 @@ const ClientsContextProvider = (props: WithChildren) => {
 
     fetchClientsList();
     fetchSummary();
-  }, []);
+  }, [loading, refresh]);
 
   return (
-    <ClientsContext.Provider value={{ list: clients, summary }}>
+    <ClientsContext.Provider
+      value={{ list: clients, summary, loading, refreshContext }}>
       {props.children}
     </ClientsContext.Provider>
   );

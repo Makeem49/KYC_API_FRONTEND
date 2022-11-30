@@ -16,6 +16,7 @@ type Client = {
 };
 
 type ClientProvider = {
+  id: string;
   name: string;
   code: string;
   logo: string;
@@ -29,6 +30,10 @@ type ClientProvider = {
   clientTransferEnabled: boolean;
   checkInventoryPositionEnabled: boolean;
   tradeInventoryTransactionEnabled: boolean;
+  createdBy: string;
+  clientProviderToken: ClientProviderToken;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 };
 
 type ClientIntegration = {
@@ -44,12 +49,37 @@ type ClientIntegration = {
 };
 
 type User = {
+  id: number;
   username: string;
   email: string;
   firstName: string;
   lastName: string;
-  password: string;
+  password?: string;
   permissions: number[];
   roles: number[];
   image: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  isActive: boolean;
+  twoStepEnabled: boolean;
 };
+
+type ClientProviderToken = {
+  id: number;
+  apiKey: string;
+  providerId: string;
+  lastUsedAt: string | null;
+  isActive: boolean;
+  createdAt: string | Date;
+  createdBy: string | null;
+  updatedAt: string | Date;
+  deletedAt: string | null;
+  clientProviderId: number;
+  tokenClientProviderId;
+};
+
+interface GenericContextInterface<T> {
+  list: T[];
+  loading: boolean;
+  refreshContext: () => void;
+}

@@ -8,8 +8,17 @@ import { apiRequest } from '../../utils';
  *
  * =================================================================
  */
-export function get_client_providers(): Promise<AxiosResponse<any, any>> {
-  return apiRequest.get('client-providers');
+
+/**
+ * GET A LIST OF ALL CLIENT PROVIDERS
+ * @returns
+ */
+export async function get_client_providers(): Promise<null | ClientProvider[]> {
+  const resp = await apiRequest.get('client-providers');
+
+  if (!resp.data) return null;
+
+  return resp.data.data.map((el: any) => ({ ...el } as ClientProvider));
 }
 
 /**
@@ -32,10 +41,14 @@ export function get_client_providers(): Promise<AxiosResponse<any, any>> {
  * }
  * @returns
  */
-export function create_client_provider(
-  data: ClientProvider
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.post('client-providers', data);
+export async function create_client_provider(
+  data: Partial<ClientProvider>
+): Promise<string> {
+  const resp = await apiRequest.post('client-providers', data);
+
+  if (!resp.data) return 'Bad request. Unable to create client provider';
+
+  return resp.data.message;
 }
 
 /**
@@ -50,10 +63,16 @@ export function create_client_provider(
  * @param id ID of the client
  * @returns
  */
-export function get_client_provider_details(
+export async function get_client_provider_details(
   id: string
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.get(`client-providers/${id}`);
+): Promise<ClientProvider | null> {
+  const resp = await apiRequest.get(`client-providers/${id}`);
+
+  if (!resp.data) return null;
+
+  const { data }: { data: ClientProvider } = resp.data;
+
+  return data;
 }
 
 /**
