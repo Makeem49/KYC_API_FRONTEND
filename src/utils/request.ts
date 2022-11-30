@@ -3,7 +3,9 @@ import axios, { Axios } from 'axios';
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
-  const token = localStorage.getItem('cuddies-access-token');
+  const token = localStorage.getItem('cuddie-access-token');
+
+  console.log({ token });
 
   if (!token) return;
 

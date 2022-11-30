@@ -22,8 +22,6 @@ function App() {
   const { isAuthenticated } = useAuthCtx();
   const token = localStorage.getItem('cuddie-access-token');
 
-  console.log({ isAuthenticated }, { token });
-
   useEffect(() => {
     if (!isAuthenticated || !token) {
       return navigate('auth');

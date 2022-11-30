@@ -22,8 +22,8 @@ const Table = () => {
 
   return (
     <div className='h-full pb-5 relative'>
-      <div className='overflow-auto w-full pb-24'>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px] min-h-[30rem]'>
+      <div className='overflow-auto w-full pb-24 min-h-[36rem]'>
+        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
             <tr className=' border-b child:cursor-default'>
               <th>
