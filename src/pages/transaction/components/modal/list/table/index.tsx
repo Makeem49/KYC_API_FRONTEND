@@ -6,7 +6,7 @@ const Table = () => {
       <div className='overflow-auto w-full '>
         <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
           <thead className='text-[12px] sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className='child:py-2 border-b border-dashed child:cursor-default child:align-middle'>
+            <tr className='child:py-2 border-b text-[#C1C0C2] font-semibold border-dashed child:cursor-default child:align-middle'>
               <th>S/N</th>
               <th>Location</th>
               <th>Active Users</th>
@@ -17,111 +17,111 @@ const Table = () => {
           <tbody className='text-[10px] xl:text-[12px]'>
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-medium'>1</span>
+                <span className='font-normal'>1</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>Kaduna1</span>
+                <span className='font-normal '>Kaduna1</span>
               </td>
 
               <td>
-                <span className='font-medium '>20</span>
+                <span className='font-normal '>20</span>
               </td>
 
               <td>
-                <span className='font-medium '>1,000</span>
+                <span className='font-normal '>1,000</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className='font-normal '>N20,100.00</span>
               </td>
             </tr>
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-medium'>1</span>
+                <span className='font-normal'>1</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>Kaduna1</span>
+                <span className='font-normal '>Kaduna1</span>
               </td>
 
               <td>
-                <span className='font-medium '>20</span>
+                <span className='font-normal '>20</span>
               </td>
 
               <td>
-                <span className='font-medium '>1,000</span>
+                <span className='font-normal '>1,000</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className='font-normal '>N20,100.00</span>
               </td>
             </tr>
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-medium'>1</span>
+                <span className='font-normal'>1</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>Kaduna1</span>
+                <span className='font-normal '>Kaduna1</span>
               </td>
 
               <td>
-                <span className='font-medium '>20</span>
+                <span className='font-normal '>20</span>
               </td>
 
               <td>
-                <span className='font-medium '>1,000</span>
+                <span className='font-normal '>1,000</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className='font-normal '>N20,100.00</span>
               </td>
             </tr>
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-medium'>1</span>
+                <span className='font-normal'>1</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>Kaduna1</span>
+                <span className='font-normal '>Kaduna1</span>
               </td>
 
               <td>
-                <span className='font-medium '>20</span>
+                <span className='font-normal '>20</span>
               </td>
 
               <td>
-                <span className='font-medium '>1,000</span>
+                <span className='font-normal '>1,000</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className='font-normal '>N20,100.00</span>
               </td>
             </tr>
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-medium'>1</span>
+                <span className='font-normal'>1</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-medium '>Kaduna1</span>
+                <span className='font-normal '>Kaduna1</span>
               </td>
 
               <td>
-                <span className='font-medium '>20</span>
+                <span className='font-normal '>20</span>
               </td>
 
               <td>
-                <span className='font-medium '>1,000</span>
+                <span className='font-normal '>1,000</span>
               </td>
               <td>
-                <span className='font-medium '>N20,100.00</span>
+                <span className='font-normal '>N20,100.00</span>
               </td>
             </tr>
           </tbody>

@@ -1,62 +1,69 @@
 import React from 'react';
+import { ArrowDown, ArrowUp } from 'iconsax-react';
 
 const Table = () => {
   return (
     <div className='h-full pb-5'>
       <div className='overflow-auto w-full '>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
-          <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className='child:py-4 border-b  child:px-6 child:cursor-default child:align-middle'>
+        <table className='overflow-auto w-full align-top'>
+          <thead className='text-[12px] sticky top-0 text-left whitespace-nowrap z-[5]'>
+            <tr className='child:py-4 border-b text-[#C1C0C2] font-normal child:px-1 child:cursor-default child:align-middle'>
               <th>
                 <input type='checkbox' className='checkbox white' />
               </th>
 
-              <th className='py-3 px-4 '>S/N</th>
-              <th className='py-3 px-4 '>Date</th>
-              <th className='py-3 px-4 '>Client's Name</th>
-              <th className='py-3 px-4 '>Amount</th>
-              <th className='py-3 px-4 '>Transaction type</th>
-              <th className='py-3 px-4 '>Status</th>
+              <th className='flex items-center'>
+                S/N{' '}
+                <span className='flex'>
+                  <ArrowUp size='14' color='#c1c0c2' variant='Outline' />
+                  <ArrowDown size='14' color='#c1c0c2' variant='Outline' />
+                </span>
+              </th>
+              <th>Date</th>
+              <th>Client's Name</th>
+              <th>Amount</th>
+              <th>Transaction type</th>
+              <th>Status</th>
             </tr>
           </thead>
-          <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left child:py-4 child:px-6 border-b'>
+          <tbody className='text-[10px] xl:text-[14px] text-[#49474D]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b'>
               <td>
                 <input
                   type='checkbox'
                   id='remember'
-                  className='checkbox white'
+                  className='checkbox white p-7'
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
                   successful
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -65,34 +72,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#FDEEEE] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
                   failed
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -101,34 +108,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
                   successful
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -137,34 +144,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
                   successful
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -173,34 +180,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#FDEEEE] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
                   failed
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -209,34 +216,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
                   successful
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -245,34 +252,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#FDEEEE] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
                   failed
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -281,34 +288,34 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#FDEEEE] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
                   failed
                 </span>
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-6 border-b border-[#F0F0F0]'>
+            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <input
                   type='checkbox'
@@ -317,28 +324,28 @@ const Table = () => {
                 />
               </td>
 
-              <td className='py-4 px-4 mr-10'>
-                <span className='font-medium'>1</span>
+              <td>
+                <span className='font-normal'>1</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 text-start '>
+              <td>
                 {' '}
-                <span className='font-medium '>May 1st 2021</span>
+                <span className='font-normal '>May 1st 2021</span>
               </td>
 
-              <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                <span className='font-medium '>Samuel Adeniyi</span>
+              <td>
+                <span className='font-normal '>Samuel Adeniyi</span>
               </td>
 
-              <td className='py-4 px-4 mr-10 w-[150px]'>
-                <span className='font-medium '>N20,100.00</span>
+              <td>
+                <span className='font-normal '>N20,100.00</span>
               </td>
-              <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
-                <span className='font-medium '>Withdrawal</span>
+              <td>
+                <span className='font-normal '>Withdrawal</span>
               </td>
 
-              <td className='py-4 px-4 mr-10  '>
-                <span className='font-medium px-3 py-2 bg-[#E7F9F0] rounded '>
+              <td>
+                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
                   successful
                 </span>
               </td>

@@ -15,11 +15,11 @@ function Transaction() {
 
         <div className='flex w-full justify-between items-center'>
           <div className='flex w-full flex-col'>
-            <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
+            <h2 className='  text-textgrey-darker text-[18px] font-bold '>
               Transactions
             </h2>
-            <p>
-              Home/ <span>Transactions</span>
+            <p className=' text-textgrey-normal'>
+              Home/ <span className=' text-textgrey-dark'>Transactions</span>
             </p>
           </div>
 
