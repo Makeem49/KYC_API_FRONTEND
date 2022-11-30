@@ -3,14 +3,14 @@ import axios, { Axios } from 'axios';
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
-  const user = JSON.parse(localStorage.getItem('cuddie-loggedin-user') ?? '{}');
+  const token = localStorage.getItem('cuddie-access-token');
 
-  if (!user) return;
+  console.log({ token });
 
-  if (!user?.token) return;
+  if (!token) return;
 
   return {
-    Authorization: `WB3 ${user.token}`,
+    Authorization: `Bearer ${token}`,
   };
 };
 

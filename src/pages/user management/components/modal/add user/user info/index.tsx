@@ -97,10 +97,14 @@ const UserInfo = () => {
         </div>
 
         <div className='w-full mt-5 gap-8 flex justify-center'>
-          <button className='p-4 rounded-lg bg-[#F0F0F0] text-[#8F8E91]'>
+          <button
+            className='p-4 rounded-lg bg-[#F0F0F0] text-[#8F8E91]'
+            type='button'>
             Discard
           </button>
-          <button className='p-4 rounded-lg bg-afexpurple-dark text-[#ffff]'>
+          <button
+            className='p-4 rounded-lg bg-afexpurple-dark text-[#ffff]'
+            type='submit'>
             Submit
           </button>
         </div>

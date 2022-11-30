@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const withMT = require("@material-tailwind/react/utils/withMT");
+const withMT = require('@material-tailwind/react/utils/withMT');
 
 module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
@@ -14,13 +14,16 @@ module.exports = withMT({
         afexpurple: {
           darker: '#44207E',
           dark: '#54289D',
+          DEFAULT: '#7737dd',
           lighter: '#DECFF7',
           light: '#A982EA',
         },
-
+        afexgray: {
+          DEFAULT: '#F5F5F5',
+        },
         textgrey: {
           Bold: '#2B2930',
-          Light: '#8F8E91'
+          Light: '#8F8E91',
         },
       },
     },

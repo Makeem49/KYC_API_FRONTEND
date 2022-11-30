@@ -22,14 +22,15 @@ const UserAction = () => {
         </Popover.Target>
 
         <Popover.Dropdown className='child:cursor-pointer rounded-lg hover:child:bg-[#F1EBFC] child:p-2'>
-          <p
-            className='text-[14px] text-gray-400 rounded-md px-2'
-            onClick={() => {
-              setEditUserModal((s) => !s);
+          <button
+            className='text-[14px] text-gray-400 rounded-md px-2 w-full text-left'
+            onClick={(e) => {
+              e.stopPropagation();
+              setEditUserModal(true);
               setOpened((s) => !s);
             }}>
             Edit
-          </p>
+          </button>
           <p
             className='text-[14px] text-gray-400 rounded-md'
             onClick={() => {
@@ -41,8 +42,11 @@ const UserAction = () => {
         </Popover.Dropdown>
       </Popover>
 
-      {editUserModal && <AddUser />}
-      {deactivateUserModal && <DeactivateUser />}
+      <AddUser show={editUserModal} close={() => setEditUserModal(false)} />
+      <DeactivateUser
+        show={deactivateUserModal}
+        close={() => setDeactivateUserModal(false)}
+      />
     </>
   );
 };

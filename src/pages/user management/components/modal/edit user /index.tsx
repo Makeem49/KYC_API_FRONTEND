@@ -1,17 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
 import { Drawer, Group } from '@mantine/core';
 import UserInfo from './user info';
 
-const AddUser = () => {
-  const [opened, setOpened] = useState(true);
-
+const AddUser = ({ show, close }: ModalControllerType) => {
   return (
     <>
       <Drawer
         position='right'
-        opened={opened}
-        onClose={() => setOpened(false)}
+        opened={show}
+        onClose={close}
         title='Add User'
         padding='xl'
         size='40%'>

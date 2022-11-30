@@ -1,8 +1,6 @@
 import { showNotification } from '@mantine/notifications';
 
-import successIcon from '../assets/svgs/successBadge.svg';
-import error from '../assets/svgs/error.svg';
-import info from '../assets/svgs/info.svg';
+import { ShieldTick, CloseCircle, InfoCircle } from 'iconsax-react';
 
 const toast = (
   id: 'success' | 'error' | 'info',
@@ -17,11 +15,11 @@ const toast = (
       : 'rgb(250, 232, 76)';
   const icon =
     id === 'success' ? (
-      <img src={successIcon} alt='success icon' />
+      <ShieldTick variant='Bulk' color='#38CB89' />
     ) : id === 'error' ? (
-      'error' && <img src={error} alt='error icon' />
+      'error' && <CloseCircle color='#F47373' />
     ) : (
-      <img src={info} alt='warning icon' />
+      <InfoCircle color='#dce775' />
     );
   //id = 'success' | 'warning' | 'error'
   return showNotification({
