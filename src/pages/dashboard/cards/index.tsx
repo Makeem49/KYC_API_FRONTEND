@@ -8,16 +8,20 @@ import greenDot from '../../../assets/images/Dot.svg';
 
 const Card = () => {
   return (
-    <div className='flex gap-4'>
+    <div className='flex gap-6 child:h-[134px]'>
       {/* Card One */}
-      <div className='relative flex flex-col border-[#DECFF7] border border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#F1EBFC] border border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>TOTAL USER</p>
+          <p className=' font-normal text-textgrey-normal'>TOTAL USER</p>
           <UserSquare size='20' color='#a982ea' variant='Bulk' />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-Bold'>
-            N2,000 <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+        <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
+          <p className='text-[18px] font-bold text-textgrey-dark'>
+            N2,000{' '}
+            <span className='text-[#0DBF66] font-normal text-[13px]'>
+              {' '}
+              + 36%{' '}
+            </span>
           </p>
           <span>vs previous day</span>
         </div>
@@ -35,38 +39,45 @@ const Card = () => {
       </div>
 
       {/* Card Two */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border border-[#F1EBFC] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>TOTAL TRANSACTION</p>
+          <p className=' font-normal text-textgrey-normal'>TOTAL TRANSACTION</p>
           <Wallet1 size='20' color='#a982ea' variant='Bulk' />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-Bold'>
-            N1,000 <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+        <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
+          <p className='text-[18px] font-bold text-textgrey-dark'>
+            N1,000{' '}
+            <span className='text-[#0DBF66] font-normal text-[13px]'>
+              {' '}
+              + 36%{' '}
+            </span>
           </p>
           <span>vs previous day</span>
         </div>
       </div>
 
       {/* Card Three */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border border-[#F1EBFC] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>TOTAL VALUE</p>
+          <p className=' font-normal text-textgrey-normal'>TOTAL VALUE</p>
           <Receipt size='20' color='#a982ea' variant='Bulk' />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-Bold'>
+        <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
+          <p className='text-[18px] w-full font-bold  text-textgrey-dark'>
             N200,000,000{' '}
-            <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+            <span className='text-[#0DBF66] font-normal text-[13px]'>
+              {' '}
+              + 36%{' '}
+            </span>
           </p>
           <span>vs previous day</span>
         </div>
       </div>
 
       {/* Card Four */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border border-[#F1EBFC] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>CHANNEL SOURCE</p>
+          <p className=' font-normal text-textgrey-normal'>CHANNEL SOURCE</p>
           <Chart size='20' color='#a982ea' variant='Bulk' />
         </div>
         <div className='flex flex-col gap-2 mb-3 mt-2'>

@@ -9,7 +9,7 @@ const Table = () => {
       <div className='overflow-auto w-full '>
         <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className=' border-b child:cursor-default'>
+            <tr className=' border-b child:cursor-default text-[#C1C0C2] text-[12px] font-semibold'>
               <th>
                 <input type='checkbox' className='checkbox white' />
               </th>
@@ -42,7 +42,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={OlvImg} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>
@@ -92,7 +95,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={OlvImg} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>
@@ -142,7 +148,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={olvImg2} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>
@@ -192,7 +201,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={olvImg2} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>
@@ -242,7 +254,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={olvImg2} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>
@@ -292,7 +307,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={olvImg2} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>
@@ -342,7 +360,10 @@ const Table = () => {
                 <div className='flex gap-5'>
                   <img src={olvImg2} alt='olvimg' />{' '}
                   <span className='font-medium text-[14px]'>
-                    Olivia Rhye <br /> <small>oryhe@afexnigeria.com</small>
+                    Olivia Rhye <br />{' '}
+                    <small className='font-normal text-textgrey-normal'>
+                      oryhe@afexnigeria.com
+                    </small>
                   </span>
                 </div>
               </td>

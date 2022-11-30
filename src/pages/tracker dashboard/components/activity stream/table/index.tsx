@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowDown } from 'iconsax-react';
 
 const Table = () => {
   return (
@@ -11,7 +12,13 @@ const Table = () => {
                 <input type='checkbox' className='checkbox white' />
               </th>
 
-              <th>S/N</th>
+              <th className='flex items-center'>
+                S/N{' '}
+                <span className='flex'>
+                  <ArrowDown size='14' color='#c1c0c2' variant='Outline' />
+                  <ArrowDown size='14' color='#c1c0c2' variant='Outline' />
+                </span>{' '}
+              </th>
               <th>Client </th>
               <th>Email</th>
               <th>Location</th>
@@ -26,7 +33,7 @@ const Table = () => {
                 <input
                   type='checkbox'
                   id='remember'
-                  className='checkbox white'
+                  className='bg-red-100 border-red-300 text-red-500 focus:ring-red-200'
                 />
               </td>
 

@@ -10,11 +10,11 @@ const UserManagement = () => {
         {/* Title */}
         <div className='flex w-full justify-between items-center'>
           <div className='flex w-full flex-col'>
-            <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
+            <h2 className='  text-textgrey-darker text-[18px] font-bold '>
               User Manangement
             </h2>
-            <p>
-              Home/ <span>User Management</span>
+            <p className=' text-textgrey-normal'>
+              Home/ <span className=' text-textgrey-dark'>User Management</span>
             </p>
           </div>
 

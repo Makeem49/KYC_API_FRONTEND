@@ -17,12 +17,12 @@ const Dashboard = () => {
         <div className='w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
           {/* Title */}
           <div className='flex w-full justify-between items-center'>
-            <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
+            <h2 className=' text-textgrey-darker text-[18px] font-bold '>
               Dashboard
             </h2>
             <div className='flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center '>
               <p>Showing data for </p>
-              <button className='border flex items-center border-[#BABABA] text-textgrey-Bold p-2 rounded-lg '>
+              <button className='border flex items-center border-[#BABABA] text-textgrey-darker p-2 rounded-lg '>
                 Today
                 <ArrowDown2 size='14' color='#2B2930' variant='Bold' />
               </button>
