@@ -13,6 +13,7 @@ interface TextInputInterface {
   required?: boolean;
   labelClass?: string;
   inputClass?: string;
+  pattern?: string;
 }
 const TextInput = ({
   labelClass,
@@ -44,6 +45,7 @@ const TextInput = ({
         id={props.id}
         autoFocus={props.autoFocus}
         autoComplete={props.autocomplete}
+        pattern={props.pattern}
         className={`block w-full appearance-none outline-none tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91] ${inputClass} `}
         placeholder={props.placeholder}
         {...field}
