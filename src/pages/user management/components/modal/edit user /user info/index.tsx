@@ -6,7 +6,7 @@ import { Formik, Form } from 'formik';
 import { useSingleUserCtx } from '../../../context/single_user.ctx';
 import { TextInput } from '../../../../../../components';
 
-const UserInfo = () => {
+const UserInfo = ({ close }: { close: () => void }) => {
   const { data } = useSingleUserCtx();
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
@@ -110,7 +110,9 @@ const UserInfo = () => {
           </div>
 
           <div className='w-full mt-5 gap-8 flex justify-center'>
-            <button className='p-4 rounded-lg bg-[#F0F0F0] text-[#8F8E91]'>
+            <button
+              className='p-4 rounded-lg bg-[#F0F0F0] text-[#8F8E91]'
+              onClick={close}>
               Discard
             </button>
             <button className='p-4 rounded-lg bg-afexpurple-dark text-[#ffff]'>

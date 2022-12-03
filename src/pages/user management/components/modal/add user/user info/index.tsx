@@ -1,114 +1,157 @@
 import React from 'react';
-import { Menu } from '@mantine/core';
-import { ArrowDown2 } from 'iconsax-react';
+import { Form, Formik } from 'formik';
+import {
+  FormImage,
+  FormInput,
+  FormMultiSelect,
+  FromLabel,
+} from '../../../../../../components/form';
 
 const UserInfo = () => {
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
-      {/* AVATAR */}
-      <div className='flex flex-col gap-5'>
-        <p>Avatar</p>
-        {/* BOX */}
-        <div className='bg-[#D9D9D9] border-[#FFFF] w-[100px] h-[100px]'></div>
-
-        <p className='text-[14px] font-normal text-[#8F8E91]'>
-          Allowed file types: png, jpg, jpeg.
-        </p>
-      </div>
-
-      {/* INPUT FIELDS */}
-
-      <form className='flex flex-col gap-3'>
-        <label className='flex flex-col gap-1'>
-          <span className='text-[14px] font-semibold'>Full Name</span>
-          <input
-            type='text'
-            name=''
-            id=''
-            placeholder='Adamu Adamu'
-            className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-full h-[40px]'
-          />
-        </label>
-
-        <label className='flex flex-col gap-1'>
-          <span className='text-[14px] font-semibold'>Email</span>
-          <input
-            type='text'
-            name=''
-            id=''
-            placeholder='aadamu@afexnigeria.com'
-            className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-full h-[40px]'
-          />
-        </label>
-
-        <label className='flex flex-col gap-1'>
-          <span className='text-[14px] font-semibold'>Phone number</span>
-          <div className='flex gap-3'>
-            <input
-              type='number'
-              name=''
-              id=''
-              placeholder='+234'
-              className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-[70px] h-[40px]'
+      <Formik
+        initialValues={{
+          fullName: '',
+          userName: '',
+          email: '',
+          extension: '',
+          phoneNumber: '',
+          password: '',
+          roles: [],
+          permissions: [],
+          image: '',
+        }}
+        onSubmit={async (values) => {
+          const newUser = {
+            firstName: values.fullName.split(' ')[0],
+            lastName: values.fullName.split(' ')[1],
+            ...values,
+            phoneNumber: values.extension + values.phoneNumber,
+          };
+          console.log(newUser);
+        }}>
+        {({ resetForm }) => (
+          <Form className='flex flex-col gap-y-4'>
+            <FormImage
+              label='Avatar'
+              accepted={['.jpeg', '.jpg', '.png']}
+              id='image'
+              name='image'
             />
 
-            <input
-              type='number'
-              name=''
-              id=''
-              placeholder='Phone number'
-              className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-full h-[40px]'
+            <FormInput
+              id='fullName'
+              name='fullName'
+              label='Full Name'
+              placeholder='Full name'
+              required
+              type='text'
+              autocomplete='name'
             />
-          </div>
-        </label>
-
-        <div className='w-full h-full mt-5'>
-          <Menu shadow='md' width='90%'>
-            <Menu.Target>
-              <div className='flex justify-between items-center border p-3 border-[#DADADD] rounded-lg text-left  text-[14px] font-normal text-textgrey-Light hover:bg-white bg-[#ffff] w-full'>
-                <span> Select Applicable Role</span>
-                <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
+            <FormInput
+              id='email'
+              name='email'
+              label='Email'
+              placeholder='Email address'
+              required
+              type='email'
+              autocomplete='email'
+            />
+            <div className='flex items-center space-x-4'>
+              <div className='flex-1'>
+                <FormInput
+                  id='userName'
+                  name='userName'
+                  label='Username'
+                  placeholder='Username'
+                  required
+                  type='text'
+                  autocomplete='username'
+                />
               </div>
-            </Menu.Target>
-
-            <Menu.Dropdown>
-              <Menu.Item>Payment Analyst</Menu.Item>
-              <Menu.Item>Finance Manager</Menu.Item>
-              <Menu.Item>Clearing Intern</Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </div>
-
-        <div className='w-full h-full mt-5'>
-          <Menu shadow='md' width='90%' position='top'>
-            <Menu.Target>
-              <div className='flex p-3 justify-between items-center border border-[#DADADD] rounded-lg text-left text-[14px] font-normal text-textgrey-Light hover:bg-white bg-[#ffff] w-full'>
-                <span>Set applicable Permissions</span>
-                <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
+              <div className='flex-1'>
+                <FormInput
+                  id='password'
+                  name='password'
+                  label='Password'
+                  placeholder='Password'
+                  required
+                  type='password'
+                  autocomplete='current-password'
+                />
               </div>
-            </Menu.Target>
+            </div>
+            <div className='flex flex-col'>
+              <FromLabel
+                htmlFor='phoneNumber'
+                label='Phone Number'
+                requiredHint
+              />
+              <div className='flex space-x-4 '>
+                <div className='w-20'>
+                  <FormInput
+                    id='extension'
+                    name='extension'
+                    type='text'
+                    label=''
+                    placeholder='+234'
+                  />
+                </div>
+                <div className='w-full'>
+                  <FormInput
+                    id='phoneNumber'
+                    label=''
+                    name='phoneNumber'
+                    type='text'
+                    placeholder='Phone number'
+                  />
+                </div>
+              </div>
+            </div>
+            <FormMultiSelect
+              data={[
+                { value: 1, label: 'Permission 1' },
+                { value: 2, label: 'Permission 2' },
+                { value: 3, label: 'Permission 3' },
+                { value: 4, label: 'Permission 4' },
+              ]}
+              id='permissions'
+              name='permissions'
+              label='Set applicable Permissions'
+              required
+              placeholder='Set applicable Permissions'
+            />
+            <FormMultiSelect
+              data={[
+                { value: 1, label: 'Role 1' },
+                { value: 2, label: 'Role 2' },
+                { value: 3, label: 'Role 3' },
+                { value: 4, label: 'Role 4' },
+              ]}
+              id='roles'
+              name='roles'
+              label='Set applicable Roles'
+              required
+              placeholder='Set applicable Roles'
+            />
 
-            <Menu.Dropdown>
-              <Menu.Item>Can view transaction log</Menu.Item>
-              <Menu.Item>can create admin user </Menu.Item>
-              <Menu.Item>can deactivate admin user </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </div>
-
-        <div className='w-full mt-5 gap-8 flex justify-center'>
-          <button
-            className='p-4 rounded-lg bg-[#F0F0F0] text-[#8F8E91]'
-            type='button'>
-            Discard
-          </button>
-          <button
-            className='p-4 rounded-lg bg-afexpurple-dark text-[#ffff]'
-            type='submit'>
-            Submit
-          </button>
-        </div>
-      </form>
+            <div className='flex items-center justify-center pt-8 space-x-6'>
+              <button
+                type='button'
+                className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                onClick={() => resetForm()}>
+                Discard
+              </button>
+              <button
+                type='submit'
+                className='bg-afexpurple p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
+                Submit
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
