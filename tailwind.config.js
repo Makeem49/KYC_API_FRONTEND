@@ -10,6 +10,20 @@ module.exports = withMT({
       display: ['Switzer', 'sans-serif'],
     },
     extend: {
+      rotate: {
+        '20': '20deg',
+        '30': '30deg',
+        '40': '40deg',
+        '50': '50deg',
+        '60': '60deg',
+        '70': '70deg',
+        '80': '80deg',
+        '130': '130deg',
+        '140': '140deg',
+        '150': '150deg',
+
+
+      },
       colors: {
         afexpurple: {
           darker: '#44207E',

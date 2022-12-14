@@ -22,7 +22,7 @@ const SingleClient = () => {
       </div>
 
       {/* Right Section */}
-      <div className='flex flex-col gap-14 p-8 h-[100%] overflow-y-auto shadow w-[65%]'>
+      <div className='flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[65%]'>
         <div className='flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center '>
           <p>Showing data for </p>
           <button className='border flex items-center border-[#BABABA] text-textgrey-Bold p-2 rounded-lg '>

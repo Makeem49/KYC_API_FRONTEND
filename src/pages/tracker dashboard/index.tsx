@@ -3,13 +3,12 @@ import { ArrowDown2 } from 'iconsax-react';
 import WalletCards from './components/wallet cards';
 import VirtualCards from './components/cards2';
 import ActivityStream from './components/activity stream';
-import ActivityLogs from './components/activity logs';
 
 const TrackerDashboard = () => {
   return (
     <div className='w-full h-[100vh] overflow-y-auto flex'>
       {/* Left Section */}
-      <div className='w-[68%] h-[100vh] flex flex-col gap-6 overflow-y-auto p-10'>
+      <div className='w-full h-[100vh] flex flex-col gap-6 overflow-y-auto p-10'>
         {/* Title */}
 
         <div className='flex justify-between items-center'>
@@ -31,11 +30,6 @@ const TrackerDashboard = () => {
         <WalletCards />
         <VirtualCards />
         <ActivityStream />
-      </div>
-
-      {/* Right Section */}
-      <div className='bg-white flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]'>
-        <ActivityLogs />
       </div>
     </div>
   );

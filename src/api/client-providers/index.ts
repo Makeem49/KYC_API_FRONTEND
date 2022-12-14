@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { apiRequest } from '../../utils';
+import { apiRequest, shortDateFormatter } from '../../utils';
 
 /**
  * =================================================================
@@ -13,12 +13,23 @@ import { apiRequest } from '../../utils';
  * GET A LIST OF ALL CLIENT PROVIDERS
  * @returns
  */
-export async function get_client_providers(): Promise<null | ClientProvider[]> {
+export async function get_client_providers(): Promise<ClientProvider[]> {
   const resp = await apiRequest.get('client-providers');
 
-  if (!resp.data) return null;
+  if (!resp.data) return [];
 
-  return resp.data.data.map((el: any) => ({ ...el } as ClientProvider));
+  if (resp.data.data.length < 1) return [];
+
+  return resp.data.data.map(
+    (el: any) =>
+      ({
+        id: el.id,
+        createdAt: shortDateFormatter(el.createdAt),
+        name: el.name,
+        transactionPhrase: el.transactionPhrase,
+        isActive: el.isActive,
+      } as ClientProvider)
+  );
 }
 
 /**
@@ -38,6 +49,7 @@ export async function get_client_providers(): Promise<null | ClientProvider[]> {
  *    "clientTransferEnabled": true,
  *    "checkInventoryPositionEnabled": true,
  *    "tradeInventoryTransactionEnabled": true
+ *
  * }
  * @returns
  */

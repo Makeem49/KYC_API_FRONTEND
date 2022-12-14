@@ -9,7 +9,7 @@ const AddUser = ({ show, close }: ModalControllerType) => {
         position='right'
         opened={show}
         onClose={close}
-        title='Add User'
+        title='Edit User'
         padding='xl'
         size='40%'>
         {/* Map Component */}

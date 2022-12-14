@@ -12,7 +12,7 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[18px] font-bold text-textgrey-dark'>
-            N2,000{' '}
+            &#8358; 2,000{' '}
             <span className='text-[#0DBF66] font-normal text-[13px]'>
               {' '}
               + 36%{' '}
@@ -48,7 +48,7 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[18px] w-full font-bold text-textgrey-dark'>
-            N200,000,000{' '}
+            &#8358; 200,000,000{' '}
             <span className='text-[#0DBF66] font-normal text-[13px]'>
               {' '}
               + 36%{' '}
@@ -66,7 +66,7 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[18px] w-full font-bold text-textgrey-dark'>
-            N200,000,000{' '}
+            &#8358; 200,000,000{' '}
             <span className='text-[#0DBF66] font-normal text-[13px]'>
               {' '}
               + 36%{' '}

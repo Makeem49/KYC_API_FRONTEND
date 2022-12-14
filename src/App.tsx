@@ -9,8 +9,9 @@ import {
   Client,
   Dashboard,
   Transaction,
-  UserManagement,
   ApiRequest,
+  UserManagement,
+  ClientProvider,
   TrackerDashboard,
   SingleClient,
   Settings,
@@ -42,13 +43,19 @@ function App() {
 
           <Route path='client'>
             <Route index element={<Client />} />
-            <Route path='single_client' element={<SingleClient />} />
+            <Route path='single-client' element={<SingleClient />} />
           </Route>
 
           <Route path='transaction' element={<Transaction />} />
-          <Route path='user_management' element={<UserManagement />} />
-          <Route path='api_request' element={<ApiRequest />} />
-          <Route path='tracker_dashboard' element={<TrackerDashboard />} />
+          <Route path='user-management' element={<UserManagement />} />
+
+          <Route path='client-provider'>
+            <Route index element={<ClientProvider />} />
+            <Route path=':provider_id/api-keys' element={<ApiRequest />} />
+          </Route>
+
+          <Route path='client-provider' element={<ClientProvider />} />
+          <Route path='tracker-dashboard' element={<TrackerDashboard />} />
           <Route path='settings' element={<Settings />} />
         </Routes>
       </div>

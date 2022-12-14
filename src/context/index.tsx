@@ -17,6 +17,8 @@ const ContextProvider = (props: WithChildren) => {
       <MantineProvider withNormalizeCSS withGlobalStyles>
         <NotificationsProvider limit={5}>
           <AuthProvider>
+            {/* <ClientsProviderProvider> */}
+
             <ApiTokensProvider>
               <UsersProvider>
                 <ClientsContextProvider>
@@ -24,6 +26,7 @@ const ContextProvider = (props: WithChildren) => {
                 </ClientsContextProvider>
               </UsersProvider>
             </ApiTokensProvider>
+            {/* </ClientsProviderProvider> */}
           </AuthProvider>
         </NotificationsProvider>
       </MantineProvider>

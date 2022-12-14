@@ -1,5 +1,5 @@
 import React from 'react';
-import reciptIcon from '../../../assets/images/xsd.svg';
+import AuditModal from '../audit modal';
 
 const WalletBallance = () => {
   return (
@@ -7,7 +7,7 @@ const WalletBallance = () => {
       <div className='px-5 py-3 bg-afexpurple-lighter'>
         <span className=' text-afexpurple-light'>Total wallet balance</span>
         <p className='text-xl text-afexpurple-regular font-semibold'>
-          N50,000,000.00
+          &#8358; 50,000,000.00
         </p>
       </div>
 
@@ -16,25 +16,25 @@ const WalletBallance = () => {
         {' '}
         <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Number of Users</p>
-          <p>N3,0000</p>
+          <p>&#8358; 3,0000</p>
         </div>
         <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Open Balance</p>
-          <p>N3,0000</p>
+          <p>&#8358; 3,0000</p>
         </div>
         <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Total Deposit</p>
-          <p>N3,0000</p>
+          <p>&#8358; 3,0000</p>
         </div>
         <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Total Withdrawal</p>
-          <p>N3,0000</p>
+          <p>&#8358; 3,0000</p>
         </div>
       </div>
 
       {/* Total Balance */}
       <div className='flex w-full justify-end'>
-        <p>N3,0000</p>
+        <p>&#8358; 3,0000</p>
       </div>
 
       <div className='relative flex gap-2 items-center'>
@@ -42,11 +42,33 @@ const WalletBallance = () => {
         <p className=' bg-[#E7F9F0] font-semibold text-[#0DBF66] py-1 px-2 rounded'>
           Passed
         </p>
-        <img
-          src={reciptIcon}
-          alt='rcpt'
-          className='absolute bottom-[-150%] right-0'
-        />
+        <AuditModal />
+        {/* <Popover
+          width={120}
+          styles={{
+            dropdown: {
+              top: '-140% !important',
+              left: '80% !important',
+              backgroundColor: '#54289D',
+              color: '#FFFF',
+              fontSize: '16px',
+              fontStyle: 'bold',
+            },
+          }}>
+          <Popover.Target>
+            <img
+              src={reciptIcon}
+              alt='rcpt'
+              className='absolute bottom-[-150%] right-0'
+            />
+          </Popover.Target>
+          <Popover.Dropdown className='flex flex-col rounded-xl p-5'>
+            <div className=' w-full text-center cursor-pointer'>
+              {' '}
+              <p> Run Audit</p>
+            </div>
+          </Popover.Dropdown>
+        </Popover> */}
       </div>
     </div>
   );

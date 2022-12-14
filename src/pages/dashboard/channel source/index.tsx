@@ -4,7 +4,7 @@ import chann from '../../../assets/images/channel.svg';
 const ChanneSource = () => {
   return (
     <div className=' flex'>
-      <img src={chann} alt='chan' />
+      <img src={chann} alt='chan' className='w-full' />
     </div>
   );
 };

@@ -1,197 +1,96 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useApiTokenCtx } from '../../../../../../context';
+import { Pagination } from '../../../../../../components';
 
 const Table = () => {
-  return (
-    <div className='h-full pb-5'>
-      <div className='overflow-auto w-full '>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
-          <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className=' border-b child:cursor-default child:py-3 text-[#C1C0C2] font-semibold text-[12px]'>
-              <th>
-                <input type='checkbox' className='checkbox white' />
-              </th>
+  const { list } = useApiTokenCtx();
 
-              <th>S/N</th>
-              <th>Api Endpoint</th>
-              <th>Number of Succesful Request</th>
-              <th>Number of Failed Request</th>
-              <th>Number of Not Found Request</th>
+  const [itemsOffset, setItemsOffset] = useState<number>(0);
+  const [currentItems, setCurrentItems] = useState<ClientProviderToken[]>([]);
+
+  const [page, setPage] = useState<number>(1);
+
+  useEffect(() => {
+    // Handle Pagination on load
+    const endOffset = itemsOffset + 10;
+    setCurrentItems(list.slice(itemsOffset, endOffset));
+    setPage(Math.ceil(list.length / 10));
+  }, [itemsOffset, list]);
+
+  return (
+    <div className='h-full pb-5 relative'>
+      <div className='overflow-auto w-full pb-24 '>
+        <table className='overflow-auto w-full align-top  text-[#54565B]'>
+          <thead className='text-[10px]  sticky top-0 text-left z-[5]'>
+            <tr className='border-b child:cursor-default child:py-4 text-[#C1C0C2] text-[12px] font-semibold'>
+              <td className='py-6 px-6'>
+                <input
+                  type='checkbox'
+                  id='remember'
+                  className=' white w-[16px] h-[16px] rounded-lg active:border-afexpurple-darker text-afexpurple active:bg-afexpurple-light accent-afexpurple-light'
+                />
+              </td>
+              <th className='px-6 '>S/N</th>
+              <th className='px-6 '>Date Created</th>
+              <th className='px-6 '>API Keys</th>
+              <th className='px-6 '>Number of Requests</th>
+              <th className='px-6 '>Last Used</th>
+              <th className='px-6 '>Status</th>
+              <th className='px-6 '>Actions</th>
             </tr>
           </thead>
-          <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
+          <tbody className='text-[14px]'>
+            {currentItems.map((token) => (
+              <tr className=' text-left border-b'>
+                <td className='py-6 px-6'>
+                  <input
+                    type='checkbox'
+                    id='remember'
+                    className='checkbox white  w-[16px] h-[16px] rounded-lg text-afexpurple accent-afexpurple-light'
+                  />
+                </td>
+                <td className='py-6 px-6'>{list.indexOf(token) + 1}</td>
 
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
+                <td className='py-6 px-6'>
+                  <span className='font-medium'>
+                    {token.createdAt.toString()}
+                  </span>
+                </td>
 
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
+                <td className='py-6 px-6'>
+                  <span className='font-medium'>
+                    {token.apiKey.substring(0, 4)}...xxx
+                  </span>
+                </td>
 
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
+                <td className='py-6 px-6'>
+                  <span className='font-medium'>227</span>
+                </td>
 
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
+                <td className='py-6 px-6'>
+                  <span className='font-medium'>{token.lastUsedAt}</span>
+                </td>
 
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
+                <td className='py-6 px-6'>
+                  <span className='font-medium text-[#076D3A] bg-[#E7F9F0] py-1 px-3 rounded '>
+                    {token.isActive ? 'Active' : 'Inactive'}
+                  </span>
+                </td>
 
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
+                <td>actions</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
+
+      <Pagination
+        dataLength={list.length}
+        page={page}
+        itemsOffset={itemsOffset}
+        perPage={10}
+        setItemsOffset={setItemsOffset}
+      />
     </div>
   );
 };

@@ -1,8 +1,6 @@
 import React from 'react';
 import { ArrowDown2 } from 'iconsax-react';
-import ApiRequestCards from './components/cards';
 import ApiKeys from './components/api keys';
-import LoginSessions from './components/login seesions';
 
 const ApiRequest = () => {
   return (
@@ -12,10 +10,10 @@ const ApiRequest = () => {
         <div className='flex w-full justify-between items-center'>
           <div className='flex w-full flex-col'>
             <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
-              Api Request
+              API Keys
             </h2>
             <p>
-              Home/ <span>Api Request</span>
+              Client's Provider/ <span>API Key</span>
             </p>
           </div>
 
@@ -28,9 +26,7 @@ const ApiRequest = () => {
           </div>
         </div>
 
-        <ApiRequestCards />
         <ApiKeys />
-        <LoginSessions />
       </div>
     </div>
   );

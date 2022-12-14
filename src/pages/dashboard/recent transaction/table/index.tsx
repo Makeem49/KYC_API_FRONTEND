@@ -8,10 +8,6 @@ const Table = () => {
         <table className='overflow-auto w-full align-top'>
           <thead className='text-[12px] sticky top-0 text-left whitespace-nowrap z-[5]'>
             <tr className='child:py-4 border-b text-[#C1C0C2] font-normal child:px-1 child:cursor-default child:align-middle'>
-              <th>
-                <input type='checkbox' className='checkbox white' />
-              </th>
-
               <th className='flex items-center'>
                 S/N{' '}
                 <span className='flex'>
@@ -27,15 +23,7 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[14px] text-[#49474D]'>
-            <tr className=' text-left child:py-4 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white p-7'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -63,15 +51,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -99,15 +79,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -135,15 +107,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -171,15 +135,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -207,15 +163,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -243,15 +191,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -279,15 +219,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>
@@ -315,15 +247,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
+            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
               <td>
                 <span className='font-normal'>1</span>
               </td>

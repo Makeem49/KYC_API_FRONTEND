@@ -1,7 +1,7 @@
 import React from 'react';
-import { Map } from 'iconsax-react';
+import { Location } from 'iconsax-react';
 import { useState } from 'react';
-import { Drawer, Button, Group } from '@mantine/core';
+import { Drawer, Group, Tooltip } from '@mantine/core';
 import NigerianMap from './map';
 import List from './list';
 
@@ -24,11 +24,13 @@ function RightModal() {
       </Drawer>
 
       <Group position='center'>
-        <Button
-          onClick={() => setOpened(true)}
-          className='flex items-center p-3 bg-[#F1EBFC] hover:bg-purple-500 rounded-lg'>
-          <Map size='18' color='#7738dd' variant='Bulk' />
-        </Button>
+        <Tooltip label='Transaction by Location' className='p-3'>
+          <button
+            onClick={() => setOpened(true)}
+            className='flex items-center py-3 px-4 bg-[#F1EBFC] hover:bg-afexpurple-light rounded-lg'>
+            <Location size='25' color='#7738dd' variant='Bulk' />
+          </button>
+        </Tooltip>
       </Group>
     </>
   );

@@ -11,7 +11,6 @@ import {
   ArrowSwapHorizontal,
   KeyboardOpen,
   Logout,
-  Notification,
   Setting2,
 } from 'iconsax-react';
 
@@ -59,7 +58,7 @@ function Sidebar() {
       label: 'Transaction',
     },
     {
-      to: '/user_management',
+      to: '/user-management',
       icon: (
         <UserAdd
           variant='Bulk'
@@ -71,7 +70,7 @@ function Sidebar() {
     },
 
     {
-      to: '/api_request',
+      to: '/client-provider',
       icon: (
         <ArrowSwapHorizontal
           variant='Bulk'
@@ -79,11 +78,11 @@ function Sidebar() {
           // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
         />
       ),
-      label: 'Api Request',
+      label: "Clients' Provider",
     },
 
     {
-      to: '/tracker_dashboard',
+      to: '/tracker-dashboard',
       icon: (
         <KeyboardOpen
           variant='Bulk'
@@ -146,7 +145,7 @@ function Sidebar() {
           width={250}
           styles={{
             dropdown: {
-              top: '-280% !important',
+              top: '-160% !important',
               left: '160% !important',
             },
           }}>
@@ -155,17 +154,12 @@ function Sidebar() {
           </Popover.Target>
           <Popover.Dropdown className='flex flex-col'>
             <div className=' flex items-center text-[12px] text-[#000] font-semibold p-1 gap-2 border-b'>
-              <img src={profIcon} alt='user_icon' />
               <p>
                 Adamu Adamu <br />{' '}
                 <span className=' text-[#bfbdc2]'>makanni@afexnigeria.com</span>
               </p>
             </div>
             <div className='mt-1 p-2'>
-              <p className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
-                <Notification size='16' color='#8f8e91' variant='Bulk' />
-                Notification
-              </p>
               <NavLink
                 to='/settings'
                 className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>

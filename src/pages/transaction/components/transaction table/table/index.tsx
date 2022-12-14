@@ -22,7 +22,7 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left font-normal child:py-4 child:px-2 border-b'>
+            <tr className=' text-left font-normal child:py-8 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'
@@ -64,7 +64,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-2 border-b'>
+            <tr className=' text-left child:py-8 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'
@@ -106,7 +106,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-2 border-b'>
+            <tr className=' text-left child:py-8 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'
@@ -146,7 +146,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-2 border-b'>
+            <tr className=' text-left child:py-8 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'
@@ -188,7 +188,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-2 border-b'>
+            <tr className=' text-left child:py-8 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'
@@ -230,7 +230,7 @@ const Table = () => {
               </td>
             </tr>
 
-            <tr className=' text-left child:py-4 child:px-2 border-b'>
+            <tr className=' text-left child:py-8 child:px-2 border-b'>
               <td>
                 <input
                   type='checkbox'

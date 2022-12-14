@@ -8,48 +8,76 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Bar,
+  // Scatter,
+  // LegendProps,
 } from 'recharts';
+import { capitalizeWords } from '../../../../utils';
 
 const data = [
   {
-    name: 'Page A',
-    uv: 590,
-    pv: 800,
-    amt: 1400,
+    name: 'Sun 15',
+    total_withdrawal: 590,
+    total_deposit: 800,
+    transfer: 1400,
   },
   {
-    name: 'Page B',
-    uv: 868,
-    pv: 967,
-    amt: 1506,
+    name: '16 Mon',
+    total_withdrawal: 868,
+    total_deposit: 967,
+    transfer: 1506,
   },
   {
-    name: 'Page C',
-    uv: 1397,
-    pv: 1098,
-    amt: 989,
+    name: '17 Tue',
+    total_withdrawal: 1397,
+    total_deposit: 1098,
+    transfer: 989,
   },
   {
-    name: 'Page D',
-    uv: 1480,
-    pv: 1200,
-    amt: 1228,
+    name: '18 Wed',
+    total_withdrawal: 1480,
+    total_deposit: 1200,
+    transfer: 1228,
   },
   {
-    name: 'Page E',
-    uv: 1520,
-    pv: 1108,
-    amt: 1100,
+    name: '19 Thur',
+    total_withdrawal: 1520,
+    total_deposit: 1108,
+    transfer: 1100,
   },
   {
-    name: 'Page F',
-    uv: 1400,
-    pv: 680,
-    amt: 1700,
+    name: '20 Fri',
+    total_withdrawal: 1400,
+    total_deposit: 680,
+    transfer: 1700,
   },
 ];
 
-export default function Chart1() {
+type TChart1 = {
+  showBar: boolean;
+  showLine: boolean;
+};
+
+export default function Chart1({ showBar, showLine }: TChart1) {
+  // console.log({ showBar, showLine });
+  const renderLengend = (props: any) => {
+    const { payload } = props;
+    const labels = payload.filter(
+      (elem: any, index: number) =>
+        payload.findIndex((obj: any) => obj.dataKey === elem.dataKey) === index
+    );
+    return (
+      <div className='flex items-center justify-center space-x-4'>
+        {labels.map((el: any) => (
+          <div className='flex items-center space-x-1'>
+            <span
+              className={`p-2 rounded-full w-4 h-4 bg-[${el.color}]`}></span>
+            <span>{capitalizeWords(el.dataKey)}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
     <div style={{ width: '100%', height: 300 }}>
       <ResponsiveContainer>
@@ -57,19 +85,52 @@ export default function Chart1() {
           width={500}
           height={400}
           data={data}
+          barGap={0}
+          barSize={12}
           margin={{
             top: 20,
             right: 20,
             bottom: 20,
             left: 20,
           }}>
-          <CartesianGrid stroke='#f5f5f5' />
-          <XAxis dataKey='name' scale='band' />
-          <YAxis />
+          <CartesianGrid stroke='#f5f5f5' vertical={false} />
+          <XAxis
+            dataKey='name'
+            type='category'
+            // scale='band'
+            axisLine={false}
+            tickLine={false}
+          />
+          <YAxis axisLine={false} tickLine={false} />
           <Tooltip />
-          <Legend />
+          <Legend content={renderLengend} />
 
-          <Line type='monotone' dataKey='uv' stroke='#ff7300' />
+          <Bar dataKey='total_deposit' fill='#7738DD' hide={showLine} />
+          <Bar dataKey='total_withdrawal' fill='#ED5556' hide={showLine} />
+          <Bar dataKey='transfer' fill='#E1891C' hide={showLine} />
+
+          <Line
+            type='monotone'
+            dataKey='total_deposit'
+            stroke='#7738DD'
+            hide={showBar}
+          />
+          <Line
+            type='monotone'
+            dataKey='total_withdrawal'
+            stroke='#ED5556'
+            hide={showBar}
+          />
+          <Line
+            type='monotone'
+            dataKey='transfer'
+            stroke='#E1891C'
+            hide={showBar}
+          />
+
+          {/* <Scatter dataKey='transfer' fill='#3bc939' />
+          <Scatter dataKey='total_withdrawal' fill='#ff7300' />
+          <Scatter dataKey='total_deposit' fill='#82ca9d' /> */}
         </ComposedChart>
       </ResponsiveContainer>
     </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Menu } from '@mantine/core';
-import { ExportSquare } from 'iconsax-react';
+import columnIcon from '../../../../../../assets/images/row-horizontal.svg';
 
-const Exports = () => {
+const Column = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-[#F1EBFC] rounded-lg'>
-          <ExportSquare size='18' color='#7738dd' variant='Bulk' />
-          <span>Export</span>
+        <button className='flex items-center justify-center gap-1 w-full text-[14px] text-nowrap py-3 px-5 bg-[#F1EBFC] rounded-lg'>
+          <img src={columnIcon} alt='colicon' />
+          <span>COLUMNS</span>
         </button>
       </Menu.Target>
       <Menu.Dropdown
@@ -29,4 +29,4 @@ const Exports = () => {
   );
 };
 
-export default Exports;
+export default Column;

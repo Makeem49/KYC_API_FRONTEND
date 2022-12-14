@@ -1,9 +1,27 @@
 import React from 'react';
+import halfCirc from '../../../../assets/images/ell.svg';
 
 const TransactionCount = () => {
   return (
     <div className=' flex flex-col border border-afexpurple-lighter rounded-lg'>
-      <div className='text-sm  bg-afexpurple-dark rounded-t text-[#F1EBFC] p-5'>
+      <div className=' relative text-sm  bg-afexpurple-dark rounded-t text-[#F1EBFC] p-5'>
+        <img
+          src={halfCirc}
+          alt='hafcirc'
+          className='absolute -rotate-90 left-[-7%] top-[-30%] '
+        />
+        <img
+          src={halfCirc}
+          alt='hafcirc'
+          className='absolute rotate-140 left-[40%] bottom-[-50%] '
+        />
+
+        <img
+          src={halfCirc}
+          alt='hafcirc'
+          className='absolute rotate-20 right-[-7%] top-[-30%] '
+        />
+
         <p className='text-xl font-bold'>Transaction Count (Top Users)</p>
         <span className=''>24 October, 2022</span>
       </div>
@@ -11,7 +29,7 @@ const TransactionCount = () => {
       <div className='h-full rounded pb-2'>
         <div className='overflow-auto w-full rounded'>
           <table className='overflow-auto w-full align-top text-[#54565B] text-[12px] xl:text-[14px]'>
-            <thead className='text-[10px] bg-[#F1EBFC] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
+            <thead className=' z-10 text-[10px] bg-[#F1EBFC] rounded-full sticky top-0 text-left whitespace-nowrap'>
               <tr className=' border-b child:font-normal text-[#5D5B60] child:text-[14px] child:p-2 child:cursor-default child:align-middle'>
                 <th>S/N</th>
                 <th>Clients' Name</th>

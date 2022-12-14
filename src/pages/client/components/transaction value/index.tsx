@@ -1,9 +1,26 @@
 import React from 'react';
+import halfCirc from '../../../../assets/images/ell.svg';
 
 const TransactionValue = () => {
   return (
-    <div className=' flex flex-col border border-afexpurple-lighter rounded-lg'>
-      <div className='text-sm  bg-afexpurple-dark rounded-t text-[#F1EBFC] p-5'>
+    <div className='flex flex-col border border-afexpurple-lighter rounded-lg'>
+      <div className='relative text-sm  bg-afexpurple-dark rounded-t text-[#F1EBFC] p-5'>
+        <img
+          src={halfCirc}
+          alt='hafcirc'
+          className='absolute -rotate-90 left-[-7%] top-[-30%] '
+        />
+        <img
+          src={halfCirc}
+          alt='hafcirc'
+          className='absolute rotate-140 left-[40%] bottom-[-50%] '
+        />
+
+        <img
+          src={halfCirc}
+          alt='hafcirc'
+          className='absolute rotate-20 right-[-7%] top-[-30%] '
+        />
         <p className='text-xl font-bold'>Transaction Values (Top Users)</p>
         <span className=''>24 October, 2022</span>
       </div>

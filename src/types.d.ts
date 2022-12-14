@@ -20,6 +20,7 @@ type ClientProvider = {
   name: string;
   code: string;
   logo: string;
+  isActive: boolean;
   clientRepoUrl: string;
   walletTransactionCallbackUrl: string;
   inventoryPositionUrl: string;
@@ -79,6 +80,20 @@ type ClientProviderToken = {
   tokenClientProviderId;
 };
 
+type clientProviderApiKey = {
+  id: number;
+  apiKey: string;
+  providerId: string;
+  lastUsedAt: string | null;
+  isActive: boolean;
+  createdAt: string | Date;
+  createdBy: string | null;
+  updatedAt: string | Date;
+  deletedAt: string | null;
+  clientProviderId: number;
+  tokenClientProviderId;
+};
+
 interface GenericContextInterface<T> {
   list: T[];
   loading: boolean;
@@ -88,4 +103,68 @@ interface GenericContextInterface<T> {
 interface SingleEntityCtx<T> {
   data: T;
   setData: React.Dispatch<React.SetStateAction<T>>;
+}
+
+type WX = {
+  previousDay: number;
+  today: number;
+  active: number;
+};
+
+type CUSSD = {
+  ussd: number;
+  others: number;
+};
+
+type PerformanceOverview = {
+  date: string | Date;
+  stats: {
+    withdrawals: number;
+    deposit: number;
+    transfer: number;
+  };
+};
+
+const serviceProviders = {
+  Glo: '',
+  MTN: '',
+  Airtel: '',
+  '9Mobile': '',
+  VMobile: '',
+};
+
+type ServiceProviderStatus = {
+  name: keyof typeof serviceProviders;
+  value: number;
+};
+
+interface ResponseSect {
+  sectionOne: {
+    users: WX;
+    transactions: Partial<WX>;
+    values: Partial<WX>;
+    channels: {
+      previousDay: CUSSD;
+      today: CUSSD;
+    };
+  };
+  performanceOverview: PerformanceOverview[];
+  transactionStatus: {
+    successful: number;
+    failed: number;
+    pending: number;
+  };
+  others: {
+    totalWalletBalance: number;
+    numberOfUsers: number;
+    totalDeposit: number;
+    totalWithdrawal: number;
+  };
+  serviceProviderStatus: ServiceProviderStatus[];
+}
+
+interface ClientSSS extends Partial<ResponseSect> {
+  topClientsBySearch: [];
+  topClientsByNoOfTransactions: [];
+  topClientsByValueOfTransactions: [];
 }

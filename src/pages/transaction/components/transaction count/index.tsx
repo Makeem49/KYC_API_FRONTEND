@@ -4,7 +4,7 @@ import transactionCountImg from '../../../././././../assets/images/transaction-c
 const TransactionCount = () => {
   return (
     <div>
-      <img src={transactionCountImg} alt='trc' />
+      <img src={transactionCountImg} alt='trc' className='w-full' />
     </div>
   );
 };

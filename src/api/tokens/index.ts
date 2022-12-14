@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { apiRequest } from '../../utils';
+import { shortDateFormatter } from '../../utils';
 
 /**
  * =================================================================
@@ -14,10 +15,25 @@ import { apiRequest } from '../../utils';
  * @param providerId The ID of the provider
  * @returns
  */
-export function get_token_list(
-  providerId: string
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.get(`api-tokens?providerId=${providerId}`);
+export async function get_token_list(
+  providerId: number
+): Promise<ClientProviderToken[]> {
+  const resp = await apiRequest.get(`api-tokens?providerId=${providerId}`);
+
+  if (!resp.data) return [];
+
+  if (resp.data.data.length < 1) return [];
+
+  return resp.data.data.map(
+    (el: any) =>
+      ({
+        id: el.id,
+        createdAt: shortDateFormatter(el.createdAt),
+        apiKey: el.apiKey,
+        lastUsedAt: shortDateFormatter(el.lastUsedAt),
+        isActive: el.isActive,
+      } as ClientProviderToken)
+  );
 }
 
 /**
@@ -26,7 +42,7 @@ export function get_token_list(
  * @returns
  */
 export function create_token(
-  providerId: string
+  providerId: number
 ): Promise<AxiosResponse<any, any>> {
   return apiRequest.post('api-tokens', { providerId });
 }

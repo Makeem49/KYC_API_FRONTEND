@@ -3,39 +3,30 @@ import verifyIcon from '../../../../assets/images/verify.svg';
 
 const VirtualCards = () => {
   return (
-    <div className='flex gap-6 child:h-[128px]'>
+    <div className='w-[66%] flex gap-6 child:h-[200px]'>
       {/* Card One */}
-      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[12px]  p-6 w-full gap-1'>
+      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-full gap-8 first:'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-medium text-[12px] text-[#8F8E91]'>
-            Virtual Account
+          <p className=' font-medium text-[24px] text-[#8F8E91]'>
+            No Virtual Account
           </p>
-          <img src={verifyIcon} alt='verifiImg' className='w-8' />
+          <img src={verifyIcon} alt='verifiImg' className='w-[52px] h-[52px]' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[25px] font-bold text-textgrey-Bold'>2,000</p>
+          <p className='text-[48px] font-bold text-textgrey-darker'>2,000</p>
         </div>
       </div>
 
       {/* Card Two */}
-      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[12px]  p-6 w-full gap-1'>
+      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-full gap-8 first:'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-medium text-[12px] text-[#8F8E91]'>Withdrawal</p>
-          <img src={verifyIcon} alt='verifiImg' className='w-8' />
+          <p className=' font-medium text-[24px] text-[#8F8E91]'>
+            Unsynced Withdrawal
+          </p>
+          <img src={verifyIcon} alt='verifiImg' className='w-[52px] h-[52px]' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[25px] font-bold text-textgrey-Bold'>2,000</p>
-        </div>
-      </div>
-
-      {/* Card Three */}
-      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[12px]  p-6 w-full gap-1'>
-        <div className='flex items-center justify-between w-full'>
-          <p className=' font-medium text-[12px] text-[#8F8E91]'>Withdrawal</p>
-          <img src={verifyIcon} alt='verifiImg' className='w-8' />
-        </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='text-[25px] font-bold text-textgrey-Bold'>2,000</p>
+          <p className='text-[48px] font-bold text-textgrey-darker'>2,000</p>
         </div>
       </div>
     </div>

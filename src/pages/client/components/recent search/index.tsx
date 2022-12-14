@@ -22,7 +22,7 @@ const RecentSearch = () => {
             </span>{' '}
           </p>
         </div>
-        <NavLink to='/client/single_client'>
+        <NavLink to='/client/single-client'>
           {' '}
           <ArrowRight
             size='35'
