@@ -16,8 +16,6 @@ const AddUser = () => {
         padding='xl'
         size='40%'
         centered>
-        {/* Map Component */}
-
         <UserInfo />
       </Modal>
 

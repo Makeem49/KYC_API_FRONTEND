@@ -14,7 +14,7 @@ const AddUser = ({ show, close }: ModalControllerType) => {
         size='40%'>
         {/* Map Component */}
 
-        <UserInfo />
+        <UserInfo close={close} />
       </Drawer>
 
       <Group position='right'></Group>
