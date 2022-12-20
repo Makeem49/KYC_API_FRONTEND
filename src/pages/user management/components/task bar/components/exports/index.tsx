@@ -6,9 +6,9 @@ const Exports = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-[#F1EBFC] rounded-lg'>
-          <ExportSquare size='18' color='#7738dd' variant='Bulk' />
-          <span>Export</span>
+        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-afexred-extralight text-afexred-regular rounded-lg'>
+          <ExportSquare size='18' color='#E1261C' variant='Bulk' />
+          <span>EXPORT</span>
         </button>
       </Menu.Target>
       <Menu.Dropdown

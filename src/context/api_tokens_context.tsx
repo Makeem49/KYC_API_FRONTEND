@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { get_token_list } from '../api';
 
 const ApiTokensCtx = createContext<
-  GenericContextInterface<ClientProviderToken>
->({} as GenericContextInterface<ClientProviderToken>);
+  GenericContextInterface<ClientProviderToken[]>
+>({} as GenericContextInterface<ClientProviderToken[]>);
 
 const ApiTokensProvider = (props: WithChildren) => {
   const { pathname } = useLocation();

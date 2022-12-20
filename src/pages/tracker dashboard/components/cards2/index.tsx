@@ -1,7 +1,9 @@
 import React from 'react';
 import verifyIcon from '../../../../assets/images/verify.svg';
+import { useTrackerStatsCtx } from '../../../../context';
 
 const VirtualCards = () => {
+  const { list } = useTrackerStatsCtx();
   return (
     <div className='w-[66%] flex gap-6 child:h-[200px]'>
       {/* Card One */}
@@ -13,7 +15,9 @@ const VirtualCards = () => {
           <img src={verifyIcon} alt='verifiImg' className='w-[52px] h-[52px]' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[48px] font-bold text-textgrey-darker'>2,000</p>
+          <p className='text-[48px] font-bold text-textgrey-darker'>
+            {list.overview.novirtualAccount}
+          </p>
         </div>
       </div>
 
@@ -26,7 +30,9 @@ const VirtualCards = () => {
           <img src={verifyIcon} alt='verifiImg' className='w-[52px] h-[52px]' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[48px] font-bold text-textgrey-darker'>2,000</p>
+          <p className='text-[48px] font-bold text-textgrey-darker'>
+            {list.overview.unsyncedWithdrawal}
+          </p>
         </div>
       </div>
     </div>

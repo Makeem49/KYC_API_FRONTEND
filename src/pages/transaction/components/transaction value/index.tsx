@@ -1,10 +1,13 @@
 import React from 'react';
-import transValueImg from '../../../../assets/images/transaction-value.png';
+import BarChart from './horizantalBar';
 
 const TransactionValue = () => {
   return (
-    <div>
-      <img src={transValueImg} alt='trn' className='w-full' />
+    <div className='w-full rounded-lg border px-2 py-4'>
+      <h3 className=' text-textgrey-darker font-bold text-[18px] ml-3 mb-4'>
+        Transaction Value
+      </h3>
+      <BarChart />
     </div>
   );
 };

@@ -15,6 +15,30 @@ type Client = {
   active: boolean;
 };
 
+type ClientList = {
+  id: number;
+  platformId: string;
+  firstName: string;
+  lastName: string;
+  otherNames: string;
+  phoneNumber: string;
+  image: string;
+  bvn: string;
+  idCardType: string;
+  idCardNumber: string;
+  expiry: string;
+  isVerified: boolean;
+  isActive: boolean;
+  bankAccount: null;
+  balance: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
+  accountId: number;
+  clientProviderId: null;
+  providerId: number;
+};
+
 type ClientProvider = {
   id: string;
   name: string;
@@ -95,7 +119,7 @@ type clientProviderApiKey = {
 };
 
 interface GenericContextInterface<T> {
-  list: T[];
+  list: T;
   loading: boolean;
   refreshContext: () => void;
 }
@@ -142,6 +166,24 @@ interface ResponseSect {
   sectionOne: {
     users: WX;
     transactions: Partial<WX>;
+
+    activeClients: {
+      previousDay: number;
+      today: number;
+      active: number;
+    };
+    totalClients: {
+      previousDay: number;
+      today: number;
+      active: number;
+    };
+    verifiedClients: {
+      previousDay: number;
+      today: number;
+      active: number;
+    };
+    totalClients: Partial<Wx>;
+    verifiedClients: Partial<Wx>;
     values: Partial<WX>;
     channels: {
       previousDay: CUSSD;
@@ -168,3 +210,68 @@ interface ClientSSS extends Partial<ResponseSect> {
   topClientsByNoOfTransactions: [];
   topClientsByValueOfTransactions: [];
 }
+
+interface TransactionSect {
+  transactionCounts: {
+    withdrawals: number;
+    deposit: number;
+    transfer: number;
+  };
+
+  transactionValues: {
+    withdrawals: number;
+    deposit: number;
+    transfer: number;
+  };
+
+  dailyTransactions: {
+    withdrawals: {
+      today: number;
+      yesterday: number;
+    };
+    deposit: {
+      today: number;
+      yesterday: number;
+    };
+    transfer: {
+      today: number;
+      yesterday: number;
+    };
+  };
+
+  transactionLocations: {
+    withdrawals: number;
+    deposit: number;
+    transfer: number;
+  };
+}
+
+interface TrackerSect {
+  overview: {
+    noWallets: number;
+    failedFunding: number;
+    unsyncedWalletTransfer: number;
+    novirtualAccount: number;
+    unsyncedWithdrawal: number;
+  };
+}
+
+type TransactionList = {
+  id: number;
+  amount: string;
+  transactionType: string;
+  channel: string;
+  amountBefore: string;
+  amountAfter: string;
+  description: string;
+  comment: null;
+  status: string;
+  sessionId: string;
+  ref: string;
+  isPlatformSynced: null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
+  clientId: null;
+  client: null;
+};

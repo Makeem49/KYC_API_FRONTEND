@@ -98,8 +98,8 @@ const MultiSelect = (props: MultiSelectInterface) => {
                   }`}>
                   <input
                     type='checkbox'
-                    name=''
-                    id=''
+                    name={option.label}
+                    id={option.label}
                     className='appearance-none w-6 h-6 rounded-md bg-white border border-afexpurple'
                     onChange={(e) => {
                       if (e.currentTarget.checked) {

@@ -7,7 +7,7 @@ const Date = () => {
     <Menu width={250}>
       <Menu.Target>
         <button className='flex w-full items-center px-2 py-3 text-[11px] text-[#F1EBFC] bg-[#7738DD] rounded-lg'>
-          <span>Add User</span>
+          <span>ADD USER</span>
           <Add size='18' color='#F1EBFC' variant='Bulk' />
         </button>
       </Menu.Target>

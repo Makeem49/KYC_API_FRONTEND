@@ -2,7 +2,7 @@ import React, { useContext, createContext, useEffect, useState } from 'react';
 import { get_client_providers } from '../api';
 
 const ClientsContext = createContext(
-  {} as GenericContextInterface<ClientProvider>
+  {} as GenericContextInterface<ClientProvider[]>
 );
 
 const ClientsContextProvider = (props: WithChildren) => {

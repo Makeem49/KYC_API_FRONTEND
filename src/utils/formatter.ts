@@ -30,3 +30,8 @@ export const generateInitials = (fullname: string): string => {
   }
   return `${firstname.substring(0, 1)} ${firstname.substring(1, 2)}`;
 };
+
+export const calculatePercentageChange = (curr: number, prev: number) => {
+  if (!curr || !prev) return 0;
+  return ((curr - prev) / curr) * 100;
+};

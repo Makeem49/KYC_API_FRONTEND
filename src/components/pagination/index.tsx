@@ -17,9 +17,11 @@ const Pagination = (props: PaginationProps) => {
     props.setItemsOffset(newOffset);
   };
   return (
-    <div className='absolute bottom-0 right-0 left-0 w-full'>
-      <div className='flex justify-between items-center p-1 px-6 bg-[#F7F8F9] rounded-md'>
+    <div className='bottom-0 right-0 left-0 w-full'>
+      <div className='flex justify-between items-center px-6 rounded-md'>
         <span>
+          {' '}
+          showing &nbsp;
           {props.itemsOffset + 1} -{' '}
           {props.perPage + props.itemsOffset > props.dataLength
             ? props.dataLength
@@ -30,16 +32,16 @@ const Pagination = (props: PaginationProps) => {
         <ReactPaginate
           breakLabel='...'
           previousLabel={
-            <MdKeyboardArrowLeft className='text-4xl bg-afexpurple-light text-white rounded-lg cursor-pointer ' />
+            <MdKeyboardArrowLeft className='text-4xl text-textgrey-dark rounded-lg cursor-pointer ' />
           }
           nextLabel={
-            <MdKeyboardArrowRight className='text-4xl bg-afexpurple-light text-white rounded-lg cursor-pointer ' />
+            <MdKeyboardArrowRight className='text-4xl text-textgrey-dark rounded-lg cursor-pointer ' />
           }
           onPageChange={handlePageChange}
           pageCount={props.page}
           pageRangeDisplayed={2}
           marginPagesDisplayed={1}
-          className='flex justify-end items-center gap-2 child:child:p-2 child:m-1 child:child:rounded'
+          className='flex justify-end items-center  gap-2 child:child:p-2 child:m-1 child:child:rounded'
         />
       </div>
     </div>

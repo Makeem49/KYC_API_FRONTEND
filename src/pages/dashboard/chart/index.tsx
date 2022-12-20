@@ -7,7 +7,7 @@ const Chart = () => {
   const [showBarChat, setShowBarChat] = useState(true);
   const [showLineChart, setShowLineChart] = useState(false);
 
-  const activeStyle = 'p-2 bg-[#a982ea] bg-opacity-10 text-[#a982ea]  ';
+  const activeStyle = 'p-2 bg-afexred-regular bg-opacity-10 text-[#E1261C]  ';
   const baseStyle = 'p-2 bg-[#F1EBFC] bg-opacity-10';
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDashboardCtx } from '../../../context';
+import { useTransactionCtx } from '../../../../../context';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -55,19 +55,20 @@ export const options = {
   },
 };
 
-export default function ChanneSource() {
-  const { list } = useDashboardCtx();
+export default function BarChart() {
+  const { stats } = useTransactionCtx();
 
-  const providers = list.serviceProviderStatus.map((el) => el.name);
-  const provData = list.serviceProviderStatus.map((el) => el.value);
-
-  const labels = providers;
+  const labels = ['Transfer', 'Deposit', 'Withdrawal'];
   const data = {
     labels,
     datasets: [
       {
         label: '',
-        data: provData,
+        data: [
+          stats.transactionValues.transfer,
+          stats.transactionValues.transfer,
+          stats.transactionValues.withdrawals,
+        ],
         borderColor: [
           'rgba(249, 195, 98, 1)',
           'rgba(237, 85, 86, 1)',

@@ -42,7 +42,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='flex text-afexpurple-dark flex-col font-medium'>
+                <span className='flex text-afexred-regular flex-col font-medium'>
                   Chidi Nnadi{' '}
                   <small className='text-[10px] text-[#49474D]'>
                     001-12343-00001
@@ -83,7 +83,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='flex text-afexpurple-dark flex-col font-medium'>
+                <span className='flex text-afexred-regular flex-col font-medium'>
                   Chidi Nnadi{' '}
                   <small className='text-[10px] text-[#49474D]'>
                     001-12343-00001
@@ -124,7 +124,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='flex text-afexpurple-dark flex-col font-medium'>
+                <span className='flex text-afexred-regular flex-col font-medium'>
                   Chidi Nnadi{' '}
                   <small className='text-[10px] text-[#49474D]'>
                     001-12343-00001
@@ -165,7 +165,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='flex text-afexpurple-dark flex-col font-medium'>
+                <span className='flex text-afexred-regular flex-col font-medium'>
                   Chidi Nnadi{' '}
                   <small className='text-[10px] text-[#49474D]'>
                     001-12343-00001
@@ -206,7 +206,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='flex text-afexpurple-dark flex-col font-medium'>
+                <span className='flex text-afexred-regular flex-col font-medium'>
                   Chidi Nnadi{' '}
                   <small className='text-[10px] text-[#49474D]'>
                     001-12343-00001
@@ -247,7 +247,7 @@ const Table = () => {
               </td>
 
               <td>
-                <span className='flex text-afexpurple-dark flex-col font-medium'>
+                <span className='flex text-afexred-regular flex-col font-medium'>
                   Chidi Nnadi{' '}
                   <small className='text-[10px] text-[#49474D]'>
                     001-12343-00001

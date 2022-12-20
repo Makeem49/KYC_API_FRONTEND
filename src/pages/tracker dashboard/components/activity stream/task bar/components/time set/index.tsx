@@ -6,9 +6,9 @@ const TimeSet = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items-center text-afexpurple-light gap-1 w-full text-[12px] text-nowrap p-3 bg-[#F1EBFC] rounded'>
+        <button className='flex items-center bg-afexred-extralight gap-1 w-full text-[12px] text-nowrap p-3 text-afexred-regular rounded'>
           <span>1 Hour</span>
-          <ArrowDown2 size='18' color='#7738dd' variant='Bulk' />
+          <ArrowDown2 size='18' color='#E1261C' variant='Bulk' />
         </button>
       </Menu.Target>
       <Menu.Dropdown

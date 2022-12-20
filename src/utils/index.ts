@@ -10,4 +10,5 @@ export {
   uniques,
   shortDateFormatter,
   generateInitials,
+  calculatePercentageChange,
 } from './formatter';

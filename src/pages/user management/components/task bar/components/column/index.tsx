@@ -1,14 +1,14 @@
 import React from 'react';
 import { Menu } from '@mantine/core';
-import columnIcon from '../../../../../../assets/images/row-horizontal.svg';
+import columnIcon from '../../../../../../assets/images/row-horizontal.png';
 
 const Column = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-[#F1EBFC] rounded-lg'>
+        <button className='flex items-center justify-center gap-2 w-full text-[14px] text-nowrap px-5 py-3 bg-afexred-extralight text-afexred-regular rounded-lg'>
           <img src={columnIcon} alt='colicon' />
-          <span>Column</span>
+          <span>COLUMN</span>
         </button>
       </Menu.Target>
       <Menu.Dropdown

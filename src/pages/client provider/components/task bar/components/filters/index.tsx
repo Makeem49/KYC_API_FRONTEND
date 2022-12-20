@@ -6,8 +6,8 @@ const Filter = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-[#F1EBFC] rounded-lg'>
-          <FilterEdit size='18' variant='Bold' color='#7738dd' />
+        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-afexred-extralight text-afexred-regular rounded-lg'>
+          <FilterEdit size='18' variant='Bold' color='#E1261C' />
           <span>FILTERS</span>
         </button>
       </Menu.Target>

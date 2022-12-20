@@ -3,7 +3,7 @@ import { apiRequest } from '../../utils';
 /**
  * =================================================================
  *
- * DASHBOARD CARDS API CALLS
+ * TRACKER CARDS API CALLS
  *
  * =================================================================
  */
@@ -12,10 +12,9 @@ import { apiRequest } from '../../utils';
  * GET A LIST OF ALL THE CARDS
  * @returns
  */
-export async function get_dashboard_stats(): Promise<ResponseSect | null> {
-  const resp = await apiRequest.get('admin/stats/dashboard');
-
+export async function get_tracker_stats(): Promise<TrackerSect | null> {
+  const resp = await apiRequest.get('admin/stats/tracker');
   if (!resp.data) return null;
 
-  return resp.data as ResponseSect;
+  return resp.data as TrackerSect;
 }

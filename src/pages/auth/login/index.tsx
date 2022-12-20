@@ -5,8 +5,8 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 
 import { TextInput } from '../../../components';
 
-import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
-import flap from '../../../assets/brand/flap.svg';
+// import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
+import flap from '../../../assets/brand/flap2.png';
 import afexLogo from '../../../assets/brand/AFEX-logo.png';
 import { useAuthCtx } from '../../../context';
 
@@ -24,7 +24,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
           transition={{ duration: 2 }}>
           <div className='flex flex-1 h-full w-full flex-col space-y-20 px-20'>
             <motion.img
-              src={cuddieLogo}
+              // src={cuddieLogo}
               initial={{
                 transform: 'translateX(-100%) translateY(-100%)',
               }}
@@ -69,7 +69,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
 
                 <div className='flex items-center justify-center flex-col pt-12 space-y-4'>
                   <button
-                    className='bg-afexpurple text-white flex justify-between font-bold px-5 p-4 rounded-lg items-center w-1/2 hover:shadow-md'
+                    className='bg-[#E1261C] text-white flex justify-center  font-bold px-5 p-4 rounded-lg items-center w-1/2 hover:shadow-md'
                     type='submit'>
                     Sign in
                     <MdKeyboardArrowRight className='text-3xl ' />

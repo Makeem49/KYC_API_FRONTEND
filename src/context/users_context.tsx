@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { get_users } from '../api';
 
-const UsersCtx = createContext({} as GenericContextInterface<User>);
+const UsersCtx = createContext({} as GenericContextInterface<User[]>);
 
 const UsersProvider = (props: WithChildren) => {
   const [users, setUsers] = useState<User[]>([]);

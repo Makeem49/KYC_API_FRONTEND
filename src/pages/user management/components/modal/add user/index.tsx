@@ -1,7 +1,7 @@
 import React from 'react';
 import { Add } from 'iconsax-react';
 import { useState } from 'react';
-import { Modal, Group, Button } from '@mantine/core';
+import { Drawer, Group, Button } from '@mantine/core';
 import UserInfo from './user info';
 
 const AddUser = () => {
@@ -9,22 +9,22 @@ const AddUser = () => {
 
   return (
     <>
-      <Modal
+      <Drawer
+        position='right'
         opened={opened}
         onClose={() => setOpened(false)}
         title='Add User'
         padding='xl'
-        size='40%'
-        centered>
-        <UserInfo />
-      </Modal>
+        size='50%'>
+        <UserInfo closeModal={() => setOpened(false)} />
+      </Drawer>
 
       <Group position='center'>
         <Button
-          className='flex w-full items-center py-2 px-2 hover:bg-afexpurple-light text-[12px] text-[#F1EBFC] bg-[#7738DD] rounded-lg'
+          className='flex w-full items-center py-2 px-2 hover:bg-afexred-lighter bg-afexred-extralight text-afexred-regular text-[14px] rounded-lg'
           onClick={() => setOpened(true)}>
-          <span className='w-full'>Add User</span>
-          <Add size='18' color='#F1EBFC' variant='Bulk' />
+          <span className='w-full'>ADD USER</span>
+          <Add size='18' color='#E1261C' variant='Bulk' />
         </Button>
       </Group>
     </>

@@ -15,8 +15,6 @@ import {
 } from 'iconsax-react';
 
 import { useAuthCtx } from '../../context';
-
-import cuddieLogo from '../../assets/brand/Cuddie.svg';
 import profIcon from '../../assets/images/profile_img.svg';
 import NotificationModal from '../notification modal';
 
@@ -95,15 +93,16 @@ function Sidebar() {
   ];
 
   const activeStyle =
-    'bg-[#FAF8FF] flex justify-center items-center border-l-4 border-[#7738DD] text-[#7738DD] w-full p-8';
+    'bg-[#F5F5F5] flex justify-center items-center border-l-4 border-[#E1261C] text-[#E1261C] w-full p-8';
   const baseStyle =
-    'hover:bg-[#FAF8FF] justify-center flex items-center hover:text-[#7738DD] text-[#A982EA] opacity-0.5 p-8 w-full';
+    'hover:bg-[#F5F5F5] justify-center flex items-center hover:text-[#E1261C] text-[#C4C0C0]] opacity-0.5 p-8 w-full';
 
   return (
     <div className=' relative flex flex-col items-center w-[6%] h-[100vh] text-gray-400 bg-[#FFFFF] shadow-xl p-5 rounded'>
       {/* Cuddie logo */}
       <div className='absolute top-[5%]'>
-        <img src={cuddieLogo} alt='cuddi_Logo' className='w-12' />
+        <p className=' text-afexred-regular text-[16px] font-bold'>Cuddie</p>
+        {/* <img src={cuddieLogo} alt='cuddi_Logo' className='w-12' /> */}
       </div>
 
       {/* Dashboard Icons */}
@@ -116,7 +115,7 @@ function Sidebar() {
               position='right'
               radius='md'
               style={{
-                backgroundColor: '#44207E',
+                backgroundColor: '#E1261C',
                 border: 0,
                 padding: 12,
                 color: '#fffff',
@@ -125,6 +124,7 @@ function Sidebar() {
               }}>
               <NavLink
                 to={route.to}
+                end
                 className={({ isActive }) =>
                   isActive ? activeStyle : baseStyle
                 }>

@@ -6,9 +6,9 @@ const RecentTransaction = () => {
     <div className='w-full p-8 bg-[#ffff] rounded-lg'>
       <div className='flex justify-between mb-6 items-center text-[#000000] text-[16px] font-normal'>
         <p>Top 10 recent Transactions</p>
-        <div className='flex items-center text-sm text-afexpurple-dark font-bold rounded-md gap-1 bg-[#F1EBFC] p-2'>
+        <div className='flex items-center text-sm text-afexred-regular font-bold rounded-md gap-1  bg-afexred-extralight p-2'>
           {' '}
-          <Eye size='20' color='#a982ea' variant='Bulk' />
+          <Eye size='20' color='#E1261C' variant='Bulk' />
           <p>VIEW ALL</p>
         </div>
       </div>

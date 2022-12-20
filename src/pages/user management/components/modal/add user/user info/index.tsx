@@ -1,13 +1,21 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
+import { faker } from '@faker-js/faker';
+
 import {
   FormImage,
   FormInput,
   FormMultiSelect,
-  FromLabel,
+  // FromLabel,
 } from '../../../../../../components/form';
 
-const UserInfo = () => {
+import { create_user } from '../../../../../../api';
+
+import { useUsersCtx } from '../../../../../../context';
+
+const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
+  const { refreshContext } = useUsersCtx();
+
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
       <Formik
@@ -15,8 +23,8 @@ const UserInfo = () => {
           fullName: '',
           userName: '',
           email: '',
-          extension: '',
-          phoneNumber: '',
+          // extension: '',
+          // phoneNumber: '',
           password: '',
           roles: [],
           permissions: [],
@@ -24,12 +32,20 @@ const UserInfo = () => {
         }}
         onSubmit={async (values) => {
           const newUser = {
+            username: values.userName,
+            email: values.email,
             firstName: values.fullName.split(' ')[0],
             lastName: values.fullName.split(' ')[1],
-            ...values,
-            phoneNumber: values.extension + values.phoneNumber,
+            password: values.password,
+            roles: values.roles,
+            permissions: values.permissions,
+            image: faker.image.people(640, 640),
           };
-          console.log(newUser);
+          const message = await create_user(newUser);
+          console.log(message);
+
+          refreshContext();
+          closeModal();
         }}>
         {({ resetForm }) => (
           <Form className='flex flex-col gap-y-4'>
@@ -82,33 +98,7 @@ const UserInfo = () => {
                 />
               </div>
             </div>
-            <div className='flex flex-col'>
-              <FromLabel
-                htmlFor='phoneNumber'
-                label='Phone Number'
-                requiredHint
-              />
-              <div className='flex space-x-4 '>
-                <div className='w-20'>
-                  <FormInput
-                    id='extension'
-                    name='extension'
-                    type='text'
-                    label=''
-                    placeholder='+234'
-                  />
-                </div>
-                <div className='w-full'>
-                  <FormInput
-                    id='phoneNumber'
-                    label=''
-                    name='phoneNumber'
-                    type='text'
-                    placeholder='Phone number'
-                  />
-                </div>
-              </div>
-            </div>
+
             <FormMultiSelect
               data={[
                 { value: 1, label: 'Permission 1' },

@@ -27,8 +27,8 @@ function RightModal() {
         <Tooltip label='Transaction by Location' className='p-3'>
           <button
             onClick={() => setOpened(true)}
-            className='flex items-center py-3 px-4 bg-[#F1EBFC] hover:bg-afexpurple-light rounded-lg'>
-            <Location size='25' color='#7738dd' variant='Bulk' />
+            className='flex items-center py-3 px-4 bg-afexred-extralight hover:bg-afexred-light rounded-lg'>
+            <Location size='25' color='#E1261C' variant='Bulk' />
           </button>
         </Tooltip>
       </Group>

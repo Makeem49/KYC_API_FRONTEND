@@ -4,7 +4,7 @@ import halfCirc from '../../../../assets/images/ell.svg';
 const TransactionValue = () => {
   return (
     <div className='flex flex-col border border-afexpurple-lighter rounded-lg'>
-      <div className='relative text-sm  bg-afexpurple-dark rounded-t text-[#F1EBFC] p-5'>
+      <div className='relative text-sm rounded-t text-textgrey-darker p-5'>
         <img
           src={halfCirc}
           alt='hafcirc'
@@ -28,7 +28,7 @@ const TransactionValue = () => {
       <div className='h-full rounded pb-2'>
         <div className='overflow-auto w-full rounded'>
           <table className='overflow-auto w-full align-top text-[12px] xl:text-[14px]'>
-            <thead className='text-[10px] bg-[#F1EBFC] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
+            <thead className='text-[10px] bg-[#F5F5F5] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
               <tr className=' border-b child:p-2 child:text-[14px] child:font-normal child:cursor-default child:align-middle'>
                 <th className=''>S/N</th>
                 <th className=''>Clients' Name</th>

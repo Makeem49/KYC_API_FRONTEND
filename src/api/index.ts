@@ -5,7 +5,7 @@ export {
   reset_password,
 } from './auth';
 
-export { create_client } from './clients';
+export { create_client, get_client_stats, get_client_list } from './clients';
 
 export {
   create_client_provider,
@@ -35,3 +35,6 @@ export {
   toggle_user_status,
   update_user,
 } from './users';
+
+export { get_dashboard_stats } from './dashboard';
+export { get_tracker_stats } from './tracker';
