@@ -58,7 +58,7 @@ export const data = {
         {
           x: 300,
           y: 400,
-          r: 30,
+          r: 20,
         },
       ],
       backgroundColor: 'rgba(101, 214, 191, 1)',
@@ -69,7 +69,7 @@ export const data = {
         {
           x: 400,
           y: 500,
-          r: 30,
+          r: 20,
         },
       ],
       backgroundColor: 'rgba(249, 195, 98, 1)',
@@ -81,7 +81,7 @@ export const data = {
         {
           x: 500,
           y: 600,
-          r: 30,
+          r: 20,
         },
       ],
       backgroundColor: 'rgba(237, 85, 86, 1)',

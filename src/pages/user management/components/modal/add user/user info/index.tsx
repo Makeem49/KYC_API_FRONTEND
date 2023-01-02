@@ -23,8 +23,6 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           fullName: '',
           userName: '',
           email: '',
-          // extension: '',
-          // phoneNumber: '',
           password: '',
           roles: [],
           permissions: [],

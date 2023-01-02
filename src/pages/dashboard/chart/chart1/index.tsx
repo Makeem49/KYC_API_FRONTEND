@@ -14,9 +14,10 @@ import {
 } from 'recharts';
 import {
   // capitalizeWords,
-  commaformatter,
-  shortDateFormatter,
+  // commaformatter,
+  dayDateFormatter,
 } from '../../../../utils';
+import { nFormatter } from '../../../../utils/formatter';
 
 import { useDashboardCtx } from '../../../../context';
 
@@ -75,13 +76,9 @@ export default function Chart1({ showBar, showLine }: TChart1) {
             // scale='band'
             axisLine={false}
             tickLine={false}
-            tickFormatter={shortDateFormatter}
+            tickFormatter={dayDateFormatter}
           />
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            tickFormatter={commaformatter}
-          />
+          <YAxis axisLine={false} tickLine={false} tickFormatter={nFormatter} />
           <Tooltip />
           <Legend content={renderLengend} />
 

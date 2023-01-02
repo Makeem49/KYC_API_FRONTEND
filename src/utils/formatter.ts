@@ -21,6 +21,13 @@ export const shortDateFormatter = (value: string | Date): string => {
   });
 };
 
+export const dayDateFormatter = (value: string | Date): string => {
+  return new Date(value).toLocaleDateString('en-US', {
+    day: '2-digit',
+    weekday: 'short',
+  });
+};
+
 export const generateInitials = (fullname: string): string => {
   const firstname = fullname.split(' ')[0];
   const lastname = fullname.split(' ')[1];
@@ -35,3 +42,36 @@ export const calculatePercentageChange = (curr: number, prev: number) => {
   if (!curr || !prev) return 0;
   return ((curr - prev) / curr) * 100;
 };
+
+export function currencyFormatter(amt: number): string {
+  const Formatter = Intl.NumberFormat();
+
+  return Formatter.format(amt);
+}
+
+export function nFormatter(num: number) {
+  const lookup = [
+    { value: 1, symbol: '' },
+
+    { value: 1e3, symbol: 'k' },
+
+    { value: 1e6, symbol: 'M' },
+
+    { value: 1e9, symbol: 'B' },
+
+    { value: 1e12, symbol: 'T' },
+
+    { value: 1e15, symbol: 'P' },
+
+    { value: 1e18, symbol: 'E' },
+  ];
+
+  var item = lookup
+    .slice()
+    .reverse()
+    .find(function (item) {
+      return num >= item.value;
+    });
+
+  return item ? currencyFormatter(num / item.value) + `${item.symbol}` : '0';
+}

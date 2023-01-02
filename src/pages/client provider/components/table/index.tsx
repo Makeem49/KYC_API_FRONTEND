@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { Pagination } from '../../../../components';
 import { useClientsCtx } from '../../../../context';
-// import { useSingleClientCtx } from '../context/single_user.ctx';
+import { useSingleClientCtx } from '../context/single_user.ctx';
 
 const Table = () => {
   const { list } = useClientsCtx();
-  // const { setData } = useSingleClientCtx();
+  const { setData } = useSingleClientCtx();
 
   const [page, setPage] = useState<number>(1);
   const [itemsOffset, setItemsOffset] = useState<number>(0);
@@ -31,7 +31,7 @@ const Table = () => {
                 <input
                   type='checkbox'
                   id='remember'
-                  className=' white w-[16px] h-[16px] rounded-lg active:border-afexpurple-darker text-afexpurple active:bg-afexpurple-light accent-afexpurple-light'
+                  className='checkbox white'
                 />
               </td>
               <th className='px-6 '>S/N</th>
@@ -91,7 +91,7 @@ const Table = () => {
                   </span>
                 </td>
 
-                <td>
+                <td onClick={() => setData(providers)}>
                   {' '}
                   <UserAction />{' '}
                 </td>

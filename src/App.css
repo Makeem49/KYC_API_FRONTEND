@@ -11,21 +11,6 @@
   background-color: rgb(233, 230, 230);
 }
 
-::selection {
-  background: #38cb89;
-  color: #fff;
-}
-
-li.selected a {
-  color: #38cb89;
-}
-li.previous.disabled svg,
-li.next.disabled svg {
-  background-color: #f3f3f3;
-  color: #9fa19c;
-  cursor: not-allowed;
-}
-
 .mantine-Modal-modal {
   padding: 0;
   border-radius: 1.75rem;
@@ -72,19 +57,19 @@ li.next.disabled svg {
 .mantine-Popover-dropdown {
   z-index: 3 !important;
 }
-
+/* 
 a[aria-current='page'] svg path {
   fill: #fff !important;
-}
+} */
 
 .checkbox {
-  appearance: none;
+  /* appearance: none; */
   position: relative;
   cursor: pointer;
   margin-right: 20px;
 }
 .checkbox:hover::before {
-  background-color: rgba(56, 203, 137, 0.2);
+  background-color: #fce9e8;
 }
 .checkbox::before {
   content: '';
@@ -98,13 +83,16 @@ a[aria-current='page'] svg path {
   border-radius: 5px;
 }
 .checkbox.white::before {
-  background-color: #fff;
+  /* background-color: rgb(146, 141, 141); */
+  border: #680202;
+  border: 500px;
 }
 .checkbox:checked::before {
-  background-color: #38cb89;
-  content: url('./assets/svgs/check.svg');
-  padding-top: 1px;
+  background-color: #fce9e8;
+  content: url('./assets/images/check.svg');
+  padding-top: 4px;
   padding-left: 5px;
+  border-color: #680202;
 }
 
 .mantine-Stepper-stepIcon[data-completed='true'] {

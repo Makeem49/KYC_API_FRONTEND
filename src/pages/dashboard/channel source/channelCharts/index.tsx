@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTransactionCtx } from '../../../../../context';
-import { nFormatter } from '../../../../../utils/formatter';
+import { useDashboardCtx } from '../../../../context';
+import { nFormatter } from '../../../../utils/formatter';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -29,13 +29,11 @@ export const options = {
     },
   },
   scales: {
-    x: {
-      ticks: {
-        callback: (value: any) => {
-          return nFormatter(value);
-        },
-      },
-    },
+    // x: {
+    //   grid: {
+    //     drawBorder: false,
+    //   },
+    // },
     y: {
       grid: {
         display: false,
@@ -58,38 +56,35 @@ export const options = {
   },
 };
 
-export default function BarChart() {
-  const { stats } = useTransactionCtx();
+export default function ChanneSource() {
+  const { list } = useDashboardCtx();
 
-  const labels = ['Transfer', 'Deposit', 'Withdrawal'];
+  const providers = list.serviceProviderStatus.map((el) => el.name);
+  const provData = list.serviceProviderStatus.map((el) => nFormatter(el.value));
+
+  const labels = providers;
   const data = {
     labels,
     datasets: [
       {
         label: '',
-        data: [
-          // nFormatter(200000),
-          // nFormatter(300000),
-          // nFormatter(400000),
-          stats?.transactionValues?.transfer,
-          stats?.transactionValues?.deposit,
-          stats?.transactionValues?.withdrawals,
-        ],
+        data: provData,
         borderColor: [
           'rgba(249, 195, 98, 1)',
           'rgba(237, 85, 86, 1)',
           'rgba(101, 214, 191, 1)',
+          'rgba(119, 56, 221, 1)',
         ],
         backgroundColor: [
           'rgba(249, 195, 98, 1)',
           'rgba(237, 85, 86, 1)',
           'rgba(101, 214, 191, 1)',
+          'rgba(119, 56, 221, 1)',
         ],
         borderRadius: Number.MAX_VALUE,
       },
     ],
   };
-  console.log(data);
 
   return <Bar options={options} data={data} />;
 }

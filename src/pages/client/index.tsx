@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ClientCard from './components/cards';
 import ClientList from './components/client list';
 import RecentSearch from './components/recent search';
 import TransactionCount from './components/transaction count';
 import TransactionValue from './components/transaction value';
 import { ArrowDown2 } from 'iconsax-react';
+import { ArrowLeft } from 'iconsax-react';
 
 function Client() {
   return (
@@ -12,14 +14,17 @@ function Client() {
       {/* Left Section */}
       <div className='w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
         {/* Title */}
-
         <div className='flex justify-between items-center'>
           <div className='flex w-full flex-col'>
             <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
               Client
             </h2>
-            <p>
-              Home/ <span>Clients</span>
+            <p className='flex items-center gap-2 text-textgrey-normal'>
+              <Link to='/dashboard'>
+                {' '}
+                <ArrowLeft className=' w-5' />
+              </Link>{' '}
+              Home/ <span className=' text-textgrey-dark'>Clients</span>
             </p>
           </div>
 

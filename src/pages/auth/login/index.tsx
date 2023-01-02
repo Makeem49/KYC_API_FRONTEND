@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
 import { TextInput } from '../../../components';
+import Button from '../../../components/button';
 
 // import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
 import flap from '../../../assets/brand/flap2.png';
@@ -11,7 +12,7 @@ import afexLogo from '../../../assets/brand/AFEX-logo.png';
 import { useAuthCtx } from '../../../context';
 
 const LoginOverlay = (props: { isVisible: boolean }) => {
-  const { login } = useAuthCtx();
+  const { login, loading } = useAuthCtx();
 
   return (
     <>
@@ -62,18 +63,32 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
 
                 <div className='flex justify-between items-center'>
                   <div className='flex items-center space-x-4'>
-                    <input type='checkbox' name='remember' id='remember' />
+                    <input
+                      type='checkbox'
+                      id='remember'
+                      className='checkbox white'
+                    />
                     <label htmlFor='remember'>Remember me</label>
                   </div>
                 </div>
 
                 <div className='flex items-center justify-center flex-col pt-12 space-y-4'>
-                  <button
+                  <Button
+                    type='submit'
+                    text={
+                      <span className='flex items-center space-x-6'>
+                        Submit
+                        <MdKeyboardArrowRight />{' '}
+                      </span>
+                    }
+                    loading={loading}
+                  />
+                  {/* <button
                     className='bg-[#E1261C] text-white flex justify-center  font-bold px-5 p-4 rounded-lg items-center w-1/2 hover:shadow-md'
                     type='submit'>
                     Sign in
                     <MdKeyboardArrowRight className='text-3xl ' />
-                  </button>
+                  </button> */}
 
                   <span className='text-bg-afexpurple text-red-400 font-semibole hover:underline cursor-pointer'>
                     Forgot your password?

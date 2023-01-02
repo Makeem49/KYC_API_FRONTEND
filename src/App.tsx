@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-
 import { Sidebar } from './components';
 import bgImage from '../src/assets/svgs/bg-pattern.svg';
 
@@ -18,6 +17,7 @@ import {
 } from './pages';
 import { useAuthCtx } from './context';
 
+import './App.css';
 function App() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthCtx();
@@ -27,7 +27,7 @@ function App() {
     if (!isAuthenticated || !token) {
       return navigate('auth');
     }
-    // eslint-disable-next-line
+    //eslint-disable-next-line
   }, [isAuthenticated]);
   return (
     <div className='flex bg-white text-[#54565B] text-sm xl:text-base'>
@@ -43,7 +43,7 @@ function App() {
 
           <Route path='client'>
             <Route index element={<Client />} />
-            <Route path='single-client' element={<SingleClient />} />
+            <Route path=':providerId/:clientId' element={<SingleClient />} />
           </Route>
 
           <Route path='transaction' element={<Transaction />} />

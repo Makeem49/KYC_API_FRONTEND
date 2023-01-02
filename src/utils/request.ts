@@ -1,11 +1,9 @@
-import axios, { Axios } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
   const token = localStorage.getItem('cuddie-access-token');
-
-  console.log({ token });
 
   if (!token) return;
 
@@ -14,7 +12,7 @@ const setAuthHeader = () => {
   };
 };
 
-const apiRequest: Axios = axios.create({
+const apiRequest: AxiosInstance = axios.create({
   baseURL,
   // timeout: 100000,
   headers: {

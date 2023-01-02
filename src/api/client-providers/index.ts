@@ -56,7 +56,20 @@ export async function get_client_providers(): Promise<ClientProvider[]> {
 export async function create_client_provider(
   data: Partial<ClientProvider>
 ): Promise<string> {
-  const resp = await apiRequest.post('client-providers', data);
+  const resp = await apiRequest.post('client-providers', {
+    name: data.name,
+    code: data.code,
+    clientRepoUrl: data.clientRepoUrl,
+    walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
+    inventoryPositionUrl: data.inventoryPositionUrl,
+    transactionPhrase: data.transactionPhrase,
+    image: data.image,
+    checkWalletBalanceEnabled: data.checkWalletBalanceEnabled,
+    bankTransferEnabled: data.bankTransferEnabled,
+    clientTransferEnabled: data.clientTransferEnabled,
+    checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
+    tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
+  });
 
   if (!resp.data) return 'Bad request. Unable to create client provider';
 

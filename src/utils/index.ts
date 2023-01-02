@@ -11,4 +11,5 @@ export {
   shortDateFormatter,
   generateInitials,
   calculatePercentageChange,
+  dayDateFormatter,
 } from './formatter';

@@ -15,17 +15,18 @@ import { apiRequest } from '../../utils';
  * @param username existing username
  * @param password password
  */
-export async function authenticate(
-  username: string,
-  password: string
-): Promise<string | null> {
-  const resp = await apiRequest.post('auth/login', { username, password });
+export async function authenticate(username: string, password: string) {
+  try {
+    const resp = await apiRequest.post('auth/login', { username, password });
 
-  if (!resp.data) return null;
+    if (!resp.data) return null;
 
-  if (resp.data.message !== 'Authenticated') return null;
+    if (resp.data.message !== 'Authenticated') return null;
 
-  return resp.data.access_token;
+    return resp.data;
+  } catch (error: any) {
+    return error;
+  }
 }
 
 export function register() {}

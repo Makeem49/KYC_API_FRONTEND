@@ -46,7 +46,7 @@ const FormInput = ({ label, ...props }: FormInputInterface) => {
           placeholder={props.placeholder}
           autoComplete={props.autocomplete}
           autoFocus={props.autoFocus}
-          className='block w-full appearance-none outline-none tracking-wide rounded-lg text-sm p-3 font-normal text-gray-400 bg-white h-14 border focus:border-afexpurple-light transition '
+          className='block w-full appearance-none outline-none tracking-wide rounded-lg text-sm p-3 font-normal text-[#C1C0C2] bg-white h-14 border focus:border-afexpurple-light transition '
           {...field}
         />
         {props.type === 'password' && type === 'password' && (

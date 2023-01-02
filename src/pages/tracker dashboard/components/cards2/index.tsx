@@ -16,7 +16,7 @@ const VirtualCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[48px] font-bold text-textgrey-darker'>
-            {list.overview.novirtualAccount}
+            {list?.overview?.novirtualAccount}
           </p>
         </div>
       </div>
@@ -31,7 +31,7 @@ const VirtualCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[48px] font-bold text-textgrey-darker'>
-            {list.overview.unsyncedWithdrawal}
+            {list?.overview?.unsyncedWithdrawal}
           </p>
         </div>
       </div>

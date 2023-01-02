@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowDown2 } from 'iconsax-react';
+import { Link } from 'react-router-dom';
+import { ArrowDown2, ArrowLeft } from 'iconsax-react';
 import TaskBar from './components/task bar';
 import Table from './components/table';
 import { SingleUserProvider } from './components/context/single_user.ctx';
@@ -15,8 +16,13 @@ const UserManagement = () => {
               <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
                 User Manangement
               </h2>
-              <p>
-                Home/ <span>User Management</span>
+              <p className='flex items-center gap-2 text-textgrey-normal'>
+                <Link to='/dashboard'>
+                  {' '}
+                  <ArrowLeft className=' w-5' />
+                </Link>{' '}
+                Home/{' '}
+                <span className=' text-textgrey-dark'>User Management</span>
               </p>
             </div>
 

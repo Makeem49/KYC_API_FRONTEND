@@ -2,8 +2,11 @@ import React from 'react';
 import profImg from '../../../../../assets/images/profile_img.svg';
 import verifiedIcon from '../../../../../assets/svgs/verify.svg';
 import { ArrowDown2 } from 'iconsax-react';
+// import { useSingleClientCtx } from '../../../../../context';
 
 const ProfileBoard = () => {
+  // const { item } = useSingleClientCtx();
+  // console.log(item);
   return (
     <div className=' w-full flex flex-col gap-10'>
       {/* FIrst Card */}

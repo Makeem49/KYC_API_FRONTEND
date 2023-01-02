@@ -38,3 +38,4 @@ export {
 
 export { get_dashboard_stats } from './dashboard';
 export { get_tracker_stats } from './tracker';
+export { get_single_client } from './single-client';

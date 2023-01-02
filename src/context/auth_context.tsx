@@ -12,12 +12,14 @@ interface AuthInterface {
     password: string;
   }) => void;
   logout: () => void;
+  loading: boolean;
 }
 
 const AuthCtx = createContext({} as AuthInterface);
 
 const AuthProvider = (props: WithChildren) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const authStatus: string =
     localStorage.getItem('cuddie-auth-status') ?? 'false';
 
@@ -32,14 +34,22 @@ const AuthProvider = (props: WithChildren) => {
     username: string;
     password: string;
   }) => {
+    setLoading(true);
     const resp = await authenticate(username, password);
 
-    if (!resp) return;
+    if (resp.message !== 'Authenticated') {
+      console.log(resp.message);
+      setLoading(false);
 
-    localStorage.setItem('cuddie-access-token', resp);
+      return;
+    }
+
+    // Drop success toast
+    console.log(resp.message);
+    localStorage.setItem('cuddie-access-token', resp.access_token);
     localStorage.setItem('cuddie-auth-status', 'true');
     setIsAuthenticated(true);
-
+    setLoading(false);
     return window.location.assign('/');
 
     // console.log(username, password);
@@ -53,7 +63,7 @@ const AuthProvider = (props: WithChildren) => {
   };
 
   return (
-    <AuthCtx.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthCtx.Provider value={{ isAuthenticated, login, logout, loading }}>
       {props.children}
     </AuthCtx.Provider>
   );

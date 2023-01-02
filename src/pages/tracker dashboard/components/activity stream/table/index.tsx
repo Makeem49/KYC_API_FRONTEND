@@ -33,7 +33,7 @@ const Table = () => {
                 <input
                   type='checkbox'
                   id='remember'
-                  className='bg-red-100 border-red-300 text-red-500 focus:ring-red-200'
+                  className='checkbox white'
                 />
               </td>
 

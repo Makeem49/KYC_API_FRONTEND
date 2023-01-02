@@ -3,7 +3,7 @@ import verifyIcon from '../../../../assets/images/verify.svg';
 import { useTrackerStatsCtx } from '../../../../context';
 const WalletCards = () => {
   const { list } = useTrackerStatsCtx();
-  console.log(list);
+
   return (
     <div className='flex gap-6 child:h-[200px]'>
       {/* Card One */}
@@ -16,7 +16,7 @@ const WalletCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[48px] font-bold text-textgrey-darker'>
-            {list.overview.noWallets}
+            {list?.overview?.noWallets}
           </p>
         </div>
       </div>
@@ -31,7 +31,7 @@ const WalletCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[48px] font-bold text-textgrey-darker'>
-            {list.overview.failedFunding}
+            {list?.overview?.failedFunding}
           </p>
         </div>
       </div>
@@ -46,7 +46,7 @@ const WalletCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='text-[48px] font-bold text-textgrey-darker'>
-            {list.overview.unsyncedWalletTransfer}
+            {list?.overview?.unsyncedWalletTransfer}
           </p>
         </div>
       </div>

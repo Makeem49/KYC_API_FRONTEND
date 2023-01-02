@@ -13,9 +13,9 @@ const AddUser = () => {
         position='right'
         opened={opened}
         onClose={() => setOpened(false)}
-        title='Add User'
+        title='Add Client Provider'
         padding='xl'
-        size='50%'>
+        size='45%'>
         {/* Map Component */}
 
         <UserInfo />

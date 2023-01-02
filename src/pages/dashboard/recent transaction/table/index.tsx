@@ -1,7 +1,11 @@
 import React from 'react';
 import { ArrowDown, ArrowUp } from 'iconsax-react';
+import { useTransactionCtx } from '../../../../context';
 
 const Table = () => {
+  const { list } = useTransactionCtx();
+  const arr = list.slice(0, 9);
+
   return (
     <div className='h-full pb-5'>
       <div className='overflow-auto w-full '>
@@ -23,257 +27,39 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[14px] text-[#49474D]'>
-            <tr className=' text-left child:py-8 child:px-1 border-b'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
+            {arr.map((el) => (
+              <tr className=' text-left child:py-8 child:px-1 border-b'>
+                <td>
+                  <span className='font-normal'>{list.indexOf(el) + 1}</span>
+                </td>
 
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
+                <td>
+                  {' '}
+                  <span className='font-normal '>
+                    {el.createdAt.toString()}
+                  </span>
+                </td>
 
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
+                <td>
+                  <span className='font-normal '>
+                    {el.client ? null : 'no name'}
+                  </span>
+                </td>
 
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
+                <td>
+                  <span className='font-normal '>{el.amount}</span>
+                </td>
+                <td>
+                  <span className='font-normal '>{el.transactionType}</span>
+                </td>
 
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
-                  successful
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
-                  failed
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
-                  successful
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
-                  successful
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
-                  failed
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
-                  successful
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
-                  failed
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#FDEEEE] rounded '>
-                  failed
-                </span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-8 child:px-1 border-b border-[#F0F0F0]'>
-              <td>
-                <span className='font-normal'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-normal '>May 1st 2021</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>Samuel Adeniyi</span>
-              </td>
-
-              <td>
-                <span className='font-normal '>N20,100.00</span>
-              </td>
-              <td>
-                <span className='font-normal '>Withdrawal</span>
-              </td>
-
-              <td>
-                <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
-                  successful
-                </span>
-              </td>
-            </tr>
+                <td>
+                  <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
+                    {el.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Formik } from 'formik';
 import { FormImage, FormInput } from '../../../../../../components/form';
-// import { create_user } from '../../../../../../api';
+// import Button from '../../../../../../components/button';
+import ToggleButton from '../../../../../../components/toggleButton';
 
 import { useUsersCtx } from '../../../../../../context';
+import { create_client_provider } from '../../../../../../api';
 
 import { faker } from '@faker-js/faker';
 
 const UserInfo = () => {
   const { refreshContext } = useUsersCtx();
-  const [enabled, setEnabled] = useState(false);
+
   return (
-    <div className='w-full flex flex-col gap-3 p-6'>
+    <div className='w-full h-full overflow-y-auto flex flex-col gap-3 p-6'>
       <Formik
         initialValues={{
           name: '',
@@ -21,6 +23,11 @@ const UserInfo = () => {
           inventoryPositionUrl: '',
           transactionPhrase: '',
           image: '',
+          checkWalletBalanceEnabled: false,
+          bankTransferEnabled: false,
+          clientTransferEnabled: false,
+          checkInventoryPositionEnabled: false,
+          tradeInventoryTransactionEnabled: false,
         }}
         onSubmit={async (values) => {
           const newProvider = {
@@ -31,14 +38,20 @@ const UserInfo = () => {
             inventoryPositionUrl: values.inventoryPositionUrl,
             transactionPhrase: values.transactionPhrase,
             image: faker.image.people(640, 640),
+            checkWalletBalanceEnabled: values.checkWalletBalanceEnabled,
+            bankTransferEnabled: values.bankTransferEnabled,
+            clientTransferEnabled: values.clientTransferEnabled,
+            checkInventoryPositionEnabled: values.checkInventoryPositionEnabled,
+            tradeInventoryTransactionEnabled:
+              values.tradeInventoryTransactionEnabled,
           };
-          const message = newProvider;
+          const message = await create_client_provider(newProvider);
           console.log(message);
 
           refreshContext();
         }}>
         {({ resetForm }) => (
-          <Form className='flex flex-col gap-y-4'>
+          <Form className='flex overflow-y-auto flex-col gap-y-4'>
             <FormImage
               label='Avatar'
               accepted={['.jpeg', '.jpg', '.png']}
@@ -100,7 +113,35 @@ const UserInfo = () => {
               autocomplete='URL'
             />
 
-            <label className='inline-flex relative items-center cursor-pointer'>
+            <ToggleButton
+              label='Check Wallet Balance Enabled'
+              id='checkWalletBalanceEnabled'
+              name='checkWalletBalanceEnabled'
+            />
+            <ToggleButton
+              label='Bank Transfer Enabled'
+              id='bankTransferEnabled'
+              name='bankTransferEnabled'
+            />
+
+            <ToggleButton
+              label='Client Transfer Enabled'
+              id=' clientTransferEnabled'
+              name='clientTransferEnabled'
+            />
+
+            <ToggleButton
+              label='Check Inventory Position Enabled'
+              id='checkInventoryPositionEnabled'
+              name='checkInventoryPositionEnabled'
+            />
+
+            <ToggleButton
+              label='Trade Inventory Transaction Enabled'
+              id='tradeInventoryTransactionEnabled'
+              name='tradeInventoryTransactionEnabled'
+            />
+            {/* <label className='inline-flex relative items-center cursor-pointer'>
               <input
                 type='checkbox'
                 className='sr-only peer'
@@ -112,9 +153,9 @@ const UserInfo = () => {
                   setEnabled(!enabled);
                 }}
                 className='w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-afexpurple peer-checked:after:translate-x-full peer-checked:after:border-whit after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-afexpurple '></div>
-            </label>
+            </label> */}
 
-            <div className='flex items-center justify-center pt-8 space-x-6'>
+            <div className='flex items-center mb-6 justify-center space-x-6'>
               <button
                 type='button'
                 className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'

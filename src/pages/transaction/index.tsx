@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TransactionCards from './components/cards';
-import { ArrowDown2 } from 'iconsax-react';
+import { ArrowDown2, ArrowLeft } from 'iconsax-react';
 import TransactionTable from './components/transaction table';
 import TransactionCount from './components/transaction count';
 import TransactionValue from './components/transaction value';
@@ -18,7 +19,11 @@ function Transaction() {
             <h2 className='  text-textgrey-darker text-[18px] font-bold '>
               Transactions
             </h2>
-            <p className=' text-textgrey-normal'>
+            <p className='flex items-center gap-2 text-textgrey-normal'>
+              <Link to='/dashboard'>
+                {' '}
+                <ArrowLeft className=' w-5' />
+              </Link>{' '}
               Home/ <span className=' text-textgrey-dark'>Transactions</span>
             </p>
           </div>

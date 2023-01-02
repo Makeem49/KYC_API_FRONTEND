@@ -17,6 +17,9 @@ import UsersProvider, { useUsersCtx } from './users_context';
 import TrackerStatsProvider, {
   useTrackerStatsCtx,
 } from './tracker_stats_context';
+import SingleClientProvider, {
+  useSingleClientCtx,
+} from './single_clients_context';
 
 // Context wrapper for all the context managers
 const ContextProvider = (props: WithChildren) => {
@@ -30,11 +33,13 @@ const ContextProvider = (props: WithChildren) => {
                 <ApiTokensProvider>
                   <UsersProvider>
                     <ClientStatsProvider>
-                      <TrackerStatsProvider>
-                        <TransactionsProvider>
-                          {props.children}
-                        </TransactionsProvider>
-                      </TrackerStatsProvider>
+                      <SingleClientProvider>
+                        <TrackerStatsProvider>
+                          <TransactionsProvider>
+                            {props.children}
+                          </TransactionsProvider>
+                        </TrackerStatsProvider>
+                      </SingleClientProvider>
                     </ClientStatsProvider>
                   </UsersProvider>
                 </ApiTokensProvider>
@@ -56,6 +61,7 @@ export {
   useDashboardCtx,
   useClientStats,
   useTrackerStatsCtx,
+  useSingleClientCtx,
 };
 
 export default ContextProvider;

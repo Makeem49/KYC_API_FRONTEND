@@ -56,6 +56,7 @@ type ClientProvider = {
   checkInventoryPositionEnabled: boolean;
   tradeInventoryTransactionEnabled: boolean;
   createdBy: string;
+  image: string;
   clientProviderToken: ClientProviderToken;
   createdAt: string | Date;
   updatedAt: string | Date;
@@ -120,6 +121,13 @@ type clientProviderApiKey = {
 
 interface GenericContextInterface<T> {
   list: T;
+  loading: boolean;
+  refreshContext: () => void;
+}
+
+interface SpecificContextInterface<T> {
+  list: T;
+  // item: T;
   loading: boolean;
   refreshContext: () => void;
 }
@@ -257,6 +265,26 @@ interface TrackerSect {
 }
 
 type TransactionList = {
+  id: number;
+  amount: string;
+  transactionType: string;
+  channel: string;
+  amountBefore: string;
+  amountAfter: string;
+  description: string;
+  comment: null;
+  status: string;
+  sessionId: string;
+  ref: string;
+  isPlatformSynced: null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
+  clientId: null;
+  client: null;
+};
+
+type SingleClient = {
   id: number;
   amount: string;
   transactionType: string;

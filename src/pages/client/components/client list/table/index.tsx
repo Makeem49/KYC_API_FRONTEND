@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useClientStats } from '../../../../../context';
 import { Pagination } from '../../../../../components';
 
 const Table = () => {
   const { list } = useClientStats();
   // console.log(list);
+  const navigate = useNavigate();
 
   const [page, setPage] = useState<number>(1);
   const [itemsOffset, setItemsOffset] = useState<number>(0);
@@ -24,7 +27,11 @@ const Table = () => {
           <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
             <tr className='child:py-4 border-b text-[#C1C0C2] child:font-semibold child:text-[12px] child:px-1 child:cursor-default child:align-middle'>
               <th>
-                <input type='checkbox' className='checkbox white' />
+                <input
+                  type='checkbox'
+                  id='remember'
+                  className='checkbox white'
+                />
               </th>
 
               <th>S/N</th>
@@ -37,7 +44,9 @@ const Table = () => {
           </thead>
           <tbody className='text-[10px] xl:text-[14px] child:text-[#49474D]'>
             {currentItems.map((items) => (
-              <tr className=' text-left child:py-8 child:px-1 border-b'>
+              <tr
+                className=' text-left child:py-8 child:px-1 border-b'
+                onClick={() => navigate(`${items.providerId}/${items.id}`)}>
                 <td>
                   <input
                     type='checkbox'

@@ -1,89 +1,15 @@
 import React from 'react';
-import { useDashboardCtx } from '../../../context';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  // Legend
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import ChanneSource from './channelCharts';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip
-  // Legend
-);
-
-export const options = {
-  indexAxis: 'y' as const,
-  elements: {
-    bar: {
-      borderWidth: 0,
-    },
-  },
-  scales: {
-    // x: {
-    //   grid: {
-    //     drawBorder: false,
-    //   },
-    // },
-    y: {
-      grid: {
-        display: false,
-        drawBorder: false,
-        drawOnChartArea: false,
-        drawTicks: false,
-      },
-    },
-  },
-  barThickness: 20,
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom' as const,
-    },
-    title: {
-      display: false,
-      text: 'Chart.js Horizontal Bar Chart',
-    },
-  },
+const ChannelSource = () => {
+  return (
+    <div className='h-full flex flex-col gap-8 border border-[#DAD9DA] rounded-lg p-5'>
+      <p className=' text-textgrey-darker font-semibold text-[18px] ml-6'>
+        Service Provider
+      </p>
+      <ChanneSource />
+    </div>
+  );
 };
 
-export default function ChanneSource() {
-  const { list } = useDashboardCtx();
-
-  const providers = list.serviceProviderStatus.map((el) => el.name);
-  const provData = list.serviceProviderStatus.map((el) => el.value);
-
-  const labels = providers;
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: '',
-        data: provData,
-        borderColor: [
-          'rgba(249, 195, 98, 1)',
-          'rgba(237, 85, 86, 1)',
-          'rgba(101, 214, 191, 1)',
-          'rgba(119, 56, 221, 1)',
-        ],
-        backgroundColor: [
-          'rgba(249, 195, 98, 1)',
-          'rgba(237, 85, 86, 1)',
-          'rgba(101, 214, 191, 1)',
-          'rgba(119, 56, 221, 1)',
-        ],
-        borderRadius: Number.MAX_VALUE,
-      },
-    ],
-  };
-
-  return <Bar options={options} data={data} />;
-}
+export default ChannelSource;

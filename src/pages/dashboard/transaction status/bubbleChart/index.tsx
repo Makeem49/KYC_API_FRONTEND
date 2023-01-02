@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Chart as ChartJS,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Chart as ChartJS, LinearScale, PointElement, Tooltip } from 'chart.js';
 import { Bubble } from 'react-chartjs-2';
 
-ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LinearScale, PointElement, Tooltip);
 
 export const options = {
   plugins: {
