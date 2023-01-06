@@ -1,5 +1,5 @@
 import React from 'react';
-import verifyIcon from '../../../../assets/images/verify.svg';
+import verifyIcon from '../../../../assets/images/verify.png';
 import { useTrackerStatsCtx } from '../../../../context';
 
 const VirtualCards = () => {

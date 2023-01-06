@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
 import { TextInput } from '../../../components';
@@ -41,7 +42,11 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
             </h3>
             <Formik
               initialValues={{ username: '', password: '' }}
-              onSubmit={(values) => login(values)}>
+              onSubmit={(values) => login(values)}
+              validationSchema={Yup.object({
+                username: Yup.string().required('Username is required'),
+                password: Yup.string().required('Password is required'),
+              })}>
               <Form className='w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-8 bg-white m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative'>
                 <TextInput
                   id='username'

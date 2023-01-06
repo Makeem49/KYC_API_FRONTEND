@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { useField, FieldArray } from 'formik';
-import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
-
+import { MdKeyboardArrowDown } from 'react-icons/md';
+//  MdClose;
 import FormLabel from '../label';
 
 interface MultiSelectInterface {
@@ -57,10 +57,10 @@ const MultiSelect = (props: MultiSelectInterface) => {
                 {...props}
                 {...field}
               />
-              <div
+              {/* <div
                 className='values flex space-x-4 text-xs absolute top-1/2 left-3 -translate-y-1/2'
                 onClick={(e) => e.stopPropagation()}>
-                {field.value.map((val: string | number) => (
+                {field?.value?.map((val: string | number) => (
                   <>
                     <div className='flex w-16 justify-between pr-2 items-center bg-afexgray p-1 rounded-md overflow-clip '>
                       <span className='w-14 overflow-ellipsis whitespace-nowrap'>
@@ -73,7 +73,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
                     </div>
                   </>
                 ))}
-              </div>
+              </div> */}
               <MdKeyboardArrowDown className='absolute top-1/2 -translate-y-1/2 right-4 text-gray-400 text-lg' />
             </div>
             <ul
@@ -86,14 +86,14 @@ const MultiSelect = (props: MultiSelectInterface) => {
                   onClick={(e) => {
                     e.stopPropagation();
 
-                    if (field.value.includes(option.value)) {
+                    if (field?.value?.includes(option.value)) {
                       return remove(field.value.indexOf(option.value));
                     }
 
                     push(option.value);
                   }}
                   className={`text-base font-light first:mt-0 rounded-lg flex items-center space-x-4 accent-afexpurple-light p-3 ${
-                    field.value.indexOf(option.value) > -1 &&
+                    field?.value?.indexOf(option.value) > -1 &&
                     'bg-afexpurple-lighter'
                   }`}>
                   <input
@@ -107,7 +107,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
                       }
                       return push(option.value);
                     }}
-                    checked={field.value.indexOf(option.value) > -1}
+                    checked={field?.value?.indexOf(option.value) > -1}
                   />
                   <label htmlFor=''>{option.label}</label>
                 </li>

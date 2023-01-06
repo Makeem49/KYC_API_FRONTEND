@@ -5,12 +5,13 @@ import { commaformatter } from '../../../utils';
 
 const WalletBallance = () => {
   const { list } = useDashboardCtx();
+  console.log(list);
   return (
     <div className=' flex flex-col gap-2 border border-[#DAD9DA] rounded-lg p-5'>
       <div className='px-5 py-3 bg-afexred-lighter'>
         <span className=' text-afexred-regular'>Total wallet balance</span>
         <p className='text-[20px] text-afexred-regular font-semibold'>
-          &#8358;{commaformatter(list.others.totalWalletBalance ?? 0)}
+          &#8358;{commaformatter(list?.others?.walletBalance ?? 0)}
         </p>
       </div>
 
@@ -18,20 +19,20 @@ const WalletBallance = () => {
       <div className='w-full flex flex-col gap-4 py-2 border-b pb-4'>
         {' '}
         <div className='flex justify-between'>
-          <p className=' text-textgrey-normal'>Number of Users</p>
-          <p>{commaformatter(list?.others?.numberOfUsers)}</p>
+          <p className=' text-textgrey-normal'>Total Transfers</p>
+          <p>{commaformatter(list?.others?.transfer ?? 0)}</p>
         </div>
         {/* <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Open Balance</p>
           <p>&#8358; 3,0000</p>
         </div> */}
         <div className='flex justify-between'>
-          <p className=' text-textgrey-normal'>Total Deposit</p>
-          <p>{commaformatter(list?.others?.totalDeposit)}</p>
+          <p className=' text-textgrey-normal'>Total Deposits</p>
+          <p>{commaformatter(list?.others?.deposit ?? 0)}</p>
         </div>
         <div className='flex justify-between'>
-          <p className=' text-textgrey-normal'>Total Withdrawal</p>
-          <p>{commaformatter(list?.others?.totalWithdrawal)}</p>
+          <p className=' text-textgrey-normal'>Total Withdrawals</p>
+          <p>{commaformatter(list?.others?.withdrawals ?? 0)}</p>
         </div>
       </div>
       {/* 

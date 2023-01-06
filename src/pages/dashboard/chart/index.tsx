@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Chart21 } from 'iconsax-react';
 import { PresentionChart } from 'iconsax-react';
 import Chart1 from './chart1';
+import Chart2 from './chart2';
 
 const Chart = () => {
   const [showBarChat, setShowBarChat] = useState(true);
@@ -35,7 +36,8 @@ const Chart = () => {
           />
         </div>
       </div>
-      <Chart1 showBar={showBarChat} showLine={showLineChart} />
+      {showBarChat && <Chart1 />}
+      {showLineChart && <Chart2 />}
     </div>
   );
 };

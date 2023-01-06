@@ -39,6 +39,50 @@ export async function get_users(): Promise<User[]> {
       } as User)
   );
 }
+
+/**
+ * List all the Permissions
+ * @returns
+ */
+export async function get_permissions(): Promise<User[]> {
+  const resp = await apiRequest.get('roles-permissions/permissions');
+
+  if (!resp.data) return [];
+
+  if (resp.data.data.length < 1) return [];
+
+  return resp.data.data.map(
+    (el: any) =>
+      ({
+        id: el.id,
+        name: el.name,
+        description: el.description,
+        group: el.group,
+        createdAt: shortDateFormatter(el.createdAt),
+        updatedAt: shortDateFormatter(el.updatedAt),
+      } as User)
+  );
+}
+
+/**
+ * List all the Permissions
+ * @returns
+ */
+export async function get_roles(): Promise<User[]> {
+  const resp = await apiRequest.get('roles-permissions/roles');
+
+  if (!resp.data) return [];
+
+  if (resp.data.data.length < 1) return [];
+
+  return resp.data.data.map(
+    (el: any) =>
+      ({
+        id: el.id,
+        name: el.name,
+      } as User)
+  );
+}
 /**
  *
  * @param data

@@ -15,7 +15,7 @@ const AddUser = () => {
         onClose={() => setOpened(false)}
         title='Add User'
         padding='xl'
-        size='50%'>
+        size='45%'>
         <UserInfo closeModal={() => setOpened(false)} />
       </Drawer>
 

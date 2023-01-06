@@ -27,6 +27,7 @@ const toast = (
       root: {
         borderRadius: '1rem',
         backgroundColor: '#fff',
+        top: '1px',
         border: `1px solid ${borderColor}`,
         padding: '0 1.5rem 0 0 ',
         position: 'relative',
@@ -48,7 +49,7 @@ const toast = (
     icon: icon,
     message: (
       <div
-        className={`flex items-start  rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
+        className={`flex items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
           id === 'success'
             ? 'before:bg-afexgreen-lighter'
             : id === 'error'

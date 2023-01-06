@@ -4,6 +4,7 @@ import { Pagination } from '../../../../../components';
 
 const Table = () => {
   const { list } = useTransactionCtx();
+  console.log(list);
 
   const [page, setPage] = useState<number>(1);
   const [itemsOffset, setItemsOffset] = useState<number>(0);
@@ -57,7 +58,9 @@ const Table = () => {
                 </td>
 
                 <td>
-                  <span className=' '>{item.client ? null : 'no name'}</span>
+                  <span className=' '>
+                    {item.client.firstName} {item.client.lastName}
+                  </span>
                 </td>
 
                 <td>

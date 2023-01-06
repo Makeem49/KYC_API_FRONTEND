@@ -9,6 +9,7 @@ import { commaformatter } from '../../../utils';
 
 const Card = () => {
   const { list } = useDashboardCtx();
+  // console.log(list);
   // const obj = list?.sectionOne?.users;
   // const change = obj.today - obj.previousDay;
   // const percentage = Math.abs((change / obj.active) * 100).toFixed(0);
@@ -23,12 +24,12 @@ const Card = () => {
           <UserSquare size='25' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-dark'>
-            {commaformatter(list?.sectionOne?.users?.previousDay)}
+          <p className=' flex items-center gap-1 text-[22px] font-bold text-textgrey-dark'>
+            {commaformatter(list?.sectionOne?.users?.today)}
             <Change
               value={calculatePercentageChange(
-                list?.sectionOne?.users?.today,
-                list?.sectionOne?.users?.previousDay
+                list?.sectionOne?.users?.previousDay,
+                list?.sectionOne?.users?.today
               )}
             />
           </p>
@@ -54,9 +55,8 @@ const Card = () => {
           <Wallet1 size='25' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-dark'>
-            &#8358;{' '}
-            {commaformatter(list?.sectionOne?.transactions?.previousDay ?? 0)}
+          <p className='flex items-center gap-1 text-[22px] font-bold text-textgrey-dark'>
+            &#8358; {commaformatter(list?.sectionOne?.transactions?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
                 list?.sectionOne?.transactions?.today ?? 0,
@@ -75,8 +75,8 @@ const Card = () => {
           <Receipt size='25' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold  text-textgrey-dark'>
-            {list?.sectionOne?.values?.previousDay}
+          <p className='flex items-center gap-1 text-[22px] w-full font-bold  text-textgrey-dark'>
+            {commaformatter(list?.sectionOne?.values?.today ?? 0)}
 
             <Change
               value={calculatePercentageChange(

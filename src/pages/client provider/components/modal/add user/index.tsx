@@ -23,10 +23,10 @@ const AddUser = () => {
 
       <Group position='center'>
         <Button
-          className='flex w-full items-center gap-3 py-2 px-2 hover:bg-afexpurple-light text-[12px] text-afexred-regular bg-afexred-extralight rounded-lg'
+          className='flex w-full items-center gap-4 py-2 px-3 hover:bg-afexred-extralight text-[14px] text-afexred-regular bg-[#FCE9E8] rounded-lg'
           onClick={() => setOpened(true)}>
           <span className='w-full'>ADD CLIENT PROVIDER</span>
-          <Add size='18' color='#E1261C' variant='Bulk' />
+          <Add size='20' color='#E1261C' variant='Bulk' />
         </Button>
       </Group>
     </>

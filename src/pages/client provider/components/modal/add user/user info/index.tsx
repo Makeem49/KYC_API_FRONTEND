@@ -22,12 +22,16 @@ const UserInfo = () => {
           walletTransactionCallbackUrl: '',
           inventoryPositionUrl: '',
           transactionPhrase: '',
+          API_KEY: '',
+          REQUEST_TS: '',
+          HASH_KEY: '',
           image: '',
           checkWalletBalanceEnabled: false,
           bankTransferEnabled: false,
           clientTransferEnabled: false,
           checkInventoryPositionEnabled: false,
           tradeInventoryTransactionEnabled: false,
+          allowAutoApproveFundRequest: false,
         }}
         onSubmit={async (values) => {
           const newProvider = {
@@ -37,6 +41,11 @@ const UserInfo = () => {
             walletTransactionCallbackUrl: values.walletTransactionCallbackUrl,
             inventoryPositionUrl: values.inventoryPositionUrl,
             transactionPhrase: values.transactionPhrase,
+            requestHeaders: {
+              API_KEY: values.API_KEY,
+              REQUEST_TS: values.REQUEST_TS,
+              HASH_KEY: values.HASH_KEY,
+            },
             image: faker.image.people(640, 640),
             checkWalletBalanceEnabled: values.checkWalletBalanceEnabled,
             bankTransferEnabled: values.bankTransferEnabled,
@@ -44,9 +53,10 @@ const UserInfo = () => {
             checkInventoryPositionEnabled: values.checkInventoryPositionEnabled,
             tradeInventoryTransactionEnabled:
               values.tradeInventoryTransactionEnabled,
+            allowAutoApproveFundRequest: values.allowAutoApproveFundRequest,
           };
-          const message = await create_client_provider(newProvider);
-          console.log(message);
+          // const message = await create_client_provider(newProvider);
+          console.log(newProvider);
 
           refreshContext();
         }}>
@@ -112,6 +122,35 @@ const UserInfo = () => {
               type='text'
               autocomplete='URL'
             />
+            <FormInput
+              id='API_KEY'
+              name='API_KEY'
+              label='API KEY'
+              placeholder='Enter API KEY'
+              required
+              type='text'
+              autocomplete='text'
+            />
+
+            <FormInput
+              id='REQUEST_TS'
+              name='REQUEST_TS'
+              label='Request Time'
+              placeholder='Enter request'
+              required
+              type='text'
+              autocomplete='text'
+            />
+
+            <FormInput
+              id='HASH_KEY'
+              name='HASH_KEY'
+              label='Hash Key'
+              placeholder='Enter key'
+              required
+              type='text'
+              autocomplete='text'
+            />
 
             <ToggleButton
               label='Check Wallet Balance Enabled'
@@ -141,19 +180,12 @@ const UserInfo = () => {
               id='tradeInventoryTransactionEnabled'
               name='tradeInventoryTransactionEnabled'
             />
-            {/* <label className='inline-flex relative items-center cursor-pointer'>
-              <input
-                type='checkbox'
-                className='sr-only peer'
-                checked={enabled}
-                readOnly
-              />
-              <div
-                onClick={() => {
-                  setEnabled(!enabled);
-                }}
-                className='w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-afexpurple peer-checked:after:translate-x-full peer-checked:after:border-whit after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-afexpurple '></div>
-            </label> */}
+
+            <ToggleButton
+              label='Allow Auto Approve FundRequest'
+              id='allowAutoApproveFundRequest'
+              name='allowAutoApproveFundRequest'
+            />
 
             <div className='flex items-center mb-6 justify-center space-x-6'>
               <button

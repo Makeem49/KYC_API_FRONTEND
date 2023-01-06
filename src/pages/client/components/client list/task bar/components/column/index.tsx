@@ -1,31 +1,38 @@
-import React from 'react';
-import { Menu } from '@mantine/core';
+import React, { useState } from 'react';
+import { Popover } from '@mantine/core';
 import columnIcon from '../../../../../../../assets/images/row-horizontal.png';
 
 const Column = () => {
+  const [opened, setOpened] = useState(false);
   return (
-    <Menu width={250}>
-      <Menu.Target>
-        <button className='flex justify-center items gap-2 w-full text-[14px] text-nowrap py-4 px-6 bg-afexred-extralight text-afexred-regular rounded-lg'>
+    <Popover
+      opened={opened}
+      onChange={setOpened}
+      width={250}
+      position={'bottom-end'}>
+      <Popover.Target>
+        <button
+          className='py-4 px-4 flex gap-2 justify-center border items-center rounded-lg text-afexred-regular text-sm xl:text-[14px]  bg-[#FCE9E8] xl:h-[40px] w-full'
+          onClick={() => {
+            setOpened((o) => !o);
+          }}>
           <img src={columnIcon} alt='colicon' />
           <span>COLUMNS</span>
         </button>
-      </Menu.Target>
-      <Menu.Dropdown
-        style={{
-          padding: '15px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-        <Menu.Label className='text-[14px] mb-2 bg-[#F1EBFC] rounded p-2'>
-          <span className='text-[14px]'>Active status</span>
-        </Menu.Label>
+      </Popover.Target>
 
-        <Menu.Label className='text-[14px]  mb-2 bg-[#F1EBFC] rounded'>
-          Date joined
-        </Menu.Label>
-      </Menu.Dropdown>
-    </Menu>
+      <Popover.Dropdown>
+        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+          <input type='checkbox' id='remember' className='checkbox white' />
+          Activate all
+        </button>
+
+        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight  rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+          <input type='checkbox' id='remember' className='checkbox white' />{' '}
+          Deactivate all
+        </button>
+      </Popover.Dropdown>
+    </Popover>
   );
 };
 

@@ -8,10 +8,11 @@ const DashboardStatsContext = createContext(
 const DashboardStatsProvider = (props: WithChildren) => {
   const [stats, setStats] = useState<ResponseSect>({
     others: {
+      walletBalance: 0,
       numberOfUsers: 0,
-      totalDeposit: 0,
-      totalWalletBalance: 0,
-      totalWithdrawal: 0,
+      deposit: 0,
+      withdrawals: 0,
+      transfer: 0,
     },
     performanceOverview: [
       {

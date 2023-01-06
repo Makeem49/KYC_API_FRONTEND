@@ -17,6 +17,7 @@ interface ImageInterface {
 const ImageUpload = ({ label, ...props }: ImageInterface) => {
   const [bg, setBg] = useState('');
   const [field, meta, helpers] = useField(props);
+  console.log(field);
 
   const { setValue } = helpers;
 
@@ -38,7 +39,6 @@ const ImageUpload = ({ label, ...props }: ImageInterface) => {
           type='file'
           id={props.id}
           accept={props.accepted.toString()}
-          {...field}
           className='appearance-none hidden'
           onChange={(event) => {
             const files = event.currentTarget.files;
@@ -52,6 +52,7 @@ const ImageUpload = ({ label, ...props }: ImageInterface) => {
             }
           }}
         />
+
         <div className={`border-[#FFFF] w-[100px] h-[100px] bg-[#D9D9D9]`}>
           <img
             src={bg}
@@ -61,6 +62,7 @@ const ImageUpload = ({ label, ...props }: ImageInterface) => {
         </div>
         <button
           className='absolute -bottom-1 bg-white shadow-lg drop-shadow-md -right-5 rounded-full p-1'
+          type='button'
           onClick={() => {
             setBg('');
             setValue('');

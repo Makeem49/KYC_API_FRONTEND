@@ -34,8 +34,10 @@ export {
   get_users,
   toggle_user_status,
   update_user,
+  get_permissions,
+  get_roles,
 } from './users';
 
-export { get_dashboard_stats } from './dashboard';
+export { get_dashboard_stats, get_admin_name } from './dashboard';
 export { get_tracker_stats } from './tracker';
 export { get_single_client } from './single-client';

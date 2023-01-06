@@ -37,6 +37,10 @@ type ClientList = {
   accountId: number;
   clientProviderId: null;
   providerId: number;
+  client: {
+    firstName: string;
+    lastName: string;
+  };
 };
 
 type ClientProvider = {
@@ -49,12 +53,19 @@ type ClientProvider = {
   walletTransactionCallbackUrl: string;
   inventoryPositionUrl: string;
   inventoryTradeUrl: string;
+  locationsUrl: string;
   transactionPhrase: string;
   checkWalletBalanceEnabled: boolean;
   bankTransferEnabled: boolean;
   clientTransferEnabled: boolean;
   checkInventoryPositionEnabled: boolean;
   tradeInventoryTransactionEnabled: boolean;
+  requestHeaders: {
+    API_KEY: string;
+    REQUEST_TS: string;
+    HASH_KEY: string;
+  };
+  allowAutoApproveFundRequest: booleen;
   createdBy: string;
   image: string;
   clientProviderToken: ClientProviderToken;
@@ -89,6 +100,29 @@ type User = {
   updatedAt: string | Date;
   isActive: boolean;
   twoStepEnabled: boolean;
+  isDefault: booleen;
+  group: string;
+  description: null;
+  name: string;
+};
+
+type Permission = {
+  id: number;
+  name: string;
+  description: null;
+  group: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+};
+
+type Roles = {
+  id: number;
+  name: string;
+  description: null;
+  isDefault: booleen;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  permissions: [];
 };
 
 type ClientProviderToken = {
@@ -118,24 +152,6 @@ type clientProviderApiKey = {
   clientProviderId: number;
   tokenClientProviderId;
 };
-
-interface GenericContextInterface<T> {
-  list: T;
-  loading: boolean;
-  refreshContext: () => void;
-}
-
-interface SpecificContextInterface<T> {
-  list: T;
-  // item: T;
-  loading: boolean;
-  refreshContext: () => void;
-}
-
-interface SingleEntityCtx<T> {
-  data: T;
-  setData: React.Dispatch<React.SetStateAction<T>>;
-}
 
 type WX = {
   previousDay: number;
@@ -169,6 +185,78 @@ type ServiceProviderStatus = {
   name: keyof typeof serviceProviders;
   value: number;
 };
+
+type TransactionList = {
+  id: number;
+  amount: string;
+  transactionType: string;
+  channel: string;
+  amountBefore: string;
+  amountAfter: string;
+  description: string;
+  comment: null;
+  status: string;
+  sessionId: string;
+  ref: string;
+  isPlatformSynced: null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
+  clientId: null;
+  client: {
+    firstName: string;
+    lastName: string;
+  };
+  firstName: string;
+  lastName: string;
+};
+
+type SingleClient = {
+  id: number;
+  amount: string;
+  transactionType: string;
+  channel: string;
+  amountBefore: string;
+  amountAfter: string;
+  description: string;
+  comment: null;
+  status: string;
+  sessionId: string;
+  ref: string;
+  isPlatformSynced: null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
+  clientId: null;
+  client: null;
+};
+
+interface GenericContextInterface<T> {
+  list: T;
+  loading: boolean;
+  refreshContext: () => void;
+}
+
+interface SpecificContextInterface<T> {
+  list: T;
+  // item: T;
+  loading: boolean;
+  refreshContext: () => void;
+}
+
+interface SpecificUserContextInterface<T> {
+  list: T;
+  item: T;
+  itemTwo: T;
+  admin: T;
+  loading: boolean;
+  refreshContext: () => void;
+}
+
+interface SingleEntityCtx<T> {
+  data: T;
+  setData: React.Dispatch<React.SetStateAction<T>>;
+}
 
 interface ResponseSect {
   sectionOne: {
@@ -205,10 +293,11 @@ interface ResponseSect {
     pending: number;
   };
   others: {
-    totalWalletBalance: number;
+    walletBalance: number;
     numberOfUsers: number;
-    totalDeposit: number;
-    totalWithdrawal: number;
+    deposit: number;
+    withdrawals: number;
+    transfer: number;
   };
   serviceProviderStatus: ServiceProviderStatus[];
 }
@@ -263,43 +352,3 @@ interface TrackerSect {
     unsyncedWithdrawal: number;
   };
 }
-
-type TransactionList = {
-  id: number;
-  amount: string;
-  transactionType: string;
-  channel: string;
-  amountBefore: string;
-  amountAfter: string;
-  description: string;
-  comment: null;
-  status: string;
-  sessionId: string;
-  ref: string;
-  isPlatformSynced: null;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: null;
-  clientId: null;
-  client: null;
-};
-
-type SingleClient = {
-  id: number;
-  amount: string;
-  transactionType: string;
-  channel: string;
-  amountBefore: string;
-  amountAfter: string;
-  description: string;
-  comment: null;
-  status: string;
-  sessionId: string;
-  ref: string;
-  isPlatformSynced: null;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: null;
-  clientId: null;
-  client: null;
-};

@@ -38,7 +38,7 @@ const Table = () => {
               <th>Date joined</th>
               <th>Client's Name</th>
               <th>Wallet Balance</th>
-              <th>Email</th>
+              {/* <th>Email</th> */}
               <th>Activity Status</th>
             </tr>
           </thead>
@@ -66,19 +66,20 @@ const Table = () => {
                   </span>
                 </td>
 
-                <td>
+                <td className=' flex flex-col'>
                   <span className='font-normal text-afexred-regular '>
                     {items.firstName} {items.lastName}
                   </span>
+
                   <span>{items.platformId}</span>
                 </td>
 
                 <td>
-                  <span className='font-normal '>{items.balance}</span>
+                  <span className='font-normal '>&#8358;{items.balance}</span>
                 </td>
-                <td>
+                {/* <td>
                   <span className='font-normal '>@gmail.com</span>
-                </td>
+                </td> */}
 
                 <td>
                   <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>

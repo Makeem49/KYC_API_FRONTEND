@@ -55,7 +55,12 @@
 }
 
 .mantine-Popover-dropdown {
-  z-index: 3 !important;
+  z-index: 20 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 10px;
 }
 /* 
 a[aria-current='page'] svg path {
@@ -95,7 +100,7 @@ a[aria-current='page'] svg path {
   border-color: #680202;
 }
 
-.mantine-Stepper-stepIcon[data-completed='true'] {
+/* .mantine-Stepper-stepIcon[data-completed='true'] {
   border-color: #38cb89 !important;
   background-color: #fff;
 }
@@ -113,7 +118,7 @@ a[aria-current='page'] svg path {
   color: #38cb89;
 }
 
-.mantine-Tooltip-tooltip {
+/* .mantine-Tooltip-tooltip {
   background: rgba(143, 92, 227, 1);
   padding-bottom: 1.5rem;
-}
+} */

@@ -33,6 +33,7 @@ export async function get_client_list(): Promise<ClientList[]> {
         id: el.id,
         firstName: el.firstName,
         lastName: el.lastName,
+        platformId: el.platformId,
         phoneNumber: el.phoneNumber,
         bvn: el.bvn,
         idCardType: el.idCardType,
@@ -43,6 +44,7 @@ export async function get_client_list(): Promise<ClientList[]> {
         updatedAt: shortDateFormatter(el.updatedAt),
         accountId: el.accountId,
         providerId: el.providerId,
+        client: el.client,
       } as ClientList)
   );
 }

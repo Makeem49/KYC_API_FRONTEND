@@ -18,12 +18,17 @@ const UserInfo = () => {
           walletTransactionCallbackUrl: `${data.walletTransactionCallbackUrl}`,
           inventoryPositionUrl: `${data.inventoryPositionUrl}`,
           transactionPhrase: `${data.transactionPhrase}`,
+
+          API_KEY: `${data.requestHeaders.API_KEY}`,
+          REQUEST_TS: `${data.requestHeaders.REQUEST_TS}`,
+          HASH_KEY: `${data.requestHeaders.HASH_KEY}`,
           image: `${data.image}`,
           checkWalletBalanceEnabled: `${data.checkWalletBalanceEnabled}`,
           bankTransferEnabled: `${data.bankTransferEnabled}`,
           clientTransferEnabled: `${data.clientTransferEnabled}`,
           checkInventoryPositionEnabled: `${data.checkInventoryPositionEnabled}`,
           tradeInventoryTransactionEnabled: `${data.tradeInventoryTransactionEnabled}`,
+          allowAutoApproveFundRequest: `${data.allowAutoApproveFundRequest}`,
         }}
         onSubmit={async (values) => {
           const newProvider = {
@@ -40,6 +45,7 @@ const UserInfo = () => {
             checkInventoryPositionEnabled: values.checkInventoryPositionEnabled,
             tradeInventoryTransactionEnabled:
               values.tradeInventoryTransactionEnabled,
+            allowAutoApproveFundRequest: values.allowAutoApproveFundRequest,
           };
           console.log(newProvider);
         }}>

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authenticate } from '../api';
+import { toast } from '../utils';
 
 interface AuthInterface {
   isAuthenticated: boolean;
@@ -39,6 +40,13 @@ const AuthProvider = (props: WithChildren) => {
 
     if (resp.message !== 'Authenticated') {
       console.log(resp.message);
+      toast('error', 'Request failed!!!', 'invalid username or password');
+
+      // toast(
+      //   'success',
+      //   'Sucess!!',
+      //   'You have successfully created a third party dispatch'
+      // );
       setLoading(false);
 
       return;

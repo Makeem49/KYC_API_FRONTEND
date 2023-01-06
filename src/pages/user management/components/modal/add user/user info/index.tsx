@@ -8,13 +8,14 @@ import {
   FormMultiSelect,
   // FromLabel,
 } from '../../../../../../components/form';
+// import Button from '../../../../../../components/button';
 
 import { create_user } from '../../../../../../api';
 
 import { useUsersCtx } from '../../../../../../context';
 
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
-  const { refreshContext } = useUsersCtx();
+  const { refreshContext, item, itemTwo } = useUsersCtx();
 
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
@@ -98,12 +99,15 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             </div>
 
             <FormMultiSelect
-              data={[
-                { value: 1, label: 'Permission 1' },
-                { value: 2, label: 'Permission 2' },
-                { value: 3, label: 'Permission 3' },
-                { value: 4, label: 'Permission 4' },
-              ]}
+              // data={[
+              //   // { value: 1, label: 'Permission 1' },
+              //   // { value: 2, label: 'Permission 2' },
+              //   // { value: 3, label: 'Permission 3' },
+              //   // { value: 4, label: 'Permission 4' },
+              // ]}
+              data={item?.map((a) => {
+                return { value: a.id, label: a.name };
+              })}
               id='permissions'
               name='permissions'
               label='Set applicable Permissions'
@@ -111,12 +115,9 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
               placeholder='Set applicable Permissions'
             />
             <FormMultiSelect
-              data={[
-                { value: 1, label: 'Role 1' },
-                { value: 2, label: 'Role 2' },
-                { value: 3, label: 'Role 3' },
-                { value: 4, label: 'Role 4' },
-              ]}
+              data={itemTwo?.map((b) => {
+                return { value: b.id, label: b.name };
+              })}
               id='roles'
               name='roles'
               label='Set applicable Roles'
@@ -133,7 +134,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
               </button>
               <button
                 type='submit'
-                className='bg-afexpurple p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
+                className='bg-afexred-regular p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
                 Submit
               </button>
             </div>

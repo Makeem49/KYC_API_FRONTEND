@@ -2,6 +2,7 @@ import React from 'react';
 // import { faker } from '@faker-js/faker';
 import { Formik, Form } from 'formik';
 import { useSingleUserCtx } from '../../../context/single_user.ctx';
+import { useUsersCtx } from '../../../../../../context';
 import {
   FormImage,
   FormInput,
@@ -10,6 +11,8 @@ import {
 
 const UserInfo = ({ close }: { close: () => void }) => {
   const { data } = useSingleUserCtx();
+  const { item, itemTwo } = useUsersCtx();
+  console.log(data);
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
       {/* INPUT FIELDS */}
@@ -17,10 +20,9 @@ const UserInfo = ({ close }: { close: () => void }) => {
       <Formik
         initialValues={{
           ...data,
-          fullName: `${data.firstName} ${data.lastName}`,
-          username: `${data.username}`,
+          fullName: `${data?.firstName} ${data.lastName}`,
+          username: `${data?.username}`,
           email: `${data.email}`,
-          password: `${data.password}`,
           roles: `${data.roles}`,
           permissions: `${data.permissions}`,
           image: `${data.image}`,
@@ -56,8 +58,8 @@ const UserInfo = ({ close }: { close: () => void }) => {
             <div className='flex items-center space-x-4'>
               <div className='flex-1'>
                 <FormInput
-                  id='userName'
-                  name='userName'
+                  id='username'
+                  name='username'
                   label='Username'
                   placeholder='Username'
                   required
@@ -79,12 +81,9 @@ const UserInfo = ({ close }: { close: () => void }) => {
             </div>
 
             <FormMultiSelect
-              data={[
-                { value: 1, label: 'Permission 1' },
-                { value: 2, label: 'Permission 2' },
-                { value: 3, label: 'Permission 3' },
-                { value: 4, label: 'Permission 4' },
-              ]}
+              data={item?.map((a) => {
+                return { value: a.id, label: a.name };
+              })}
               id='permissions'
               name='permissions'
               label='Set applicable Permissions'
@@ -92,12 +91,9 @@ const UserInfo = ({ close }: { close: () => void }) => {
               placeholder='Set applicable Permissions'
             />
             <FormMultiSelect
-              data={[
-                { value: 1, label: 'Role 1' },
-                { value: 2, label: 'Role 2' },
-                { value: 3, label: 'Role 3' },
-                { value: 4, label: 'Role 4' },
-              ]}
+              data={itemTwo?.map((b) => {
+                return { value: b.id, label: b.name };
+              })}
               id='roles'
               name='roles'
               label='Set applicable Roles'
@@ -114,7 +110,7 @@ const UserInfo = ({ close }: { close: () => void }) => {
               </button>
               <button
                 type='submit'
-                className='bg-afexpurple p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
+                className='bg-afexred-regular p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
                 Submit
               </button>
             </div>
