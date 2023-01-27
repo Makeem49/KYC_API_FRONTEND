@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { Sidebar } from './components';
 import bgImage from '../src/assets/svgs/bg-pattern.svg';
 
@@ -15,20 +15,98 @@ import {
   SingleClient,
   Settings,
 } from './pages';
-import { useAuthCtx } from './context';
-
+import ContextProvider from './context';
 import './App.css';
-function App() {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuthCtx();
-  const token = localStorage.getItem('cuddie-access-token');
+import { ColumnProvider } from './context/column_context';
+import AuthProvider from './context/auth_context';
 
-  useEffect(() => {
-    if (!isAuthenticated || !token) {
-      return navigate('auth');
-    }
-    //eslint-disable-next-line
-  }, [isAuthenticated]);
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: 'client',
+        children: [
+          {
+            index: true,
+            element: <Client />,
+          },
+          {
+            path: ':clientId',
+            element: <SingleClient />,
+          },
+        ],
+      },
+      {
+        path: 'transaction',
+        children: [
+          {
+            index: true,
+            element: <Transaction />,
+          },
+        ],
+      },
+      {
+        path: 'user-management',
+        children: [
+          {
+            index: true,
+            element: <UserManagement />,
+          },
+        ],
+      },
+      {
+        path: 'client-provider',
+        children: [
+          {
+            index: true,
+            element: <ClientProvider />,
+          },
+          {
+            path: ':provider_id/api-keys',
+            element: <ApiRequest />,
+          },
+        ],
+      },
+      {
+        path: 'tracker-dashboard',
+        children: [
+          {
+            index: true,
+            element: <TrackerDashboard />,
+          },
+        ],
+      },
+      {
+        path: 'settings',
+        element: <Settings />,
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: <Authentication />,
+  },
+]);
+
+function Root() {
+  return (
+    <AuthProvider>
+      <ContextProvider>
+        <ColumnProvider>
+          <App />
+        </ColumnProvider>
+      </ContextProvider>
+    </AuthProvider>
+  );
+}
+
+function App() {
   return (
     <div className='flex bg-white text-[#54565B] text-sm xl:text-base'>
       <Sidebar />
@@ -36,31 +114,8 @@ function App() {
       <div
         className='w-[94%] bg-hero bg-[#F5F5F5]'
         style={{ backgroundImage: `url(${bgImage})` }}>
-        <Routes>
-          <Route index element={<Dashboard />} />
-          <Route path='dashboard' element={<Dashboard />} />
-          <Route path='auth' element={<Authentication />} />
-
-          <Route path='client'>
-            <Route index element={<Client />} />
-            <Route path=':providerId/:clientId' element={<SingleClient />} />
-          </Route>
-
-          <Route path='transaction' element={<Transaction />} />
-          <Route path='user-management' element={<UserManagement />} />
-
-          <Route path='client-provider'>
-            <Route index element={<ClientProvider />} />
-            <Route path=':provider_id/api-keys' element={<ApiRequest />} />
-          </Route>
-
-          <Route path='client-provider' element={<ClientProvider />} />
-          <Route path='tracker-dashboard' element={<TrackerDashboard />} />
-          <Route path='settings' element={<Settings />} />
-        </Routes>
+        <Outlet />
       </div>
     </div>
   );
 }
-
-export default App;

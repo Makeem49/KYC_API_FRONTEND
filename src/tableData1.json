@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Wendall Gripton",
+    "email": "wg@creative.org",
+    "gender": "Male",
+    "age": 100,
+    "start_date": "2022-01-26",
+    "status": true
+  },
+  {
+    "id": 2,
+    "name": "samuel Mollitt",
+    "email": "smol@github.io",
+    "gender": "Female",
+    "age": 60,
+    "start_date": "2021-06-07",
+    "status": true
+  },
+  {
+    "id": 3,
+    "name": "Ole Rogge",
+    "email": "orog@usatoday.com",
+    "gender": "Male",
+    "age": 50,
+    "start_date": "2021-06-23",
+    "status": true
+  },
+  {
+    "id": 4,
+    "name": "Elwin Huyge",
+    "email": "@gdghbssbhgh",
+    "gender": "Male",
+    "age": 34,
+    "start_date": "2021-06-07",
+    "status": true
+  }
+]

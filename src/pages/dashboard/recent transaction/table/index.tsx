@@ -1,10 +1,16 @@
 import React from 'react';
 import { ArrowDown, ArrowUp } from 'iconsax-react';
-import { useTransactionCtx } from '../../../../context';
+import { commaformatter } from '../../../../utils';
+import { get_transaction_list_querry } from '../../../../queries/transaction_stats';
+import { useQuery } from 'react-query';
 
 const Table = () => {
-  const { list } = useTransactionCtx();
-  const arr = list.slice(0, 9);
+  const { data, isError, isLoading } = useQuery(get_transaction_list_querry(1));
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
+  const arr = data!.slice(0, 10);
 
   return (
     <div className='h-full pb-5'>
@@ -30,7 +36,7 @@ const Table = () => {
             {arr.map((el) => (
               <tr className=' text-left child:py-8 child:px-1 border-b'>
                 <td>
-                  <span className='font-normal'>{list.indexOf(el) + 1}</span>
+                  <span className='font-normal'>{data!.indexOf(el) + 1}</span>
                 </td>
 
                 <td>
@@ -41,13 +47,13 @@ const Table = () => {
                 </td>
 
                 <td>
-                  <span className='font-normal '>
-                    {el.client ? null : 'no name'}
-                  </span>
+                  <span className='font-normal '>{el.clientName}</span>
                 </td>
 
                 <td>
-                  <span className='font-normal '>{el.amount}</span>
+                  <span className='font-normal '>
+                    {commaformatter(el.amount)}
+                  </span>
                 </td>
                 <td>
                   <span className='font-normal '>{el.transactionType}</span>

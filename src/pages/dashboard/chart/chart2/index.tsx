@@ -10,8 +10,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { useDashboardCtx } from '../../../../context';
 import { dayDateFormatter } from '../../../../utils';
+import { useQuery } from 'react-query';
+import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +25,15 @@ ChartJS.register(
 );
 
 export default function Chart2() {
-  const { list } = useDashboardCtx();
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
 
   const options = {
     responsive: true,
@@ -66,26 +75,37 @@ export default function Chart2() {
   };
 
   const data = {
-    labels: list.performanceOverview.map((d): any => dayDateFormatter(d.date)),
+    labels: list!.performanceOverview.map((d): any =>
+      dayDateFormatter(d.date).split(' ')
+    ),
     datasets: [
       {
         label: 'Total Withdrawals',
-        data: list.performanceOverview.map((w): any => w.stats.withdrawals),
+        data: list!.performanceOverview.map((w): any => w.stats.withdrawals),
         borderColor: '#EC7670',
         backgroundColor: '#EC7670',
+        tension: 0.8,
+        pointRadius: 1,
+        borderWidth: 1.5,
       },
       {
         label: 'Total Deposits',
-        data: list.performanceOverview.map((d): any => d.stats.deposit),
-        borderColor: '#F9C362',
-        backgroundColor: '#F9C362',
+        data: list!.performanceOverview.map((d): any => d.stats.deposit),
+        borderColor: ' #38CB89',
+        backgroundColor: ' #38CB89',
+        tension: 0.8,
+        pointRadius: 1,
+        borderWidth: 1.5,
       },
 
       {
         label: 'Total Transfers',
-        data: list.performanceOverview.map((t): any => t.stats.transfer),
-        borderColor: '#70A8EC',
-        backgroundColor: '#70A8EC',
+        data: list!.performanceOverview.map((t): any => t.stats.transfer),
+        borderColor: '#F9C362',
+        backgroundColor: '#F9C362',
+        tension: 0.8,
+        pointRadius: 1,
+        borderWidth: 1.5,
       },
     ],
   };

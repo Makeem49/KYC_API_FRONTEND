@@ -35,7 +35,7 @@ const AuditModal = () => {
             dropdown: {
               top: '-140% !important',
               left: '80% !important',
-              backgroundColor: '#54289D',
+              backgroundColor: '#E1261C',
               color: '#FFFF',
               fontSize: '16px',
               fontStyle: 'bold',

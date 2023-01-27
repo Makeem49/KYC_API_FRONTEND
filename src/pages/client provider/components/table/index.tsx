@@ -8,6 +8,7 @@ import { useSingleClientCtx } from '../context/single_user.ctx';
 
 const Table = () => {
   const { list } = useClientsCtx();
+  console.log(list, 'de here');
   const { setData } = useSingleClientCtx();
 
   const [page, setPage] = useState<number>(1);
@@ -26,7 +27,7 @@ const Table = () => {
       <div className='overflow-auto w-full pb-24 '>
         <table className='overflow-auto w-full align-top  text-[#54565B]'>
           <thead className='text-[10px]  sticky top-0 text-left z-[5]'>
-            <tr className='border-b child:cursor-default child:py-4 text-[#C1C0C2] text-[12px] font-semibold'>
+            <tr className='child:py-4 border-b text-[12px] text-[#C1C0C2] font-semibold child:px-2 child:cursor-default child:align-middle'>
               <td className='py-6 px-6'>
                 <input
                   type='checkbox'
@@ -74,7 +75,7 @@ const Table = () => {
                 </td>
 
                 <td className='py-6 px-6'>
-                  <span className='font-medium'>{}</span>
+                  <span className='font-medium'>{providers.noOfClients}</span>
                 </td>
 
                 <td className='py-6 px-6 cursor-default'>
@@ -91,7 +92,10 @@ const Table = () => {
                   </span>
                 </td>
 
-                <td onClick={() => setData(providers)}>
+                <td
+                  onClick={() => {
+                    setData(providers);
+                  }}>
                   {' '}
                   <UserAction />{' '}
                 </td>

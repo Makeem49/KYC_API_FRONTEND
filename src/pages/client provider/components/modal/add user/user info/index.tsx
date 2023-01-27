@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
-import { FormImage, FormInput } from '../../../../../../components/form';
-// import Button from '../../../../../../components/button';
+import {
+  FormImage,
+  FormInput,
+  FormMultiSelect,
+} from '../../../../../../components/form';
+import Button from '../../../../../../components/button';
 import ToggleButton from '../../../../../../components/toggleButton';
 
-import { useUsersCtx } from '../../../../../../context';
+import { useClientsCtx } from '../../../../../../context';
 import { create_client_provider } from '../../../../../../api';
 
 import { faker } from '@faker-js/faker';
 
 const UserInfo = () => {
-  const { refreshContext } = useUsersCtx();
+  const { refreshContext } = useClientsCtx();
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className='w-full h-full overflow-y-auto flex flex-col gap-3 p-6'>
@@ -25,6 +30,7 @@ const UserInfo = () => {
           API_KEY: '',
           REQUEST_TS: '',
           HASH_KEY: '',
+          countryCode: '',
           image: '',
           checkWalletBalanceEnabled: false,
           bankTransferEnabled: false,
@@ -46,6 +52,7 @@ const UserInfo = () => {
               REQUEST_TS: values.REQUEST_TS,
               HASH_KEY: values.HASH_KEY,
             },
+            countryCode: values.countryCode[0],
             image: faker.image.people(640, 640),
             checkWalletBalanceEnabled: values.checkWalletBalanceEnabled,
             bankTransferEnabled: values.bankTransferEnabled,
@@ -55,8 +62,12 @@ const UserInfo = () => {
               values.tradeInventoryTransactionEnabled,
             allowAutoApproveFundRequest: values.allowAutoApproveFundRequest,
           };
-          // const message = await create_client_provider(newProvider);
-          console.log(newProvider);
+          const message = await create_client_provider(newProvider);
+
+          if (message === 'unable to create user') {
+            alert(message);
+            setLoading(false);
+          }
 
           refreshContext();
         }}>
@@ -89,7 +100,7 @@ const UserInfo = () => {
             <FormInput
               id='clientRepoUrl'
               name='clientRepoUrl'
-              label='Clients Callback URL'
+              label='Clients Repo URL'
               placeholder='Enter URL'
               required
               type='text'
@@ -152,6 +163,20 @@ const UserInfo = () => {
               autocomplete='text'
             />
 
+            <FormMultiSelect
+              data={[
+                { value: 'GH', label: 'Ghana' },
+                { value: 'KE', label: 'Kenya' },
+                { value: 'NG', label: 'Nigeria' },
+                { value: 'UG', label: 'Uganda' },
+              ]}
+              id='countryCode'
+              name='countryCode'
+              label='Country'
+              required
+              placeholder='Select Country'
+            />
+
             <ToggleButton
               label='Check Wallet Balance Enabled'
               id='checkWalletBalanceEnabled'
@@ -194,11 +219,13 @@ const UserInfo = () => {
                 onClick={() => resetForm()}>
                 Discard
               </button>
-              <button
+              <Button
                 type='submit'
-                className='bg-afexpurple p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
-                Submit
-              </button>
+                text={
+                  <span className='flex items-center space-x-6'>Submit</span>
+                }
+                loading={loading}
+              />
             </div>
           </Form>
         )}

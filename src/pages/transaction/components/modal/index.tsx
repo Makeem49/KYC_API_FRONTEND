@@ -2,7 +2,8 @@ import React from 'react';
 import { Location } from 'iconsax-react';
 import { useState } from 'react';
 import { Drawer, Group, Tooltip } from '@mantine/core';
-import NigerianMap from './map';
+// import NigerianMap from './map';
+import HeatMap from '../heat_map';
 import List from './list';
 import AllTransactions from './allTransactions';
 
@@ -30,7 +31,8 @@ function RightModal() {
           }}>
           All Transactions
         </button>
-        <NigerianMap />
+        {/* <NigerianMap /> */}
+        <HeatMap />
         {showList && <List />}
         {showAllTransactions && <AllTransactions />}
       </Drawer>

@@ -77,17 +77,12 @@ const Notification = () => {
         </p>
       </div>
       <div className='w-full flex justify-end items-center py-6 mt-2 border-b'>
-        <p className=' bg-afexpurple-lighter text-afexpurple-dark px-4 py-1 rounded text-[10px] font-bold'>
+        <p className=' bg-afexred-extralight text-afexred-regular px-4 py-1 rounded text-[10px] font-bold'>
           {' '}
           SAVE
         </p>
       </div>
-      <div className='w-full text-[12px] py-2'>
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Facilisi facilisi mattis
-          sodales morbi eros sed consectetur. Nulla.
-        </p>
-      </div>
+      <div className='w-full text-[12px] py-2'></div>
     </div>
   );
 };

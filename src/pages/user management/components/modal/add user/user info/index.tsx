@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { faker } from '@faker-js/faker';
 
@@ -8,7 +8,7 @@ import {
   FormMultiSelect,
   // FromLabel,
 } from '../../../../../../components/form';
-// import Button from '../../../../../../components/button';
+import Button from '../../../../../../components/button';
 
 import { create_user } from '../../../../../../api';
 
@@ -17,12 +17,14 @@ import { useUsersCtx } from '../../../../../../context';
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
   const { refreshContext, item, itemTwo } = useUsersCtx();
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
       <Formik
         initialValues={{
           fullName: '',
-          userName: '',
+          username: '',
           email: '',
           password: '',
           roles: [],
@@ -31,7 +33,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
         }}
         onSubmit={async (values) => {
           const newUser = {
-            username: values.userName,
+            username: values.username,
             email: values.email,
             firstName: values.fullName.split(' ')[0],
             lastName: values.fullName.split(' ')[1],
@@ -40,8 +42,14 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             permissions: values.permissions,
             image: faker.image.people(640, 640),
           };
+          setLoading(true);
           const message = await create_user(newUser);
-          console.log(message);
+
+          if (message === 'unable to create user') {
+            alert(message);
+            setLoading(false);
+          }
+          setLoading(false);
 
           refreshContext();
           closeModal();
@@ -85,7 +93,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                   autocomplete='username'
                 />
               </div>
-              <div className='flex-1'>
+              {/* <div className='flex-1'>
                 <FormInput
                   id='password'
                   name='password'
@@ -95,7 +103,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                   type='password'
                   autocomplete='current-password'
                 />
-              </div>
+              </div> */}
             </div>
 
             <FormMultiSelect
@@ -132,11 +140,13 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                 onClick={() => resetForm()}>
                 Discard
               </button>
-              <button
+              <Button
                 type='submit'
-                className='bg-afexred-regular p-4 rounded-lg px-5 text-base font-semibold text-white hover:shadow-lg'>
-                Submit
-              </button>
+                text={
+                  <span className='flex items-center space-x-6'>Submit</span>
+                }
+                loading={loading}
+              />
             </div>
           </Form>
         )}

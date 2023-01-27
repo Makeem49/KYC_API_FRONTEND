@@ -10,12 +10,13 @@ const AddUser = () => {
   return (
     <>
       <Drawer
+        className=' overflow-y-auto'
         position='right'
         opened={opened}
         onClose={() => setOpened(false)}
         title='Add Client Provider'
         padding='xl'
-        size='45%'>
+        size='38%'>
         {/* Map Component */}
 
         <UserInfo />

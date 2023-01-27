@@ -14,7 +14,9 @@ const Chart = () => {
   return (
     <div className='w-full p-4 bg-[#ffff] rounded-lg'>
       <div className='flex justify-between mb-6 items-center'>
-        <p>Performance Overview</p>
+        <p className=' text-[16px] font-normal text-textgrey-darker'>
+          Performance Overview
+        </p>
         <div className='flex gap-3'>
           <Chart21
             size='32'

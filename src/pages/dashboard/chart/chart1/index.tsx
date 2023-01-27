@@ -1,15 +1,25 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { useDashboardCtx } from '../../../../context';
 import {
   //  capitalizeWords,
   // commaformatter,
   dayDateFormatter,
 } from '../../../../utils';
+import { useQuery } from 'react-query';
+import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 // import { nFormatter } from '../../../../utils/formatter';
 
 const Chart1 = () => {
-  const { list } = useDashboardCtx();
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
   const OPTIONS = {
     plugins: {
       legend: {
@@ -26,7 +36,7 @@ const Chart1 = () => {
     },
     responsive: true,
 
-    barThickness: 10,
+    barThickness: 8,
 
     scales: {
       x: {
@@ -52,35 +62,37 @@ const Chart1 = () => {
   };
 
   const data = {
-    labels: list.performanceOverview.map((d): any => dayDateFormatter(d.date)),
+    labels: list!.performanceOverview.map((d): any =>
+      dayDateFormatter(d.date).split(' ')
+    ),
 
     datasets: [
       {
-        label: 'withdrawals',
+        label: 'Total Withdrawals',
 
-        data: list.performanceOverview.map((w): any => w.stats.withdrawals),
+        data: list!.performanceOverview.map((w): any => w.stats.withdrawals),
 
         backgroundColor: '#EC7670',
       },
 
       {
-        label: 'Deposits',
+        label: 'Total Deposits',
 
-        data: list.performanceOverview.map((d): any => d.stats.deposit),
+        data: list!.performanceOverview.map((d): any => d.stats.deposit),
 
-        backgroundColor: '#F9C362',
+        backgroundColor: '#38CB89',
       },
 
       {
-        label: 'Transfer',
+        label: 'Total Transfer',
 
-        data: list.performanceOverview.map((t): any => t.stats.transfer),
+        data: list!.performanceOverview.map((t): any => t.stats.transfer),
 
-        backgroundColor: '#70A8EC',
+        backgroundColor: '#F9C362',
       },
     ],
   };
-  return <Bar options={OPTIONS} data={data} height={130} />;
+  return <Bar options={OPTIONS} data={data} />;
 };
 
 export default Chart1;

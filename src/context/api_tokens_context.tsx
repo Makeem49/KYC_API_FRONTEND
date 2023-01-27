@@ -9,11 +9,14 @@ const ApiTokensCtx = createContext<
 const ApiTokensProvider = (props: WithChildren) => {
   const { pathname } = useLocation();
   const provider_id = pathname.split('/')[2];
+
   const [apiKeys, setApiKeys] = useState<ClientProviderToken[]>([]);
 
   const refreshContext = () => {};
 
   useEffect(() => {
+    if (!provider_id) return;
+
     const fetch_keys = async () => {
       const resp = await get_token_list(parseInt(provider_id, 10));
 

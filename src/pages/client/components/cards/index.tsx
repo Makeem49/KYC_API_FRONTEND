@@ -8,10 +8,19 @@ import {
 import { Change } from '../../../../components';
 import { calculatePercentageChange } from '../../../../utils';
 
-import { useClientStats } from '../../../../context/client_stats_context';
+import { useQuery } from 'react-query';
+import { get_client_stats_query } from '../../../../queries/clients_stats';
 
 const ClientCard = () => {
-  const { stats } = useClientStats();
+  const {
+    data: stats,
+    isLoading,
+    isError,
+  } = useQuery(get_client_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
 
   return (
     <div className='flex gap-6 child:h-[134px]'>
@@ -22,12 +31,12 @@ const ClientCard = () => {
           <UserCirlceAdd size='25' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-dark'>
-            {stats.sectionOne?.totalClients.previousDay}
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {stats?.sectionOne?.totalClients?.today}
             <Change
               value={calculatePercentageChange(
-                stats.sectionOne?.totalClients?.today ?? 0,
-                stats.sectionOne?.totalClients?.previousDay ?? 0
+                stats?.sectionOne?.totalClients?.today ?? 0,
+                stats?.sectionOne?.totalClients?.previousDay ?? 0
               )}
             />
           </p>
@@ -42,12 +51,12 @@ const ClientCard = () => {
           <UserTick size='25' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-dark'>
-            {stats.sectionOne?.verifiedClients.previousDay}
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {stats?.sectionOne?.verifiedClients?.today}
             <Change
               value={calculatePercentageChange(
-                stats.sectionOne?.verifiedClients?.today ?? 0,
-                stats.sectionOne?.verifiedClients?.previousDay ?? 0
+                stats?.sectionOne?.verifiedClients?.today ?? 0,
+                stats?.sectionOne?.verifiedClients?.previousDay ?? 0
               )}
             />
           </p>
@@ -82,8 +91,8 @@ const ClientCard = () => {
           <UserOctagon size='25' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-dark'>
-            {stats.sectionOne?.activeClients.previousDay}
+          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+            {stats?.sectionOne?.activeClients?.today}
             <Change
               value={calculatePercentageChange(
                 stats?.sectionOne?.activeClients?.today ?? 0,

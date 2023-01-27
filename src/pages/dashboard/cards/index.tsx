@@ -2,13 +2,28 @@ import React from 'react';
 import { UserSquare, Chart, Wallet1, Receipt } from 'iconsax-react';
 import redDot from '../../../assets/images/_Dot.svg';
 import greenDot from '../../../assets/images/Dot.svg';
-import { useDashboardCtx } from '../../../context';
 import { Change } from '../../../components';
 import { calculatePercentageChange } from '../../../utils';
 import { commaformatter } from '../../../utils';
+import { get_dashboard_stats_query } from '../../../queries/dash_board';
+import { useQuery } from 'react-query';
 
 const Card = () => {
-  const { list } = useDashboardCtx();
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
+  const inactive = list;
+
+  const inactiveClients =
+    inactive!?.sectionOne?.users?.today - inactive!?.sectionOne?.users.active;
+
   // console.log(list);
   // const obj = list?.sectionOne?.users;
   // const change = obj.today - obj.previousDay;
@@ -25,25 +40,25 @@ const Card = () => {
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
           <p className=' flex items-center gap-1 text-[22px] font-bold text-textgrey-dark'>
-            {commaformatter(list?.sectionOne?.users?.today)}
+            {commaformatter(list!?.sectionOne?.users?.today)}
             <Change
               value={calculatePercentageChange(
-                list?.sectionOne?.users?.previousDay,
-                list?.sectionOne?.users?.today
+                list!?.sectionOne?.users?.today,
+                list!?.sectionOne?.users?.previousDay
               )}
             />
           </p>
           <span>vs previous day</span>
         </div>
 
-        <div className='absolute bottom-[-10%] item-center flex gap-1'>
+        <div className='absolute bottom-[-10%] item-center flex justify-between'>
           <p className='flex items-center gap-1 text-[#076D3A] bg-[#E7F9F0] px-1 rounded-lg'>
             <img src={greenDot} alt='green' className='w-[6px]' />
             Active: <span>{list?.sectionOne?.users?.active}</span>
           </p>
           <p className='flex items-center gap-1 text-[#873031] bg-[#FDEEEE] px-1 rounded-lg'>
             <img src={redDot} alt='red' className='w-[6px]' />
-            Inactive: <span>700</span>
+            Inactive: <span>{inactiveClients}</span>
           </p>
         </div>
       </div>
@@ -56,7 +71,7 @@ const Card = () => {
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[22px] font-bold text-textgrey-dark'>
-            &#8358; {commaformatter(list?.sectionOne?.transactions?.today ?? 0)}
+            {commaformatter(list?.sectionOne?.transactions?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
                 list?.sectionOne?.transactions?.today ?? 0,
@@ -80,8 +95,8 @@ const Card = () => {
 
             <Change
               value={calculatePercentageChange(
-                list.sectionOne.transactions.today ?? 0,
-                list?.sectionOne?.values?.previousDay ?? 0
+                list!.sectionOne.transactions.today ?? 0,
+                list!?.sectionOne?.values?.previousDay ?? 0
               )}
             />
           </p>
@@ -99,15 +114,15 @@ const Card = () => {
           <p className='text-[#076D3A] bg-[#E7F9F0]  px-2 rounded-md'>
             USD:{' '}
             <span>
-              {commaformatter(list?.sectionOne?.channels?.today?.ussd)}|{' '}
-              {commaformatter(list?.sectionOne?.channels?.previousDay?.ussd)}
+              {commaformatter(list!?.sectionOne?.channels?.today?.ussd)}|{' '}
+              {commaformatter(list!?.sectionOne?.channels?.previousDay?.ussd)}
             </span>
           </p>
           <p className='text-[#873031] bg-[#FDEEEE] px-2 rounded-md'>
             Others:{' '}
             <span>
-              {commaformatter(list?.sectionOne?.channels?.today?.others)} |{' '}
-              {commaformatter(list?.sectionOne?.channels?.previousDay?.others)}
+              {commaformatter(list!?.sectionOne?.channels?.today?.others)} |{' '}
+              {commaformatter(list!?.sectionOne?.channels?.previousDay?.others)}
             </span>
           </p>
         </div>

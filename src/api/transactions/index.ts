@@ -30,22 +30,27 @@ export async function get_all_transactions(): Promise<TransactionList[]> {
     (el: any) =>
       ({
         id: el.id,
+        createdAt: shortDateFormatter(el.createdAt),
+        clientName: `${el.client.firstName} ${el.client.lastName}`,
         amount: el.amount,
         transactionType: el.transactionType,
+        status: el.status,
         channel: el.channel,
         amountBefore: el.amountBefore,
         amountAfter: el.amountAfter,
         description: el.description,
-        comment: el.comment,
-        status: el.status,
+        comment: el.comment ? el.comment : '',
+
         sessionId: el.sessionId,
         ref: el.ref,
-        isPlatformSynced: el.isPlatformSynced,
-        createdAt: shortDateFormatter(el.createdAt),
+        isPlatformSynced: el.isPlatformSynced ? el.isPlatformSynced : '',
+
         updatedAt: el.updatedAt,
-        deletedAt: el.deletedAt,
-        clientId: el.clientId,
-        client: el.client,
+        deletedAt: el.deletedAt ? el.deletedAt : '',
+        clientId: el.clientId ? el.clientId : '',
+
+        clientBalance: el.client.balance,
+        clientPlatformId: el.client.platformId,
       } as TransactionList)
   );
 }

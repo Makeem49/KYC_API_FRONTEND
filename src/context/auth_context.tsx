@@ -39,21 +39,15 @@ const AuthProvider = (props: WithChildren) => {
     const resp = await authenticate(username, password);
 
     if (resp.message !== 'Authenticated') {
-      console.log(resp.message);
       toast('error', 'Request failed!!!', 'invalid username or password');
-
-      // toast(
-      //   'success',
-      //   'Sucess!!',
-      //   'You have successfully created a third party dispatch'
-      // );
       setLoading(false);
 
       return;
     }
+    // toast('success', 'Sucess!!', 'Login successfully');
 
     // Drop success toast
-    console.log(resp.message);
+    console.log(resp);
     localStorage.setItem('cuddie-access-token', resp.access_token);
     localStorage.setItem('cuddie-auth-status', 'true');
     setIsAuthenticated(true);
@@ -67,7 +61,7 @@ const AuthProvider = (props: WithChildren) => {
     localStorage.removeItem('token');
     localStorage.removeItem('cuddie-auth-status');
     setIsAuthenticated(false);
-    navigate('/auth');
+    navigate('/login');
   };
 
   return (

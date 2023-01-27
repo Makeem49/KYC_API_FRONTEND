@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-
-import OlvImg from '../../../../assets/images/olivia.svg';
+import userImg from '../../../../assets/images/user.png';
 import UserAction from '../drop down';
 import { Pagination } from '../../../../components';
 import { useUsersCtx } from '../../../../context';
@@ -62,7 +61,11 @@ const Table = () => {
                   <td className='text-start '>
                     {' '}
                     <div className='flex gap-5'>
-                      <img src={OlvImg} alt='olvimg' />{' '}
+                      <img
+                        className='w-10 h-full object-fill'
+                        src={userImg}
+                        alt='olvimg'
+                      />{' '}
                       <span className='font-medium text-[14px]'>
                         {user.firstName} {user.lastName}
                         <br /> <small>{user.email}</small>

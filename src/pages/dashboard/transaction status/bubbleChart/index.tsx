@@ -1,18 +1,89 @@
 import React from 'react';
 import { Chart as ChartJS, LinearScale, PointElement, Tooltip } from 'chart.js';
 import { Bubble } from 'react-chartjs-2';
-
-import { useDashboardCtx } from '../../../../context';
+import { calculatePercentageRadius } from '../../../../utils';
+import { useQuery } from 'react-query';
+import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 
 ChartJS.register(LinearScale, PointElement, Tooltip);
 
 export default function BubbleChart() {
-  const { list } = useDashboardCtx();
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
+  const total =
+    list!.transactionStatus.failed +
+    list!.transactionStatus.pending +
+    list!.transactionStatus.successful;
+
+  const successRadius = calculatePercentageRadius(
+    list!.transactionStatus.successful,
+    total
+  );
+  // console.log(list.transactionStatus.successful, 'here');
+  const pendingRadius = calculatePercentageRadius(
+    list!.transactionStatus.pending,
+    total
+  );
+  const failedRadius = calculatePercentageRadius(
+    list!.transactionStatus?.failed,
+    total
+  );
 
   const transactionStatus = {
     successful: list?.transactionStatus?.successful,
     failed: list?.transactionStatus?.failed,
     pending: list?.transactionStatus?.pending,
+  };
+
+  // const radius
+  const data = {
+    datasets: [
+      {
+        label: 'Success',
+        extra: transactionStatus.successful,
+        data: [
+          {
+            x: 190,
+            y: 90,
+            r: successRadius,
+          },
+        ],
+        backgroundColor: 'rgba(101, 214, 191, 1)',
+      },
+      {
+        label: 'Pending',
+        extra: transactionStatus.pending,
+        data: [
+          {
+            x: 100,
+            y: 200,
+            r: pendingRadius,
+          },
+        ],
+        backgroundColor: 'rgba(249, 195, 98, 1)',
+      },
+
+      {
+        label: 'Failed',
+        extra: transactionStatus.failed,
+        data: [
+          {
+            x: 310,
+            y: 210,
+            r: failedRadius,
+          },
+        ],
+        backgroundColor: 'rgba(237, 85, 86, 1)',
+      },
+    ],
   };
 
   const options = {
@@ -27,8 +98,22 @@ export default function BubbleChart() {
       legend: {
         display: true,
         // position: 'bottom',
+        // labels: {
+        //   usePointStyle: true,
+        // },
+
         labels: {
           usePointStyle: true,
+          generateLabels: (chart: any) => {
+            const datasets = chart.data.datasets;
+
+            return datasets.map((data: any, i: any) => ({
+              text: `${data.label} ${data.extra}`,
+              fillStyle: data.backgroundColor,
+              strokeStyle: data.backgroundColor,
+              fontColor: data.backgroundColor,
+            }));
+          },
         },
       },
     },
@@ -59,48 +144,6 @@ export default function BubbleChart() {
         },
       },
     },
-  };
-
-  const data = {
-    datasets: [
-      {
-        label: 'Success',
-        extra: transactionStatus.successful,
-        data: [
-          {
-            x: 190,
-            y: 150,
-            r: 30,
-          },
-        ],
-        backgroundColor: 'rgba(101, 214, 191, 1)',
-      },
-      {
-        label: 'Pending',
-        extra: transactionStatus.pending,
-        data: [
-          {
-            x: 100,
-            y: 300,
-            r: 30,
-          },
-        ],
-        backgroundColor: 'rgba(249, 195, 98, 1)',
-      },
-
-      {
-        label: 'Failed',
-        extra: transactionStatus.failed,
-        data: [
-          {
-            x: 300,
-            y: 400,
-            r: 30,
-          },
-        ],
-        backgroundColor: 'rgba(237, 85, 86, 1)',
-      },
-    ],
   };
 
   return <Bubble options={options} data={data} />;

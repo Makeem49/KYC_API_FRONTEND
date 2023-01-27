@@ -2,10 +2,20 @@ import React from 'react';
 import { WalletCheck, SaveAdd, MoneySend, CardCoin } from 'iconsax-react';
 import { calculatePercentageChange } from '../../../../utils';
 import { Change } from '../../../../components';
+import { commaformatter } from '../../../../utils';
+import { useQuery } from 'react-query';
+import { get_transaction_stats_query } from '../../../../queries/transaction_stats';
 
-import { useTransactionCtx } from '../../../../context';
 const TransactionCards = () => {
-  const { stats } = useTransactionCtx();
+  const {
+    data: stats,
+    isLoading,
+    isError,
+  } = useQuery(get_transaction_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
   return (
     <div className='flex gap-4 child:h-[134px]'>
       {/* Card One */}
@@ -15,8 +25,8 @@ const TransactionCards = () => {
           <SaveAdd size='20' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-dark'>
-            {stats?.dailyTransactions?.deposit?.yesterday ?? 0}
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {commaformatter(stats?.dailyTransactions?.deposit?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
                 stats?.dailyTransactions?.deposit?.today ?? 0,
@@ -35,8 +45,8 @@ const TransactionCards = () => {
           <MoneySend size='20' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-dark'>
-            {stats?.dailyTransactions?.withdrawals?.yesterday ?? 0}
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {commaformatter(stats?.dailyTransactions?.withdrawals?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
                 stats?.dailyTransactions?.withdrawals?.today ?? 0,
@@ -55,8 +65,8 @@ const TransactionCards = () => {
           <WalletCheck size='20' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-dark'>
-            {stats?.dailyTransactions?.transfer?.yesterday ?? 0}
+          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+            {commaformatter(stats?.dailyTransactions?.transfer?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
                 stats?.dailyTransactions?.transfer?.today ?? 0,
@@ -75,7 +85,7 @@ const TransactionCards = () => {
           <CardCoin size='20' color='#EC7670' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-dark'>
+          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
             &#8358; 200,000,000{' '}
             <span className='text-[#0DBF66] font-normal text-[13px]'>
               {' '}

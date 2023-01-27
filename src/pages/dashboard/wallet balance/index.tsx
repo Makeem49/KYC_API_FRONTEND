@@ -1,11 +1,20 @@
 import React from 'react';
 import AuditModal from '../audit modal';
-import { useDashboardCtx } from '../../../context';
 import { commaformatter } from '../../../utils';
+import { useQuery } from 'react-query';
+import { get_dashboard_stats_query } from '../../../queries/dash_board';
 
 const WalletBallance = () => {
-  const { list } = useDashboardCtx();
-  console.log(list);
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
   return (
     <div className=' flex flex-col gap-2 border border-[#DAD9DA] rounded-lg p-5'>
       <div className='px-5 py-3 bg-afexred-lighter'>
@@ -30,10 +39,10 @@ const WalletBallance = () => {
           <p className=' text-textgrey-normal'>Total Deposits</p>
           <p>{commaformatter(list?.others?.deposit ?? 0)}</p>
         </div>
-        <div className='flex justify-between'>
+        {/* <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Total Withdrawals</p>
           <p>{commaformatter(list?.others?.withdrawals ?? 0)}</p>
-        </div>
+        </div> */}
       </div>
       {/* 
       Total Balance

@@ -23,7 +23,7 @@
   padding: 2rem 2rem 1rem 2rem;
 }
 .mantine-Calendar-day[data-selected='true'] {
-  background-color: #38cb89;
+  background-color: #e1261c;
 }
 .mantine-Tabs-tab:hover {
   border: none;
@@ -42,7 +42,7 @@
   transform: translateX(-50%);
   width: 50px;
   height: 2px;
-  background-color: #38cb89;
+  background-color: #e1261c;
 }
 
 .mantine-Modal-overlay,
@@ -99,6 +99,36 @@ a[aria-current='page'] svg path {
   padding-left: 5px;
   border-color: #680202;
 }
+
+.chartjs-x-axis-label,
+.chartjs-y-axis-label {
+  font-size: 18px;
+  font-family: 'Arial';
+  color: blue;
+}
+
+/* table {
+  border: 1px solid lightgray;
+  width: 100vw;
+}
+
+tbody {
+  border-bottom: 1px solid lightgray;
+}
+
+th {
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 2px 4px;
+}
+
+tfoot {
+  color: gray;
+}
+
+tfoot th {
+  font-weight: normal;
+} */
 
 /* .mantine-Stepper-stepIcon[data-completed='true'] {
   border-color: #38cb89 !important;

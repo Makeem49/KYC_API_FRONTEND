@@ -13,7 +13,7 @@ const TwoStepAuthentication = () => {
           </span>
         </p>
 
-        <div className='flex gap-2 w-[280px] items-center justify-center bg-[#F1EBFC] font-bold rounded text-afexpurple-dark'>
+        <div className='flex gap-2 w-[280px] items-center justify-center bg-afexred-extralight font-bold rounded text-afexred-regular'>
           <Icon icon='system-uicons:fingerprint' className='text-[20px]' />
           <p className='text-[10px]'>ADD AUTHENTICATION STEP</p>
         </div>

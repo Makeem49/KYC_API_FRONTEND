@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDashboardCtx } from '../../../../context';
+import { useQuery } from 'react-query';
+import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 import { nFormatter } from '../../../../utils/formatter';
 import {
   Chart as ChartJS,
@@ -57,10 +57,29 @@ export const options = {
 };
 
 export default function ChanneSource() {
-  const { list } = useDashboardCtx();
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
 
-  const providers = list.serviceProviderStatus.map((el) => el.name);
-  const provData = list.serviceProviderStatus.map((el) => nFormatter(el.value));
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
+  const providers = list!.serviceProviderStatus.map((el) => el.name);
+  const provData = list!.serviceProviderStatus.map((el) =>
+    nFormatter(el.value)
+  );
+
+  const colors = {
+    MTN: '#ffcc00',
+    Airtel: '#f34749',
+    'Globacom (GLO)': '#208b1e',
+    '9Mobile': '#006847',
+    VMobile: '#C9B7A5',
+    Safaricom: '#C9B7A5',
+  };
 
   const labels = providers;
   const data = {
@@ -69,18 +88,7 @@ export default function ChanneSource() {
       {
         label: '',
         data: provData,
-        borderColor: [
-          'rgba(249, 195, 98, 1)',
-          'rgba(237, 85, 86, 1)',
-          'rgba(101, 214, 191, 1)',
-          'rgba(119, 56, 221, 1)',
-        ],
-        backgroundColor: [
-          'rgba(249, 195, 98, 1)',
-          'rgba(237, 85, 86, 1)',
-          'rgba(101, 214, 191, 1)',
-          'rgba(119, 56, 221, 1)',
-        ],
+        backgroundColor: providers.map((prov) => colors[prov]),
         borderRadius: Number.MAX_VALUE,
       },
     ],

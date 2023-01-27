@@ -1,18 +1,88 @@
 import React from 'react';
 import { Chart as ChartJS, LinearScale, PointElement, Tooltip } from 'chart.js';
 import { Bubble } from 'react-chartjs-2';
-
-import { useTransactionCtx } from '../../../../../context';
+import { calculatePercentageRadius } from '../../../../../utils';
+import { useQuery } from 'react-query';
+import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
 
 ChartJS.register(LinearScale, PointElement, Tooltip);
 
 export default function BubbleChart() {
-  const { stats } = useTransactionCtx();
+  const {
+    data: stats,
+    isLoading,
+    isError,
+  } = useQuery(get_transaction_stats_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
+  const total =
+    (stats?.transactionCounts?.withdrawals ?? 0) +
+    (stats?.transactionCounts?.deposit ?? 0) +
+    (stats?.transactionCounts?.transfer ?? 0);
+
+  const withdrawalRadius = calculatePercentageRadius(
+    stats?.transactionCounts?.withdrawals ?? 0,
+    total
+  );
+
+  const depositRadius = calculatePercentageRadius(
+    stats?.transactionCounts?.deposit ?? 0,
+    total
+  );
+  const transferRadius = calculatePercentageRadius(
+    stats?.transactionCounts?.transfer ?? 0,
+    total
+  );
 
   const transactionCounts = {
     withdrawal: stats?.transactionCounts?.withdrawals ?? 0,
     deposit: stats?.transactionCounts?.deposit ?? 0,
     transfer: stats?.transactionCounts?.transfer ?? 0,
+  };
+
+  const data = {
+    datasets: [
+      {
+        label: 'Withdrawal',
+        extra: transactionCounts?.withdrawal,
+        data: [
+          {
+            x: 190,
+            y: 90,
+            r: withdrawalRadius,
+          },
+        ],
+        backgroundColor: 'rgba(237, 85, 86, 1)',
+      },
+      {
+        label: 'Deposit',
+        extra: transactionCounts?.deposit,
+        data: [
+          {
+            x: 100,
+            y: 200,
+            r: depositRadius,
+          },
+        ],
+        backgroundColor: 'rgba(101, 214, 191, 1)',
+      },
+
+      {
+        label: 'Transfer',
+        extra: transactionCounts?.transfer,
+        data: [
+          {
+            x: 310,
+            y: 210,
+            r: transferRadius,
+          },
+        ],
+        backgroundColor: 'rgba(249, 195, 98, 1)',
+      },
+    ],
   };
 
   const options = {
@@ -27,8 +97,22 @@ export default function BubbleChart() {
       legend: {
         display: true,
         // position: 'bottom',
+        // labels: {
+        //   usePointStyle: true,
+        // },
+
         labels: {
           usePointStyle: true,
+          generateLabels: (chart: any) => {
+            const datasets = chart.data.datasets;
+
+            return datasets.map((data: any, i: any) => ({
+              text: `${data.label} ${data.extra}`,
+              fillStyle: data.backgroundColor,
+              strokeStyle: data.backgroundColor,
+              fontColor: data.backgroundColor,
+            }));
+          },
         },
       },
     },
@@ -59,48 +143,6 @@ export default function BubbleChart() {
         },
       },
     },
-  };
-
-  const data = {
-    datasets: [
-      {
-        label: 'withdrawal',
-        extra: transactionCounts.withdrawal,
-        data: [
-          {
-            x: 190,
-            y: 150,
-            r: 30,
-          },
-        ],
-        backgroundColor: 'rgba(101, 214, 191, 1)',
-      },
-      {
-        label: 'Deposit',
-        extra: transactionCounts.deposit,
-        data: [
-          {
-            x: 100,
-            y: 300,
-            r: 30,
-          },
-        ],
-        backgroundColor: 'rgba(249, 195, 98, 1)',
-      },
-
-      {
-        label: 'Transfer',
-        extra: transactionCounts.transfer,
-        data: [
-          {
-            x: 300,
-            y: 400,
-            r: 30,
-          },
-        ],
-        backgroundColor: 'rgba(237, 85, 86, 1)',
-      },
-    ],
   };
 
   return <Bubble options={options} data={data} />;

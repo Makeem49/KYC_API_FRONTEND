@@ -70,7 +70,7 @@ const Table = () => {
                 </td>
 
                 <td className=''>
-                  <span className='font-medium'>{item.transactionType}r</span>
+                  <span className='font-medium'>{item.transactionType}</span>
                 </td>
                 <td className=''>
                   <span className='font-medium'>

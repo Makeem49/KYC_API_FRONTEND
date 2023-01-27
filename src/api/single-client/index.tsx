@@ -48,36 +48,11 @@ export async function get_single_client(
 }
 
 export async function get_a_client(
-  clientId: number,
-  providerId: number
-): Promise<SingleClient[]> {
-  const resp = await apiRequest.get(
-    `client-providers/${providerId}/clients/${clientId}`
-  );
-  if (!resp.data) return [];
+  clientId: number
+): Promise<ClientBio | null> {
+  const resp = await apiRequest.get(`clients/${clientId}`);
 
-  if (resp.data.data.length < 1) return [];
+  if (!resp.data) return null;
 
-  return resp.data.data.map(
-    (el: any) =>
-      ({
-        id: el.id,
-        amount: el.amount,
-        transactionType: el.transactionType,
-        channel: el.channel,
-        amountBefore: el.amountBefore,
-        amountAfter: el.amountAfter,
-        description: el.description,
-        comment: el.comment,
-        status: el.status,
-        sessionId: el.sessionId,
-        ref: el.ref,
-        isPlatformSynced: el.isPlatformSynced,
-        createdAt: shortDateFormatter(el.createdAt),
-        updatedAt: el.updatedAt,
-        deletedAt: el.deletedAt,
-        clientId: el.clientId,
-        client: el.client,
-      } as SingleClient)
-  );
+  return resp.data.data as ClientBio;
 }

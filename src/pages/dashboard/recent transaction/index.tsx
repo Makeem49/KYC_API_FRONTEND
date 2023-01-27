@@ -2,6 +2,7 @@ import React from 'react';
 import { Eye } from 'iconsax-react';
 import Table from './table';
 import { Link } from 'react-router-dom';
+
 const RecentTransaction = () => {
   return (
     <div className='w-full p-8 bg-[#ffff] rounded-lg'>

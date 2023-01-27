@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useClientStats } from '../../../../../context';
+// import { useClientStats } from '../../../../../context';
 import { Pagination } from '../../../../../components';
+interface ClientTableInterface {
+  data: any[];
+  selectedColumns: string[];
+}
 
-const Table = () => {
-  const { list } = useClientStats();
-  // console.log(list);
+const Table = ({ data, selectedColumns }: ClientTableInterface) => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState<number>(1);
@@ -16,9 +18,9 @@ const Table = () => {
   useEffect(() => {
     // Handle Pagination on load
     const endOffset = itemsOffset + 10;
-    setCurrentItems(list.slice(itemsOffset, endOffset));
-    setPage(Math.ceil(list.length / 10));
-  }, [itemsOffset, list]);
+    setCurrentItems(data.slice(itemsOffset, endOffset));
+    setPage(Math.ceil(data.length / 10));
+  }, [itemsOffset, data]);
 
   return (
     <div className='h-full pb-5'>
@@ -33,20 +35,27 @@ const Table = () => {
                   className='checkbox white'
                 />
               </th>
-
               <th>S/N</th>
-              <th>Date joined</th>
-              <th>Client's Name</th>
-              <th>Wallet Balance</th>
-              {/* <th>Email</th> */}
-              <th>Activity Status</th>
+              {selectedColumns?.includes('date') && <th>Date Joined</th>}
+              {selectedColumns?.includes(' client_name') && (
+                <th>Client's Name</th>
+              )}
+              {selectedColumns?.includes('wallet_balance') && (
+                <th>Wallet Balance</th>
+              )}
+              {selectedColumns?.includes('phone_number') && (
+                <th>Phone Number</th>
+              )}
+              {selectedColumns?.includes('dactivity_stats') && (
+                <th>Activity Status</th>
+              )}
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[14px] child:text-[#49474D]'>
             {currentItems.map((items) => (
               <tr
                 className=' text-left child:py-8 child:px-1 border-b'
-                onClick={() => navigate(`${items.providerId}/${items.id}`)}>
+                onClick={() => navigate(`${items.id}`)}>
                 <td>
                   <input
                     type='checkbox'
@@ -56,43 +65,52 @@ const Table = () => {
                 </td>
 
                 <td>
-                  <span className='font-normal'>{list.indexOf(items) + 1}</span>
+                  <span className='font-normal'>{data.indexOf(items) + 1}</span>
                 </td>
 
-                <td>
-                  {' '}
-                  <span className='font-normal '>
-                    {items.createdAt.toString()}
-                  </span>
-                </td>
+                {selectedColumns?.includes('date') && (
+                  <td>
+                    {' '}
+                    <span className='font-normal '>
+                      {items.createdAt.toString()}
+                    </span>
+                  </td>
+                )}
 
-                <td className=' flex flex-col'>
-                  <span className='font-normal text-afexred-regular '>
-                    {items.firstName} {items.lastName}
-                  </span>
+                {selectedColumns?.includes(' client_name') && (
+                  <td className=' flex flex-col'>
+                    <span className='font-normal text-afexred-regular '>
+                      {items.firstName} {items.lastName}
+                    </span>
+                    <span>{items.platformId}</span>
+                  </td>
+                )}
 
-                  <span>{items.platformId}</span>
-                </td>
+                {selectedColumns?.includes('wallet_balance') && (
+                  <td>
+                    <span className='font-normal '>{items.balance}</span>
+                  </td>
+                )}
+                {selectedColumns?.includes('phone_number') && (
+                  <td>
+                    <span className='font-normal '>{items.phoneNumber}</span>
+                  </td>
+                )}
 
-                <td>
-                  <span className='font-normal '>&#8358;{items.balance}</span>
-                </td>
-                {/* <td>
-                  <span className='font-normal '>@gmail.com</span>
-                </td> */}
-
-                <td>
-                  <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
-                    Active
-                  </span>
-                </td>
+                {selectedColumns?.includes('dactivity_stats') && (
+                  <td>
+                    <span className='font-normal px-3 py-2 bg-[#E7F9F0] rounded '>
+                      Active
+                    </span>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
         <div>
           <Pagination
-            dataLength={list.length}
+            dataLength={data.length}
             page={page}
             itemsOffset={itemsOffset}
             perPage={10}

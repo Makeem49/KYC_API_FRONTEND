@@ -27,10 +27,11 @@ const toast = (
       root: {
         borderRadius: '1rem',
         backgroundColor: '#fff',
-        top: '1px',
+        top: '50px',
         border: `1px solid ${borderColor}`,
         padding: '0 1.5rem 0 0 ',
-        position: 'relative',
+        position: 'absolute',
+        zIndex: '-moz-initial',
       },
       body: { padding: '1.5rem 1.5rem 1.5rem 0' },
       closeButton: {
@@ -49,7 +50,7 @@ const toast = (
     icon: icon,
     message: (
       <div
-        className={`flex items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
+        className={`flex  items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
           id === 'success'
             ? 'before:bg-afexgreen-lighter'
             : id === 'error'
@@ -57,14 +58,14 @@ const toast = (
             : 'before:bg-warninig-lighter'
         }`}>
         {heading.length > 0 && (
-          <div className='pl-5 pr-4 child:py-1'>
+          <div className='pl-5 z-50 pr-4 child:py-1'>
             <p className='font-bold text-md '>{heading}</p>
             <p className=''>{text}</p>
           </div>
         )}
       </div>
     ),
-    autoClose: 3000,
+    autoClose: 60000,
   });
 };
 export default toast;

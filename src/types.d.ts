@@ -29,13 +29,13 @@ type ClientList = {
   expiry: string;
   isVerified: boolean;
   isActive: boolean;
-  bankAccount: null;
+  bankAccount?: null;
   balance: string;
   createdAt: string;
   updatedAt: string;
-  deletedAt: null;
+  deletedAt?: null;
   accountId: number;
-  clientProviderId: null;
+  clientProviderId?: null;
   providerId: number;
   client: {
     firstName: string;
@@ -66,8 +66,10 @@ type ClientProvider = {
     HASH_KEY: string;
   };
   allowAutoApproveFundRequest: booleen;
+  countryCode: string;
   createdBy: string;
   image: string;
+  noOfClients: string;
   clientProviderToken: ClientProviderToken;
   createdAt: string | Date;
   updatedAt: string | Date;
@@ -86,6 +88,7 @@ type ClientIntegration = {
 };
 
 type User = {
+  user: any;
   id: number;
   username: string;
   email: string;
@@ -93,8 +96,8 @@ type User = {
   lastName: string;
   phoneNumber: string;
   password?: string;
-  permissions: number[];
-  roles: number[];
+  permissions: number[] | any;
+  roles: number[] | any;
   image: string;
   createdAt: string | Date;
   updatedAt: string | Date;
@@ -173,8 +176,13 @@ type PerformanceOverview = {
   };
 };
 
+type LocationOverview = {
+  name: string;
+  value: string | number;
+};
+
 const serviceProviders = {
-  Glo: '',
+  'Globacom (GLO)': '',
   MTN: '',
   Airtel: '',
   '9Mobile': '',
@@ -194,19 +202,18 @@ type TransactionList = {
   amountBefore: string;
   amountAfter: string;
   description: string;
-  comment: null;
+  comment?: null;
   status: string;
   sessionId: string;
   ref: string;
-  isPlatformSynced: null;
+  isPlatformSynced?: null;
   createdAt: string;
   updatedAt: string;
-  deletedAt: null;
-  clientId: null;
-  client: {
-    firstName: string;
-    lastName: string;
-  };
+  deletedAt?: null;
+  clientId?: null;
+  clientName: string;
+  clientPlatformId: string;
+  clientBalance: number;
   firstName: string;
   lastName: string;
 };
@@ -215,6 +222,7 @@ type SingleClient = {
   id: number;
   amount: string;
   transactionType: string;
+  phoneNumber: string;
   channel: string;
   amountBefore: string;
   amountAfter: string;
@@ -231,6 +239,30 @@ type SingleClient = {
   client: null;
 };
 
+type ClientBio = {
+  accountId: number;
+  balance: string;
+  bankAccount: null;
+  bvn: string;
+  clientProviderId: null;
+  createdAt: string;
+  expiry: null;
+  firstName: string;
+  id: number;
+  idCardNumber: string;
+  idCardType: string;
+  image: null;
+  isActive: boolean;
+  isVerified: boolean;
+  lastName: string;
+  lastSearchAppearance: string;
+  locationId: number;
+  noOfTransactions: number;
+  otherNames: string;
+  phoneNumber: string;
+  platformId: string;
+};
+
 interface GenericContextInterface<T> {
   list: T;
   loading: boolean;
@@ -239,15 +271,43 @@ interface GenericContextInterface<T> {
 
 interface SpecificContextInterface<T> {
   list: T;
-  // item: T;
+  item: T;
   loading: boolean;
   refreshContext: () => void;
 }
 
-interface SpecificUserContextInterface<T> {
+interface SpecificClientInterface<T> {
   list: T;
-  item: T;
-  itemTwo: T;
+  loading: boolean;
+  refreshContext: () => void;
+  stats: ClientSSS;
+  topSearch: ClientSSS[];
+  topTranc: ClientSSS[];
+  topVal: ClientSSS[];
+  pageNo: any;
+  handleSearch: (value) => void;
+}
+
+interface SpecificTransactionInterface<T> {
+  list: T;
+  loading: boolean;
+  refreshContext: () => void;
+  stats: TransactionSect;
+  handleSearch: (value) => void;
+}
+
+interface SpecificSingleInterface<T> {
+  list: T;
+  loading: boolean;
+  refreshContext: () => void;
+  stats: ClientBio;
+  // handleSearch: (value) => void;
+}
+
+interface SpecificUserContextInterface<T> {
+  list: T[];
+  item: T[];
+  itemTwo: T[];
   admin: T;
   loading: boolean;
   refreshContext: () => void;
@@ -303,9 +363,45 @@ interface ResponseSect {
 }
 
 interface ClientSSS extends Partial<ResponseSect> {
-  topClientsBySearch: [];
-  topClientsByNoOfTransactions: [];
-  topClientsByValueOfTransactions: [];
+  [x: string]: any;
+  topClientsBySearch: [
+    platformId: string,
+    firstName: string,
+    lastName: string,
+    otherNames: string,
+    phoneNumber: string,
+    noOfTransactions: number,
+    valueOfTransactions: string,
+    searchAppearances: number
+  ];
+  topClientsByNoOfTransactions: [
+    platformId: string,
+    firstName: string,
+    lastName: string,
+    otherNames: string,
+    phoneNumber: string,
+    noOfTransactions: number,
+    valueOfTransactions: string,
+    searchAppearances: number
+  ];
+  topClientsByValueOfTransactions: [
+    platformId: string,
+    firstName: string,
+    lastName: string,
+    otherNames: string,
+    phoneNumber: string,
+    noOfTransactions: number,
+    valueOfTransactions: string,
+    searchAppearances: number
+  ];
+  platformId: string;
+  firstName: string;
+  lastName: string;
+  otherNames: string;
+  phoneNumber: string;
+  noOfTransactions: number;
+  valueOfTransactions: string;
+  searchAppearances: number;
 }
 
 interface TransactionSect {
@@ -336,11 +432,7 @@ interface TransactionSect {
     };
   };
 
-  transactionLocations: {
-    withdrawals: number;
-    deposit: number;
-    transfer: number;
-  };
+  transactionLocations: LocationOverview[];
 }
 
 interface TrackerSect {
@@ -352,3 +444,26 @@ interface TrackerSect {
     unsyncedWithdrawal: number;
   };
 }
+
+type Me = {
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  permissions: Permission[]; // change this
+  roles: Roles[];
+};
+
+type Employee = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  jobTitle: string;
+  salary: number;
+  startDate: string;
+  signatureCatchPhrase: string;
+  avatar: string;
+};
+
+type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;

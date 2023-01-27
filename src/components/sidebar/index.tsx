@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Popover } from '@mantine/core';
 import { Tooltip } from '@mantine/core';
+import userImg from '../../assets/images/user.png';
 
 import {
   HomeHashtag,
@@ -15,15 +16,19 @@ import {
 } from 'iconsax-react';
 
 import { useAuthCtx } from '../../context';
-import profIcon from '../../assets/images/profile_img.svg';
 import NotificationModal from '../notification modal';
+import { useQuery } from 'react-query';
+import { get_admin_query } from '../../queries/dash_board';
 
 function Sidebar() {
+  const { data: user } = useQuery(get_admin_query());
+
   const { logout } = useAuthCtx();
+  const [opened, setOpened] = useState(false);
 
   const routes = [
     {
-      to: '/dashboard',
+      to: '/',
       icon: (
         <HomeHashtag
           variant='Bulk'
@@ -42,7 +47,7 @@ function Sidebar() {
           // className=' w-[20px] h-[20px] xl:w-[30] xl:h-[30px]'
         />
       ),
-      label: 'Client',
+      label: "Client's",
     },
     {
       to: '/transaction',
@@ -124,10 +129,10 @@ function Sidebar() {
               }}>
               <NavLink
                 to={route.to}
-                end
                 className={({ isActive }) =>
                   isActive ? activeStyle : baseStyle
-                }>
+                }
+                end>
                 {route.icon}
               </NavLink>
             </Tooltip>
@@ -143,6 +148,7 @@ function Sidebar() {
       <div className='absolute bottom-[4%]'>
         <Popover
           width={250}
+          opened={opened}
           styles={{
             dropdown: {
               top: '-160% !important',
@@ -150,25 +156,37 @@ function Sidebar() {
             },
           }}>
           <Popover.Target>
-            <img src={profIcon} alt='user_icon' />
+            <img
+              className='w-[50px]'
+              src={userImg}
+              alt='user_icon'
+              onClick={() => setOpened((s) => !s)}
+              // onMouseLeave={() => setOpened(false)}
+            />
           </Popover.Target>
           <Popover.Dropdown className='flex flex-col'>
             <div className=' flex items-center text-[12px] text-[#000] font-semibold p-1 gap-2 border-b'>
               <p>
-                Adamu Adamu <br />{' '}
-                <span className=' text-[#bfbdc2]'>makanni@afexnigeria.com</span>
+                <span className='capitalize'>
+                  {user?.firstName} {user?.lastName}{' '}
+                </span>
+                <br /> <span className=' text-[#bfbdc2]'>{user?.email} </span>
               </p>
             </div>
             <div className='mt-1 p-2'>
               <NavLink
                 to='/settings'
+                onClick={() => setOpened(false)}
                 className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
                 <Setting2 size='16' color='#8f8e91' variant='Bulk' />
                 Settings
               </NavLink>
               <p
                 className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'
-                onClick={logout}>
+                onClick={() => {
+                  logout();
+                  setOpened(false);
+                }}>
                 <Logout size='16' color='#8f8e91' variant='Bulk' />
                 Logout
               </p>

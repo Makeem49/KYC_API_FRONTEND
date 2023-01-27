@@ -1,21 +1,24 @@
 import React from 'react';
-import profImg from '../../../../../assets/images/profile_img.svg';
-import verifiedIcon from '../../../../../assets/svgs/verify.svg';
+import userImg from '../../../../../assets/images/user.png';
+// import verifiedIcon from '../../../../../assets/svgs/verify.svg';
 import { ArrowDown2 } from 'iconsax-react';
-// import { useSingleClientCtx } from '../../../../../context';
+import { useSingleClientCtx } from '../../../../../context';
 
 const ProfileBoard = () => {
-  // const { item } = useSingleClientCtx();
-  // console.log(item);
+  const { stats } = useSingleClientCtx();
+  console.log(stats);
+
   return (
     <div className=' w-full flex flex-col gap-10'>
       {/* FIrst Card */}
       <div className=' bg-white rounded-lg p-8'>
         <div className='flex flex-col justify-center py-3 items-center gap-1'>
-          <img src={profImg} alt='profimg' className='w-32 rounded' />
-          <p>Adamu Adamu</p>
+          <img src={userImg} alt='profimg' className='w-32 rounded' />
+          <p>
+            {stats.firstName} {stats.lastName}
+          </p>
           <span className='text-[#1863BF] bg-[#E8F1FC] px-3 rounded'>
-            Famer
+            Client
           </span>
         </div>
 
@@ -31,38 +34,43 @@ const ProfileBoard = () => {
           <div>
             {' '}
             <p className=' text-textgrey-darker font-bold'>
-              Client ID: <br />{' '}
+              Account ID: <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                0001-1234-000012345
+                {stats.accountId}
+              </span>
+            </p>
+            <p className=' text-textgrey-darker font-bold'>
+              Platform ID: <br />{' '}
+              <span className=' text-textgrey-normal font-normal'>
+                {stats.platformId}
               </span>
             </p>
           </div>
 
           <div className='w-full flex flex-col gap-5'>
-            <p className=' text-textgrey-darker font-bold'>
+            {/* <p className=' text-textgrey-darker font-bold'>
               Email: <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
                 {' '}
                 aadamu@afexnigeria.com
               </span>
-            </p>
-            <p className=' text-textgrey-darker font-bold'>
+            </p> */}
+            {/* <p className=' text-textgrey-darker font-bold'>
               Address:
               <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
                 {' '}
                 No 3234, Ralph Shodeinde street, Abuja
               </span>
-            </p>
+            </p> */}
             <p className=' text-textgrey-darker font-bold'>
               Phone No:
               <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                {' '}
-                080343435234{' '}
+                {stats.phoneNumber}
               </span>
             </p>
-            <p className=' text-textgrey-darker font-bold'>
+            {/* <p className=' text-textgrey-darker font-bold'>
               Location: <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
                 {' '}
@@ -78,7 +86,7 @@ const ProfileBoard = () => {
               <span className=' text-textgrey-normal font-normal'>
                 Last Transaction: 10 Nov 2022, 6:05 pm
               </span>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
@@ -100,15 +108,14 @@ const ProfileBoard = () => {
               BVN:
               <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                {' '}
-                954-3455-244-2{' '}
+                {stats.bvn ? stats.bvn : 'none'}
               </span>
             </p>
-            <span className='p-2 flex justify-between rounded-lg bg-[#E7F9F0] text-[#076D3A]'>
+            {/* <span className='p-2 flex justify-between rounded-lg bg-[#E7F9F0] text-[#076D3A]'>
               {' '}
               <img src={verifiedIcon} alt='verified' />
               Verified
-            </span>
+            </span> */}
           </div>
 
           <p className=' text-textgrey-darker font-bold'>

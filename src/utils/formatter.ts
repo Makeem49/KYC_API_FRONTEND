@@ -40,7 +40,17 @@ export const generateInitials = (fullname: string): string => {
 
 export const calculatePercentageChange = (curr: number, prev: number) => {
   if (!curr || !prev) return 0;
-  return ((curr - prev) / curr) * 100;
+  return curr / prev - 1 * 100;
+};
+
+export const calculatePercentageRadius = (curr: number, tot: number) => {
+  if (!curr || !tot) return 0;
+  return (curr / tot) * 30;
+};
+
+export const calculateTotal = (num1: number, num2: number, num3: number) => {
+  if (!num1 || !num2 || num3) return 0;
+  return num1 + num2 + num3;
 };
 
 export function currencyFormatter(amt: number): string {

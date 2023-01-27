@@ -1,54 +1,36 @@
-import { MantineProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
-import { ThemeProvider } from '@material-tailwind/react';
-
-import DashboardStatsProvider, {
-  useDashboardCtx,
-} from './dashboard_stats_context';
-
-import ClientStatsProvider, { useClientStats } from './client_stats_context';
 import ApiTokensProvider, { useApiTokenCtx } from './api_tokens_context';
-import AuthProvider, { useAuthCtx } from './auth_context';
+import { useAuthCtx } from './auth_context';
 import ClientsContextProvider, { useClientsCtx } from './clients_context';
-import TransactionsProvider, {
-  useTransactionCtx,
-} from './transactions_context';
 import UsersProvider, { useUsersCtx } from './users_context';
-import TrackerStatsProvider, {
-  useTrackerStatsCtx,
-} from './tracker_stats_context';
 import SingleClientProvider, {
   useSingleClientCtx,
 } from './single_clients_context';
+import { ColumnProvider, useColumnCtx } from './column_context';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Context wrapper for all the context managers
 const ContextProvider = (props: WithChildren) => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthCtx();
+  const token = localStorage.getItem('cuddie-access-token');
+
+  useEffect(() => {
+    if (!isAuthenticated || !token) {
+      return navigate('login');
+    }
+    //eslint-disable-next-line
+  }, [isAuthenticated]);
   return (
-    <ThemeProvider>
-      <MantineProvider withNormalizeCSS withGlobalStyles>
-        <NotificationsProvider limit={5}>
-          <AuthProvider>
-            <DashboardStatsProvider>
-              <ClientsContextProvider>
-                <ApiTokensProvider>
-                  <UsersProvider>
-                    <ClientStatsProvider>
-                      <SingleClientProvider>
-                        <TrackerStatsProvider>
-                          <TransactionsProvider>
-                            {props.children}
-                          </TransactionsProvider>
-                        </TrackerStatsProvider>
-                      </SingleClientProvider>
-                    </ClientStatsProvider>
-                  </UsersProvider>
-                </ApiTokensProvider>
-              </ClientsContextProvider>
-            </DashboardStatsProvider>
-          </AuthProvider>
-        </NotificationsProvider>
-      </MantineProvider>
-    </ThemeProvider>
+    <ColumnProvider>
+      <ClientsContextProvider>
+        <ApiTokensProvider>
+          <UsersProvider>
+            <SingleClientProvider>{props.children}</SingleClientProvider>
+          </UsersProvider>
+        </ApiTokensProvider>
+      </ClientsContextProvider>
+    </ColumnProvider>
   );
 };
 
@@ -56,12 +38,9 @@ export {
   useApiTokenCtx,
   useAuthCtx,
   useClientsCtx,
-  useTransactionCtx,
   useUsersCtx,
-  useDashboardCtx,
-  useClientStats,
-  useTrackerStatsCtx,
   useSingleClientCtx,
+  useColumnCtx,
 };
 
 export default ContextProvider;

@@ -3,9 +3,17 @@ export {
   authenticate,
   register,
   reset_password,
+  get_logged_in_user,
 } from './auth';
 
-export { create_client, get_client_stats, get_client_list } from './clients';
+export {
+  create_client,
+  get_client_stats,
+  get_client_list,
+  get_top_clients_by_search,
+  get_top_clients_by_transactions,
+  get_clients_by_value_of_transactions,
+} from './clients';
 
 export {
   create_client_provider,

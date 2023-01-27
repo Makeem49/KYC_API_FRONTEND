@@ -1,7 +1,19 @@
 import React from 'react';
 import halfCirc from '../../../../assets/images/ell.svg';
+import { get_top_clients_by_trans_value_query } from '../../../../queries/clients_stats';
+import { useQuery } from 'react-query';
 
 const TransactionValue = () => {
+  const {
+    data: topVal,
+    isLoading,
+    isError,
+  } = useQuery(get_top_clients_by_trans_value_query());
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
   return (
     <div className='flex flex-col border border-afexpurple-lighter rounded-lg'>
       <div className='relative text-sm rounded-t text-textgrey-darker p-5'>
@@ -37,89 +49,30 @@ const TransactionValue = () => {
               </tr>
             </thead>
             <tbody className='text-[12px] xl:text-[14px]'>
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td className=''>
-                  <span className=''>1.</span>
-                </td>
+              {topVal!.map((el: any) => (
+                <tr className=' text-left child:p-2 border-b border-dashed '>
+                  <td>
+                    <span>{topVal!.indexOf(el) + 1}.</span>
+                  </td>
 
-                <td className=''>
-                  {' '}
-                  <span className=' '>Praise Onyeagu</span>
-                </td>
+                  <td>
+                    {' '}
+                    <span>
+                      {el.firstName} {el.lastName}
+                    </span>
+                  </td>
 
-                <td className=' overflow-x-auto '>
-                  <span className=' break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
+                  <td className=' overflow-x-auto '>
+                    <span className='font-medium break-words text-[#C1C0C2]'>
+                      {el.platformId}
+                    </span>
+                  </td>
 
-                <td className=''>
-                  <span className=' '>500</span>
-                </td>
-              </tr>
-
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td className=''>
-                  <span className=''>2.</span>
-                </td>
-
-                <td className=''>
-                  {' '}
-                  <span className=' '>Praise Onyeagu</span>
-                </td>
-
-                <td className=' overflow-x-auto '>
-                  <span className=' break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
-
-                <td className=''>
-                  <span className=' '>500</span>
-                </td>
-              </tr>
-
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td className=''>
-                  <span className=''>3.</span>
-                </td>
-
-                <td className=''>
-                  {' '}
-                  <span className=' '>Praise Onyeagu</span>
-                </td>
-
-                <td className=' overflow-x-auto '>
-                  <span className=' break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
-
-                <td className=''>
-                  <span className=' '>500</span>
-                </td>
-              </tr>
-
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td className=''>
-                  <span className=''>4.</span>
-                </td>
-
-                <td className=''>
-                  {' '}
-                  <span className=' '>Praise Onyeagu</span>
-                </td>
-
-                <td className=' overflow-x-auto '>
-                  <span className=' break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
-
-                <td className=''>
-                  <span className=' '>500</span>
-                </td>
-              </tr>
+                  <td>
+                    <span>{el.valueOfTransactions}</span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

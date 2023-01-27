@@ -1,7 +1,15 @@
 import React from 'react';
 import halfCirc from '../../../../assets/images/ell.svg';
+import { get_top_transactions_query } from '../../../../queries/clients_stats';
+import { useQuery } from 'react-query';
 
 const TransactionCount = () => {
+  const { data, isError, isLoading } = useQuery(get_top_transactions_query());
+  console.log(data);
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
+
   return (
     <div className=' flex flex-col border border-afexpurple-lighter rounded-lg'>
       <div className=' relative text-sm text-textgrey-darker rounded-t p-5'>
@@ -38,89 +46,30 @@ const TransactionCount = () => {
               </tr>
             </thead>
             <tbody className='text-[12px] xl:text-[14px]'>
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td>
-                  <span>1.</span>
-                </td>
+              {data!.map((el: any) => (
+                <tr className=' text-left child:p-2 border-b border-dashed '>
+                  <td>
+                    <span>{data!.indexOf(el) + 1}.</span>
+                  </td>
 
-                <td>
-                  {' '}
-                  <span>Praise Onyeagu</span>
-                </td>
+                  <td>
+                    {' '}
+                    <span>
+                      {el.firstName} {el.lastName}
+                    </span>
+                  </td>
 
-                <td className=' overflow-x-auto '>
-                  <span className='font-medium break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
+                  <td className=' overflow-x-auto '>
+                    <span className='font-medium break-words text-[#C1C0C2]'>
+                      {el.platformId}
+                    </span>
+                  </td>
 
-                <td>
-                  <span>500</span>
-                </td>
-              </tr>
-
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td>
-                  <span>2.</span>
-                </td>
-
-                <td>
-                  {' '}
-                  <span>Praise Onyeagu</span>
-                </td>
-
-                <td className=' overflow-x-auto '>
-                  <span className='font-medium break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
-
-                <td>
-                  <span>500</span>
-                </td>
-              </tr>
-
-              <tr className=' text-left child:p-2 border-b border-dashed '>
-                <td>
-                  <span>3.</span>
-                </td>
-
-                <td>
-                  {' '}
-                  <span>Praise Onyeagu</span>
-                </td>
-
-                <td className=' overflow-x-auto '>
-                  <span className='font-medium break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
-
-                <td>
-                  <span>500</span>
-                </td>
-              </tr>
-
-              <tr className=' text-left child:p-2 border-b  border-dashed '>
-                <td>
-                  <span>4.</span>
-                </td>
-
-                <td>
-                  {' '}
-                  <span>Praise Onyeagu</span>
-                </td>
-
-                <td className=' overflow-x-auto '>
-                  <span className='font-medium break-words text-[#C1C0C2]'>
-                    001-1234231-0000123
-                  </span>
-                </td>
-
-                <td className=''>
-                  <span>500</span>
-                </td>
-              </tr>
+                  <td>
+                    <span>{el.noOfTransactions}</span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

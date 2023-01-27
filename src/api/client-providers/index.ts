@@ -16,18 +16,33 @@ import { apiRequest, shortDateFormatter } from '../../utils';
 export async function get_client_providers(): Promise<ClientProvider[]> {
   const resp = await apiRequest.get('client-providers');
 
-  if (!resp.data) return [];
-
-  if (resp.data.data.length < 1) return [];
-
   return resp.data.data.map(
     (el: any) =>
       ({
         id: el.id,
-        createdAt: shortDateFormatter(el.createdAt),
         name: el.name,
-        transactionPhrase: el.transactionPhrase,
+        code: el.code,
+        logo: el.logo,
         isActive: el.isActive,
+        clientRepoUrl: el.clientRepoUrl,
+        walletTransactionCallbackUrl: el.walletTransactionCallbackUrl,
+        inventoryPositionUrl: el.inventoryPositionUrl,
+        inventoryTradeUrl: el.inventoryTradeUrl,
+        locationsUrl: el.locationsUrl,
+        transactionPhrase: el.transactionPhrase,
+        checkWalletBalanceEnabled: el.checkWalletBalanceEnabled,
+        bankTransferEnabled: el.bankTransferEnabled,
+        clientTransferEnabled: el.clientTransferEnabled,
+        checkInventoryPositionEnabled: el.checkInventoryPositionEnabled,
+        tradeInventoryTransactionEnabled: el.tradeInventoryTransactionEnabled,
+        requestHeaders: el.requestHeaders,
+        allowAutoApproveFundRequest: el.allowAutoApproveFundRequest,
+        createdBy: el.createdBy,
+        image: el.image,
+        noOfClients: el.noOfClients,
+        clientProviderToken: el.clientProviderToken,
+        createdAt: shortDateFormatter(el.createdAt),
+        updatedAt: el.updatedAt,
       } as ClientProvider)
   );
 }
@@ -186,6 +201,6 @@ export function toggle_client_provider_status(
  */
 export function get_clients_under_provider(
   id: string
-): Promise<AxiosResponse<any, any>> {
+): Promise<AxiosResponse<string>> {
   return apiRequest.get(`client-providers/${id}/clients`);
 }

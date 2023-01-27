@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTransactionCtx } from '../../../../../context';
 import { nFormatter } from '../../../../../utils/formatter';
 import {
   Chart as ChartJS,
@@ -11,6 +10,8 @@ import {
   // Legend
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { useQuery } from 'react-query';
+import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
 
 ChartJS.register(
   CategoryScale,
@@ -59,8 +60,15 @@ export const options = {
 };
 
 export default function BarChart() {
-  const { stats } = useTransactionCtx();
+  const {
+    data: stats,
+    isLoading,
+    isError,
+  } = useQuery(get_transaction_stats_query());
 
+  if (isLoading) return <p>Loading....</p>;
+
+  if (isError) return <p>Error!!!</p>;
   const labels = ['Transfer', 'Deposit', 'Withdrawal'];
   const data = {
     labels,
@@ -77,19 +85,18 @@ export default function BarChart() {
         ],
         borderColor: [
           'rgba(249, 195, 98, 1)',
-          'rgba(237, 85, 86, 1)',
           'rgba(101, 214, 191, 1)',
+          'rgba(237, 85, 86, 1)',
         ],
         backgroundColor: [
           'rgba(249, 195, 98, 1)',
-          'rgba(237, 85, 86, 1)',
           'rgba(101, 214, 191, 1)',
+          'rgba(237, 85, 86, 1)',
         ],
         borderRadius: Number.MAX_VALUE,
       },
     ],
   };
-  console.log(data);
 
   return <Bar options={options} data={data} />;
 }

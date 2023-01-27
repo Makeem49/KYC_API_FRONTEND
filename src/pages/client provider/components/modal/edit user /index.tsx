@@ -6,12 +6,13 @@ const AddUser = ({ show, close }: ModalControllerType) => {
   return (
     <>
       <Drawer
+        className=' overflow-y-auto'
         position='right'
         opened={show}
         onClose={close}
         title='Add User'
         padding='xl'
-        size='40%'>
+        size='38%'>
         {/* Map Component */}
 
         <UserInfo />

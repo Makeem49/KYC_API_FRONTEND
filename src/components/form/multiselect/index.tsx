@@ -50,7 +50,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
               }}>
               <input
                 className={`block w-full p-3 bg-white border h-14 rounded-lg text-sm transition text-transparent ${
-                  showOpts && 'ring-1 ring-afexpurple-light'
+                  showOpts && 'ring-1 ring-afexred-light'
                 }`}
                 type='text'
                 disabled
@@ -77,7 +77,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
               <MdKeyboardArrowDown className='absolute top-1/2 -translate-y-1/2 right-4 text-gray-400 text-lg' />
             </div>
             <ul
-              className={`overflow-auto absolute z-10 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white w-full ring-1 ring-afexpurple-light rounded-lg opacity-0 ${
+              className={`overflow-auto absolute z-10 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white w-full ring-1 ring-afexred-light rounded-lg opacity-0 ${
                 showOpts && 'max-h-72 opacity-100 my-2'
               }`}>
               {props.data.map((option, index) => (
@@ -92,15 +92,15 @@ const MultiSelect = (props: MultiSelectInterface) => {
 
                     push(option.value);
                   }}
-                  className={`text-base font-light first:mt-0 rounded-lg flex items-center space-x-4 accent-afexpurple-light p-3 ${
+                  className={`text-base font-light first:mt-0 rounded-lg flex items-center space-x-4 accent-afexred-regular p-3 ${
                     field?.value?.indexOf(option.value) > -1 &&
-                    'bg-afexpurple-lighter'
+                    'bg-afexred-extralight'
                   }`}>
                   <input
                     type='checkbox'
                     name={option.label}
                     id={option.label}
-                    className='appearance-none w-6 h-6 rounded-md bg-white border border-afexpurple'
+                    className='appearance-none w-6 h-6 rounded-md bg-white border border-afexred-regular'
                     onChange={(e) => {
                       if (e.currentTarget.checked) {
                         return remove(field.value.indexOf(option.value));

@@ -24,21 +24,20 @@ export async function get_dashboard_stats(): Promise<ResponseSect | null> {
  * List all the registered users
  * @returns
  */
-export async function get_admin_name(): Promise<User[]> {
+export async function get_admin_name(): Promise<User | null> {
   const resp = await apiRequest.get('users/admin');
 
-  if (!resp.data) return [];
+  if (!resp.data) return null;
 
-  if (resp.data.data.length < 1) return [];
-
-  return resp.data.data.map(
-    (el: any) =>
-      ({
-        id: el.id,
-        firstName: el.firstName,
-        lastName: el.lastName,
-        username: el.username,
-        name: el.name,
-      } as User)
-  );
+  const el = resp.data.data;
+  return {
+    id: el.id,
+    firstName: el.firstName,
+    lastName: el.lastName,
+    username: el.username,
+    name: el.name,
+    email: el.email,
+    roles: el.roles,
+    permissions: el.permissions,
+  } as User;
 }

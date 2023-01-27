@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { Wallet1 } from 'iconsax-react';
+import { useSingleClientCtx } from '../../../../../context';
 
 const SingleClientCard = () => {
+  const { stats } = useSingleClientCtx();
+
   return (
     <div className='flex gap-4'>
       {/* Card One */}
@@ -12,7 +15,9 @@ const SingleClientCard = () => {
         </div>
 
         <span>TOTAL BALANCE</span>
-        <p className='text-[40px] font-bold text-textgrey-darker'>N2,000</p>
+        <p className='text-[40px] font-bold text-textgrey-darker'>
+          {stats.balance}
+        </p>
       </div>
 
       {/* Card Two */}
