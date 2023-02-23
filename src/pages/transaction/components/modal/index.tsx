@@ -24,15 +24,15 @@ function RightModal() {
         className='flex flex-col gap-5 font-bold'>
         {/* Map Component */}
         <button
-          className='absolute right-[16%] top-[1.5%] bg-afexred-extralight text-afexred-regular hover:bg-afexred-lighter p-3 font-normal w-[150px] rounded-lg'
+          className='absolute right-[16%] top-[1.5%] bg-afexpurple-lighter text-afexpurple-regular hover:bg-afexpurple-lighter p-3 font-normal max-w-md rounded-lg'
           onClick={() => {
             setShowList((o) => !o);
             setShowAllTransactions((o) => !o);
           }}>
-          All Transactions
+          Show all Transactions
         </button>
         {/* <NigerianMap /> */}
-        <HeatMap />
+        {showList && <HeatMap />}
         {showList && <List />}
         {showAllTransactions && <AllTransactions />}
       </Drawer>
@@ -41,8 +41,8 @@ function RightModal() {
         <Tooltip label='Transaction by Location' className='p-3'>
           <button
             onClick={() => setOpened(true)}
-            className='flex items-center py-3 px-4 bg-afexred-extralight hover:bg-afexred-light rounded-lg'>
-            <Location size='25' color='#E1261C' variant='Bulk' />
+            className='flex w-full items-center gap-2 py-2 px-3 hover:bg-afexpurple-regular hover:shadow text-white text-[14px] bg-afexpurple-regular rounded-lg'>
+            <Location size='25' color='#FFFFFF' variant='Bold' />
           </button>
         </Tooltip>
       </Group>

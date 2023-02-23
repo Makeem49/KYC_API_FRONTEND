@@ -4,16 +4,19 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
+import { useNavigate } from 'react-router-dom';
 import { TextInput } from '../../../components';
 import Button from '../../../components/button';
 
 // import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
-import flap from '../../../assets/brand/flap2.png';
+import flap from '../../../assets/brand/flap.svg';
 import afexLogo from '../../../assets/brand/AFEX-logo.png';
 import { useAuthCtx } from '../../../context';
 
 const LoginOverlay = (props: { isVisible: boolean }) => {
   const { login, loading } = useAuthCtx();
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -24,7 +27,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 2 }}>
-          <div className='flex flex-1 h-full w-full flex-col space-y-20 px-20'>
+          <div className='flex flex-1 h-full w-full flex-col space-y-14 px-20'>
             <motion.img
               // src={cuddieLogo}
               initial={{
@@ -37,9 +40,16 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
               className='w-32'
             />
 
-            <h3 className='text-center text-2xl font-semibold'>
-              Welcome to Cuddie!
-            </h3>
+            <div className='relative p-8 '>
+              <h1 className='top-[-1%] absolute text-afexred-regular text-[28px] font-bold'>
+                Cudie.
+              </h1>
+
+              <h3 className=' mt-20 text-center text-2xl font-semibold'>
+                Welcome to Cudie!
+              </h3>
+            </div>
+
             <Formik
               initialValues={{ username: '', password: '' }}
               onSubmit={(values) => login(values)}
@@ -95,7 +105,11 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                     <MdKeyboardArrowRight className='text-3xl ' />
                   </button> */}
 
-                  <span className='text-bg-afexpurple text-red-400 font-semibole hover:underline cursor-pointer'>
+                  <span
+                    onClick={() => {
+                      navigate('/forgot-password');
+                    }}
+                    className='text-bg-afexpurple text-red-400 font-semibole hover:underline cursor-pointer'>
                     Forgot your password?
                   </span>
                 </div>

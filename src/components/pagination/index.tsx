@@ -20,13 +20,12 @@ const Pagination = (props: PaginationProps) => {
     <div className='bottom-0 right-0 left-0 w-full'>
       <div className='flex justify-between items-center px-6 rounded-md'>
         <span>
-          {' '}
           showing &nbsp;
-          {props.itemsOffset + 1} -{' '}
+          {props.itemsOffset + 1} -&nbsp;
           {props.perPage + props.itemsOffset > props.dataLength
             ? props.dataLength
-            : props.perPage + props.itemsOffset}{' '}
-          of {props.dataLength} entries{' '}
+            : props.perPage + props.itemsOffset}
+          &nbsp; of {props.dataLength} entries
         </span>
 
         <ReactPaginate

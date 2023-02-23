@@ -3,18 +3,37 @@ import { Form, Formik } from 'formik';
 import {
   FormImage,
   FormInput,
-  FormMultiSelect,
+  // FormMultiSelect,
 } from '../../../../../../components/form';
 import Button from '../../../../../../components/button';
 import ToggleButton from '../../../../../../components/toggleButton';
 import { faker } from '@faker-js/faker';
-import { useSingleClientCtx } from '../../../context/single_user.ctx';
+// import { useSingleClientCtx } from '../../../context/single_user.ctx';
 import { edit_client_provider_info } from '../../../../../../api';
-import { useClientsCtx } from '../../../../../../context';
-const UserInfo = () => {
-  const { data } = useSingleClientCtx();
-  console.log(data);
-  const { refreshContext } = useClientsCtx();
+import { useMutation, useQueryClient } from 'react-query';
+import { toast } from '../../../../../../utils';
+
+// import { useClientsCtx } from '../../../../../../context';
+// import MultiSelectDup from '../../../../../../components/form/multiselectDup';
+interface AddUserProps extends ModalControllerType {
+  data: ClientProvider;
+}
+const UserInfo = ({ data, close, show }: AddUserProps) => {
+  // const { data } = useSingleClientCtx();
+  console.log(data, 'update');
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (payload: ClientProvider) =>
+      edit_client_provider_info(payload.id, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clientProvider'] }); // To  invalidate and refetch
+      close();
+      toast('success', 'Provider updated successfully');
+    },
+  });
+
   const [loading, setLoading] = useState(false);
 
   return (
@@ -24,65 +43,57 @@ const UserInfo = () => {
           ...data,
           name: `${data.name}`,
           code: `${data.code}`,
+          logo: `${data.logo}`,
           clientRepoUrl: `${data.clientRepoUrl}`,
           walletTransactionCallbackUrl: `${data.walletTransactionCallbackUrl}`,
           inventoryPositionUrl: `${data.inventoryPositionUrl}`,
+          inventoryTradeUrl: `${data.inventoryTradeUrl}`,
+          locationsUrl: `${data.locationsUrl}`,
+          loanCallbackUrl: `${data.loanCallbackUrl}`,
           transactionPhrase: `${data.transactionPhrase}`,
-          API_KEY: `${data.requestHeaders.API_KEY}`,
-          REQUEST_TS: `${data.requestHeaders.REQUEST_TS}`,
-          HASH_KEY: `${data.requestHeaders.HASH_KEY}`,
-          countryCode: `${data.countryCode}`,
-          image: `${data.image}`,
-          checkWalletBalanceEnabled: data.checkWalletBalanceEnabled,
-          bankTransferEnabled: data.bankTransferEnabled,
-          clientTransferEnabled: data.clientTransferEnabled,
           checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
           tradeInventoryTransactionEnabled:
             data.tradeInventoryTransactionEnabled,
+          requestHeaders: `${data.requestHeaders}`,
           allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
+          countryCode: `${data.countryCode}`,
         }}
         onSubmit={async (values) => {
-          const updateProvider = {
+          const updateProvider: any = {
             id: data.id,
             name: values.name,
-            code: values.code,
+            code: data.code,
+            logo: faker.image.people(640, 640),
             clientRepoUrl: values.clientRepoUrl,
             walletTransactionCallbackUrl: values.walletTransactionCallbackUrl,
             inventoryPositionUrl: values.inventoryPositionUrl,
+            inventoryTradeUrl: values.inventoryTradeUrl,
+            locationsUrl: values.locationsUrl,
+            loanCallbackUrl: data.loanCallbackUrl,
             transactionPhrase: values.transactionPhrase,
-            requestHeaders: {
-              API_KEY: values.API_KEY,
-              REQUEST_TS: values.REQUEST_TS,
-              HASH_KEY: values.HASH_KEY,
-            },
-            countryCode: values.countryCode[0],
-            image: faker.image.people(640, 640),
-            checkWalletBalanceEnabled: values.checkWalletBalanceEnabled,
-            bankTransferEnabled: values.bankTransferEnabled,
-            clientTransferEnabled: values.clientTransferEnabled,
             checkInventoryPositionEnabled: values.checkInventoryPositionEnabled,
             tradeInventoryTransactionEnabled:
               values.tradeInventoryTransactionEnabled,
+            requestHeaders: {
+              API_KEY: 'kUvOHKMrkd',
+              REQUEST_TS: new Date().toISOString(),
+              HASH_KEY: 'TNiD1NXGW0Pk8Gou7XfuHSpi8SBJRYIA',
+            },
             allowAutoApproveFundRequest: values.allowAutoApproveFundRequest,
+            countryCode: data.countryCode,
           };
-          // console.log({ updateProvider });
 
-          const message = await edit_client_provider_info(
-            values.id,
-            updateProvider
-          );
-          alert(message);
+          setLoading(true);
+          mutation.mutate(updateProvider);
           setLoading(false);
-
-          refreshContext();
         }}>
         {({ resetForm }) => (
           <Form className='flex overflow-y-auto flex-col gap-y-4'>
             <FormImage
               label='Avatar'
               accepted={['.jpeg', '.jpg', '.png']}
-              id='image'
-              name='image'
+              id='logo'
+              name='logo'
             />
             <FormInput
               id='name'
@@ -93,7 +104,7 @@ const UserInfo = () => {
               type='text'
               autocomplete='text'
             />
-            <FormInput
+            {/* <FormInput
               id='code'
               name='code'
               label='Code'
@@ -101,11 +112,11 @@ const UserInfo = () => {
               required
               type='text'
               autocomplete='code'
-            />
+            /> */}
             <FormInput
               id='clientRepoUrl'
               name='clientRepoUrl'
-              label='Client Repo URL'
+              label='Clients Repo URL'
               placeholder='Enter URL'
               required
               type='text'
@@ -129,6 +140,36 @@ const UserInfo = () => {
               type='text'
               autocomplete='URL'
             />
+
+            <FormInput
+              id='inventoryTradeUrl'
+              name='inventoryTradeUrl'
+              label='Inventory Trade Url'
+              placeholder='Enter URL'
+              required
+              type='text'
+              autocomplete='URL'
+            />
+
+            <FormInput
+              id='locationsUrl'
+              name='locationsUrl'
+              label='Locations Url'
+              placeholder='Enter URL'
+              required
+              type='text'
+              autocomplete='URL'
+            />
+
+            <FormInput
+              id='loanCallbackUrl'
+              name='loanCallbackUrl'
+              label='Loan Callback Url'
+              placeholder='Enter URL'
+              required
+              type='text'
+              autocomplete='URL'
+            />
             <FormInput
               id=' transactionPhrase'
               name='transactionPhrase'
@@ -139,37 +180,7 @@ const UserInfo = () => {
               autocomplete='URL'
             />
 
-            <FormInput
-              id='API_KEY'
-              name='API_KEY'
-              label='API KEY'
-              placeholder='Enter API KEY'
-              required
-              type='text'
-              autocomplete='text'
-            />
-
-            <FormInput
-              id='REQUEST_TS'
-              name='REQUEST_TS'
-              label='Request Time'
-              placeholder='Enter request'
-              required
-              type='text'
-              autocomplete='text'
-            />
-
-            <FormInput
-              id='HASH_KEY'
-              name='HASH_KEY'
-              label='Hash Key'
-              placeholder='Enter key'
-              required
-              type='text'
-              autocomplete='text'
-            />
-
-            <FormMultiSelect
+            {/* <MultiSelectDup
               data={[
                 { value: 'GH', label: 'Ghana' },
                 { value: 'KE', label: 'Kenya' },
@@ -180,25 +191,8 @@ const UserInfo = () => {
               name='countryCode'
               label='Country'
               required
-              placeholder='Select Country'
-            />
-
-            <ToggleButton
-              label='Check Wallet Balance Enabled'
-              id='checkWalletBalanceEnabled'
-              name='checkWalletBalanceEnabled'
-            />
-            <ToggleButton
-              label='Bank Transfer Enabled'
-              id='bankTransferEnabled'
-              name='bankTransferEnabled'
-            />
-
-            <ToggleButton
-              label='Client Transfer Enabled'
-              id=' clientTransferEnabled'
-              name='clientTransferEnabled'
-            />
+              placeholder=''
+            /> */}
 
             <ToggleButton
               label='Check Inventory Position Enabled'
@@ -222,7 +216,10 @@ const UserInfo = () => {
               <button
                 type='button'
                 className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
-                onClick={() => resetForm()}>
+                onClick={() => {
+                  resetForm();
+                  close();
+                }}>
                 Discard
               </button>
               <Button

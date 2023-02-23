@@ -82,7 +82,7 @@ const GenericFilter = ({
           overflowX: 'hidden',
         },
       }}>
-      <div className='flex justify-between items-center border-b border-b-gray-300 dark:border-wdark-300 px-10 pt-20 pb-10 w-full sticky top-0 bg-white dark:bg-wdark-500'>
+      <div className='flex justify-between items-center border-b border-b-gray-300 dark:border-wdark-300 px-10 pt-20 pb-10 w-full sticky top-0 bg-black dark:bg-wdark-500'>
         <div className='flex gap-3 items-center'>
           <Filter variant='Bold' size={24} />
           <p className='text-2xl'>Filter</p>
@@ -171,7 +171,7 @@ const GenericFilter = ({
                           className='flex items-center text-gray-500 text-base overflow-hidden text-ellipsis whitespace-nowrap'
                           key={rIndex}>
                           <input
-                            type='checkbox'
+                            type='text'
                             className='checkbox'
                             id={row + rIndex}
                             name={row}

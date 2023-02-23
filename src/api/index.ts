@@ -1,5 +1,9 @@
 export {
   forgot_password,
+  activateUser,
+  request_password_reset,
+  reset__user_Password,
+  request_password_reset_setttings,
   authenticate,
   register,
   reset_password,
@@ -48,4 +52,4 @@ export {
 
 export { get_dashboard_stats, get_admin_name } from './dashboard';
 export { get_tracker_stats } from './tracker';
-export { get_single_client } from './single-client';
+export { get_single_client, get_a_client } from './single-client';

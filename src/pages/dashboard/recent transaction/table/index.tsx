@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, ArrowUp } from 'iconsax-react';
+// import { ArrowDown, ArrowUp } from 'iconsax-react';
 import { commaformatter } from '../../../../utils';
 import { get_transaction_list_querry } from '../../../../queries/transaction_stats';
 import { useQuery } from 'react-query';
@@ -20,10 +20,10 @@ const Table = () => {
             <tr className='child:py-4 border-b text-[#C1C0C2] font-normal child:px-1 child:cursor-default child:align-middle'>
               <th className='flex items-center'>
                 S/N{' '}
-                <span className='flex'>
+                {/* <span className='flex'>
                   <ArrowUp size='14' color='#c1c0c2' variant='Outline' />
                   <ArrowDown size='14' color='#c1c0c2' variant='Outline' />
-                </span>
+                </span> */}
               </th>
               <th>Date</th>
               <th>Client's Name</th>
@@ -56,7 +56,15 @@ const Table = () => {
                   </span>
                 </td>
                 <td>
-                  <span className='font-normal '>{el.transactionType}</span>
+                  {el.transactionType === 'Credit' ? (
+                    <span className='font-normal text-afexgreen-dark '>
+                      {el.transactionType}
+                    </span>
+                  ) : (
+                    <span className='font-normal text-afexred-regular '>
+                      {el.transactionType}
+                    </span>
+                  )}
                 </td>
 
                 <td>

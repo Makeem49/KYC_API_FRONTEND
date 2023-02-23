@@ -1,3 +1,4 @@
+export { default as ConfirmOverlay } from './confirm';
 export { default as Authentication } from './auth';
 export { default as Client } from './client';
 export { default as SingleClient } from './client/single client';

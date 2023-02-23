@@ -2,10 +2,19 @@ import React from 'react';
 import verifyIcon from '../../../../assets/images/verify.png';
 import { useQuery } from 'react-query';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
+import { Skeleton } from '@mantine/core';
 
 const VirtualCards = () => {
-  const { data: list } = useQuery(get_tracker_stats_query());
-
+  const { data: list, isLoading } = useQuery(get_tracker_stats_query());
+  if (isLoading)
+    return (
+      <Skeleton
+        height={200}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
   return (
     <>
       <div className='w-[66%] flex gap-14 child:h-[200px]'>
@@ -23,7 +32,7 @@ const VirtualCards = () => {
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
-              {list?.overview?.novirtualAccount}
+              {list?.overview?.noVirtualAccount ?? 0}
             </p>
           </div>
         </div>
@@ -42,7 +51,7 @@ const VirtualCards = () => {
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
-              {list?.overview?.unsyncedWithdrawal}
+              {list?.overview?.unsyncedWithdrawal ?? 0}
             </p>
           </div>
         </div>

@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { dayDateFormatter } from '../../../../utils';
+
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 
@@ -75,15 +75,15 @@ export default function Chart2() {
   };
 
   const data = {
-    labels: list!.performanceOverview.map((d): any =>
-      dayDateFormatter(d.date).split(' ')
+    labels: list!.performanceOverview.map(
+      (d): any => d.dayOfWeekAndDateInMonth
     ),
     datasets: [
       {
         label: 'Total Withdrawals',
         data: list!.performanceOverview.map((w): any => w.stats.withdrawals),
-        borderColor: '#EC7670',
-        backgroundColor: '#EC7670',
+        borderColor: ' #EC7670',
+        backgroundColor: ' #EC7670',
         tension: 0.8,
         pointRadius: 1,
         borderWidth: 1.5,

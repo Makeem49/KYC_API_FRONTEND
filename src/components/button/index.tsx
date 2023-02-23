@@ -15,7 +15,7 @@ interface MyButtonInterface {
 const Button = ({ text, loading, type, onClick }: MyButtonInterface) => {
   return (
     <button
-      className={`w-[95px] font-medium text-white bg-afexred-dark rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center ${
+      className={`w-[95px] font-medium text-white bg-afexpurple-dark rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center ${
         loading ? 'py-2' : 'py-4'
       }`}
       type={type ?? 'button'}

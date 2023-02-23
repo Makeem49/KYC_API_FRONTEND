@@ -1,21 +1,30 @@
-import React, { useCallback, useState } from 'react';
-import { Filter, RowHorizontal } from 'iconsax-react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
+import { useReactToPrint } from 'react-to-print';
+// import { DownloadTableExcel } from 'react-export-table-to-excel';
+// import { CSVLink } from 'react-csv';
+import { ExportSquare, Filter, RowHorizontal } from 'iconsax-react';
+import { ArrowDown2 } from 'iconsax-react';
 import { SearchNormal } from 'iconsax-react';
 // import { HiDownload } from 'react-icons/hi';
 import { Calendar } from 'iconsax-react';
+// import { useTranslation } from 'react-i18next';
 
 import {
   useDebouncedEffect,
   isDeepEqual,
   searchText,
+  searchSpecificText,
   insert,
 } from '../../utils/functions';
 
-import { DateRanges, GenericFilter, Pagination } from '..';
+import { DateRanges, Pagination } from '..';
 import { useNavigate } from 'react-router-dom';
+import { Popover } from '@mantine/core';
+
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 // Data Headers
-interface Header {
+export interface Header {
   name: string;
   accessor: string;
   hidden: boolean;
@@ -30,6 +39,10 @@ interface Header {
   actionCell?: (data: ArrayElement<any[]>) => JSX.Element;
 }
 
+export interface HeaderFilter {
+  name: string;
+}
+
 // Table properties (Required)
 interface DataGridRequiredProps {
   data: any[];
@@ -39,6 +52,7 @@ interface DataGridRequiredProps {
     accessor: string;
     label: string;
   };
+  headerFilter: HeaderFilter[];
   rows: number;
 }
 
@@ -58,6 +72,7 @@ interface DataGridOptionalProps extends DataGridRequiredProps {
   withCheck?: boolean;
   ActionComponent?: (props: ActionComponentProps) => JSX.Element;
   withNavigation?: boolean;
+  withRowNavigation?: boolean;
   navigationProps?: { baseRoute: string; accessor: string };
 }
 
@@ -66,32 +81,39 @@ interface DataGridProps extends DataGridOptionalProps {}
 const DataGrid = ({
   data,
   headers,
+  headerFilter,
   rows,
   dateFilter,
   ...props
 }: DataGridProps) => {
   const navigate = useNavigate();
-
+  // const { t } = useTranslation();
+  const [availableData, setAvailableData] = useState<typeof data>(data);
   const table = React.useMemo(() => data, [data]);
   // const [currentUsers, setCurrentUsers] = useState<typeof data>(data);
   const [selectedColumns, setSelectedColumns] = useState(headers);
   // Column visibility
   const [showColOpts, setShowColOpts] = useState<boolean>(false); // Column options
+  const [showAllComp, setshowAllComp] = useState<boolean>(false); // Column options
+  const [showFilterColOpts, setShowFilterColOpts] = useState<boolean>(false); // Column options
   // const [_internal, setInternal] = useState<typeof data>(data); // Data Mainpulation
   const [selectedRows, setSelectedRows] = useState<typeof data>([]); // Data Selection
   const [start, setStart] = useState<Date | null>(null); // Date Range Start
   const [end, setEnd] = useState<Date | null>(null); // Date Range End
   const [showDateCalendar, setShowDateCalendar] = useState<boolean>(false); // Show Date Calendar
-  const [showFilter, setShowFilter] = useState<boolean>(false); // Filtering
-  const [filterObj, setFilterObj] = useState<{ [key: string]: string[] }>(
-    () => {
-      if (props.filterKeys) {
-        return props.filterKeys.reduce((a, b) => ({ ...a, [b]: [] }), {});
-      }
+  // const [showFilter, setShowFilter] = useState<boolean>(false); // Filtering
+  // const [filterObj, setFilterObj] = useState<{ [key: string]: string[] }>(
+  //   () => {
+  //     if (props.filterKeys) {
+  //       return props.filterKeys.reduce((a, b) => ({ ...a, [b]: [] }), {});
+  //     }
 
-      return { '': [] };
-    }
-  );
+  //     return { '': [] };
+  //   }
+  // );
+
+  const [opened, setOpened] = useState(false);
+  const [drawer, setDrawer] = useState(false);
 
   // SORTING ACTIONS
 
@@ -129,7 +151,7 @@ const DataGrid = ({
     return { items: sortedItems, requestSort, sortConfig };
   };
 
-  const { items, requestSort, sortConfig } = useSortableData(data, '');
+  const { items, requestSort, sortConfig } = useSortableData(availableData, '');
   const getClassNamesFor = (name: any) => {
     if (!sortConfig) {
       return;
@@ -137,37 +159,17 @@ const DataGrid = ({
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
   getClassNamesFor('');
-  // const [sorting, setSorting] = useState({ key: 'name', ascending: true });
-
-  // useEffect(() => {
-  //   const currentUsersCopy = [...currentUsers];
-
-  //   console.log(currentUsersCopy, sorting);
-
-  //   const sortedCurrentUsers = currentUsersCopy.sort((a: any, b: any) => {
-  //     if (typeof a[sorting?.key] === 'number') {
-  //       return a - b;
-  //     } else {
-  //       return a[sorting?.key] - b[sorting?.key];
-  //     }
-  //   });
-
-  //   setCurrentUsers(
-  //     sorting.ascending ? sortedCurrentUsers : sortedCurrentUsers.reverse()
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [sorting]);
-
-  // function applySorting(key: string) {
-  //   setSorting((prev) => {
-  //     return { key, ascending: !prev.ascending };
-  //   });
-  // }
 
   // Pagination Controls // Rows per page
   const [currentItems, setCurrentItems] = useState<typeof data>([]); // Current list displayed
   const [page, setPage] = useState<number>(1); // Current page
   const [itemsOffset, setItemsOffset] = useState<number>(0); // offset from index
+
+  useEffect(() => {
+    const endOffset = itemsOffset + rows;
+    setCurrentItems(availableData.slice(itemsOffset, endOffset));
+    setPage(Math.ceil(availableData.length / rows));
+  }, [itemsOffset, rows, availableData]);
 
   // Select/Deselect a particular row
   const toggleRow = (row: ArrayElement<typeof data>) => {
@@ -197,7 +199,7 @@ const DataGrid = ({
   // Filter Date use******
   const filterByDate = useCallback(() => {
     if (!start || !end) return;
-    setCurrentItems(
+    setAvailableData(
       table
         .slice()
         .filter(
@@ -233,10 +235,31 @@ const DataGrid = ({
   const filterByTextSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.currentTarget;
-      setCurrentItems(() => searchText(table, value));
+      setAvailableData(() => searchText(data, value));
     },
-    [table]
+    [data]
   );
+
+  const filterBySpecificTextSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.currentTarget;
+      setAvailableData(() => searchSpecificText(data, value));
+    },
+    [data]
+  );
+  const inputRef = useRef(null);
+
+  const onButtonClick = () => {
+    // @ts-ignore (us this comment if typescript raises an error)
+    inputRef.current.value = '';
+  };
+  //  const clearFilterByTextSearch = useCallback(
+  //    (e: React.ChangeEvent<HTMLInputElement>) => {
+  //      const { value } = e.currentTarget;
+  //      setAvailableData(() => searchText(data, ''));
+  //    },
+  //    [data]
+  //  );
 
   useDebouncedEffect(
     () => {
@@ -251,57 +274,226 @@ const DataGrid = ({
   );
 
   // Generate the Filter Object
-  useDebouncedEffect(
-    () => {
-      if (props.withGlobalFilters && props.filterKeys) {
-        setFilterObj(
-          props.filterKeys.reduce((a, b) => ({ ...a, [b]: [] }), {})
-        );
-      }
-    },
-    [props.withGlobalFilters],
-    100
-  );
+  // useDebouncedEffect(
+  //   () => {
+  //     if (props.withGlobalFilters && props.filterKeys) {
+  //       setFilterObj(
+  //         props.filterKeys.reduce((a, b) => ({ ...a, [b]: [] }), {})
+  //       );
+  //     }
+  //   },
+  //   [props.withGlobalFilters],
+  //   100
+  // );
+  useEffect(() => {
+    setAvailableData(data);
+  }, [data]);
+
+  // PDF EXPORT
+
+  const printCurrent = useRef(null);
+  const printSelected = useRef(null);
+  const printAllData = useRef(null);
+  // const printCurrentCsv = useRef(null);
+  // const componentRef = useRef(null);
+  // const AllComponentRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => printCurrent.current,
+    documentTitle: 'cuddie_client_table',
+  });
+  const handlePrintAllData = useReactToPrint({
+    content: () => printAllData.current,
+    documentTitle: 'cuddie_client_table',
+  });
+  const handlePrintSelected = useReactToPrint({
+    content: () => printSelected.current,
+    documentTitle: 'cuddie_client_table',
+  });
+
+  // CSV EXPORT
+
+  // const { onDownload } = useDownloadExcel({
+  //   currentTableRef: tableRef.current,
+  //   filename: 'Users table',
+  //   sheet: 'Users',
+  // });
 
   return (
     <section className='h-full relative space-y-5'>
+      <div className='hidden'>
+        {/* all data */}{' '}
+        <table
+          ref={printAllData}
+          className='overflow-auto p-5 w-full mb-10 align-top'>
+          <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
+            <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+              <th className='w-8'>S/N</th>
+              {selectedColumns.map((column) => (
+                <th
+                  key={column.accessor}
+                  className={`${column.hidden && 'hidden'}`}>
+                  {column.cell
+                    ? column.cell(column.name)
+                    : column.name.toLowerCase()}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className='bg-white'>
+            {data.map((row, index) => (
+              <tr
+                key={index}
+                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                <td className='py-4'>{index + 1}</td>
+
+                {Object.keys(row).map((entry, index) => {
+                  const header = headers.find((el) => el.accessor === entry);
+                  const secondary_data = header?.secondary_key
+                    ? row[header.secondary_key]
+                    : '';
+                  const data = row[entry];
+                  return (
+                    <td
+                      key={index}
+                      className={`text-${header?.rowAlign}  ${
+                        selectedColumns.findIndex(
+                          (el) => el.accessor === header?.accessor
+                        ) >= 0
+                          ? 'visible'
+                          : 'hidden'
+                      }`}>
+                      {header?.row && data !== null
+                        ? header.row(data, secondary_data)
+                        : data.length > 0
+                        ? data
+                        : '--------'}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* selected */}
+        <table
+          ref={printSelected}
+          className='overflow-auto p-5 w-full mb-10 align-top'>
+          <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
+            <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+              <th className='w-8'>S/N</th>
+              {selectedColumns.map((column) => (
+                <th
+                  key={column.accessor}
+                  className={`${column.hidden && 'hidden'}`}>
+                  {column.cell
+                    ? column.cell(column.name)
+                    : column.name.toLowerCase()}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className='bg-white'>
+            {selectedRows.map((row, index) => (
+              <tr
+                key={index}
+                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                <td className='py-4'>{index + 1}</td>
+
+                {Object.keys(row).map((entry, index) => {
+                  const header = headers.find((el) => el.accessor === entry);
+                  const secondary_data = header?.secondary_key
+                    ? row[header.secondary_key]
+                    : '';
+                  const data = row[entry];
+                  return (
+                    <td
+                      key={index}
+                      className={`text-${header?.rowAlign}  ${
+                        selectedColumns.findIndex(
+                          (el) => el.accessor === header?.accessor
+                        ) >= 0
+                          ? 'visible'
+                          : 'hidden'
+                      }`}>
+                      {header?.row && data !== null
+                        ? header.row(data, secondary_data)
+                        : data.length > 0
+                        ? data
+                        : '--------'}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* current */}
+        <table
+          ref={printCurrent}
+          className='overflow-auto p-5 w-full mb-10 align-top'>
+          <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
+            <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+              <th className='w-8'>S/N</th>
+              {selectedColumns.map((column) => (
+                <th
+                  key={column.accessor}
+                  className={`${column.hidden && 'hidden'}`}>
+                  {column.cell
+                    ? column.cell(column.name)
+                    : column.name.toLowerCase()}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className='bg-white'>
+            {currentItems.map((row, index) => (
+              <tr
+                key={index}
+                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                <td className='py-4'>{index + 1}</td>
+
+                {Object.keys(row).map((entry, index) => {
+                  const header = headers.find((el) => el.accessor === entry);
+                  const secondary_data = header?.secondary_key
+                    ? row[header.secondary_key]
+                    : '';
+                  const data = row[entry];
+                  return (
+                    <td
+                      key={index}
+                      className={`text-${header?.rowAlign}  ${
+                        selectedColumns.findIndex(
+                          (el) => el.accessor === header?.accessor
+                        ) >= 0
+                          ? 'visible'
+                          : 'hidden'
+                      }`}>
+                      {header?.row && data !== null
+                        ? header.row(data, secondary_data)
+                        : data.length > 0
+                        ? data
+                        : '--------'}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* Top Task Bar */}
       <div className='flex justify-between items-center  border-[#F3F3F3] dark:border-wdark-300 relative'>
-        <h2 className='text-xl font-bold ml-3 capitalize'>{props.title}</h2>
+        <h2 className='text-xl font-bold ml-3 capitalize'>{''}</h2>
 
-        <div className='flex items-center space-x-5 relative text-base'>
-          {/* {props.withExport && (
-            <ActionSelect
-              label='export options'
-              type='filled'
-              className='dark:bg-wdark-400 dark:text-wdark-300'
-              data={[
-                {
-                  label: 'export all',
-                  icon: <HiDownload />,
-                  function: () => {},
-                },
-                {
-                  label: 'export selected',
-                  icon: <HiDownload />,
-                  function: () => {},
-                },
-                {
-                  label: 'export filtered',
-                  icon: <HiDownload />,
-                  function: () => {},
-                },
-              ]}
-            />
-          )} */}
-        </div>
+        <div className='flex items-center space-x-5 relative text-base'></div>
       </div>
       <div className='flex items-center'>
         {/* SEARCH */}
         <div className='relative flex items-center w-72 2xl:w-96 '>
           <input
             type='text'
-            placeholder='Search by clients name, id'
+            placeholder={props.title}
             className='py-3 mx-2 w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100  hover:shadow bg-white'
             onChange={filterByTextSearch}
           />
@@ -311,19 +503,20 @@ const DataGrid = ({
         </div>
 
         {/* RIGHT SIDE ACTIONS */}
-        <div className='text-gray-300 flex flex-1 items-center gap-4 relative justify-end'>
-          {/* COLUMN FILTER */}
+
+        <div className='text-gray-300 flex flex-1 items-center gap-2 relative justify-end'>
+          {/* COLUMN VISIBILITY FILTER */}
           <div className='relative' onClick={(e) => e.stopPropagation()}>
             <button
-              className={`h-full whitespace-nowrap bg-afexred-extralight gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexred-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+              className={`h-full whitespace-nowrap bg-afexpurple-lighter gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
                 showColOpts
-                  ? ' border-afexred-regular  '
+                  ? ' border-afexpurple-regular  '
                   : ' border-transparent'
               }`}
               onClick={() => setShowColOpts((s) => !s)}>
               <RowHorizontal
                 size='16'
-                color='#E1261C'
+                color='#7738DD'
                 variant='Bulk'
                 className='shrink-0 '
               />
@@ -341,16 +534,16 @@ const DataGrid = ({
                     selectedColumns.findIndex(
                       (el) => el.accessor === header.accessor
                     ) >= 0 && !header.static
-                      ? 'bg-afexred-lighter'
+                      ? 'bg-afexpurple-lighter'
                       : selectedColumns.findIndex(
                           (el) => el.accessor === header.accessor
                         ) >= 0 && header.static
-                      ? 'bg-gray-200 cursor-not-allowed'
+                      ? ' bg-afexpurple-lighter cursor-not-allowed'
                       : undefined
                   }`}>
                   <input
-                    type='checkbox'
                     className='checkbox'
+                    type='checkbox'
                     name={header.accessor}
                     id={header.accessor}
                     disabled={header.static}
@@ -367,23 +560,198 @@ const DataGrid = ({
             </ul>
           </div>
 
-          <button
-            className='flex bg-afexred-extralight font-semibold justify-between items-center rounded-lg py-4 px-4 text-sm  gap-2 border-[1px] border-none  text-afexred-regular  hover:shadow p-2  hover:text-afexred-regular'
-            onClick={() => setShowFilter(true)}>
-            <Filter size={18} variant='Bold' />
-            {'FILTER'}
-          </button>
+          {/* FILTER ACTION */}
+
+          <div className='' onClick={(e) => e.stopPropagation()}>
+            <button
+              className={`h-full whitespace-nowrap bg-afexpurple-lighter gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+                showAllComp
+                  ? ' border-afexpurple-regular  '
+                  : ' border-transparent'
+              }`}
+              onClick={() => setshowAllComp((s) => !s)}>
+              <Filter
+                size='16'
+                color='#7738DD'
+                variant='Bulk'
+                className='shrink-0 '
+              />
+              {'FILTERS'}
+            </button>
+            {/* ALL COMPONENTS TO BE DISPLAYED */}
+            <div
+              className={`flex gap-2  w-[340px] bg-white px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0  dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                showAllComp && 'max-h-[450px] opacity-100 overflow-scroll'
+              }`}>
+              {/* COLUMNS HEADER */}
+              <div className='relative' onClick={(e) => e.stopPropagation()}>
+                <button
+                  className={`h-full w-full whitespace-nowrap  gap-2 text-base p-4 rounded-lg hover:shadow  hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+                    showFilterColOpts
+                      ? ' border-[#DAD9DA]'
+                      : '  border-[#DAD9DA]'
+                  }`}
+                  onClick={() => setShowFilterColOpts((s) => !s)}>
+                  {'SELECT COLUMNS'}
+                  <ArrowDown2
+                    size='16'
+                    color='#7738DD'
+                    variant='Bulk'
+                    className='shrink-0 '
+                  />
+                </button>
+                <ul
+                  className={`flex gap-1 w-full px-1 py-2 flex-col absolute bg-white top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                    showFilterColOpts && 'max-h-[300px] opacity-100 '
+                  }`}>
+                  {headerFilter.map((header) => (
+                    <label
+                      key={header.name}
+                      htmlFor={header.name}
+                      className='flex items-center gap-1 whitespace-nowrap  text-gray-900 text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize'>
+                      <input
+                        type='checkbox'
+                        className='checkbox'
+                        name={header.name}
+                        id={header.name}
+                      />
+                      {header.name}{' '}
+                    </label>
+                  ))}
+                </ul>
+              </div>
+
+              {/* SEARCH SECTION */}
+              <div className='w-full'>
+                <div className='w-full'>
+                  <input
+                    type='text'
+                    placeholder='Input Query Value'
+                    className='py-3  w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  hover:shadow bg-white'
+                    onChange={filterBySpecificTextSearch}
+                    ref={inputRef}
+                  />
+                </div>
+                {/* BUTTONS */}
+                <div className='flex justify-end gap-2 py-5 w-full'>
+                  <span
+                    onClick={() => {
+                      setAvailableData(data);
+                      onButtonClick();
+                    }}
+                    className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light text-textgrey-darker'>
+                    Clear
+                  </span>
+                  <span
+                    onClick={() => setshowAllComp((s) => !s)}
+                    className='p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white '>
+                    Add
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* {props.withGlobalFilters && (
+            <button
+              className='flex bg-afexpurple-lighter font-semibold justify-between items-center rounded-lg py-4 px-4 text-sm  gap-2 border-[1px] border-none  text-afexpurple-regular  hover:shadow p-2  hover:text-afex-regular'
+              onClick={() => setShowFilter(true)}>
+              <Filter size={18} variant='Bold' />
+              {t('FIlTER')}
+            </button>
+          )} */}
+
+          {/* EXPORT ACTIONS */}
+          <Popover
+            opened={opened}
+            onChange={setOpened}
+            width={100}
+            position={'bottom-end'}>
+            <Popover.Target>
+              <button
+                className='py-6 px-3 flex font-semibold gap-2 border items-center rounded-lg text-afexpurple-regular text-sm xl:text-[14px] bg-afexpurple-lighter xl:h-[40px] w-[100px]'
+                onClick={() => {
+                  setOpened((o) => !o);
+                }}>
+                <ExportSquare size='18' color='#7738DD' variant='Bulk' />
+                <span>EXPORT</span>
+              </button>
+            </Popover.Target>
+
+            <Popover.Dropdown>
+              {/* PDF POPOVER */}
+              <Popover
+                opened={drawer}
+                onChange={setDrawer}
+                width={140}
+                position='left-start'>
+                <Popover.Target>
+                  <button
+                    className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter  rounded-lg py-4 px-2 font-normal text-[14px] text-left'
+                    onClick={() => {
+                      setDrawer((o) => !o);
+                    }}>
+                    PDF
+                  </button>
+                </Popover.Target>
+
+                <Popover.Dropdown>
+                  <span
+                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
+                    onClick={() => {
+                      handlePrintAllData();
+                    }}>
+                    Export All
+                  </span>
+                  <span
+                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
+                    onClick={() => {
+                      handlePrintSelected();
+                    }}>
+                    Export Selected
+                  </span>
+                  <span
+                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
+                    onClick={() => {
+                      handlePrint();
+                    }}>
+                    Export Page{' '}
+                  </span>
+                </Popover.Dropdown>
+
+                {/* <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+                  PDF
+                </button> */}
+              </Popover>
+
+              <DownloadTableExcel
+                filename='users table'
+                sheet='users'
+                currentTableRef={printCurrent.current}>
+                <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+                  {' '}
+                  CSV
+                  {/* <CSVLink
+                  filename={'TableContent.csv'}
+                  data={data}
+                  className='btn btn-primary'>
+                  Download csv
+                </CSVLink> */}
+                </button>
+              </DownloadTableExcel>
+            </Popover.Dropdown>
+          </Popover>
 
           {/* DATE FILTER ACTION */}
           {dateFilter.enabled && (
             <button
-              className='flex gap-6 items-center py-3 mx-2 text-base rounded-xl px-4 focus:outline-none focus:border-afexgreen hover:shadow bg-afexred-extralight cursor-pointer'
+              className='flex gap-6 items-center py-3 mx-2 text-base rounded-xl px-4 focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter cursor-pointer'
               onClick={() => setShowDateCalendar((s) => !s)}>
               {/* <span className='capitalize whitespace-nowrap'>
                 {dateFilter.label}{' '}
               </span> */}
               <span>
-                <Calendar color='#E1261C' variant='Bulk' />
+                <Calendar color='#7738DD' variant='Bulk' />
               </span>
             </button>
           )}
@@ -406,6 +774,24 @@ const DataGrid = ({
       <div className='h-full'>
         <div className='h-[40rem] xl:h-[50rem] relative pb-24'>
           <div className='h-full table-auto overflow-auto w-full my-3'>
+            <style type='text/css'>
+              {`
+          @media print {
+            .table {
+              font-size: 16px;
+              width: 100%;
+            }
+            th, td {
+              border: 1px solid grey;
+              padding: 8px;
+            }
+            th {
+              
+              
+            }
+          }
+        `}
+            </style>
             <table className='overflow-auto p-5 w-full mb-10 align-top'>
               <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
                 <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
@@ -430,20 +816,21 @@ const DataGrid = ({
                       {column.cell
                         ? column.cell(column.name)
                         : column.name.toLowerCase()}
-
-                      <span
-                        className='#C1C0C2'
-                        onClick={() => requestSort(`${column.accessor}`)}>
-                        {' '}
-                        &uarr;&darr;
-                      </span>
+                      {
+                        <span
+                          className='#C1C0C2'
+                          onClick={() => requestSort(`${column.accessor}`)}>
+                          {' '}
+                          &uarr;&darr;
+                        </span>
+                      }
                     </th>
                   ))}
                   {props.withActions && <th>{'action'}</th>}
                 </tr>
               </thead>
               <tbody className='bg-white'>
-                {currentItems.map((row, index) => (
+                {currentItems.map((row: any, index) => (
                   <tr
                     onClick={
                       props.withNavigation && props.navigationProps
@@ -456,7 +843,7 @@ const DataGrid = ({
                         : undefined
                     }
                     key={index}
-                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexred-extralight child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
                     {props.withCheck && (
                       <td onClick={(e) => e.stopPropagation()}>
                         <input
@@ -472,7 +859,7 @@ const DataGrid = ({
                         />
                       </td>
                     )}
-                    <td className='py-4'>{table.indexOf(row) + 1}</td>
+                    <td className='py-4'>{index + 1}</td>
 
                     {Object.keys(row).map((entry, index) => {
                       const header = headers.find(
@@ -484,6 +871,16 @@ const DataGrid = ({
                       const data = row[entry];
                       return (
                         <td
+                          onClick={
+                            props.withRowNavigation && props.navigationProps
+                              ? () =>
+                                  navigate(
+                                    `/${props.navigationProps?.baseRoute}/${
+                                      row[props.navigationProps?.accessor!]
+                                    }`
+                                  )
+                              : undefined
+                          }
                           key={index}
                           className={`text-${header?.rowAlign}  ${
                             selectedColumns.findIndex(
@@ -514,7 +911,7 @@ const DataGrid = ({
           </div>
 
           <Pagination
-            dataLength={data.length}
+            dataLength={availableData.length}
             itemsOffset={itemsOffset}
             setItemsOffset={setItemsOffset}
             page={page}
@@ -523,29 +920,17 @@ const DataGrid = ({
         </div>
       </div>
 
-      {props.withGlobalFilters && props.filterKeys && (
+      {/* {props.withGlobalFilters && props.filterKeys && (
         <GenericFilter
           close={() => setShowFilter(false)}
           filterObj={filterObj}
           setFilterObj={setFilterObj}
-          data={[
-            {
-              client_type: [
-                'Client',
-                'CMC',
-                'Farmer',
-                'Input Partner',
-                'Investor',
-                'Logistics Partner',
-              ],
-            },
-            {
-              status: ['Verified', 'Unverified'],
-            },
-          ]}
+          data={props.filterKeys.map((key) => ({
+            [key]: [...new Set(data.map((el) => el[key]))],
+          }))}
           show={showFilter}
         />
-      )}
+      )} */}
     </section>
   );
 };

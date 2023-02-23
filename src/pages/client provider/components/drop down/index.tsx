@@ -4,7 +4,7 @@ import { ArrowDown2 } from 'iconsax-react';
 import AddUser from '../modal/edit user ';
 import DeactivateUser from '../modal/deactivate';
 
-const UserAction = () => {
+const UserAction = ({ data }: { data: ClientProvider }) => {
   const [opened, setOpened] = useState(false);
   const [editUserModal, setEditUserModal] = useState(false);
   const [deactivateUserModal, setDeactivateUserModal] = useState(false);
@@ -21,29 +21,45 @@ const UserAction = () => {
           </button>
         </Popover.Target>
 
-        <Popover.Dropdown className='child:cursor-pointer rounded-lg  hover:child:bg-afexred-extralight child:p-2'>
+        <Popover.Dropdown className='child:cursor-pointer rounded-lg  hover:child:bg-afexpurple-lighter child:p-2'>
           <button
             className='text-[14px] text-gray-400 rounded-md px-2 w-full text-left'
             onClick={(e) => {
               e.stopPropagation();
-              setEditUserModal(true);
+              setEditUserModal((s) => !s);
               setOpened((s) => !s);
             }}>
             Edit
           </button>
-          <p
-            className='text-[14px] text-gray-400 rounded-md'
-            onClick={() => {
-              setDeactivateUserModal((s) => !s);
-              setOpened((s) => !s);
-            }}>
-            Deactivate
-          </p>
+          {data.isActive === 'Active' ? (
+            <p
+              className='text-[14px] text-gray-400 rounded-md'
+              onClick={() => {
+                setDeactivateUserModal((s) => !s);
+                setOpened((s) => !s);
+              }}>
+              Deactivate
+            </p>
+          ) : (
+            <p
+              className='text-[14px] text-gray-400 rounded-md'
+              onClick={() => {
+                setDeactivateUserModal((s) => !s);
+                setOpened((s) => !s);
+              }}>
+              Activate
+            </p>
+          )}
         </Popover.Dropdown>
       </Popover>
 
-      <AddUser show={editUserModal} close={() => setEditUserModal(false)} />
+      <AddUser
+        data={data}
+        show={editUserModal}
+        close={() => setEditUserModal(false)}
+      />
       <DeactivateUser
+        data={data}
         show={deactivateUserModal}
         close={() => setDeactivateUserModal(false)}
       />

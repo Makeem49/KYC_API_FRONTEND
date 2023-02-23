@@ -4,11 +4,13 @@ const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
   const token = localStorage.getItem('cuddie-access-token');
+  const providerId: any = localStorage.getItem('decoded-token_providers');
 
   if (!token) return;
 
   return {
     Authorization: `Bearer ${token}`,
+    providerId,
   };
 };
 

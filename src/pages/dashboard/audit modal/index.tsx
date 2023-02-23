@@ -35,7 +35,7 @@ const AuditModal = () => {
             dropdown: {
               top: '-140% !important',
               left: '80% !important',
-              backgroundColor: '#E1261C',
+              backgroundColor: '#54289D',
               color: '#FFFF',
               fontSize: '16px',
               fontStyle: 'bold',
@@ -52,7 +52,7 @@ const AuditModal = () => {
             <button
               onClick={() => setOpened(true)}
               className='cursor-pointer py-2 hover:bg-transparent w-full'>
-              Run Audit
+              Run Audit n
             </button>
           </Popover.Dropdown>
         </Popover>

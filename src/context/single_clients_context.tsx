@@ -11,7 +11,7 @@ const SingleClientProvider = (props: WithChildren) => {
   const { pathname } = useLocation();
   // console.log(pathname.split('/'));
   const clientId = pathname.split('/')[2];
-  const providerId = pathname.split('/')[2];
+  // const providerId = pathname.split('/')[3];
   // console.log(clientId, 'runs');
 
   const [clientList, setClientLIst] = useState<SingleClient[]>([]);
@@ -20,7 +20,7 @@ const SingleClientProvider = (props: WithChildren) => {
   const refreshContext = () => {};
 
   useEffect(() => {
-    if (!clientId || !providerId) return;
+    if (!clientId) return;
 
     const fetchSingleClient = async () => {
       const resp = await get_single_client(parseInt(clientId, 10));
@@ -37,7 +37,7 @@ const SingleClientProvider = (props: WithChildren) => {
 
     fetchClientBio();
     fetchSingleClient();
-  }, [clientId, providerId]);
+  }, [clientId]);
 
   return (
     <SingleClientCtx.Provider

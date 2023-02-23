@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { faker } from '@faker-js/faker';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { get_client_provider_query } from '../../../../../../queries/client_provider';
 
 import {
   FormImage,
@@ -8,16 +10,39 @@ import {
   FormMultiSelect,
   // FromLabel,
 } from '../../../../../../components/form';
+// import MultiSelectDup from '../../../../../../components/form/multiselectDup';
 import Button from '../../../../../../components/button';
 
 import { create_user } from '../../../../../../api';
 
 import { useUsersCtx } from '../../../../../../context';
+import { toast } from '../../../../../../utils';
 
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
-  const { refreshContext, item, itemTwo } = useUsersCtx();
+  const { item, itemTwo } = useUsersCtx();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: create_user,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast('success', 'activation link will be sent to the users email'); // To  invalidate and refetch
+    },
+    onError: () => {
+      toast('error', 'please ', 'unable to craete user');
+    },
+  });
 
   const [loading, setLoading] = useState(false);
+  const {
+    data: list,
+    isError,
+    isLoading,
+  } = useQuery(get_client_provider_query());
+  if (isLoading) return <span> Loading......</span>;
+  if (isError) return <span> Error!!!</span>;
+
+  // console.log(list, 'provider');
 
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
@@ -26,10 +51,11 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           fullName: '',
           username: '',
           email: '',
-          password: '',
+          // password: 'Password@1',
           roles: [],
           permissions: [],
           image: '',
+          providers: [],
         }}
         onSubmit={async (values) => {
           const newUser = {
@@ -37,22 +63,24 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             email: values.email,
             firstName: values.fullName.split(' ')[0],
             lastName: values.fullName.split(' ')[1],
-            password: values.password,
+            // password: values.password,
             roles: values.roles,
+            providers: values.providers,
             permissions: values.permissions,
             image: faker.image.people(640, 640),
           };
           setLoading(true);
-          const message = await create_user(newUser);
-
-          if (message === 'unable to create user') {
-            alert(message);
-            setLoading(false);
-          }
+          mutation.mutate(newUser);
+          console.log(newUser);
           setLoading(false);
-
-          refreshContext();
           closeModal();
+
+          // const message = await create_user(newUser);
+
+          // if (message === 'unable to create user') {
+          //   alert(message);
+          //   setLoading(false);
+          // }
         }}>
         {({ resetForm }) => (
           <Form className='flex flex-col gap-y-4'>
@@ -84,8 +112,8 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             <div className='flex items-center space-x-4'>
               <div className='flex-1'>
                 <FormInput
-                  id='userName'
-                  name='userName'
+                  id='username'
+                  name='username'
                   label='Username'
                   placeholder='Username'
                   required
@@ -105,39 +133,63 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                 />
               </div> */}
             </div>
+            <div className='relative'>
+              {/* <p className='absolute top-12 text-sm text-textgrey-light left-4 z-30'>
+                Select Applicable Permissions
+              </p>{' '} */}
+              <FormMultiSelect
+                data={item?.map((a) => {
+                  return { value: a.id, label: a.name };
+                })}
+                id='permissions'
+                name='permissions'
+                label=' Permissions'
+                required
+                placeholder=''
+              />
+            </div>
 
-            <FormMultiSelect
-              // data={[
-              //   // { value: 1, label: 'Permission 1' },
-              //   // { value: 2, label: 'Permission 2' },
-              //   // { value: 3, label: 'Permission 3' },
-              //   // { value: 4, label: 'Permission 4' },
-              // ]}
-              data={item?.map((a) => {
-                return { value: a.id, label: a.name };
-              })}
-              id='permissions'
-              name='permissions'
-              label='Set applicable Permissions'
-              required
-              placeholder='Set applicable Permissions'
-            />
-            <FormMultiSelect
-              data={itemTwo?.map((b) => {
-                return { value: b.id, label: b.name };
-              })}
-              id='roles'
-              name='roles'
-              label='Set applicable Roles'
-              required
-              placeholder='Set applicable Roles'
-            />
+            <div className='relative'>
+              {/* <p className='absolute top-12 text-sm text-textgrey-light left-4 z-30'>
+                Select Applicable Roles
+              </p> */}
+              <FormMultiSelect
+                data={itemTwo?.map((b) => {
+                  return { value: b.id, label: b.name };
+                })}
+                id='roles'
+                name='roles'
+                label='Roles'
+                required
+                placeholder=''
+              />
+            </div>
+
+            <div className='relative'>
+              {/* <p className='absolute top-12 text-sm text-textgrey-light left-4 z-30'>
+                Select Provider
+              </p> */}
+
+              <FormMultiSelect
+                data={list!?.map((b) => {
+                  return { value: b.id, label: b.name };
+                })}
+                id='providers'
+                name='providers'
+                label='Providers'
+                required
+                placeholder=''
+              />
+            </div>
 
             <div className='flex items-center justify-center pt-8 space-x-6'>
               <button
                 type='button'
                 className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
-                onClick={() => resetForm()}>
+                onClick={() => {
+                  resetForm();
+                  closeModal();
+                }}>
                 Discard
               </button>
               <Button

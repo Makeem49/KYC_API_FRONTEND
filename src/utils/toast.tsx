@@ -65,7 +65,7 @@ const toast = (
         )}
       </div>
     ),
-    autoClose: 60000,
+    autoClose: 10000,
   });
 };
 export default toast;

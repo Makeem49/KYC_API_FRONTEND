@@ -1,45 +1,40 @@
 import React from 'react';
 import DataGrid from '../../../../components/data-grid';
 import { shortDateFormatter } from '../../../../utils';
-// import { SearchNormal } from 'iconsax-react';
-// // import Column from './task bar/components/column';
-// import Filter from './task bar/components/filters';
-// import Exports from './task bar/components/exports';
-// import Table from './table';
-// import { useColumnCtx } from '../../../../context/column_context';
-// import { ColumnFilter } from '../../../../components';
-// import { colClientsTable } from '../../../../assets/columnData';
+import { useQuery } from 'react-query';
+import { get_client_list_query } from '../../../../queries/clients_stats';
+import { Skeleton } from '@mantine/core';
 
-const ClientList = ({ data }: any) => {
-  // const { clientColumn } = useColumnCtx();
-  // const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
-  // const [results, setResults] = useState(data);
+const ClientList = () => {
+  const { data, isError, isLoading } = useQuery(get_client_list_query(1));
 
-  // useEffect(() => {
-  //   setSelectedColumns(clientColumn); // eslint-disable-next-line
-  // }, [clientColumn]);
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
-  // const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   return setResults(() =>
-  //     data
-  //       .slice()
-  //       .filter(
-  //         (el) =>
-  //           `${el?.firstName} ${el?.lastName}`
-  //             .toLowerCase()
-  //             .includes(event.currentTarget.value.toLowerCase()) ||
-  //           el.platformId.includes(event.currentTarget.value)
-  //       )
-  //   );
-  // };
+  if (isError) return <p>Error!!!</p>;
+
+  const countryCode = data!.slice(0, 1);
+  const code = countryCode.map((el: any) => el.countryCode);
 
   return (
     <>
-      <div className='bg-white p-3'>
+      <div className='bg-white px-6 py-3'>
         <DataGrid
+          title='Search by client name, id..'
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
-          data={data}
+          data={data!}
+          headerFilter={[
+            { name: 'Activity Status' },
+            { name: 'Verification Status' },
+          ]}
           headers={[
             {
               accessor: 'createdAt',
@@ -50,26 +45,24 @@ const ClientList = ({ data }: any) => {
               row: (val) => <span>{shortDateFormatter(val)} </span>,
             },
             {
-              accessor: 'firstName',
+              accessor: 'clientName',
               hidden: false,
               name: 'Client Name',
               sortable: true,
               static: true,
-              secondary_key: 'lastName',
-              tertiary_key: 'platformId',
-              row: (val, second, third) => (
+              secondary_key: 'platformId',
+
+              row: (val, second) => (
                 <span className='flex flex-col'>
-                  <span>
-                    {val} {second}{' '}
-                  </span>
-                  <span>{third} </span>
+                  <span className=' text-afexpurple-regular'>{val}</span>
+                  <span className='w-[140px]'>{second}</span>
                 </span>
               ),
             },
             {
               accessor: 'balance',
               hidden: false,
-              name: 'Wallet Balance',
+              name: `Wallet Balance ${code}`,
               sortable: true,
               static: false,
             },
@@ -88,12 +81,78 @@ const ClientList = ({ data }: any) => {
               name: 'Status',
               sortable: true,
               static: false,
-              row: (val) => (
-                <span className=' bg-afexgreen-extralight rounded-lg p-2'>
-                  {val ? 'Active' : 'Inactive'}{' '}
-                </span>
-              ),
+              row: (val) => {
+                if (val === 'Active') {
+                  return (
+                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                }
+              },
             },
+
+            {
+              accessor: 'providerName',
+              hidden: false,
+              name: 'Provider Name',
+              sortable: true,
+              static: false,
+            },
+
+            {
+              accessor: 'isVerified',
+              hidden: false,
+              name: 'Verification Status',
+              sortable: true,
+              static: false,
+
+              row: (val) => {
+                if (val === 'Verified') {
+                  return (
+                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                }
+              },
+            },
+
+            {
+              accessor: 'valueOfTransactions',
+              hidden: false,
+              name: `Transaction Value ${code}`,
+              sortable: true,
+              static: false,
+            },
+
+            // {
+            //   accessor: 'providerId',
+            //   hidden: false,
+            //   name: 'Provider Id',
+            //   sortable: true,
+            //   static: false,
+            // },
+
+            // {
+            //   accessor: 'platformId',
+            //   hidden: false,
+            //   name: 'Platform Id',
+            //   sortable: true,
+            //   static: true,
+            // },
           ]}
           withExport
           withGlobalFilters
@@ -105,37 +164,6 @@ const ClientList = ({ data }: any) => {
         />
       </div>
     </>
-    // <div className='w-full flex flex-col gap-4 p-8 bg-[#ffff] rounded-lg'>
-    //   <div className='flex justify-between'>
-    //     <div className='relative'>
-    //       <SearchNormal
-    //         size='20'
-    //         color='#c1c0c2'
-    //         variant='Bulk'
-    //         className=' absolute top-2.5 left-2 '
-    //       />
-    //       <input
-    //         type='text'
-    //         name=''
-    //         id=''
-    //         placeholder="Search by client's name, id"
-    //         className=' py-2 px-10 rounded text-sm text-gray-400 border outline-none focus:outline-none bg-[#FFFF] h-full w-[280px]'
-    //         onChange={handleSearch}
-    //       />
-    //     </div>
-
-    //     <div className='flex items-center text-sm text-afexpurple-dark font-bold rounded-md gap-3'>
-    //       <ColumnFilter
-    //         columnOptions={colClientsTable}
-    //         name='transactionsColumn'
-    //         {...{ selectedColumns, setSelectedColumns }}
-    //       />
-    //       <Filter />
-    //       <Exports />
-    //     </div>
-    //   </div>
-    //   <Table data={results} selectedColumns={selectedColumns} />
-    // </div>
   );
 };
 

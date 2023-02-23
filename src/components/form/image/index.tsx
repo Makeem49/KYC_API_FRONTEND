@@ -5,6 +5,7 @@ import { useField } from 'formik';
 
 import FormLabel from '../label';
 import { MdClose } from 'react-icons/md';
+import userImg from '../../../assets/images/user.png';
 
 interface ImageInterface {
   id: string;
@@ -15,7 +16,7 @@ interface ImageInterface {
 }
 
 const ImageUpload = ({ label, ...props }: ImageInterface) => {
-  const [bg, setBg] = useState('');
+  const [bg, setBg] = useState(userImg);
   const [field, meta, helpers] = useField(props);
   console.log(field);
 
@@ -53,12 +54,9 @@ const ImageUpload = ({ label, ...props }: ImageInterface) => {
           }}
         />
 
-        <div className={`border-[#FFFF] w-[100px] h-[100px] bg-[#D9D9D9]`}>
-          <img
-            src={bg}
-            alt=''
-            className='w-full h-full object-cover appearance-none'
-          />
+        <div
+          className={`border-[#FFFF] flex items-center justify-center w-[100px] h-[100px]`}>
+          <img src={bg} alt='' className=' h-[90px] w-[90px] appearance-none' />
         </div>
         <button
           className='absolute -bottom-1 bg-white shadow-lg drop-shadow-md -right-5 rounded-full p-1'

@@ -24,37 +24,43 @@ type ClientList = {
   phoneNumber: string;
   image: string;
   bvn: string;
+  countryCode: string;
   idCardType: string;
   idCardNumber: string;
   expiry: string;
-  isVerified: boolean;
-  isActive: boolean;
+  isVerified: boolean | string;
+  isActive: boolean | string;
   bankAccount?: null;
   balance: string;
   createdAt: string;
   updatedAt: string;
   deletedAt?: null;
   accountId: number;
-  clientProviderId?: null;
+  clientProviderId?: number;
   providerId: number;
-  client: {
-    firstName: string;
-    lastName: string;
-  };
+  providerName: string;
+  isVerified: boolean | string;
+  clientId: number;
+  valueOfTransactions: string;
+  clientName: string;
 };
 
 type ClientProvider = {
-  id: string;
+  id: number;
   name: string;
   code: string;
   logo: string;
-  isActive: boolean;
+  isActive: boolean | string;
   clientRepoUrl: string;
   walletTransactionCallbackUrl: string;
   inventoryPositionUrl: string;
   inventoryTradeUrl: string;
   locationsUrl: string;
+  loanCallbackUrl: string;
   transactionPhrase: string;
+  checkInventoryPositionEnabled: boolean;
+  checkInventoryPositionEnabled: boolean;
+  tradeInventoryTransactionEnabled: boolean;
   checkWalletBalanceEnabled: boolean;
   bankTransferEnabled: boolean;
   clientTransferEnabled: boolean;
@@ -67,12 +73,23 @@ type ClientProvider = {
   };
   allowAutoApproveFundRequest: booleen;
   countryCode: string;
+  header: any;
+
+  countryCode: string;
+  apiKey: string;
   createdBy: string;
   image: string;
   noOfClients: string;
   clientProviderToken: ClientProviderToken;
   createdAt: string | Date;
   updatedAt: string | Date;
+};
+
+type ActivateUser = {
+  username: string;
+  password: string;
+  token: string;
+  email: string;
 };
 
 type ClientIntegration = {
@@ -92,16 +109,18 @@ type User = {
   id: number;
   username: string;
   email: string;
+  lastLogin: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
   password?: string;
   permissions: number[] | any;
   roles: number[] | any;
+  providers: number[] | any;
   image: string;
   createdAt: string | Date;
   updatedAt: string | Date;
-  isActive: boolean;
+  isActive: boolean | string;
   twoStepEnabled: boolean;
   isDefault: booleen;
   group: string;
@@ -133,7 +152,8 @@ type ClientProviderToken = {
   apiKey: string;
   providerId: string;
   lastUsedAt: string | null;
-  isActive: boolean;
+  isActive: boolean | string;
+  noOfRequests: string;
   createdAt: string | Date;
   createdBy: string | null;
   updatedAt: string | Date;
@@ -168,7 +188,7 @@ type CUSSD = {
 };
 
 type PerformanceOverview = {
-  date: string | Date;
+  dayOfWeekAndDateInMonth: string;
   stats: {
     withdrawals: number;
     deposit: number;
@@ -198,12 +218,13 @@ type TransactionList = {
   id: number;
   amount: string;
   transactionType: string;
+  transactionLogId: string;
   channel: string;
   amountBefore: string;
   amountAfter: string;
   description: string;
   comment?: null;
-  status: string;
+  status: boolean | string;
   sessionId: string;
   ref: string;
   isPlatformSynced?: null;
@@ -216,6 +237,8 @@ type TransactionList = {
   clientBalance: number;
   firstName: string;
   lastName: string;
+  countryCode: string;
+  time: string;
 };
 
 type SingleClient = {
@@ -237,6 +260,7 @@ type SingleClient = {
   deletedAt: null;
   clientId: null;
   client: null;
+  countryCode: string;
 };
 
 type ClientBio = {
@@ -261,6 +285,11 @@ type ClientBio = {
   otherNames: string;
   phoneNumber: string;
   platformId: string;
+  providers: {
+    map(arg0: (el: any) => any): React.ReactNode;
+    clientProviderClient: {};
+  };
+  clientProviderClient: string[];
 };
 
 interface GenericContextInterface<T> {
@@ -439,8 +468,8 @@ interface TrackerSect {
   overview: {
     noWallets: number;
     failedFunding: number;
-    unsyncedWalletTransfer: number;
-    novirtualAccount: number;
+    unSyncedWalletTransfer: number;
+    noVirtualAccount: number;
     unsyncedWithdrawal: number;
   };
 }

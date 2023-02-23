@@ -1,8 +1,9 @@
 import React from 'react';
 import ProfileBoard from './components/profile board';
-import { ArrowDown2 } from 'iconsax-react';
+
 import SingleClientCard from './components/cards';
 import SingleClientTable from './components/single client table';
+import { Link } from 'react-router-dom';
 
 const SingleClient = () => {
   return (
@@ -14,8 +15,16 @@ const SingleClient = () => {
           <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
             Client Profile
           </h2>
-          <p>
-            Home/ <span>Client</span> <span>Client profile</span>
+          <p className=' text-textgrey-normal'>
+            <span>
+              {' '}
+              <Link to='/'>Home/</Link>
+            </span>
+            <span>
+              {' '}
+              <Link to='/client'>Clients</Link>
+            </span>{' '}
+            <span className=' text-textgrey-darker'>/Client profile</span>
           </p>
         </div>
         <ProfileBoard />
@@ -23,13 +32,13 @@ const SingleClient = () => {
 
       {/* Right Section */}
       <div className='flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[65%]'>
-        <div className='flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center '>
+        {/* <div className='flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center '>
           <p>Showing data for </p>
           <button className='border flex items-center border-[#BABABA] text-textgrey-Bold p-2 rounded-lg '>
             Today
             <ArrowDown2 size='14' color='#2B2930' variant='Bold' />
           </button>
-        </div>
+        </div> */}
 
         <SingleClientCard />
         <SingleClientTable />

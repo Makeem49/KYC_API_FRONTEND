@@ -2,21 +2,35 @@ import React from 'react';
 import userImg from '../../../../assets/images/user.png';
 import { get_admin_query } from '../../../../queries/dash_board';
 import { useQuery } from 'react-query';
+import { Skeleton } from '@mantine/core';
+import { Navigate } from 'react-router-dom';
 
 const ProfileBoard = () => {
-  const { data: user } = useQuery(get_admin_query());
+  const { data: user, isLoading, isError } = useQuery(get_admin_query());
+
+  if (isLoading)
+    return (
+      <Skeleton
+        height={700}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+
+  if (isError) return <Navigate to='/login' />;
 
   return (
     <div className=' w-full flex flex-col gap-10 h-full'>
       {/* FIrst Card */}
-      <div className=' bg-white rounded-lg h-full p-8'>
-        <div className='flex flex-col justify-center py-3 items-center gap-1'>
+      <div className=' bg-white flex flex-col gap-8 rounded-lg h-full p-8'>
+        <div className='flex flex-col justify-center py-3 items-center gap-3'>
           <img src={userImg} alt='profimg' className='w-32 rounded' />
-          <p>
-            {user!.firstName} {user!.lastName}
+          <p className=' font-semibold text-textgrey-darker'>
+            {user!?.firstName} {user!?.lastName}
           </p>
-          <span className='text-[#1863BF] bg-[#E8F1FC] px-3 rounded'>
-            {user!.roles[0].name}
+          <span className='text-[#1863BF] bg-[#E8F1FC] px-3 py-2 rounded'>
+            {user!?.roles[0].name}
           </span>
         </div>
 
@@ -32,14 +46,14 @@ const ProfileBoard = () => {
           <p className=' text-textgrey-Bold font-bold'>
             User ID: <br />{' '}
             <span className=' text-textgrey-Light font-normal'>
-              ID-300003246357
+              {user!?.id}
             </span>
           </p>
           {/* EMAIL */}
           <p className=' text-textgrey-Bold font-bold'>
             Email: <br />{' '}
             <span className=' text-textgrey-Light font-normal'>
-              {user!.email}
+              {user!?.email}
             </span>
           </p>
           {/* LAST LOGIN */}

@@ -1,6 +1,6 @@
 import React from 'react';
 // import cuddieLogo from '../../../assets/brand/logo-white.svg';
-import background from '../../../assets/brand/Rectangle.png';
+import background from '../../../assets/brand/background.png';
 import { motion } from 'framer-motion';
 
 const InitialOverlay = (props: { isVisible: boolean }) => {
@@ -14,7 +14,7 @@ const InitialOverlay = (props: { isVisible: boolean }) => {
           animate={{ transform: 'translateX(0%)', opacity: 1 }}
           exit={{ opacity: 0, transform: 'translate(0,0)' }}
           transition={{ duration: 2 }}>
-          <h1 className=' text-white text-[50px]'>Cuddie</h1>
+          <h1 className=' text-white text-[50px]'>Cudie</h1>
           {/* <img src={cuddieLogo} alt='Cuddie' /> */}
         </motion.div>
       )}

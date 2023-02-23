@@ -3,12 +3,36 @@ import { Chart21 } from 'iconsax-react';
 import { PresentionChart } from 'iconsax-react';
 import Chart1 from './chart1';
 import Chart2 from './chart2';
+import { useQuery } from 'react-query';
+import { get_dashboard_stats_query } from '../../../queries/dash_board';
+import { Skeleton } from '@mantine/core';
+import Box from '../../../assets/images/box.png';
 
 const Chart = () => {
   const [showBarChat, setShowBarChat] = useState(true);
   const [showLineChart, setShowLineChart] = useState(false);
 
-  const activeStyle = 'p-2 bg-afexred-regular bg-opacity-10 text-[#E1261C]  ';
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_dashboard_stats_query());
+  // console.log(list?.performanceOverview, 'here');
+
+  if (isLoading)
+    return (
+      <Skeleton
+        height={300}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+
+  if (isError) return <p>Error ocured!!!</p>;
+
+  const activeStyle =
+    'p-2 bg-afexpurple-regular bg-opacity-10 text-[#7738DD]  ';
   const baseStyle = 'p-2 bg-[#F1EBFC] bg-opacity-10';
 
   return (
@@ -17,6 +41,7 @@ const Chart = () => {
         <p className=' text-[16px] font-normal text-textgrey-darker'>
           Performance Overview
         </p>
+
         <div className='flex gap-3'>
           <Chart21
             size='32'
@@ -38,8 +63,19 @@ const Chart = () => {
           />
         </div>
       </div>
-      {showBarChat && <Chart1 />}
-      {showLineChart && <Chart2 />}
+
+      {list!?.performanceOverview.length > 0 ? (
+        <div>
+          {showBarChat && <Chart1 />}
+          {showLineChart && <Chart2 />}
+        </div>
+      ) : (
+        <div className=' p-10 h-[500px] flex flex-col gap-10 items-center'>
+          {' '}
+          <img src={Box} alt='' className='h-[80px]' />
+          <p className=' text-[18px] font-semibold'>No data to display</p>{' '}
+        </div>
+      )}
     </div>
   );
 };

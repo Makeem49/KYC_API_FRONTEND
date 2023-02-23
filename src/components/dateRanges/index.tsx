@@ -25,6 +25,8 @@ const DateRanges = ({
   resetFunc,
   classes = 'right-0 ',
 }: DateRangesInterface) => {
+  console.log(startDate);
+  console.log(endDate);
   return (
     <div
       className={`absolute top-[5.5rem] z-10 drop-shadow-2xl ${classes} right-[0%]`}
@@ -37,7 +39,7 @@ const DateRanges = ({
                 setStartDate(new Date(Date.now()));
                 setEndDate(new Date(Date.now()));
               }}
-              className='p-2 hover:bg-afexred-lighter hover:text-[#E1261C] rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
               Today
             </li>
             <li
@@ -45,7 +47,7 @@ const DateRanges = ({
                 setStartDate(new Date(Date.now() - 24 * 60 * 60 * 1000)); // 24 hours ago in milliseconds
                 setEndDate(new Date());
               }}
-              className='p-2 hover:bg-afexred-lighter hover:text-[#E1261C] rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
               Yesterday
             </li>
             <li
@@ -53,7 +55,7 @@ const DateRanges = ({
                 setStartDate(new Date(Date.now() - 24 * 7 * 60 * 60 * 1000)); // 7 days ago in milliseconds
                 setEndDate(new Date());
               }}
-              className='p-2 hover:bg-afexred-lighter hover:text-[#E1261C] rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
               Last 7 Days
             </li>
             <li
@@ -65,11 +67,11 @@ const DateRanges = ({
                 );
                 setEndDate(new Date(Date.now())); // Setting the current day of month as 0 corresponds to the last day of the last month
               }}
-              className='p-2 hover:bg-afexred-lighter hover:text-[#E1261C] rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
               Last Month
             </li>
             <li
-              className='p-2 hover:bg-afexred-lighter hover:text-[#E1261C] rounded-2xl transition cursor-pointer'
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'
               onClick={() => {
                 setStartDate(null);
                 setEndDate(null);
@@ -83,7 +85,7 @@ const DateRanges = ({
               <p className='text-center mb-4 text-gray-400'>Start</p>
               <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
                 <Calendar value={startDate} onChange={setStartDate} />
-                <div className='flex justify-between mt-3'>
+                {/* <div className='flex justify-between mt-3'>
                   <button
                     type='button'
                     className='px-8 py-3 text-gray-900 dark:bg-wdark-50 dark:rounded'
@@ -96,7 +98,7 @@ const DateRanges = ({
                     onClick={filterFunc}>
                     Done
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
             <div>
@@ -112,8 +114,11 @@ const DateRanges = ({
                   </button>
                   <button
                     type='button'
-                    className='px-8 py-3 bg-[#E1261C] text-white rounded'
-                    onClick={filterFunc}>
+                    className='px-8 py-3 bg-afexpurple text-white rounded'
+                    onClick={() => {
+                      close();
+                      filterFunc!();
+                    }}>
                     Done
                   </button>
                 </div>

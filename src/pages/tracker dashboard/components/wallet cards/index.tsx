@@ -2,10 +2,26 @@ import React from 'react';
 import verifyIcon from '../../../../assets/images/verify.png';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
 import { useQuery } from 'react-query';
+import { Navigate } from 'react-router-dom';
+import { Skeleton } from '@mantine/core';
 
 const WalletCards = () => {
-  const { data: list } = useQuery(get_tracker_stats_query());
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_tracker_stats_query());
+  if (isLoading)
+    return (
+      <Skeleton
+        height={200}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
+  if (isError) return <Navigate to='/login' />;
   return (
     <>
       <div className='flex gap-14 child:h-[200px]'>
@@ -23,7 +39,7 @@ const WalletCards = () => {
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
-              {list?.overview?.noWallets}
+              {list?.overview?.noWallets ?? 0}
             </p>
           </div>
         </div>
@@ -42,7 +58,7 @@ const WalletCards = () => {
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
-              {list?.overview?.failedFunding}
+              {list?.overview?.failedFunding ?? 0}
             </p>
           </div>
         </div>
@@ -61,7 +77,7 @@ const WalletCards = () => {
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
-              {list?.overview?.unsyncedWalletTransfer}
+              {list?.overview?.unSyncedWalletTransfer ?? 0}
             </p>
           </div>
         </div>

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import {
-  //  capitalizeWords,
-  // commaformatter,
-  dayDateFormatter,
-} from '../../../../utils';
+import //  capitalizeWords,
+// commaformatter,
+// dayDateFormatter,
+'../../../../utils';
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 // import { nFormatter } from '../../../../utils/formatter';
@@ -15,6 +14,7 @@ const Chart1 = () => {
     isLoading,
     isError,
   } = useQuery(get_dashboard_stats_query());
+  // console.log(list?.performanceOverview, 'here');
 
   if (isLoading) return <p>Loading....</p>;
 
@@ -62,8 +62,8 @@ const Chart1 = () => {
   };
 
   const data = {
-    labels: list!.performanceOverview.map((d): any =>
-      dayDateFormatter(d.date).split(' ')
+    labels: list!.performanceOverview.map(
+      (d): any => d.dayOfWeekAndDateInMonth
     ),
 
     datasets: [

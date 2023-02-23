@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authenticate } from '../api';
-import { toast } from '../utils';
+import decodeJwt from 'jwt-decode';
+// import { toast } from '../utils';
+// import UseInvalidateAll from '../hooks/useInvalidateAll';
 
 interface AuthInterface {
   isAuthenticated: boolean;
@@ -12,6 +14,7 @@ interface AuthInterface {
     username: string;
     password: string;
   }) => void;
+
   logout: () => void;
   loading: boolean;
 }
@@ -37,30 +40,53 @@ const AuthProvider = (props: WithChildren) => {
   }) => {
     setLoading(true);
     const resp = await authenticate(username, password);
+    setLoading(false);
 
     if (resp.message !== 'Authenticated') {
-      toast('error', 'Request failed!!!', 'invalid username or password');
-      setLoading(false);
-
+      // toast('error', 'Request failed!!!', 'invalid username or password');
       return;
     }
     // toast('success', 'Sucess!!', 'Login successfully');
 
     // Drop success toast
     console.log(resp);
+
+    const decodedToken: any = decodeJwt(resp.access_token);
+    decodedToken.providers.sort((a: any, b: any) => {
+      return a.id > b.id ? 1 : -1;
+    });
+
+    localStorage.setItem(
+      'decoded-token_providers',
+      decodedToken.providers[0].id
+    );
+
+    localStorage.setItem(
+      'decoded-token_providers_name',
+      decodedToken.providers[0].name
+    );
+    const myArrayString = JSON.stringify(decodedToken);
+    localStorage.setItem('decoded-arrays', myArrayString);
+
+    console.log(decodedToken.providers);
+
     localStorage.setItem('cuddie-access-token', resp.access_token);
+
     localStorage.setItem('cuddie-auth-status', 'true');
     setIsAuthenticated(true);
     setLoading(false);
     return window.location.assign('/');
+    // UseInvalidateAll(decodedToken.providers[0].id)
 
     // console.log(username, password);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    // localStorage.removeItem('permissions');
     localStorage.removeItem('cuddie-auth-status');
     setIsAuthenticated(false);
+
     navigate('/login');
   };
 

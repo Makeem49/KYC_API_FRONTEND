@@ -1,5 +1,7 @@
 import { apiRequest } from '../../utils';
 import { shortDateFormatter } from '../../utils';
+import { commaformatter } from '../../utils';
+import { checkCountryCode } from '../../utils/formatter';
 
 /**
  * =================================================================
@@ -18,7 +20,7 @@ import { shortDateFormatter } from '../../utils';
 export async function get_single_client(
   clientId: number
 ): Promise<SingleClient[]> {
-  const resp = await apiRequest.get(`transactions?clientid=${clientId}`);
+  const resp = await apiRequest.get(`transactions?clientId=${clientId}`);
   if (!resp.data) return [];
 
   if (resp.data.data.length < 1) return [];
@@ -27,22 +29,23 @@ export async function get_single_client(
     (el: any) =>
       ({
         id: el.id,
-        amount: el.amount,
+        createdAt: shortDateFormatter(el.createdAt),
+        amount: commaformatter(el.amount),
+        amountBefore: commaformatter(el.amountBefore),
+        amountAfter: commaformatter(el.amountAfter),
         transactionType: el.transactionType,
+        ref: el.ref.substr(0, 10) + '...',
         channel: el.channel,
-        amountBefore: el.amountBefore,
-        amountAfter: el.amountAfter,
         description: el.description,
-        comment: el.comment,
+        comment: el.comment ? el.comment : '',
         status: el.status,
         sessionId: el.sessionId,
-        ref: el.ref,
-        isPlatformSynced: el.isPlatformSynced,
-        createdAt: shortDateFormatter(el.createdAt),
+        isPlatformSynced: el.isPlatformSynced ? el.isPlatformSynced : '',
         updatedAt: el.updatedAt,
-        deletedAt: el.deletedAt,
+        deletedAt: el.deletedAt ? el.deletedAt : '',
         clientId: el.clientId,
         client: el.client,
+        countryCode: checkCountryCode(el.client.countryCode),
       } as SingleClient)
   );
 }

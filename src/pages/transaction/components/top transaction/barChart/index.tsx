@@ -72,25 +72,10 @@ const BarChart = () => {
     datasets: [
       {
         label: '',
-        backgroundColor: [
-          'rgba(237, 85, 86, 1)',
-          '#F5F5F5',
-          '#F5F5F5',
-          '#F5F5F5',
-        ],
+        backgroundColor: ['#7738DD', '#F5F5F5', '#F5F5F5', '#F5F5F5'],
         borderWidth: 1,
-        hoverBackgroundColor: [
-          'rgba(237, 85, 86, 1)',
-          '#F5F5F5',
-          '#F5F5F5',
-          '#F5F5F5',
-        ],
-        hoverBorderColor: [
-          'rgba(237, 85, 86, 1)',
-          '#F5F5F5',
-          '#F5F5F5',
-          '#F5F5F5',
-        ],
+        hoverBackgroundColor: ['#7738DD', '#F5F5F5', '#F5F5F5', '#F5F5F5'],
+        hoverBorderColor: ['#7738DD', '#F5F5F5', '#F5F5F5', '#F5F5F5'],
         data: stats?.transactionLocations?.map(
           (el): string | number => el.value
         ),

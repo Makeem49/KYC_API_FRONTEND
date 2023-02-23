@@ -19,10 +19,10 @@ const TransactionCards = () => {
   return (
     <div className='flex gap-4 child:h-[134px]'>
       {/* Card One */}
-      <div className='relative flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-normal text-textgrey-normal'>DEPOSITS</p>
-          <SaveAdd size='20' color='#EC7670' variant='Bulk' />
+          <SaveAdd size='20' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
@@ -39,10 +39,10 @@ const TransactionCards = () => {
       </div>
 
       {/* Card Two */}
-      <div className='relative flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-normal text-textgrey-normal'>WITHDRAWAL</p>
-          <MoneySend size='20' color='#EC7670' variant='Bulk' />
+          <MoneySend size='20' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
@@ -59,10 +59,10 @@ const TransactionCards = () => {
       </div>
 
       {/* Card Three */}
-      <div className='relative flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-normal text-textgrey-normal'>WALLET TRANSFER</p>
-          <WalletCheck size='20' color='#EC7670' variant='Bulk' />
+          <WalletCheck size='20' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
@@ -79,18 +79,15 @@ const TransactionCards = () => {
       </div>
 
       {/* Card Four */}
-      <div className='relative flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
           <p className=' font-normal text-textgrey-normal'>FEES</p>
-          <CardCoin size='20' color='#EC7670' variant='Bulk' />
+          <CardCoin size='20' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
-            &#8358; 200,000,000{' '}
-            <span className='text-[#0DBF66] font-normal text-[13px]'>
-              {' '}
-              + 36%{' '}
-            </span>
+            0{' '}
+            {/* <span className='text-[#0DBF66] font-normal text-[13px]'> 0% </span> */}
           </p>
           <span>vs previous day</span>
         </div>

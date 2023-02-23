@@ -1,7 +1,7 @@
 import React from 'react';
 import { Add } from 'iconsax-react';
 import { useState } from 'react';
-import { Drawer, Group, Button } from '@mantine/core';
+import { Drawer, Group } from '@mantine/core';
 import UserInfo from './user info';
 
 const AddUser = () => {
@@ -21,12 +21,12 @@ const AddUser = () => {
       </Drawer>
 
       <Group position='center'>
-        <Button
-          className='flex w-full items-center py-2 px-2 hover:bg-afexred-lighter bg-afexred-extralight text-afexred-regular text-[14px] rounded-lg'
+        <button
+          className='flex w-[120px] items-center gap-2 py-2 px-3 hover:bg-afexpurple-regular hover:shadow text-white text-[14px] bg-afexpurple-regular rounded-lg'
           onClick={() => setOpened(true)}>
           <span className='w-full'>ADD USER</span>
-          <Add size='18' color='#E1261C' variant='Bulk' />
-        </Button>
+          <Add size='20' color='#FFFFFF' variant='Bulk' />
+        </button>
       </Group>
     </>
   );

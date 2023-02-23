@@ -6,18 +6,22 @@ import {
   get_dashboard_stats_query,
 } from '../../../queries/dash_board';
 import { useQuery } from 'react-query';
+import waving from '../../../assets/svgs/waving.svg';
+import { Skeleton } from '@mantine/core';
 
 const Header = () => {
-  const { data: list } = useQuery(get_admin_query());
+  const { data: list, isLoading } = useQuery(get_admin_query());
   const { data } = useQuery(get_dashboard_stats_query());
 
-  // console.log(admin);
-  // const date = new Date();
-  // // Fri Jun 17 2022 11:27:28 GMT+0100 (British Summer Time)
-  // const time = date.toLocaleTimeString('en-US', {
-  //   hour: '2-digit',
-  //   minute: '2-digit',
-  // });
+  if (isLoading)
+    return (
+      <Skeleton
+        height={300}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
   const today = new Date().toLocaleDateString('en-us', {
     weekday: 'long',
@@ -27,11 +31,9 @@ const Header = () => {
     hour: '2-digit',
     minute: '2-digit',
   });
-  // "Friday, Jul 2, 2021"
 
-  // console.log(today);
   return (
-    <div className='relative flex justify-between text-[14px] items-center rounded-lg bg-[#A01B14] w-full h-[94px] p-5 text-[#F1EBFC] '>
+    <div className='relative flex justify-between text-[14px] items-center rounded-lg bg-[#54289D] w-full h-[94px] p-5 text-[#F1EBFC] '>
       <img src={hafCirc} alt='' className=' absolute top-0 left-[20%]' />
       <img
         src={hafCirc}
@@ -45,15 +47,18 @@ const Header = () => {
       />
 
       <div>
-        <h2 className='text-[20px] text-[#ffff]'>Welcome {list?.username}</h2>
+        <h2 className='text-[20px] flex items-center text-[#ffff]'>
+          <span>Welcome {list?.username} </span>
+          <img src={waving} alt='wave' className='w-10' />
+        </h2>
         <p>
           {' '}
           {commaformatter(data?.sectionOne?.transactions?.today ?? 0)}{' '}
-          transactions have been initiated today.
+          transactions have been initiated.
         </p>
       </div>
 
-      <div className='text-[12px] bg-afexred-darker p-3 rounded-lg'>
+      <div className='text-[12px] bg-[#44207E] p-3 rounded-lg'>
         <p>{today}</p>
       </div>
     </div>

@@ -55,7 +55,7 @@ export default function BubbleChart() {
             r: withdrawalRadius,
           },
         ],
-        backgroundColor: 'rgba(237, 85, 86, 1)',
+        backgroundColor: '#EC7670',
       },
       {
         label: 'Deposit',
@@ -67,7 +67,7 @@ export default function BubbleChart() {
             r: depositRadius,
           },
         ],
-        backgroundColor: 'rgba(101, 214, 191, 1)',
+        backgroundColor: '#38CB89',
       },
 
       {
@@ -80,7 +80,7 @@ export default function BubbleChart() {
             r: transferRadius,
           },
         ],
-        backgroundColor: 'rgba(249, 195, 98, 1)',
+        backgroundColor: '#F9C362',
       },
     ],
   };

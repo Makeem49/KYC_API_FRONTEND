@@ -50,6 +50,7 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
+      display: false,
       position: 'bottom' as const,
     },
     title: {
@@ -83,16 +84,8 @@ export default function BarChart() {
           stats?.transactionValues?.deposit,
           stats?.transactionValues?.withdrawals,
         ],
-        borderColor: [
-          'rgba(249, 195, 98, 1)',
-          'rgba(101, 214, 191, 1)',
-          'rgba(237, 85, 86, 1)',
-        ],
-        backgroundColor: [
-          'rgba(249, 195, 98, 1)',
-          'rgba(101, 214, 191, 1)',
-          'rgba(237, 85, 86, 1)',
-        ],
+        borderColor: ['#F9C362', '#38CB89', '#EC7670'],
+        backgroundColor: ['#F9C362', '#38CB89', '#EC7670'],
         borderRadius: Number.MAX_VALUE,
       },
     ],

@@ -4,6 +4,7 @@ import { Bubble } from 'react-chartjs-2';
 import { calculatePercentageRadius } from '../../../../utils';
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
+import { Skeleton } from '@mantine/core';
 
 ChartJS.register(LinearScale, PointElement, Tooltip);
 
@@ -14,7 +15,10 @@ export default function BubbleChart() {
     isError,
   } = useQuery(get_dashboard_stats_query());
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading)
+    return (
+      <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-[300px]' />
+    );
 
   if (isError) return <p>Error!!!</p>;
 
@@ -56,7 +60,7 @@ export default function BubbleChart() {
             r: successRadius,
           },
         ],
-        backgroundColor: 'rgba(101, 214, 191, 1)',
+        backgroundColor: '#38CB89',
       },
       {
         label: 'Pending',
@@ -68,7 +72,7 @@ export default function BubbleChart() {
             r: pendingRadius,
           },
         ],
-        backgroundColor: 'rgba(249, 195, 98, 1)',
+        backgroundColor: ' #F9C362',
       },
 
       {
@@ -81,7 +85,7 @@ export default function BubbleChart() {
             r: failedRadius,
           },
         ],
-        backgroundColor: 'rgba(237, 85, 86, 1)',
+        backgroundColor: ' #EC7670',
       },
     ],
   };

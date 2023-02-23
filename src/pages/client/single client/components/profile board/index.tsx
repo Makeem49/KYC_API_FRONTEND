@@ -2,11 +2,28 @@ import React from 'react';
 import userImg from '../../../../../assets/images/user.png';
 // import verifiedIcon from '../../../../../assets/svgs/verify.svg';
 import { ArrowDown2 } from 'iconsax-react';
-import { useSingleClientCtx } from '../../../../../context';
-
+// import { useSingleClientCtx } from '../../../../../context';
+import { get_a_client_query } from '../../../../../queries/single_client';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { Skeleton } from '@mantine/core';
 const ProfileBoard = () => {
-  const { stats } = useSingleClientCtx();
-  console.log(stats);
+  // const { stats! } = useSingleClientCtx();
+
+  const { pathname } = useLocation();
+  const clientId = pathname.split('/')[2];
+  const { data: stats, isLoading } = useQuery(
+    get_a_client_query(parseInt(clientId, 10))
+  );
+  if (isLoading)
+    return (
+      <Skeleton
+        height={600}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
   return (
     <div className=' w-full flex flex-col gap-10'>
@@ -15,7 +32,7 @@ const ProfileBoard = () => {
         <div className='flex flex-col justify-center py-3 items-center gap-1'>
           <img src={userImg} alt='profimg' className='w-32 rounded' />
           <p>
-            {stats.firstName} {stats.lastName}
+            {stats!.firstName} {stats!.lastName}
           </p>
           <span className='text-[#1863BF] bg-[#E8F1FC] px-3 rounded'>
             Client
@@ -34,15 +51,17 @@ const ProfileBoard = () => {
           <div>
             {' '}
             <p className=' text-textgrey-darker font-bold'>
-              Account ID: <br />{' '}
+              Client ID: <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                {stats.accountId}
+                {stats!?.id}
               </span>
             </p>
             <p className=' text-textgrey-darker font-bold'>
               Platform ID: <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                {stats.platformId}
+                {stats!?.providers?.map(
+                  (el: any) => el.clientProviderClient?.platformId
+                )}{' '}
               </span>
             </p>
           </div>
@@ -67,7 +86,7 @@ const ProfileBoard = () => {
               Phone No:
               <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                {stats.phoneNumber}
+                {stats!.phoneNumber}
               </span>
             </p>
             {/* <p className=' text-textgrey-darker font-bold'>
@@ -108,7 +127,7 @@ const ProfileBoard = () => {
               BVN:
               <br />{' '}
               <span className=' text-textgrey-normal font-normal'>
-                {stats.bvn ? stats.bvn : 'none'}
+                {stats!.bvn ? stats!.bvn : 'none'}
               </span>
             </p>
             {/* <span className='p-2 flex justify-between rounded-lg bg-[#E7F9F0] text-[#076D3A]'>
@@ -120,20 +139,17 @@ const ProfileBoard = () => {
 
           <p className=' text-textgrey-darker font-bold'>
             Virtual Account: <br />
-            <span className=' text-textgrey-normal font-normal'>
-              {' '}
-              100-100-2410
-            </span>
+            <span className=' text-textgrey-normal font-normal'> none</span>
           </p>
 
           <p className=' text-textgrey-darker font-bold'>
             Bank: <br />
-            <span className=' text-textgrey-normal font-normal'> GT Bank</span>
+            <span className=' text-textgrey-normal font-normal'> none</span>
           </p>
 
           <p className=' text-textgrey-darker font-bold'>
             Debit Card Status: <br />
-            <span className=' text-textgrey-normal font-normal'> Issued</span>
+            <span className=' text-textgrey-normal font-normal'> none</span>
           </p>
         </div>
       </div>

@@ -1,6 +1,12 @@
+import { timeFormatter } from './../../utils/formatter';
 import { AxiosResponse } from 'axios';
 import { apiRequest } from '../../utils';
 import { shortDateFormatter } from '../../utils';
+
+import {
+  checkCountryCode,
+  currentNumberFormatter,
+} from '../../utils/formatter';
 
 /**
  * =================================================================
@@ -31,26 +37,29 @@ export async function get_all_transactions(): Promise<TransactionList[]> {
       ({
         id: el.id,
         createdAt: shortDateFormatter(el.createdAt),
+        time: timeFormatter(el.createdAt),
         clientName: `${el.client.firstName} ${el.client.lastName}`,
-        amount: el.amount,
+        sessionId: el.sessionId.substr(0, 15) + '',
+        amount: currentNumberFormatter(el.amount),
         transactionType: el.transactionType,
-        status: el.status,
-        channel: el.channel,
-        amountBefore: el.amountBefore,
-        amountAfter: el.amountAfter,
-        description: el.description,
-        comment: el.comment ? el.comment : '',
-
-        sessionId: el.sessionId,
-        ref: el.ref,
-        isPlatformSynced: el.isPlatformSynced ? el.isPlatformSynced : '',
-
-        updatedAt: el.updatedAt,
-        deletedAt: el.deletedAt ? el.deletedAt : '',
+        status: el.status ? 'Active' : 'Inactive',
+        countryCode: checkCountryCode(el.client.countryCode),
         clientId: el.clientId ? el.clientId : '',
+        // transactionLogId: el.transactionLogId ? el.transactionLogId : 'none',
+        // channel: el.channel,
+        // amountBefore: currentNumberFormatter(el.amountBefore),
+        // amountAfter: currentNumberFormatter(el.amountAfter),
+        // description: el.description,
+        // comment: el.comment ? el.comment : '',
+        // ref: el.ref,
+        // isPlatformSynced: el.isPlatformSynced ? el.isPlatformSynced : '',
 
-        clientBalance: el.client.balance,
-        clientPlatformId: el.client.platformId,
+        // updatedAt: el.updatedAt,
+        // deletedAt: el.deletedAt ? el.deletedAt : '',
+        // clientId: el.clientId ? el.clientId : '',
+
+        // clientBalance: el.client.balance,
+        // clientPlatformId: el.client.platformId ? el.client.platformId : '',
       } as TransactionList)
   );
 }

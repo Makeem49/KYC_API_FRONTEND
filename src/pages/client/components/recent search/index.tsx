@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'iconsax-react';
 import { useQuery } from 'react-query';
 import { get_top_clients_searches_query } from '../../../../queries/clients_stats';
+import { Skeleton } from '@mantine/core';
 
 const RecentSearch = () => {
   const navigate = useNavigate();
@@ -12,7 +13,15 @@ const RecentSearch = () => {
     isError,
   } = useQuery(get_top_clients_searches_query());
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading)
+    return (
+      <Skeleton
+        height={300}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
   if (isError) return <p>Error!!!</p>;
 
@@ -20,7 +29,6 @@ const RecentSearch = () => {
     <div className=' flex flex-col gap-3 border border-[#DAD9DA] rounded-lg p-5'>
       <div className='text-normal'>
         <p className='text-xl font-bold'>Recent Searches</p>
-        <span className=''>24 October, 2022</span>
       </div>
 
       {topSearch?.map((el: any) => (

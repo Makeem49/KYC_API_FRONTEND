@@ -47,6 +47,27 @@ export function searchText(array: any[], searchTerm: string) {
   return matches;
 }
 
+export function searchSpecificText(array: any[], searchTerm: string) {
+  let matches = [];
+  for (let i = 0; i < array.length; i++) {
+    for (let key in array[i]) {
+      if (typeof array[i][key] === 'string') {
+        if (array[i][key].toLowerCase().startsWith(searchTerm.toLowerCase())) {
+          matches.push(array[i]);
+          break;
+        }
+      }
+      if (typeof array[i][key] === 'number') {
+        if (array[i][key].toString().startsWith(searchTerm.toString())) {
+          matches.push(array[i]);
+          break;
+        }
+      }
+    }
+  }
+  return matches;
+}
+
 export const isDeepEqual = (
   object1: { [key: string]: any },
   object2: { [key: string]: any }
@@ -78,3 +99,17 @@ export const insert = (arr: any[], index: number, newItem: any) => [
   newItem, // part of the array after the specified index
   ...arr.slice(index),
 ];
+
+export function get_nested_value(
+  obj: { [key: string]: any },
+  accessors?: string
+): string {
+  if (!accessors) return '';
+
+  const keys = accessors.split('.');
+
+  for (let i = 0; i < keys.length; i++) {
+    obj = obj[keys[i]];
+  }
+  return obj as unknown as string;
+}

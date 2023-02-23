@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { Formik, Form } from 'formik';
-import { useSingleUserCtx } from '../../../context/single_user.ctx';
+// import { useSingleUserCtx } from '../../../context/single_user.ctx';
 import { useUsersCtx } from '../../../../../../context';
 import { update_user } from '../../../../../../api';
 import {
@@ -10,11 +10,25 @@ import {
   FormMultiSelect,
 } from '../../../../../../components/form';
 import Button from '../../../../../../components/button';
+import { useMutation, useQueryClient } from 'react-query';
+import { toast } from '../../../../../../utils';
 
-const UserInfo = ({ close }: { close: () => void }) => {
-  const { data } = useSingleUserCtx();
+interface AddUserProps extends ModalControllerType {
+  data: User;
+}
+
+const UserInfo = ({ data, close, show }: AddUserProps) => {
   const { item, itemTwo, refreshContext } = useUsersCtx();
-  console.log(data);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (payload: User) => update_user(data.username, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] }); // To  invalidate and refetch
+    },
+  });
+  // console.log(data);
 
   const [loading, setLoading] = useState(false);
 
@@ -33,8 +47,8 @@ const UserInfo = ({ close }: { close: () => void }) => {
           image: `${data.image}`,
         }}
         onSubmit={async (values) => {
-          const updateUser = {
-            username: values.username,
+          const updateUser: any = {
+            // username: values.username,
             email: values.email,
             firstName: values.fullName.split(' ')[0],
             lastName: values.fullName.split(' ')[1],
@@ -43,9 +57,12 @@ const UserInfo = ({ close }: { close: () => void }) => {
             permissions: values.permissions,
             image: faker.image.people(640, 640),
           };
+
           setLoading(true);
-          await update_user(values.username, updateUser);
+          mutation.mutate(updateUser);
           setLoading(false);
+          toast('success', 'User created successfully');
+          console.log(updateUser);
 
           refreshContext();
         }}>
@@ -109,7 +126,7 @@ const UserInfo = ({ close }: { close: () => void }) => {
               name='permissions'
               label='Set applicable Permissions'
               required
-              placeholder='Set applicable Permissions'
+              placeholder=''
             />
             <FormMultiSelect
               data={itemTwo?.map((b) => {
@@ -119,14 +136,17 @@ const UserInfo = ({ close }: { close: () => void }) => {
               name='roles'
               label='Set applicable Roles'
               required
-              placeholder='Set applicable Roles'
+              placeholder=''
             />
 
             <div className='flex items-center justify-center pt-8 space-x-6'>
               <button
                 type='button'
                 className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
-                onClick={() => resetForm()}>
+                onClick={() => {
+                  resetForm();
+                  close();
+                }}>
                 Discard
               </button>
               <Button

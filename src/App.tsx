@@ -1,9 +1,13 @@
 import React from 'react';
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+//  {
+//    useEffect;
+//  }
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { Sidebar } from './components';
 import bgImage from '../src/assets/svgs/bg-pattern.svg';
 
 import {
+  ConfirmOverlay,
   Authentication,
   Client,
   Dashboard,
@@ -19,6 +23,12 @@ import ContextProvider from './context';
 import './App.css';
 import { ColumnProvider } from './context/column_context';
 import AuthProvider from './context/auth_context';
+// {
+//   useAuthCtx;
+// }
+import ForgotPassword from './pages/forgotPassword';
+import ResetPassword from './pages/resetPassword';
+// import axios from 'axios';
 
 export const router = createBrowserRouter([
   {
@@ -68,7 +78,7 @@ export const router = createBrowserRouter([
             element: <ClientProvider />,
           },
           {
-            path: ':provider_id/api-keys',
+            path: 'api-keys/:providerId',
             element: <ApiRequest />,
           },
         ],
@@ -92,6 +102,18 @@ export const router = createBrowserRouter([
     path: '/login',
     element: <Authentication />,
   },
+  {
+    path: 'activate-account',
+    element: <ConfirmOverlay />,
+  },
+  {
+    path: 'forgot-password',
+    element: <ForgotPassword />,
+  },
+  {
+    path: 'reset-password',
+    element: <ResetPassword />,
+  },
 ]);
 
 function Root() {
@@ -107,6 +129,19 @@ function Root() {
 }
 
 function App() {
+  // const { isAuthenticated } = useAuthCtx();
+  // useEffect(() => {
+  //   axios.interceptors.response.use((response) => {
+  //     console.log(response);
+  //     if (response.status === 401) {
+  //       // logout
+  //       console.log('log user out');
+  //     }
+  //     return response;
+  //   });
+  // }, []);
+
+  const isAuthorised = localStorage.getItem('cuddie-access-token');
   return (
     <div className='flex bg-white text-[#54565B] text-sm xl:text-base'>
       <Sidebar />
@@ -114,7 +149,7 @@ function App() {
       <div
         className='w-[94%] bg-hero bg-[#F5F5F5]'
         style={{ backgroundImage: `url(${bgImage})` }}>
-        <Outlet />
+        {isAuthorised ? <Outlet /> : <Navigate to='/login' />}{' '}
       </div>
     </div>
   );

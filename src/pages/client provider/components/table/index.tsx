@@ -1,118 +1,121 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import UserAction from '../drop down';
-import { Link } from 'react-router-dom';
-
-import { Pagination } from '../../../../components';
-import { useClientsCtx } from '../../../../context';
-import { useSingleClientCtx } from '../context/single_user.ctx';
+// import { useSingleClientCtx } from '../context/single_user.ctx';
+import { useQuery } from 'react-query';
+import { get_client_provider_query } from '../../../../queries/client_provider';
+import DataGrid from '../../../../components/data-grid';
+import { shortDateFormatter } from '../../../../utils';
+import { Navigate } from 'react-router-dom';
+import { Skeleton } from '@mantine/core';
 
 const Table = () => {
-  const { list } = useClientsCtx();
-  console.log(list, 'de here');
-  const { setData } = useSingleClientCtx();
+  const {
+    data: list,
+    isError,
+    isLoading,
+  } = useQuery(get_client_provider_query());
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+  if (isError) return <Navigate to='/login' />;
 
-  const [page, setPage] = useState<number>(1);
-  const [itemsOffset, setItemsOffset] = useState<number>(0);
-  const [currentItems, setCurrentItems] = useState<ClientProvider[]>([]);
-
-  useEffect(() => {
-    // Handle Pagination on load
-    const endOffset = itemsOffset + 10;
-    setCurrentItems(list.slice(itemsOffset, endOffset));
-    setPage(Math.ceil(list.length / 10));
-  }, [itemsOffset, list]);
+  const ActionComponent = ({ data }: { data: ClientProvider }) => (
+    <UserAction data={data} />
+  );
 
   return (
-    <div className='h-full pb-5 relative'>
-      <div className='overflow-auto w-full pb-24 '>
-        <table className='overflow-auto w-full align-top  text-[#54565B]'>
-          <thead className='text-[10px]  sticky top-0 text-left z-[5]'>
-            <tr className='child:py-4 border-b text-[12px] text-[#C1C0C2] font-semibold child:px-2 child:cursor-default child:align-middle'>
-              <td className='py-6 px-6'>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-              <th className='px-6 '>S/N</th>
-              <th className='px-6 '>Date Created</th>
-              <th className='px-6 '>Provider Name</th>
-              <th className='px-6 '>Transaction Phrase</th>
-              <th className='px-6 '>Number of Clients</th>
-              <th className='px-6 '>Api Keys</th>
-              <th className='px-6 '>Status</th>
-              <th className='px-6 '>Actions</th>
-            </tr>
-          </thead>
-          <tbody className='text-[14px]'>
-            {currentItems.map((providers) => (
-              <tr className=' text-left border-b'>
-                <td className='py-6 px-6'>
-                  <input
-                    type='checkbox'
-                    id='remember'
-                    className='checkbox white  w-[16px] h-[16px] rounded-lg text-afexpurple accent-afexpurple-light'
-                  />
-                </td>
-                <td className='py-6 px-6'>{list.indexOf(providers) + 1}</td>
+    <>
+      <div className='bg-white p-3'>
+        <DataGrid
+          title='Search'
+          rows={10}
+          dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
+          data={list!}
+          headerFilter={[{ name: 'Status' }]}
+          headers={[
+            {
+              accessor: 'createdAt',
+              hidden: false,
+              name: 'Date Created',
+              sortable: true,
+              static: false,
+              row: (val) => <span>{shortDateFormatter(val)} </span>,
+            },
+            {
+              accessor: 'name',
+              hidden: false,
+              name: 'Provider Name',
+              sortable: true,
+              static: true,
+            },
+            {
+              accessor: 'transactionPhrase',
+              hidden: false,
+              name: 'Transaction Phrase',
+              sortable: true,
+              static: false,
+            },
 
-                <td className='py-6 px-6'>
-                  <span className='font-medium'>
-                    {' '}
-                    {providers.createdAt.toString()}{' '}
-                  </span>
-                </td>
+            // {
+            //   accessor: 'numberOfClients',
+            //   hidden: false,
+            //   name: 'Number of Clients',
+            //   sortable: true,
+            //   static: false,
+            //   row: (val) => <span>0</span>,
+            // },
 
-                <td className='py-6 px-6'>
-                  <span className='font-medium'>{providers.name}</span>
-                </td>
+            {
+              accessor: 'apiKey',
+              hidden: false,
+              name: 'Api Keys',
+              sortable: true,
+              static: false,
+              row: (val) => <span className=' underline'>{val}</span>,
+            },
 
-                <td className='py-6 px-6'>
-                  <span className='font-medium'>
-                    {providers.transactionPhrase}
-                  </span>
-                </td>
-
-                <td className='py-6 px-6'>
-                  <span className='font-medium'>{providers.noOfClients}</span>
-                </td>
-
-                <td className='py-6 px-6 cursor-default'>
-                  <Link
-                    to={`${providers.id}/api-keys`}
-                    className='font-medium underline'>
-                    API Keys
-                  </Link>
-                </td>
-
-                <td className='py-6 px-6'>
-                  <span className='font-medium text-[#076D3A] bg-[#E7F9F0] py-1 px-3 rounded '>
-                    {providers.isActive ? 'Active' : 'Inactive'}
-                  </span>
-                </td>
-
-                <td
-                  onClick={() => {
-                    setData(providers);
-                  }}>
-                  {' '}
-                  <UserAction />{' '}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            {
+              accessor: 'isActive',
+              hidden: false,
+              name: 'Status',
+              sortable: true,
+              static: false,
+              row: (val) => {
+                if (val === 'Active') {
+                  return (
+                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                }
+              },
+            },
+          ]}
+          withExport
+          withGlobalFilters
+          withCheck // enable checkbox
+          withActions // enable action column
+          ActionComponent={ActionComponent} // action component
+          withRowNavigation // enable row navigation
+          navigationProps={{
+            baseRoute: 'client-provider/api-keys',
+            accessor: 'id',
+          }} // define navigation
+        />
       </div>
-
-      <Pagination
-        dataLength={list.length}
-        page={page}
-        itemsOffset={itemsOffset}
-        perPage={10}
-        setItemsOffset={setItemsOffset}
-      />
-    </div>
+    </>
   );
 };
 

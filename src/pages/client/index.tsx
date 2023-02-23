@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import ClientCard from './components/cards';
 import ClientList from './components/client list';
 import RecentSearch from './components/recent search';
@@ -8,40 +8,22 @@ import TransactionValue from './components/transaction value';
 import { ArrowDown2, ArrowLeft } from 'iconsax-react';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { DateRanges } from '../../components';
-
-import { useQuery } from 'react-query';
-import { get_client_list_query } from '../../queries/clients_stats';
+import { useQuery, useQueryClient } from 'react-query';
+import { get_transaction_list_querry } from '../../queries/transaction_stats';
 
 function Client() {
-  const [showDateCalendar, setShowDateCalendar] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const queryClient = useQueryClient();
+  const [showProviderOpt, setShowProviderOpt] = useState<boolean>(false);
 
-  const { data, isError, isLoading } = useQuery(get_client_list_query(1));
+  const { isError } = useQuery(get_transaction_list_querry(1));
+  if (isError) return <Navigate to='/login' />;
 
-  if (isLoading) return <p>Loading....</p>;
+  const decodedDefaultVal: any = localStorage.getItem(
+    'decoded-token_providers_name'
+  );
+  const Decoded: any = localStorage.getItem('decoded-arrays');
 
-  if (isError) return <p>Error!!!</p>;
-
-  // const filterByRegDate = () => {
-  //   if (!startDate || !endDate) return;
-  //   setClients(() =>
-  //     data
-  //       .slice()
-  //       .filter(
-  //         (client) =>
-  //           new Date(client.createdAt).getTime() >= startDate.getTime() &&
-  //           new Date(client.createdAt).getTime() <= endDate.getTime()
-  //       )
-  //       .sort(
-  //         (a, b) =>
-  //           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  //       )
-  //   );
-
-  //   setShowDateCalendar(false);
-  // };
+  const providersArray = JSON.parse(Decoded);
 
   return (
     <AnimatePresence>
@@ -52,36 +34,58 @@ function Client() {
           <div className='flex justify-between items-center'>
             <div className='flex w-full flex-col'>
               <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
-                Client
+                Clients
               </h2>
-              <p className='flex items-center gap-2 text-textgrey-normal'>
-                <Link to='/dashboard'>
+              <p className='flex items-center gap-1 text-textgrey-normal'>
+                <Link className='flex items-center gap-1' to='/'>
                   {' '}
                   <ArrowLeft className=' w-5' />
+                  <span>Home</span>
                 </Link>{' '}
-                Home/ <span className=' text-textgrey-dark'>Clients</span>
+                <span>/</span>
+                <span className=' text-textgrey-dark'>Clients</span>
               </p>
             </div>
-
-            <div className='flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center '>
-              <p>Showing data for </p>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className='flex relative w-full px-3 justify-end gap-2 text-[14px] font-normal items-center '>
+              <p>Switch Provider </p>
               <button
-                onClick={() => setShowDateCalendar((s) => !s)}
-                className='border flex items-center border-[#BABABA] text-textgrey-Bold p-2 rounded-lg '>
-                Today
+                className={`border flex items-center border-[#BABABA] text-textgrey-darker p-2 rounded-lg ${
+                  showProviderOpt
+                    ? ' border-afexpurple-regular  '
+                    : ' border-transparent'
+                }`}
+                onClick={() => {
+                  console.log('clicked');
+                  setShowProviderOpt((s) => !s);
+                }}>
+                {decodedDefaultVal}
                 <ArrowDown2 size='14' color='#2B2930' variant='Bold' />
               </button>
 
-              {showDateCalendar && (
-                <DateRanges
-                  startDate={startDate}
-                  endDate={endDate}
-                  setEndDate={setEndDate}
-                  setStartDate={setStartDate}
-                  close={() => setShowDateCalendar(false)}
-                  // filterFunc={filterByRegDate}
-                />
-              )}
+              <ul
+                className={`flex gap-1 w-[120px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                  showProviderOpt && 'max-h-[300px] opacity-100 overflow-scroll'
+                }`}>
+                {providersArray?.providers?.map((el: any) => (
+                  <span
+                    onClick={() => {
+                      localStorage.setItem('decoded-token_providers', el.id);
+                      localStorage.setItem(
+                        'decoded-token_providers_name',
+                        el.name
+                      );
+                      queryClient.invalidateQueries();
+                      console.log(localStorage);
+                      setShowProviderOpt((s) => !s);
+                    }}
+                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 text-base cursor-pointer m-1 py-2 px-2 capitalize'>
+                    {' '}
+                    {el.name}
+                  </span>
+                ))}
+              </ul>
             </div>
           </div>
 
@@ -103,7 +107,7 @@ function Client() {
               exit={{ opacity: 0, transform: 'translate(0,0)' }}
               transition={{ duration: 2 }}>
               {' '}
-              <ClientList data={data!} />
+              <ClientList />
             </motion.div>
           }
         </div>

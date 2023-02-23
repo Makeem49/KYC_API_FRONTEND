@@ -1,29 +1,159 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import userImg from '../../../../assets/images/user.png';
 import UserAction from '../drop down';
-import { Pagination } from '../../../../components';
-import { useUsersCtx } from '../../../../context';
-import { useSingleUserCtx } from '../context/single_user.ctx';
+import DataGrid from '../../../../components/data-grid';
+import { shortDateFormatter } from '../../../../utils';
+import { get_users_query } from '../../../../queries/user_management';
+import { useQuery } from 'react-query';
+import { Navigate } from 'react-router-dom';
+import { Skeleton } from '@mantine/core';
 
 const Table = () => {
-  const { list } = useUsersCtx();
-  const { setData } = useSingleUserCtx();
+  const { data: list, isError, isLoading } = useQuery(get_users_query());
+  // console.log(list, 'works');
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
-  const [page, setPage] = useState<number>(1);
-  const [itemsOffset, setItemsOffset] = useState<number>(0);
-  const [currentItems, setCurrentItems] = useState<User[]>([]);
+  if (isError) return <Navigate to='/login' />;
 
-  useEffect(() => {
-    // Handle Pagination on load
-    const endOffset = itemsOffset + 10;
-    setCurrentItems(list.slice(itemsOffset, endOffset));
-    setPage(Math.ceil(list.length / 10));
-  }, [itemsOffset, list]);
+  const ActionComponent = ({ data }: { data: User }) => (
+    <UserAction data={data} />
+  );
 
   return (
     <>
-      <div className='h-full pb-5 relative'>
+      <div className='bg-white p-3'>
+        <DataGrid
+          title='Search'
+          rows={10}
+          dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
+          data={list!}
+          headerFilter={[{ name: 'Two Step' }, { name: 'Status' }]}
+          headers={[
+            {
+              accessor: 'user',
+              hidden: false,
+              name: 'User',
+              sortable: true,
+              static: false,
+              secondary_key: 'email',
+              row: (val, secondary_key) => (
+                <span className='flex flex-col'>
+                  {' '}
+                  <span className=' relative  flex items-center gap-2'>
+                    {' '}
+                    <img
+                      className='w-10 h-10 top-[-5px] absolute'
+                      src={userImg}
+                      alt='olvimg'
+                    />
+                    <span className=' absolute top-[-18] left-12 '>
+                      {' '}
+                      {val}{' '}
+                    </span>
+                  </span>
+                  <span className='mt-4 ml-12'>{secondary_key}</span>
+                </span>
+              ),
+            },
+            {
+              accessor: 'username',
+              hidden: false,
+              name: 'User Name',
+              sortable: true,
+              static: true,
+            },
+            {
+              accessor: 'lastLogin',
+              hidden: false,
+              name: 'Last Login',
+              sortable: true,
+              static: false,
+              row: () => (
+                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
+                  {moment(new Date()).fromNow()}
+                </span>
+              ),
+            },
+
+            {
+              accessor: 'twoStepEnabled',
+              hidden: false,
+              name: 'Two Step',
+              sortable: true,
+              static: false,
+              row: (val) => (
+                <span className=' bg-afexgreen-extralight rounded-lg p-2'>
+                  {val ? 'Enabled' : 'Disabled'}{' '}
+                </span>
+              ),
+            },
+
+            {
+              accessor: 'isActive',
+              hidden: false,
+              name: 'Status',
+              sortable: true,
+              static: false,
+
+              row: (val) => {
+                if (val === 'Active') {
+                  return (
+                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                }
+              },
+              // row: (val) => (
+              //   <span>
+              //     {val ? (
+              //       <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+              //         Active
+              //       </span>
+              //     ) : (
+              //       <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+              //         {' '}
+              //         Inactive
+              //       </span>
+              //     )}{' '}
+              //   </span>
+              // ),
+            },
+
+            {
+              accessor: 'createdAt',
+              hidden: false,
+              name: 'Date Created',
+              sortable: true,
+              static: false,
+              row: (val) => <span>{shortDateFormatter(val)} </span>,
+            },
+          ]}
+          withExport
+          withGlobalFilters
+          withCheck // enable checkbox
+          withActions // enable action column
+          ActionComponent={ActionComponent} // action component
+          // withNavigation // enable row navigation
+          // navigationProps={{ baseRoute: '', accessor: 'id' }} // define navigation
+        />
+      </div>
+      {/* <div className='h-full pb-5 relative'>
         <div className='overflow-auto w-full pb-24 min-h-[36rem]'>
           <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
             <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
@@ -112,7 +242,7 @@ const Table = () => {
           perPage={10}
           setItemsOffset={setItemsOffset}
         />
-      </div>
+      </div> */}
     </>
   );
 };

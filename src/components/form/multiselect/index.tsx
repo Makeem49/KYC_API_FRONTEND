@@ -22,6 +22,7 @@ interface Option {
 const MultiSelect = (props: MultiSelectInterface) => {
   const [field, meta] = useField(props);
   const [showOpts, setShowOpts] = useState<boolean>(false);
+  const [showSelectOpts, setSelectShowOpts] = useState<string>('Select');
 
   useEffect(() => {
     document.body.addEventListener('click', () => setShowOpts(false));
@@ -50,7 +51,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
               }}>
               <input
                 className={`block w-full p-3 bg-white border h-14 rounded-lg text-sm transition text-transparent ${
-                  showOpts && 'ring-1 ring-afexred-light'
+                  showOpts && 'ring-1 ring-afexpurple-light'
                 }`}
                 type='text'
                 disabled
@@ -76,8 +77,11 @@ const MultiSelect = (props: MultiSelectInterface) => {
               </div> */}
               <MdKeyboardArrowDown className='absolute top-1/2 -translate-y-1/2 right-4 text-gray-400 text-lg' />
             </div>
+            <span className='absolute top-4 left-4'>
+              {showSelectOpts} {props.name}{' '}
+            </span>
             <ul
-              className={`overflow-auto absolute z-10 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white w-full ring-1 ring-afexred-light rounded-lg opacity-0 ${
+              className={`overflow-auto absolute z-40 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white w-full ring-1 ring-afexpurple-light rounded-lg opacity-0 ${
                 showOpts && 'max-h-72 opacity-100 my-2'
               }`}>
               {props.data.map((option, index) => (
@@ -86,26 +90,33 @@ const MultiSelect = (props: MultiSelectInterface) => {
                   onClick={(e) => {
                     e.stopPropagation();
 
-                    if (field?.value?.includes(option.value)) {
-                      return remove(field.value.indexOf(option.value));
-                    }
+                    // if (field?.value?.includes(option.value)) {
+                    //   return remove(field.value.indexOf(option.value));
+                    // }
 
-                    push(option.value);
+                    // push(option.value);
                   }}
-                  className={`text-base font-light first:mt-0 rounded-lg flex items-center space-x-4 accent-afexred-regular p-3 ${
+                  className={`text-base font-light first:mt-0 rounded-lg flex items-center accent-afexpurple-regular p-3 ${
                     field?.value?.indexOf(option.value) > -1 &&
-                    'bg-afexred-extralight'
+                    'bg-afexpurple-lighter'
                   }`}>
                   <input
                     type='checkbox'
                     name={option.label}
                     id={option.label}
-                    className='appearance-none w-6 h-6 rounded-md bg-white border border-afexred-regular'
+                    className='checkbox'
                     onChange={(e) => {
-                      if (e.currentTarget.checked) {
+                      if (field?.value?.includes(option.value)) {
                         return remove(field.value.indexOf(option.value));
                       }
                       return push(option.value);
+                    }}
+                    onClick={(e) => {
+                      if (field?.value?.includes(option.value)) {
+                        setSelectShowOpts('Select');
+                      } else {
+                        setSelectShowOpts('View selected');
+                      }
                     }}
                     checked={field?.value?.indexOf(option.value) > -1}
                   />

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Drawer, Group } from '@mantine/core';
 import UserInfo from './user info';
+interface AddUserProps extends ModalControllerType {
+  data: User;
+}
 
-const AddUser = ({ show, close }: ModalControllerType) => {
+const AddUser = ({ show, close, data }: AddUserProps) => {
   return (
     <>
       <Drawer
@@ -15,7 +18,7 @@ const AddUser = ({ show, close }: ModalControllerType) => {
         size='38%'>
         {/* Map Component */}
 
-        <UserInfo close={close} />
+        <UserInfo data={data} show close={close} />
       </Drawer>
 
       <Group position='right'></Group>

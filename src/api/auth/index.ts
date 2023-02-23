@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { apiRequest } from '../../utils';
+import { apiRequest, toast } from '../../utils';
 
 /**
  * =================================================================
@@ -25,8 +25,79 @@ export async function authenticate(username: string, password: string) {
 
     return resp.data;
   } catch (error: any) {
-    return error;
+    toast('error', 'Unable to login', `${error.response.data.error}`);
+    console.log(error.response.data);
   }
+}
+
+/**
+ * Activate user on the system
+ *
+ * @param username existing username
+ * @param password password
+ */
+export async function activateUser(
+  data: Partial<ActivateUser>
+): Promise<string> {
+  const resp = await apiRequest.post('auth/activate-account', {
+    username: data.username,
+    password: data.password,
+    token: data.token,
+  });
+
+  if (!resp.data) return 'Bad request. Unable to activate account';
+
+  return resp.data.message;
+}
+
+/**
+ * Reset user password on the system
+ *
+ * @param username existing username
+ * @param password password
+ */
+export async function reset__user_Password(
+  data: Partial<ActivateUser>
+): Promise<string> {
+  const resp = await apiRequest.post('auth/reset-password', {
+    username: data.username,
+    password: data.password,
+    token: data.token,
+  });
+
+  if (!resp.data) return 'Bad request. Unable to process request';
+
+  return resp.data.message;
+}
+
+/**
+ * Request reset to password
+ *
+ * @param email existing email
+ *
+ */
+export async function request_password_reset(
+  data: Partial<ActivateUser>
+): Promise<string> {
+  const resp = await apiRequest.post('auth/request-password-reset', {
+    email: data.email,
+  });
+
+  if (!resp.data) return 'Bad request. Unable to reset password';
+
+  return resp.data.message;
+}
+
+export async function request_password_reset_setttings(
+  data: any
+): Promise<string> {
+  const resp = await apiRequest.post('auth/request-password-reset', {
+    email: data.email,
+  });
+
+  if (!resp.data) return 'Bad request. Unable to reset password';
+
+  return resp.data.message;
 }
 
 export function register() {}

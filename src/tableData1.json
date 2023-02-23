@@ -1,38 +1,38 @@
 [
   {
     "id": 1,
-    "name": "Wendall Gripton",
+    "userName": "Ade Seun",
     "email": "wg@creative.org",
-    "gender": "Male",
-    "age": 100,
-    "start_date": "2022-01-26",
+    "actionSummarry": "Deactivated Password",
+    "details": "Change password for user",
+    "dateCreated": "2022-01-26",
     "status": true
   },
   {
     "id": 2,
-    "name": "samuel Mollitt",
+    "userName": "samuel Mollitt",
     "email": "smol@github.io",
-    "gender": "Female",
-    "age": 60,
-    "start_date": "2021-06-07",
+    "actionSummarry": "Updated Password",
+    "details": "Change password for user",
+    "dateCreated": "2021-06-07",
     "status": true
   },
   {
     "id": 3,
-    "name": "Ole Rogge",
+    "userName": "Onya Victry",
     "email": "orog@usatoday.com",
-    "gender": "Male",
-    "age": 50,
-    "start_date": "2021-06-23",
+    "actionSummarry": "Updated Password",
+    "details": "Change password for user",
+    "dateCreated": "2021-06-23",
     "status": true
   },
   {
     "id": 4,
-    "name": "Elwin Huyge",
+    "userName": "Jay Simire",
     "email": "@gdghbssbhgh",
-    "gender": "Male",
-    "age": 34,
-    "start_date": "2021-06-07",
+    "actionSummarry": "Deactivated Password",
+    "details": "Change password for user",
+    "dateCreated": "2021-06-07",
     "status": true
   }
 ]

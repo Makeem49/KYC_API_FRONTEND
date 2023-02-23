@@ -79,11 +79,11 @@ const HeatMap = () => {
           gridLineWidth={1}
           dataClassColor='category'
           dataClasses={[
-            { color: '#801610', from: 200000 },
-            { color: '#E1261C', from: 100000, to: 199999 },
-            { color: '#EC7670', from: 50000, to: 99999 },
-            { color: '#F2A29D', from: 10000, to: 49999 },
-            { color: '#FCE9E8', from: 9999, to: 0 },
+            { color: '#44207E', from: 200000 },
+            { color: '#54289D', from: 100000, to: 199999 },
+            { color: '#7737dd', from: 50000, to: 99999 },
+            { color: '#7738DD', from: 10000, to: 49999 },
+            { color: '#C5A9F0', from: 9999, to: 0 },
           ]}
         />
         <Legend layout='horizontal' verticalAlign='bottom' align='right' />
