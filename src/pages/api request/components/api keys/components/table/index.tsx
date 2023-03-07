@@ -1,198 +1,114 @@
-import React from 'react';
+// import { useApiTokenCtx } from '../../../../../../context';
 
+import { shortDateFormatter } from '../../../../../../utils';
+import DataGrid from '../../../../../../components/data-grid';
+import { useQuery } from 'react-query';
+import { get_tokens_query } from '../../../../../../queries/api_tokens';
+import { Navigate, useLocation } from 'react-router-dom';
+import UserAction from '../drop down';
+import { Skeleton } from '@mantine/core';
 const Table = () => {
+  // const { list } = useApiTokenCtx();
+  // console.log(list);
+  const { pathname } = useLocation();
+  const providerId = pathname.split('/')[3];
+  const {
+    data: list,
+    isError,
+    isLoading,
+  } = useQuery(get_tokens_query(parseInt(providerId, 10)));
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+  if (isError) return <Navigate to='/login' />;
+
+  // console.log(list, 'apis');
+  const ActionComponent = ({ data }: { data: ClientProviderToken }) => (
+    <UserAction data={data} />
+  );
+
   return (
-    <div className='h-full pb-5'>
-      <div className='overflow-auto w-full '>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
-          <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className=' border-b child:cursor-default child:py-3 text-[#C1C0C2] font-semibold text-[12px]'>
-              <th>
-                <input type='checkbox' className='checkbox white' />
-              </th>
+    <>
+      <div className='bg-white p-3'>
+        <DataGrid
+          title='Search'
+          rows={10}
+          dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
+          data={list!}
+          headerFilter={[{ name: 'Status' }]}
+          headers={[
+            {
+              accessor: 'createdAt',
+              hidden: false,
+              name: 'Date Created',
+              sortable: true,
+              static: false,
+              row: (val) => <span>{shortDateFormatter(val)} </span>,
+            },
 
-              <th>S/N</th>
-              <th>Api Endpoint</th>
-              <th>Number of Succesful Request</th>
-              <th>Number of Failed Request</th>
-              <th>Number of Not Found Request</th>
-            </tr>
-          </thead>
-          <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
+            {
+              accessor: 'apiKey',
+              hidden: false,
+              name: 'API Key',
+              sortable: true,
+              static: true,
+            },
+            {
+              accessor: 'noOfRequests',
+              hidden: false,
+              name: 'No of Requests',
+              sortable: true,
+              static: false,
+            },
 
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
+            {
+              accessor: 'lastUsedAt',
+              hidden: false,
+              name: 'Last Used',
+              sortable: true,
+              static: false,
+            },
 
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
+            {
+              accessor: 'isActive',
+              hidden: false,
+              name: 'Status',
+              sortable: true,
+              static: false,
 
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-
-            <tr className=' text-left  child:py-4 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className='text-start '>Docs API Key </td>
-              <td className='text-start '>0</td>
-              <td className='text-start '>2027</td>
-              <td className='text-start '>2027</td>
-            </tr>
-          </tbody>
-        </table>
+              row: (val) => {
+                if (val === 'Active') {
+                  return (
+                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                      {val}
+                    </span>
+                  );
+                }
+              },
+            },
+          ]}
+          withExport
+          withGlobalFilters
+          withCheck // enable checkbox
+          withActions // enable action column
+          ActionComponent={ActionComponent} // action component
+          // withNavigation // enable row navigation
+          // navigationProps={{ baseRoute: '', accessor: 'id' }} // define navigation
+        />
       </div>
-    </div>
+    </>
   );
 };
 

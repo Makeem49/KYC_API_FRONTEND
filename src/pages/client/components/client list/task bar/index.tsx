@@ -3,7 +3,6 @@ import { SearchNormal } from 'iconsax-react';
 import Column from './components/column';
 import Filter from './components/filters';
 import Exports from './components/exports';
-import Date from './date';
 
 const TaskBar = () => {
   return (
@@ -28,7 +27,6 @@ const TaskBar = () => {
         <Column />
         <Filter />
         <Exports />
-        <Date />
       </div>
     </div>
   );

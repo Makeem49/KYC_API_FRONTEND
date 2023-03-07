@@ -1,325 +1,134 @@
 import React from 'react';
-
+// import { useSingleClientCtx } from '../../../../../../context';
+import DataGrid from '../../../../../../components/data-grid';
+import { shortDateFormatter } from '../../../../../../utils';
+import { get_client_transactions_query } from '../../../../../../queries/single_client';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { Skeleton } from '@mantine/core';
+import Box from '../../../../../../assets/images/box.png';
 const Table = () => {
+  // const { list } = useSingleClientCtx();
+  const { pathname } = useLocation();
+  const clientId = pathname.split('/')[2];
+  const { data, isError, isLoading } = useQuery(
+    get_client_transactions_query(parseInt(clientId, 10))
+  );
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+  if (isError) return <Navigate to='/login' />;
+
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
-    <div className='h-full pb-5'>
-      <div className='overflow-auto w-full '>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
-          <thead className='text-[10px]  sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className='child:py-4 border-b  child:px-1 child:cursor-default child:align-middle'>
-              <th>
-                <input type='checkbox' className='checkbox white' />
-              </th>
+    <>
+      <div className='bg-white p-3'>
+        {data!?.length > 0 ? (
+          <DataGrid
+            rows={10}
+            dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
+            data={data!}
+            headerFilter={[{ name: 'Transaction Type' }]}
+            headers={[
+              {
+                accessor: 'createdAt',
+                hidden: false,
+                name: 'Date Created',
+                sortable: true,
+                static: false,
+                row: (val) => <span>{shortDateFormatter(val)} </span>,
+              },
+              {
+                accessor: 'amount',
+                hidden: false,
+                name: `Amount ${
+                  defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'
+                }`,
+                sortable: true,
+                static: true,
+              },
+              {
+                accessor: 'amountBefore',
+                hidden: false,
+                name: `Total Before ${
+                  defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'
+                }`,
+                sortable: true,
+                static: false,
+              },
 
-              <th>S/N</th>
-              <th>Date created</th>
-              <th>Amount</th>
-              <th>Total before</th>
-              <th>Total after</th>
-              <th>Transaction Type</th>
-              <th>Reference ID</th>
-            </tr>
-          </thead>
-          <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
+              {
+                accessor: 'amountAfter',
+                hidden: false,
+                name: `Total After ${
+                  defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'
+                }`,
+                sortable: true,
+                static: false,
+              },
 
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-3 child:px-1 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  id='remember'
-                  className='checkbox white'
-                />
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td className=''>
-                {' '}
-                <span className='font-medium'>May 1st 2021</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-              <td className=''>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-
-              <td className=''>
-                <span className='font-medium'>Wallet transfer</span>
-              </td>
-              <td className=''>
-                <span className='font-medium'>True</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              {
+                accessor: 'transactionType',
+                hidden: false,
+                name: 'Transaction Type',
+                sortable: true,
+                static: false,
+                row: (val) => {
+                  if (val === 'Credit') {
+                    return (
+                      <span className=' text-afexgreen-regular'>{val}</span>
+                    );
+                  } else {
+                    return <span className=' text-afexred-regular'>{val}</span>;
+                  }
+                },
+              },
+              {
+                accessor: 'ref',
+                hidden: false,
+                name: 'Reference ID',
+                sortable: true,
+                static: false,
+              },
+            ]}
+            withExport
+            withGlobalFilters
+            withCheck // enable checkbox
+            // withActions // enable action column
+            // ActionComponent={ActionComponent} // action component
+            // withNavigation // enable row navigation
+            // navigationProps={{ baseRoute: 'client', accessor: 'id' }} // define navigation
+          />
+        ) : (
+          <div className=' p-16 h-[600px] justify-center flex flex-col gap-6 items-center'>
+            {' '}
+            <img src={Box} alt='' className='animate-bounce h-[50px]' />
+            <p className=' text-[16px] font-semibold'>
+              No data to display
+            </p>{' '}
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

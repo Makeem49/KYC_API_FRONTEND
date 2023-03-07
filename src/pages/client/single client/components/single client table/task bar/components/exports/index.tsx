@@ -1,31 +1,38 @@
-import React from 'react';
-import { Menu } from '@mantine/core';
+import React, { useState } from 'react';
+import { Popover } from '@mantine/core';
 import { ExportSquare } from 'iconsax-react';
 
 const Exports = () => {
-  return (
-    <Menu width={250}>
-      <Menu.Target>
-        <button className='flex items gap-2 w-full text-[14px] text-nowrap p-3 bg-[#F1EBFC] rounded-lg'>
-          <ExportSquare size='18' color='#7738dd' variant='Bulk' />
-          <span>Export</span>
-        </button>
-      </Menu.Target>
-      <Menu.Dropdown
-        style={{
-          padding: '15px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-        <Menu.Label className='text-[14px] mb-2 bg-[#F1EBFC] rounded p-2'>
-          <span className='text-[14px]'>Active status</span>
-        </Menu.Label>
+  const [opened, setOpened] = useState(false);
 
-        <Menu.Label className='text-[14px]  mb-2 bg-[#F1EBFC] rounded'>
-          Date joined
-        </Menu.Label>
-      </Menu.Dropdown>
-    </Menu>
+  return (
+    <Popover
+      opened={opened}
+      onChange={setOpened}
+      width={100}
+      position={'bottom-end'}>
+      <Popover.Target>
+        <button
+          className='py-4 px-3 flex gap-2 border items-center rounded-lg text-afexred-regular text-sm xl:text-[14px]  bg-[#FCE9E8] xl:h-[40px] w-full'
+          onClick={() => {
+            setOpened((o) => !o);
+          }}>
+          <ExportSquare size='18' color='#E1261C' variant='Bulk' />
+          <span>EXPORT</span>
+        </button>
+      </Popover.Target>
+
+      <Popover.Dropdown>
+        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+          PDF
+        </button>
+
+        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight  rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+          {' '}
+          CSV
+        </button>
+      </Popover.Dropdown>
+    </Popover>
   );
 };
 

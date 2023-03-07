@@ -6,8 +6,8 @@ const Date = () => {
   return (
     <Menu width={250}>
       <Menu.Target>
-        <button className='flex items-center p-3 bg-[#F1EBFC] rounded-lg'>
-          <Calendar size='18' color='#7738dd' variant='Bulk' />
+        <button className='flex items-center p-3 bg-afexred-lighter rounded-lg'>
+          <Calendar size='18' color='#E1261C' variant='Bulk' />
         </button>
       </Menu.Target>
     </Menu>

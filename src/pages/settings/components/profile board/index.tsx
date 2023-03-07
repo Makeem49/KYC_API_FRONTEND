@@ -1,16 +1,36 @@
 import React from 'react';
-import profImg from '../../../../assets/images/prof2.svg';
+import userImg from '../../../../assets/images/user.png';
+import { get_admin_query } from '../../../../queries/dash_board';
+import { useQuery } from 'react-query';
+import { Skeleton } from '@mantine/core';
+import { Navigate } from 'react-router-dom';
 
 const ProfileBoard = () => {
+  const { data: user, isLoading, isError } = useQuery(get_admin_query());
+
+  if (isLoading)
+    return (
+      <Skeleton
+        height={700}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+
+  if (isError) return <Navigate to='/login' />;
+
   return (
-    <div className=' w-full flex flex-col gap-10'>
+    <div className=' w-full flex flex-col gap-10 h-full'>
       {/* FIrst Card */}
-      <div className=' bg-white rounded-lg  p-8'>
-        <div className='flex flex-col justify-center py-3 items-center gap-1'>
-          <img src={profImg} alt='profimg' className='w-32 rounded' />
-          <p>Adamu Adamu</p>
-          <span className='text-[#1863BF] bg-[#E8F1FC] px-3 rounded'>
-            Famer
+      <div className=' bg-white flex flex-col gap-8 rounded-lg h-full p-8'>
+        <div className='flex flex-col justify-center py-3 items-center gap-3'>
+          <img src={userImg} alt='profimg' className='w-32 rounded' />
+          <p className=' font-semibold text-textgrey-darker'>
+            {user!?.firstName} {user!?.lastName}
+          </p>
+          <span className='text-[#1863BF] bg-[#E8F1FC] px-3 py-2 rounded'>
+            {user!?.roles[0].name}
           </span>
         </div>
 
@@ -26,42 +46,20 @@ const ProfileBoard = () => {
           <p className=' text-textgrey-Bold font-bold'>
             User ID: <br />{' '}
             <span className=' text-textgrey-Light font-normal'>
-              ID-300003246357
+              {user!?.id}
             </span>
           </p>
           {/* EMAIL */}
           <p className=' text-textgrey-Bold font-bold'>
             Email: <br />{' '}
             <span className=' text-textgrey-Light font-normal'>
-              aadamu@afexnigeria.com
-            </span>
-          </p>
-          {/* ROLE */}
-          <p className=' text-textgrey-Bold font-bold'>
-            Role: <br />{' '}
-            <span className=' text-textgrey-Light font-normal'>
-              0001-1234-000012345
+              {user!?.email}
             </span>
           </p>
           {/* LAST LOGIN */}
           <p className=' text-textgrey-Bold font-bold'>
             Last Login: <br />{' '}
-            <span className=' text-textgrey-Light font-normal'>
-              0001-1234-000012345
-            </span>
-          </p>
-          {/* STATUS */}
-          <div className=' flex justify-between'>
-            <p className=' text-textgrey-Bold font-bold'>
-              Status: <br />{' '}
-              <span className=' text-textgrey-Light font-normal'>Active</span>
-            </p>
-            <input type='checkbox' className='rounded' />
-          </div>
-          {/* TWO STEP AUTHEN */}
-          <p className=' text-textgrey-Bold font-bold'>
-            Two Step Authentication: <br />{' '}
-            <span className=' text-textgrey-Light font-normal'>Enabled</span>
+            <span className=' text-textgrey-Light font-normal'>Today</span>
           </p>
         </div>
       </div>

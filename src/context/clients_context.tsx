@@ -1,62 +1,30 @@
 import React, { useContext, createContext, useEffect, useState } from 'react';
+import { get_client_providers } from '../api';
 
-import { clients_dummy_data } from '../assets/dummyData';
-
-interface DayOnDay {
-  current: number;
-  previous_day: number;
-}
-
-interface Summary {
-  total: DayOnDay;
-  verified: DayOnDay;
-  unverified: DayOnDay;
-  active: DayOnDay;
-}
-
-interface ClientsCtxInt {
-  summary: Summary;
-  list: Client[];
-}
-
-const ClientsContext = createContext<ClientsCtxInt>({} as ClientsCtxInt);
+const ClientsContext = createContext(
+  {} as GenericContextInterface<ClientProvider[]>
+);
 
 const ClientsContextProvider = (props: WithChildren) => {
-  const [clients, setClients] = useState<Client[]>([]);
-  const [summary, setSummary] = useState<Summary>({} as Summary);
+  const [clients, setClients] = useState<ClientProvider[]>([]);
+  const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const refreshContext = () => {
+    setLoading(true);
+    setRefresh((s) => !s);
+    setLoading(false);
+  };
+
+  const fetchClientProvider = async () =>
+    setClients(await get_client_providers());
 
   useEffect(() => {
-    const fetchClientsList = () => {
-      setClients(clients_dummy_data);
-    };
-
-    const fetchSummary = () => {
-      setSummary({
-        total: {
-          current: 2000,
-          previous_day: 1600,
-        },
-        verified: {
-          current: 2000,
-          previous_day: 1600,
-        },
-        unverified: {
-          current: 2000,
-          previous_day: 1600,
-        },
-        active: {
-          current: 2000,
-          previous_day: 1600,
-        },
-      });
-    };
-
-    fetchClientsList();
-    fetchSummary();
-  }, []);
+    fetchClientProvider();
+  }, [loading, refresh]);
 
   return (
-    <ClientsContext.Provider value={{ list: clients, summary }}>
+    <ClientsContext.Provider value={{ list: clients, loading, refreshContext }}>
       {props.children}
     </ClientsContext.Provider>
   );

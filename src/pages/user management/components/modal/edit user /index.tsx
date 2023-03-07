@@ -1,23 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
 import { Drawer, Group } from '@mantine/core';
 import UserInfo from './user info';
+interface AddUserProps extends ModalControllerType {
+  data: User;
+}
 
-const AddUser = () => {
-  const [opened, setOpened] = useState(true);
-
+const AddUser = ({ show, close, data }: AddUserProps) => {
   return (
     <>
       <Drawer
+        className=' overflow-y-auto'
         position='right'
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title='Add User'
+        opened={show}
+        onClose={close}
+        title='Edit User'
         padding='xl'
-        size='40%'>
+        size='38%'>
         {/* Map Component */}
 
-        <UserInfo />
+        <UserInfo data={data} show close={close} />
       </Drawer>
 
       <Group position='right'></Group>

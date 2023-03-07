@@ -1,5 +1,6 @@
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import { apiRequest } from '../../utils';
+import { shortDateFormatter } from '../../utils';
 
 /**
  * =================================================================
@@ -14,10 +15,26 @@ import { apiRequest } from '../../utils';
  * @param providerId The ID of the provider
  * @returns
  */
-export function get_token_list(
-  providerId: string
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.get(`api-tokens?providerId=${providerId}`);
+export async function get_token_list(
+  providerId: number
+): Promise<ClientProviderToken[]> {
+  const resp = await apiRequest.get(`api-tokens?providerId=${providerId}`);
+
+  if (!resp.data) return [];
+
+  if (resp.data.data.length < 1) return [];
+
+  return resp.data.data.map(
+    (el: any) =>
+      ({
+        id: el.id,
+        createdAt: shortDateFormatter(el.createdAt),
+        apiKey: el.apiKey.substr(0, 15) + '...',
+        noOfRequests: el.noOfRequests ? el.noOfRequests : '0',
+        lastUsedAt: el.lastUsedAt ? el.lastUsedAt : 'unavailable',
+        isActive: el.isActive ? 'Active' : 'Inactive',
+      } as ClientProviderToken)
+  );
 }
 
 /**
@@ -25,10 +42,10 @@ export function get_token_list(
  * @param providerId The ID of the provider
  * @returns
  */
-export function create_token(
-  providerId: string
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.post('api-tokens', { providerId });
+export async function create_token(providerId: number): Promise<string> {
+  const resp = await apiRequest.post('api-tokens', { providerId });
+  if (!resp.data) return 'Unable to generate token';
+  return resp.data.message;
 }
 
 /**
@@ -37,9 +54,14 @@ export function create_token(
  * @param data Toggles the availability of the token
  * @returns
  */
-export function toggle_token_availability(
-  tokenId: string,
-  data: { isActive: boolean }
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.put(`api-tokens/${tokenId}/enable-or-disable`, data);
+export async function toggle_token_availability(
+  tokenId: number,
+  isActive: boolean
+): Promise<string> {
+  const resp = await apiRequest.put(`api-tokens/${tokenId}/enable-or-disable`, {
+    isActive,
+  });
+
+  if (!resp.data) return 'unable to disable provider';
+  return resp.data.message;
 }

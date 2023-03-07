@@ -1,38 +1,66 @@
 import React from 'react';
+import { currentNumberFormatter } from '../../../../../utils/formatter';
 
 import { Wallet1 } from 'iconsax-react';
+// import { useSingleClientCtx } from '../../../../../context';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { get_a_client_query } from '../../../../../queries/single_client';
+import { Skeleton } from '@mantine/core';
 
 const SingleClientCard = () => {
+  // const { stats } = useSingleClientCtx();
+  const { pathname } = useLocation();
+  const clientId = pathname.split('/')[2];
+  const { data: stats, isLoading } = useQuery(
+    get_a_client_query(parseInt(clientId, 10))
+  );
+  if (isLoading)
+    return (
+      <Skeleton
+        height={200}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
     <div className='flex gap-4'>
       {/* Card One */}
-      <div className='flex flex-col gap-3 border-[#DECFF7] border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-5 w-full'>
+      <div className='flex flex-col gap-8 border-textgrey-light border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[16px] h-[200px] p-5 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <Wallet1 size='30' color='#a982ea' variant='Bulk' />
+          <Wallet1 size='30' color='#A982EA' variant='Bulk' />
         </div>
 
         <span>TOTAL BALANCE</span>
-        <p className='text-[30px] font-bold text-textgrey-Bold'>N2,000</p>
+        <p className='text-[40px] font-bold text-textgrey-darker'>
+          {defaultCountryCode === 'NG'
+            ? '₦'
+            : defaultCountryCode === 'KE'
+            ? 'KES'
+            : 'UGX'}{' '}
+          {currentNumberFormatter(stats!?.balance)}
+        </p>
       </div>
 
       {/* Card Two */}
-      <div className='flex flex-col gap-3 border-[#DECFF7] border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-5 w-full'>
+      <div className='flex flex-col gap-8  border-textgrey-light border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[16px]  h-[200px] p-5 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <Wallet1 size='30' color='#a982ea' variant='Bulk' />
+          <Wallet1 size='30' color='#A982EA' variant='Bulk' />
         </div>
 
-        <span>TOTAL BALANCE</span>
-        <p className='text-[30px] font-bold text-textgrey-Bold'>N2,000</p>
-      </div>
-
-      {/* Card Three */}
-      <div className='flex flex-col gap-3 border-[#DECFF7] border-b-4 bg-white rounded-lg shadow-md text-[#8F8E91] text-[12px] p-5 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <Wallet1 size='30' color='#a982ea' variant='Bulk' />
-        </div>
-
-        <span>TOTAL BALANCE</span>
-        <p className='text-[30px] font-bold text-textgrey-Bold'>N2,000</p>
+        <span>AVAILABLE BALANCE</span>
+        <p className='text-[40px] font-bold text-textgrey-darker'>
+          {defaultCountryCode === 'NG'
+            ? '₦'
+            : defaultCountryCode === 'KE'
+            ? 'KES'
+            : 'UGX'}{' '}
+          {currentNumberFormatter(stats!?.balance)}
+        </p>
       </div>
     </div>
   );

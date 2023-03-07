@@ -1,110 +1,218 @@
-import React from 'react';
-import { Menu } from '@mantine/core';
-import { ArrowDown2 } from 'iconsax-react';
+import React, { useState } from 'react';
+import { Form, Formik } from 'formik';
+import { faker } from '@faker-js/faker';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { get_client_provider_query } from '../../../../../../queries/client_provider';
 
-const UserInfo = () => {
+import {
+  FormImage,
+  FormInput,
+  FormMultiSelect,
+  // FromLabel,
+} from '../../../../../../components/form';
+// import MultiSelectDup from '../../../../../../components/form/multiselectDup';
+import Button from '../../../../../../components/button';
+
+import { create_user } from '../../../../../../api';
+
+import { useUsersCtx } from '../../../../../../context';
+import { toast } from '../../../../../../utils';
+import * as Yup from 'yup';
+
+const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
+  const { item, itemTwo } = useUsersCtx();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: create_user,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast('success', 'activation link will be sent to the users email'); // To  invalidate and refetch
+    },
+    onError: () => {
+      toast(
+        'error',
+        'unable to create user',
+        'please ensure you enter the required credentials'
+      );
+    },
+  });
+
+  const [loading, setLoading] = useState(false);
+  const {
+    data: list,
+    isError,
+    isLoading,
+  } = useQuery(get_client_provider_query());
+  if (isLoading) return <span> Loading......</span>;
+  if (isError) return <span> Error!!!</span>;
+
+  // console.log(list, 'provider');
+
   return (
     <div className='w-full flex flex-col gap-3 p-6'>
-      {/* AVATAR */}
-      <div className='flex flex-col gap-5'>
-        <p>Avatar</p>
-        {/* BOX */}
-        <div className='bg-[#D9D9D9] border-[#FFFF] w-[100px] h-[100px]'></div>
+      <Formik
+        initialValues={{
+          fullName: '',
+          username: '',
+          email: '',
+          // password: 'Password@1',
+          roles: [],
+          permissions: [],
+          image: '',
+          providers: [],
+        }}
+        onSubmit={async (values) => {
+          const newUser = {
+            username: values.username,
+            email: values.email,
+            firstName: values.fullName.split(' ')[0],
+            lastName: values.fullName.split(' ')[1],
+            // password: values.password,
+            roles: values.roles,
+            providers: values.providers,
+            permissions: values.permissions,
+            image: faker.image.people(640, 640),
+          };
+          setLoading(true);
+          mutation.mutate(newUser);
+          console.log(newUser);
+          setLoading(false);
+          closeModal();
 
-        <p className='text-[14px] font-normal text-[#8F8E91]'>
-          Allowed file types: png, jpg, jpeg.
-        </p>
-      </div>
+          // const message = await create_user(newUser);
 
-      {/* INPUT FIELDS */}
-
-      <form className='flex flex-col gap-3'>
-        <label className='flex flex-col gap-1'>
-          <span className='text-[14px] font-semibold'>Full Name</span>
-          <input
-            type='text'
-            name=''
-            id=''
-            placeholder='Adamu Adamu'
-            className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-full h-[40px]'
-          />
-        </label>
-
-        <label className='flex flex-col gap-1'>
-          <span className='text-[14px] font-semibold'>Email</span>
-          <input
-            type='text'
-            name=''
-            id=''
-            placeholder='aadamu@afexnigeria.com'
-            className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-full h-[40px]'
-          />
-        </label>
-
-        <label className='flex flex-col gap-1'>
-          <span className='text-[14px] font-semibold'>Phone number</span>
-          <div className='flex gap-3'>
-            <input
-              type='number'
-              name=''
-              id=''
-              placeholder='+234'
-              className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-[70px] h-[40px]'
+          // if (message === 'unable to create user') {
+          //   alert(message);
+          //   setLoading(false);
+          // }
+        }}
+        validationSchema={Yup.object({
+          fullName: Yup.string().required('Full name is required'),
+          username: Yup.string().required('Username is required'),
+          email: Yup.string().required('Email is required'),
+        })}>
+        {({ resetForm }) => (
+          <Form className='flex flex-col gap-y-4'>
+            <FormImage
+              label='Avatar'
+              accepted={['.jpeg', '.jpg', '.png']}
+              id='image'
+              name='image'
             />
 
-            <input
-              type='number'
-              name=''
-              id=''
-              placeholder='Phone number'
-              className='p-3 rounded-lg text-sm font-normal text-gray-400 border outline-none focus:outline-none bg-[#FFFF] w-full h-[40px]'
+            <FormInput
+              id='fullName'
+              name='fullName'
+              label='Full Name'
+              placeholder='Full name'
+              required
+              type='text'
+              autocomplete='name'
             />
-          </div>
-        </label>
-
-        <div className='w-full h-full mt-5'>
-          <Menu shadow='md' width='90%'>
-            <Menu.Target>
-              <div className='flex justify-between items-center border p-3 border-[#DADADD] rounded-lg text-left  text-[14px] font-normal text-textgrey-Light hover:bg-white bg-[#ffff] w-full'>
-                <span> Select Applicable Role</span>
-                <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
+            <FormInput
+              id='email'
+              name='email'
+              label='Email'
+              placeholder='Email address'
+              required
+              type='email'
+              autocomplete='email'
+            />
+            <div className='flex items-center space-x-4'>
+              <div className='flex-1'>
+                <FormInput
+                  id='username'
+                  name='username'
+                  label='Username'
+                  placeholder='Username'
+                  required
+                  type='text'
+                  autocomplete='username'
+                />
               </div>
-            </Menu.Target>
+              {/* <div className='flex-1'>
+                <FormInput
+                  id='password'
+                  name='password'
+                  label='Password'
+                  placeholder='Password'
+                  required
+                  type='password'
+                  autocomplete='current-password'
+                />
+              </div> */}
+            </div>
+            <div className='relative'>
+              {/* <p className='absolute top-12 text-sm text-textgrey-light left-4 z-30'>
+                Select Applicable Permissions
+              </p>{' '} */}
+              <FormMultiSelect
+                data={item?.map((a) => {
+                  return { value: a.id, label: a.name };
+                })}
+                id='permissions'
+                name='permissions'
+                label=' Permissions'
+                required
+                placeholder=''
+              />
+            </div>
 
-            <Menu.Dropdown>
-              <Menu.Item>Payment Analyst</Menu.Item>
-              <Menu.Item>Finance Manager</Menu.Item>
-              <Menu.Item>Clearing Intern</Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </div>
+            <div className='relative'>
+              {/* <p className='absolute top-12 text-sm text-textgrey-light left-4 z-30'>
+                Select Applicable Roles
+              </p> */}
+              <FormMultiSelect
+                data={itemTwo?.map((b) => {
+                  return { value: b.id, label: b.name };
+                })}
+                id='roles'
+                name='roles'
+                label='Roles'
+                required
+                placeholder=''
+              />
+            </div>
 
-        <div className='w-full h-full mt-5'>
-          <Menu shadow='md' width='90%' position='top'>
-            <Menu.Target>
-              <div className='flex p-3 justify-between items-center border border-[#DADADD] rounded-lg text-left text-[14px] font-normal text-textgrey-Light hover:bg-white bg-[#ffff] w-full'>
-                <span>Set applicable Permissions</span>
-                <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
-              </div>
-            </Menu.Target>
+            <div className='relative'>
+              {/* <p className='absolute top-12 text-sm text-textgrey-light left-4 z-30'>
+                Select Provider
+              </p> */}
 
-            <Menu.Dropdown>
-              <Menu.Item>Can view transaction log</Menu.Item>
-              <Menu.Item>can create admin user </Menu.Item>
-              <Menu.Item>can deactivate admin user </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </div>
+              <FormMultiSelect
+                data={list!?.map((b) => {
+                  return { value: b.id, label: b.name };
+                })}
+                id='providers'
+                name='providers'
+                label='Providers'
+                required
+                placeholder=''
+              />
+            </div>
 
-        <div className='w-full mt-5 gap-8 flex justify-center'>
-          <button className='p-4 rounded-lg bg-[#F0F0F0] text-[#8F8E91]'>
-            Discard
-          </button>
-          <button className='p-4 rounded-lg bg-afexpurple-dark text-[#ffff]'>
-            Submit
-          </button>
-        </div>
-      </form>
+            <div className='flex items-center justify-center pt-8 space-x-6'>
+              <button
+                type='button'
+                className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                onClick={() => {
+                  resetForm();
+                  closeModal();
+                }}>
+                Discard
+              </button>
+              <Button
+                type='submit'
+                text={
+                  <span className='flex items-center space-x-6'>Submit</span>
+                }
+                loading={loading}
+              />
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

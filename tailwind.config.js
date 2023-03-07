@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const withMT = require("@material-tailwind/react/utils/withMT");
+const withMT = require('@material-tailwind/react/utils/withMT');
 
 module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
@@ -10,15 +10,28 @@ module.exports = withMT({
       display: ['Switzer', 'sans-serif'],
     },
     extend: {
+      rotate: {
+        '20': '20deg',
+        '30': '30deg',
+        '40': '40deg',
+        '50': '50deg',
+        '60': '60deg',
+        '70': '70deg',
+        '80': '80deg',
+        '130': '130deg',
+        '140': '140deg',
+        '150': '150deg',
 
+
+      },
       colors: {
         afexpurple: {
           darker: '#44207E',
           dark: '#54289D',
+          DEFAULT: '#7737dd',
           regular: '#7738DD',
           light: '#C5A9F0',
           lighter: '#F1EBFC',
-
         },
 
         afexgreen: {
@@ -27,7 +40,7 @@ module.exports = withMT({
           regular: '#0DBF66',
           light: '#97E3BD',
           lighter: '#C5F0DA',
-          extralight: '#E7F9F0'
+          extralight: '#E7F9F0',
         },
 
         afexwarning: {
@@ -36,7 +49,7 @@ module.exports = withMT({
           regular: '#E1891C',
           light: '#F2CC9D',
           lighter: '#F8E3C9',
-          extralight: '#FCF3E8'
+          extralight: '#FCF3E8',
         },
 
         afexred: {
@@ -45,7 +58,7 @@ module.exports = withMT({
           regular: '#ED5556',
           light: '#F7B6B6',
           lighter: '#FBD6D6',
-          extralight: '#FDEEEE'
+          extralight: '#FDEEEE',
         },
 
         afexblue: {
@@ -54,16 +67,18 @@ module.exports = withMT({
           regular: '#1C75E1',
           light: '#9DC4F2',
           lighter: '#C9DEF8',
-          extralight: '#E8F1FC'
+          extralight: '#E8F1FC',
         },
-
+        afexgray: {
+          DEFAULT: '#F5F5F5',
+        },
         textgrey: {
           darker: '#2B2930',
           dark: '#5D5B60',
           normal: '#8F8E91',
           light: '#DAD9DA',
           lighter: '#F0F0F0',
-          extraLight: '#F5F5F5'
+          extraLight: '#F5F5F5',
         },
       },
     },

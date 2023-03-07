@@ -1,20 +1,20 @@
-import axios, { Axios } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
-  const user = JSON.parse(localStorage.getItem('cuddie-loggedin-user') ?? '{}');
+  const token = localStorage.getItem('cuddie-access-token');
+  const providerId: any = localStorage.getItem('decoded-token_providers');
 
-  if (!user) return;
-
-  if (!user?.token) return;
+  if (!token) return;
 
   return {
-    Authorization: `WB3 ${user.token}`,
+    Authorization: `Bearer ${token}`,
+    providerId,
   };
 };
 
-const apiRequest: Axios = axios.create({
+const apiRequest: AxiosInstance = axios.create({
   baseURL,
   // timeout: 100000,
   headers: {
