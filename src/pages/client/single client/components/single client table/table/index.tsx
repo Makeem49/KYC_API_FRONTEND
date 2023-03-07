@@ -25,9 +25,7 @@ const Table = () => {
     );
   if (isError) return <Navigate to='/login' />;
 
-  // const countryCode = list.slice(0, 1);
-
-  // const code = countryCode.map((el: any) => el.countryCode);
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <>
@@ -50,14 +48,26 @@ const Table = () => {
               {
                 accessor: 'amount',
                 hidden: false,
-                name: `Amount`,
+                name: `Amount ${
+                  defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'
+                }`,
                 sortable: true,
                 static: true,
               },
               {
                 accessor: 'amountBefore',
                 hidden: false,
-                name: `Total Before`,
+                name: `Total Before ${
+                  defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'
+                }`,
                 sortable: true,
                 static: false,
               },
@@ -65,7 +75,13 @@ const Table = () => {
               {
                 accessor: 'amountAfter',
                 hidden: false,
-                name: `Total After`,
+                name: `Total After ${
+                  defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'
+                }`,
                 sortable: true,
                 static: false,
               },

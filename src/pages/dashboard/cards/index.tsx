@@ -38,11 +38,7 @@ const Card = () => {
     (inactive!?.sectionOne?.totalClients?.today ?? 0) -
     (inactive!?.sectionOne?.totalClients?.previousDay ?? 0);
 
-  // console.log(list);
-  // const obj = list?.sectionOne?.users;
-  // const change = obj.today - obj.previousDay;
-  // const percentage = Math.abs((change / obj.active) * 100).toFixed(0);
-  // console.log(percentage);
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <div className='flex gap-6 child:h-[134px]'>
@@ -105,8 +101,12 @@ const Card = () => {
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[22px] w-full font-bold  text-textgrey-dark'>
-            {commaformatter(list?.sectionOne?.values?.today ?? 0)}
-
+            {defaultCountryCode === 'NG'
+              ? '₦'
+              : defaultCountryCode === 'KE'
+              ? 'KES'
+              : 'UGX'}
+            <span> {commaformatter(list?.sectionOne?.values?.today ?? 0)}</span>
             <Change
               value={calculatePercentageChange(
                 list!.sectionOne.transactions.today ?? 0,

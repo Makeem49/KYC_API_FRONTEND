@@ -27,6 +27,7 @@ export async function get_users(): Promise<User[]> {
         id: el.id,
         user: `${el.firstName} ${el.lastName}`,
         username: el.username,
+        providers: el.providers.map((el: any) => el.name) ?? '',
         lastLogin: el.lastLogin ? el.lastLogin : '',
         twoStepEnabled: false,
         isActive: el.isActive ? 'Active' : 'Inactive',
@@ -37,7 +38,7 @@ export async function get_users(): Promise<User[]> {
         firstName: el.firstName,
         // permissions: el.permissions.map((el: any) => el) ?? '',
         // roles: el.roles.map((el: any) => el) ?? '',
-        // providers: el.providers.map((el: any) => el.name) ?? '',
+
         updatedAt: shortDateFormatter(el.updatedAt),
       } as User)
   );
@@ -119,6 +120,32 @@ export async function create_user(data: Partial<User>): Promise<string> {
 
   return resp.data.message;
 }
+
+// export async function create_user(data: Partial<User>): Promise<string> {
+//   try {
+//     const resp = await apiRequest.post('users', {
+//       username: data.username,
+//       email: data.email,
+//       firstName: data.firstName,
+//       lastName: data.lastName,
+//       password: data.password,
+//       permissions: data.permissions,
+//       providers: data.providers,
+//       roles: data.roles,
+//       image: data.image,
+//     });
+
+//     // console.log(resp.data, 'is okay');
+
+//     if (!resp.data) return 'unable to create user';
+
+//     return resp.data.message;
+//   } catch (error: any) {
+//     console.error(error);
+//     toast('error', 'unable to create user', `${error.response.data.error}`);
+//     return 'error creating user';
+//   }
+// }
 
 export async function update_user(
   username: string,

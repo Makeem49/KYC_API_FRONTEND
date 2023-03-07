@@ -2,9 +2,7 @@ import React from 'react';
 import DataGrid from '../../../../components/data-grid';
 import { shortDateFormatter } from '../../../../utils';
 const TransactionTable = ({ data }: { data: TransactionList[] }) => {
-  const countryCode = data.slice(0, 1);
-
-  const code = countryCode.map((el: any) => el.countryCode);
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <>
@@ -58,7 +56,13 @@ const TransactionTable = ({ data }: { data: TransactionList[] }) => {
             {
               accessor: 'amount',
               hidden: false,
-              name: `Value ${code}`,
+              name: `Value ${
+                defaultCountryCode === 'NG'
+                  ? '₦'
+                  : defaultCountryCode === 'KE'
+                  ? 'KES'
+                  : 'UGX'
+              }`,
               sortable: true,
               static: false,
             },

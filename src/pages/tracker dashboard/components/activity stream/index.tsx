@@ -1,7 +1,10 @@
 import React from 'react';
-import tableData1 from '../../../../tableData1.json';
 import DataGrid from '../../../../components/data-grid';
-import { shortDateFormatter } from '../../../../utils';
+
+import { useQuery } from 'react-query';
+import { Skeleton } from '@mantine/core';
+import { get_activity_log_query } from '../../../../queries/tracker_board';
+import { Navigate } from 'react-router-dom';
 
 // const ActionComponent = ({ data }: { data: any }) => {
 //   console.log({ data });
@@ -14,63 +17,71 @@ import { shortDateFormatter } from '../../../../utils';
 // };
 
 const ActivityStream = () => {
+  const { data, isError, isLoading } = useQuery(get_activity_log_query());
+  console.log(data, 'works');
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+
+  if (isError) return <Navigate to='/login' />;
+
   return (
     <>
       <DataGrid
         title='Search'
-        rows={2}
+        rows={10}
         dateFilter={{ enabled: true, label: '', accessor: 'dateCreated' }}
-        data={tableData1}
+        data={data!}
         headerFilter={[{ name: 'Status' }]}
         headers={[
           {
-            accessor: 'userName',
+            accessor: 'key',
             hidden: false,
-            name: 'User Name',
+            name: 'Name',
             sortable: true,
             static: true,
           },
           {
-            accessor: 'email',
+            accessor: 'type',
             hidden: false,
-            name: 'Email',
+            name: 'Type',
             sortable: true,
             static: false,
           },
 
           {
-            accessor: 'actionSummarry',
+            accessor: 'action',
             hidden: false,
-            name: 'Action Summarry',
+            name: 'Action Summary',
             sortable: true,
             static: false,
           },
           {
-            accessor: 'details',
+            accessor: 'description',
             hidden: false,
-            name: 'Age',
+            name: 'Details',
             sortable: true,
             static: false,
           },
           {
-            accessor: 'dateCreated',
+            accessor: 'actionTime',
             hidden: false,
-            name: 'Start Date',
+            name: 'Date',
             sortable: true,
             static: false,
-            row: (val) => <span>{shortDateFormatter(val)} </span>,
           },
           {
-            accessor: 'status',
+            accessor: 'ref',
             hidden: false,
-            name: 'Status',
+            name: 'Reference Id',
             sortable: true,
             static: false,
-            row: (val) => (
-              <span className=' bg-afexgreen-extralight p-3 rounded-lg'>
-                {val ? 'Successful' : 'Fail'}{' '}
-              </span>
-            ),
           },
         ]}
         withExport

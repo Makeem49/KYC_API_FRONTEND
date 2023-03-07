@@ -31,10 +31,10 @@ const Pagination = (props: PaginationProps) => {
         <ReactPaginate
           breakLabel='...'
           previousLabel={
-            <MdKeyboardArrowLeft className='text-4xl text-textgrey-dark rounded-lg cursor-pointer ' />
+            <MdKeyboardArrowLeft className='text-4xl bg-afexpurple-regular text-white rounded-lg cursor-pointer ' />
           }
           nextLabel={
-            <MdKeyboardArrowRight className='text-4xl text-textgrey-dark rounded-lg cursor-pointer ' />
+            <MdKeyboardArrowRight className='text-4xl bg-afexpurple-regular text-white rounded-lg cursor-pointer ' />
           }
           onPageChange={handlePageChange}
           pageCount={props.page}

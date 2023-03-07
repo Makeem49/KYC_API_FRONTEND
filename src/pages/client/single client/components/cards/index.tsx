@@ -25,6 +25,8 @@ const SingleClientCard = () => {
       />
     );
 
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
     <div className='flex gap-4'>
       {/* Card One */}
@@ -35,6 +37,11 @@ const SingleClientCard = () => {
 
         <span>TOTAL BALANCE</span>
         <p className='text-[40px] font-bold text-textgrey-darker'>
+          {defaultCountryCode === 'NG'
+            ? '₦'
+            : defaultCountryCode === 'KE'
+            ? 'KES'
+            : 'UGX'}{' '}
           {currentNumberFormatter(stats!?.balance)}
         </p>
       </div>
@@ -47,6 +54,11 @@ const SingleClientCard = () => {
 
         <span>AVAILABLE BALANCE</span>
         <p className='text-[40px] font-bold text-textgrey-darker'>
+          {defaultCountryCode === 'NG'
+            ? '₦'
+            : defaultCountryCode === 'KE'
+            ? 'KES'
+            : 'UGX'}{' '}
           {currentNumberFormatter(stats!?.balance)}
         </p>
       </div>

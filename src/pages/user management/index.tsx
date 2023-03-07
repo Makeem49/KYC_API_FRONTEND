@@ -7,7 +7,8 @@ import Table from './components/table';
 import { SingleUserProvider } from './components/context/single_user.ctx';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+import { get_users_query } from '../../queries/user_management';
 
 const UserManagement = () => {
   const queryClient = useQueryClient();
@@ -19,6 +20,9 @@ const UserManagement = () => {
   const Decoded: any = localStorage.getItem('decoded-arrays');
 
   const providersArray = JSON.parse(Decoded);
+
+  const { data: list } = useQuery(get_users_query());
+  console.log(list, 'list exist');
   return (
     <AnimatePresence>
       <SingleUserProvider>
@@ -75,6 +79,11 @@ const UserManagement = () => {
                             'decoded-token_providers_name',
                             el.name
                           );
+                          localStorage.setItem(
+                            'decoded-country-code',
+                            el.countryCode
+                          );
+                          window.location.reload();
                           queryClient.invalidateQueries();
                           console.log(localStorage);
                           setShowProviderOpt((s) => !s);

@@ -65,6 +65,12 @@ const AuthProvider = (props: WithChildren) => {
       'decoded-token_providers_name',
       decodedToken.providers[0].name
     );
+
+    localStorage.setItem(
+      'decoded-country-code',
+      decodedToken.providers[0].countryCode
+    );
+
     const myArrayString = JSON.stringify(decodedToken);
     localStorage.setItem('decoded-arrays', myArrayString);
 

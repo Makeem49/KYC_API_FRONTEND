@@ -21,8 +21,6 @@ const Dashboard = () => {
   const Decoded: any = localStorage.getItem('decoded-arrays');
 
   const providersArray = JSON.parse(Decoded);
-  // console.log(providersArray);
-  // const defaultValue = providersArray.providers[0].name;
 
   return (
     <AnimatePresence>
@@ -64,6 +62,11 @@ const Dashboard = () => {
                         'decoded-token_providers_name',
                         el.name
                       );
+                      localStorage.setItem(
+                        'decoded-country-code',
+                        el.countryCode
+                      );
+                      window.location.reload();
                       queryClient.invalidateQueries();
                       console.log(localStorage);
                       setShowProviderOpt((s) => !s);

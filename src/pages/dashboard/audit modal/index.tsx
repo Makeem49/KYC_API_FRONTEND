@@ -51,8 +51,8 @@ const AuditModal = () => {
           <Popover.Dropdown className='flex flex-col rounded-xl'>
             <button
               onClick={() => setOpened(true)}
-              className='cursor-pointer py-2 hover:bg-transparent w-full'>
-              Run Audit n
+              className='cursor-pointer  hover:bg-transparent w-full'>
+              Run Audit
             </button>
           </Popover.Dropdown>
         </Popover>

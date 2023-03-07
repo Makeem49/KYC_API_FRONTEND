@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { activateUser } from '../../api';
 import { useMutation, useQueryClient } from 'react-query';
+import cudiLogo from '../././../assets/brand/Cudi-Logo.png';
 
 const ConfirmOverlay = () => {
   const { search } = useLocation();
@@ -33,6 +34,10 @@ const ConfirmOverlay = () => {
     mutationFn: activateUser,
     onSuccess: () => {
       queryProvider.invalidateQueries({ queryKey: ['activate-user'] }); // To  invalidate and refetch
+      toast('success', 'Request Accepted', 'User Account created succesfully');
+    },
+    onError: () => {
+      toast('error', 'unable to activate', 'please try again');
     },
   });
 
@@ -44,9 +49,9 @@ const ConfirmOverlay = () => {
         <div className='bg-afexgray w-screen h-screen absolute top-0 left-0 right-0 flex items-center'>
           <div className='flex flex-1 h-full w-full flex-col space-y-14 px-20'>
             <div className='relative p-8 '>
-              <h1 className='top-[20%] absolute text-afexred-regular text-[28px] font-bold'>
-                Cudie.
-              </h1>
+              <div className='top-[30%] absolute'>
+                <img src={cudiLogo} alt='' className=' w-20 ' />
+              </div>
 
               <h3 className='mt-20 text-center  text-2xl font-semibold'>
                 Activate User Account!
@@ -64,11 +69,6 @@ const ConfirmOverlay = () => {
                 setLoading(true);
                 mutation.mutate(activated);
                 setLoading(false);
-                toast(
-                  'success',
-                  'Request Accepted',
-                  'User Account created succesfully'
-                );
                 navigate('/login');
               }}
               validationSchema={Yup.object({

@@ -12,6 +12,8 @@ const Table = () => {
 
   const arr = data!.slice(0, 10);
 
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
     <div className='h-full pb-5'>
       <div className='overflow-auto w-full '>
@@ -27,7 +29,14 @@ const Table = () => {
               </th>
               <th>Date</th>
               <th>Client's Name</th>
-              <th>Amount</th>
+              <th>
+                Amount{' '}
+                {defaultCountryCode === 'NG'
+                  ? '₦'
+                  : defaultCountryCode === 'KE'
+                  ? 'KES'
+                  : 'UGX'}
+              </th>
               <th>Transaction type</th>
               <th>Status</th>
             </tr>

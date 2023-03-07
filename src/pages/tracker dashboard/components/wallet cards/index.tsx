@@ -1,5 +1,6 @@
 import React from 'react';
-import verifyIcon from '../../../../assets/images/verify.png';
+import UnverifyIcon from '../../../../assets/images/verify.png';
+import verifyIcon from '../../../../assets/images/verifyIcon.png';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
 import { useQuery } from 'react-query';
 import { Navigate } from 'react-router-dom';
@@ -31,11 +32,19 @@ const WalletCards = () => {
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
               Client’s with no wallet
             </p>
-            <img
-              src={verifyIcon}
-              alt='verifiImg'
-              className='w-[52px] h-[52px]'
-            />
+            {list!?.overview?.noWallets > 0 ? (
+              <img
+                src={UnverifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            ) : (
+              <img
+                src={verifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            )}
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
@@ -50,11 +59,20 @@ const WalletCards = () => {
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
               Failed Funding
             </p>
-            <img
-              src={verifyIcon}
-              alt='verifiImg'
-              className='w-[52px] h-[52px]'
-            />
+
+            {list!?.overview?.failedFunding > 0 ? (
+              <img
+                src={UnverifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            ) : (
+              <img
+                src={verifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            )}
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
@@ -69,11 +87,19 @@ const WalletCards = () => {
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
               Unsynced Wallet Transfer
             </p>
-            <img
-              src={verifyIcon}
-              alt='verifiImg'
-              className='w-[52px] h-[52px]'
-            />
+            {list!?.overview?.unSyncedWalletTransfer > 0 ? (
+              <img
+                src={UnverifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            ) : (
+              <img
+                src={verifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            )}
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>

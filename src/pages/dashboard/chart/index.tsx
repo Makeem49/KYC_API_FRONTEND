@@ -35,11 +35,21 @@ const Chart = () => {
     'p-2 bg-afexpurple-regular bg-opacity-10 text-[#7738DD]  ';
   const baseStyle = 'p-2 bg-[#F1EBFC] bg-opacity-10';
 
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
     <div className='w-full p-4 bg-[#ffff] rounded-lg'>
       <div className='flex justify-between mb-6 items-center'>
         <p className=' text-[16px] font-normal text-textgrey-darker'>
-          Performance Overview
+          Performance Overview{' '}
+          <span className=' text-sm font-bold'>
+            {' '}
+            {defaultCountryCode === 'NG'
+              ? '(₦)'
+              : defaultCountryCode === 'KE'
+              ? '(KES)'
+              : '(UGX)'}
+          </span>
         </p>
 
         <div className='flex gap-3'>

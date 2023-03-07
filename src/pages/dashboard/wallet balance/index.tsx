@@ -24,6 +24,8 @@ const WalletBallance = () => {
 
   if (isError) return <p>Error!!!</p>;
 
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
     <>
       {list?.others ? (
@@ -33,7 +35,12 @@ const WalletBallance = () => {
               Total wallet balance
             </span>
             <p className='text-[20px] text-afexpurple-regular font-semibold'>
-              &#8358;{commaformatter(list?.others?.walletBalance ?? 0)}
+              {defaultCountryCode === 'NG'
+                ? '₦'
+                : defaultCountryCode === 'KE'
+                ? 'KES'
+                : 'UGX'}
+              {commaformatter(list?.others?.walletBalance ?? 0)}
             </p>
           </div>
 
@@ -42,7 +49,15 @@ const WalletBallance = () => {
             {' '}
             <div className='flex justify-between'>
               <p className=' text-textgrey-normal'>Total Transfers</p>
-              <p>{commaformatter(list?.others?.transfer ?? 0)}</p>
+              <p>
+                {' '}
+                {defaultCountryCode === 'NG'
+                  ? '₦'
+                  : defaultCountryCode === 'KE'
+                  ? 'KES'
+                  : 'UGX'}
+                {commaformatter(list?.others?.transfer ?? 0)}
+              </p>
             </div>
             {/* <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Open Balance</p>
@@ -50,7 +65,14 @@ const WalletBallance = () => {
         </div> */}
             <div className='flex justify-between'>
               <p className=' text-textgrey-normal'>Total Deposits</p>
-              <p>{commaformatter(list?.others?.deposit ?? 0)}</p>
+              <p>
+                {defaultCountryCode === 'NG'
+                  ? '₦'
+                  : defaultCountryCode === 'KE'
+                  ? 'KES'
+                  : 'UGX'}
+                {commaformatter(list?.others?.deposit ?? 0)}
+              </p>
             </div>
             {/* <div className='flex justify-between'>
           <p className=' text-textgrey-normal'>Total Withdrawals</p>

@@ -76,6 +76,11 @@ function Client() {
                         'decoded-token_providers_name',
                         el.name
                       );
+                      localStorage.setItem(
+                        'decoded-country-code',
+                        el.countryCode
+                      );
+                      window.location.reload();
                       queryClient.invalidateQueries();
                       console.log(localStorage);
                       setShowProviderOpt((s) => !s);

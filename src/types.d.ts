@@ -472,6 +472,13 @@ interface TrackerSect {
     noVirtualAccount: number;
     unsyncedWithdrawal: number;
   };
+  id: number;
+  key: string;
+  type: string;
+  action: string;
+  description: string;
+  actionTime: string;
+  ref: string;
 }
 
 type Me = {

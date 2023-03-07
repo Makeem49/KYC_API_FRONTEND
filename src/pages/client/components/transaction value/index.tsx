@@ -4,6 +4,7 @@ import { get_top_clients_by_trans_value_query } from '../../../../queries/client
 import { useQuery } from 'react-query';
 import { Skeleton } from '@mantine/core';
 import Box from '../../../../assets/images/box.png';
+import { commaformatter } from '../../../../utils';
 
 const TransactionValue = () => {
   const { data: topVal, isLoading } = useQuery(
@@ -19,6 +20,7 @@ const TransactionValue = () => {
         }}
       />
     );
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <div className='flex flex-col border border-afexpurple-lighter rounded-lg'>
@@ -51,7 +53,14 @@ const TransactionValue = () => {
                   <th className=''>S/N</th>
                   <th className=''>Clients' Name</th>
                   <th className=''>Client's Id</th>
-                  <th className=''>Value</th>
+                  <th className=''>
+                    Value{' '}
+                    {defaultCountryCode === 'NG'
+                      ? '₦'
+                      : defaultCountryCode === 'KE'
+                      ? 'KES'
+                      : 'UGX'}
+                  </th>
                 </tr>
               </thead>
               <tbody className='text-[12px] xl:text-[14px]'>
@@ -75,7 +84,7 @@ const TransactionValue = () => {
                     </td>
 
                     <td>
-                      <span>{el.valueOfTransactions}</span>
+                      <span>{commaformatter(el.valueOfTransactions)}</span>
                     </td>
                   </tr>
                 ))}

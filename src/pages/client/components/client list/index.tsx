@@ -20,8 +20,7 @@ const ClientList = () => {
 
   if (isError) return <p>Error!!!</p>;
 
-  const countryCode = data!.slice(0, 1);
-  const code = countryCode.map((el: any) => el.countryCode);
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <>
@@ -62,7 +61,13 @@ const ClientList = () => {
             {
               accessor: 'balance',
               hidden: false,
-              name: `Wallet Balance ${code}`,
+              name: `Wallet Balance ${
+                defaultCountryCode === 'NG'
+                  ? '₦'
+                  : defaultCountryCode === 'KE'
+                  ? 'KES'
+                  : 'UGX'
+              }`,
               sortable: true,
               static: false,
             },
@@ -133,7 +138,13 @@ const ClientList = () => {
             {
               accessor: 'valueOfTransactions',
               hidden: false,
-              name: `Transaction Value ${code}`,
+              name: `Transaction Value ${
+                defaultCountryCode === 'NG'
+                  ? '₦'
+                  : defaultCountryCode === 'KE'
+                  ? 'KES'
+                  : 'UGX'
+              }`,
               sortable: true,
               static: false,
             },

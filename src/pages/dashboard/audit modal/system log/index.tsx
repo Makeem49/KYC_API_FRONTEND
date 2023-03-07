@@ -14,9 +14,9 @@ const SystemLog = () => {
           <div className='absolute w-[3px] h-[23px] bg-afexgreen-regular top-8'></div>
         </div>
 
-        <p className=' text-textgrey-normal'>Total Users</p>
+        <p className=' text-textgrey-normal'>Total Clients</p>
         <img src={dotted} alt='dotted' className=' mx-10 w-[170px]' />
-        <p>N500</p>
+        <p>35</p>
       </div>
 
       {/* Open Balance */}
@@ -56,7 +56,7 @@ const SystemLog = () => {
       </div>
 
       {/* Storage to Trade Sales */}
-      <div className=' flex justify-between px-10 text-[14px] items-center w-full'>
+      {/* <div className=' flex justify-between px-10 text-[14px] items-center w-full'>
         <div className='relative flex flex-col gap-2 items-center'>
           <Verify size='24' color='#38cb89' />
           <div className='absolute w-[3px] h-[23px] bg-afexgreen-regular top-8'></div>
@@ -65,7 +65,7 @@ const SystemLog = () => {
         <p className=' text-textgrey-normal'>Storage to Trade Sales</p>
         <img src={dotted} alt='dotted' className=' mx-10 w-[170px]' />
         <p>N8,000,000.00</p>
-      </div>
+      </div> */}
 
       {/* AUDIT STATUS */}
       <div className=' flex text-right bg-[#FDFCFD] justify-between items-center mt-28 p-5'>

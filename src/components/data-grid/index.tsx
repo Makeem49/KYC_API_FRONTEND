@@ -311,6 +311,8 @@ const DataGrid = ({
     documentTitle: 'cuddie_client_table',
   });
 
+  console.log(currentItems);
+
   // CSV EXPORT
 
   // const { onDownload } = useDownloadExcel({
@@ -364,8 +366,8 @@ const DataGrid = ({
                           : 'hidden'
                       }`}>
                       {header?.row && data !== null
-                        ? header.row(data, secondary_data)
-                        : data.length > 0
+                        ? header?.row(data, secondary_data)
+                        : data?.length > 0
                         ? data
                         : '--------'}
                     </td>
@@ -417,8 +419,8 @@ const DataGrid = ({
                           : 'hidden'
                       }`}>
                       {header?.row && data !== null
-                        ? header.row(data, secondary_data)
-                        : data.length > 0
+                        ? header?.row(data, secondary_data)
+                        : data?.length > 0
                         ? data
                         : '--------'}
                     </td>
@@ -447,7 +449,7 @@ const DataGrid = ({
             </tr>
           </thead>
           <tbody className='bg-white'>
-            {currentItems.map((row, index) => (
+            {currentItems?.map((row, index) => (
               <tr
                 key={index}
                 className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
@@ -470,8 +472,8 @@ const DataGrid = ({
                           : 'hidden'
                       }`}>
                       {header?.row && data !== null
-                        ? header.row(data, secondary_data)
-                        : data.length > 0
+                        ? header?.row(data, secondary_data)
+                        : data?.length > 0
                         ? data
                         : '--------'}
                     </td>
@@ -638,6 +640,7 @@ const DataGrid = ({
                     onClick={() => {
                       setAvailableData(data);
                       onButtonClick();
+                      setshowAllComp((s) => !s);
                     }}
                     className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light text-textgrey-darker'>
                     Clear
@@ -830,7 +833,7 @@ const DataGrid = ({
                 </tr>
               </thead>
               <tbody className='bg-white'>
-                {currentItems.map((row: any, index) => (
+                {currentItems?.map((row: any, index) => (
                   <tr
                     onClick={
                       props.withNavigation && props.navigationProps
@@ -890,8 +893,8 @@ const DataGrid = ({
                               : 'hidden'
                           }`}>
                           {header?.row && data !== null
-                            ? header.row(data, secondary_data)
-                            : data.length > 0
+                            ? header?.row(data, secondary_data)
+                            : data?.length > 0
                             ? data
                             : '--------'}
                         </td>

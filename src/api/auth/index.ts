@@ -25,7 +25,7 @@ export async function authenticate(username: string, password: string) {
 
     return resp.data;
   } catch (error: any) {
-    toast('error', 'Unable to login', `${error.response.data.error}`);
+    toast('error', 'Unable to login', `${error.response.data.message}`);
     console.log(error.response.data);
   }
 }
@@ -88,18 +88,6 @@ export async function request_password_reset(
   return resp.data.message;
 }
 
-export async function request_password_reset_setttings(
-  data: any
-): Promise<string> {
-  const resp = await apiRequest.post('auth/request-password-reset', {
-    email: data.email,
-  });
-
-  if (!resp.data) return 'Bad request. Unable to reset password';
-
-  return resp.data.message;
-}
-
 export function register() {}
 
 /**
@@ -131,6 +119,13 @@ export function reset_password(
   });
 }
 
+export function request_password_reset_setttings(
+  email: string
+): Promise<AxiosResponse<any, any>> {
+  return apiRequest.post('auth/request-password-reset', {
+    email,
+  });
+}
 /**
  * Get the details of the logged in user
  */

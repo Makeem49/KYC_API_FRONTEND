@@ -17,6 +17,7 @@ import { create_user } from '../../../../../../api';
 
 import { useUsersCtx } from '../../../../../../context';
 import { toast } from '../../../../../../utils';
+import * as Yup from 'yup';
 
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
   const { item, itemTwo } = useUsersCtx();
@@ -29,7 +30,11 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
       toast('success', 'activation link will be sent to the users email'); // To  invalidate and refetch
     },
     onError: () => {
-      toast('error', 'please ', 'unable to craete user');
+      toast(
+        'error',
+        'unable to create user',
+        'please ensure you enter the required credentials'
+      );
     },
   });
 
@@ -81,7 +86,12 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           //   alert(message);
           //   setLoading(false);
           // }
-        }}>
+        }}
+        validationSchema={Yup.object({
+          fullName: Yup.string().required('Full name is required'),
+          username: Yup.string().required('Username is required'),
+          email: Yup.string().required('Email is required'),
+        })}>
         {({ resetForm }) => (
           <Form className='flex flex-col gap-y-4'>
             <FormImage

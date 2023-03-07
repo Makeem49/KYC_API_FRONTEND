@@ -16,6 +16,9 @@ const TransactionCards = () => {
   if (isLoading) return <p>Loading....</p>;
 
   if (isError) return <p>Error!!!</p>;
+
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+
   return (
     <div className='flex gap-4 child:h-[134px]'>
       {/* Card One */}
@@ -26,6 +29,11 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {defaultCountryCode === 'NG'
+              ? '₦'
+              : defaultCountryCode === 'KE'
+              ? 'KES'
+              : 'UGX'}{' '}
             {commaformatter(stats?.dailyTransactions?.deposit?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
@@ -46,6 +54,11 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {defaultCountryCode === 'NG'
+              ? '₦'
+              : defaultCountryCode === 'KE'
+              ? 'KES'
+              : 'UGX'}{' '}
             {commaformatter(stats?.dailyTransactions?.withdrawals?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
@@ -66,6 +79,11 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+            {defaultCountryCode === 'NG'
+              ? '₦'
+              : defaultCountryCode === 'KE'
+              ? 'KES'
+              : 'UGX'}{' '}
             {commaformatter(stats?.dailyTransactions?.transfer?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
@@ -86,6 +104,11 @@ const TransactionCards = () => {
         </div>
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+            {defaultCountryCode === 'NG'
+              ? '₦'
+              : defaultCountryCode === 'KE'
+              ? 'KES'
+              : 'UGX'}{' '}
             0{' '}
             {/* <span className='text-[#0DBF66] font-normal text-[13px]'> 0% </span> */}
           </p>

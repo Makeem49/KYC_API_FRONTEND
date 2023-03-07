@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Popover } from '@mantine/core';
 import { Tooltip } from '@mantine/core';
 import userImg from '../../assets/images/user.png';
+import cudiLogo from '../../assets/brand/Cudi-Logo.png';
 
 import {
   HomeHashtag,
@@ -100,7 +101,8 @@ function Sidebar() {
     <div className=' relative flex flex-col items-center w-[6%] h-[100vh] text-gray-400 bg-[#FFFFF] shadow-xl p-5 rounded'>
       {/* Cuddie logo */}
       <div className='absolute top-[5%]'>
-        <p className=' text-afexpurple-regular text-[16px] font-bold'>Cudie</p>
+        <img src={cudiLogo} alt='cudiLogo' className='w-14' />
+        {/* <p className=' text-afexpurple-regular text-[16px] font-bold'>Cudie</p> */}
         {/* <img src={cuddieLogo} alt='cuddi_Logo' className='w-12' /> */}
       </div>
 

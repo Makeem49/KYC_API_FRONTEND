@@ -1,5 +1,6 @@
 import React from 'react';
-import verifyIcon from '../../../../assets/images/verify.png';
+import UnverifyIcon from '../../../../assets/images/verify.png';
+import verifyIcon from '../../../../assets/images/verifyIcon.png';
 import { useQuery } from 'react-query';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
 import { Skeleton } from '@mantine/core';
@@ -24,11 +25,19 @@ const VirtualCards = () => {
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
               No Virtual Account
             </p>
-            <img
-              src={verifyIcon}
-              alt='verifiImg'
-              className='w-[52px] h-[52px]'
-            />
+            {list!?.overview?.noVirtualAccount > 0 ? (
+              <img
+                src={UnverifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            ) : (
+              <img
+                src={verifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            )}
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>
@@ -43,11 +52,19 @@ const VirtualCards = () => {
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
               Unsynced Withdrawal
             </p>
-            <img
-              src={verifyIcon}
-              alt='verifiImg'
-              className='w-[52px] h-[52px]'
-            />
+            {list!?.overview?.unsyncedWithdrawal > 0 ? (
+              <img
+                src={UnverifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            ) : (
+              <img
+                src={verifyIcon}
+                alt='verifiImg'
+                className='w-[52px] h-[52px]'
+              />
+            )}
           </div>
           <div className='w-full mb-3 mt-2'>
             <p className='text-[48px] font-bold text-textgrey-darker'>

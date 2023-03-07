@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Calendar } from '@mantine/dates';
 
@@ -25,11 +26,11 @@ const DateRanges = ({
   resetFunc,
   classes = 'right-0 ',
 }: DateRangesInterface) => {
-  console.log(startDate);
-  console.log(endDate);
+  const { t } = useTranslation();
+
   return (
     <div
-      className={`absolute top-[5.5rem] z-10 drop-shadow-2xl ${classes} right-[0%]`}
+      className={`absolute top-[4.5rem] z-10 drop-shadow-2xl ${classes} right-2 capitalize`}
       onClick={(e) => e.stopPropagation()}>
       <OpacityContainer>
         <div className='flex justify-between bg-[#F7F8F9] dark:bg-wdark-500 p-4 rounded-2xl z-20 w-fit'>
@@ -39,24 +40,24 @@ const DateRanges = ({
                 setStartDate(new Date(Date.now()));
                 setEndDate(new Date(Date.now()));
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
-              Today
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              {t('today')}
             </li>
             <li
               onClick={() => {
                 setStartDate(new Date(Date.now() - 24 * 60 * 60 * 1000)); // 24 hours ago in milliseconds
                 setEndDate(new Date());
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
-              Yesterday
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              {t('yesterday')}
             </li>
             <li
               onClick={() => {
                 setStartDate(new Date(Date.now() - 24 * 7 * 60 * 60 * 1000)); // 7 days ago in milliseconds
                 setEndDate(new Date());
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
-              Last 7 Days
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              {t('last 7 days')}
             </li>
             <li
               onClick={() => {
@@ -67,62 +68,53 @@ const DateRanges = ({
                 );
                 setEndDate(new Date(Date.now())); // Setting the current day of month as 0 corresponds to the last day of the last month
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'>
-              Last Month
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              {t('last month')}
             </li>
             <li
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexpurple rounded-2xl transition cursor-pointer'
+              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'
               onClick={() => {
                 setStartDate(null);
                 setEndDate(null);
                 resetFunc && resetFunc();
               }}>
-              Reset
+              {t('reset')}
             </li>
           </ul>
-          <div className='flex gap-5'>
-            <div>
-              <p className='text-center mb-4 text-gray-400'>Start</p>
-              <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
-                <Calendar value={startDate} onChange={setStartDate} />
-                {/* <div className='flex justify-between mt-3'>
-                  <button
-                    type='button'
-                    className='px-8 py-3 text-gray-900 dark:bg-wdark-50 dark:rounded'
-                    onClick={close}>
-                    Cancel
-                  </button>
-                  <button
-                    type='button'
-                    className='px-8 py-3 bg-[#E1261C] text-white rounded'
-                    onClick={filterFunc}>
-                    Done
-                  </button>
-                </div> */}
-              </div>
-            </div>
-            <div>
-              <p className='text-center mb-4 text-gray-400'>End</p>
-              <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
-                <Calendar value={endDate} onChange={setEndDate} />
-                <div className='flex justify-between mt-3'>
-                  <button
-                    type='button'
-                    className='px-8 py-3 text-gray-900 dark:bg-wdark-50 dark:rounded'
-                    onClick={close}>
-                    Cancel
-                  </button>
-                  <button
-                    type='button'
-                    className='px-8 py-3 bg-afexpurple text-white rounded'
-                    onClick={() => {
-                      close();
-                      filterFunc!();
-                    }}>
-                    Done
-                  </button>
+          <div className='flex flex-col gap-5'>
+            <div className='flex gap-5'>
+              <div>
+                <p className='text-center mb-4 text-gray-400'>{t('start')}</p>
+                <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
+                  <Calendar value={startDate} onChange={setStartDate} />
                 </div>
               </div>
+              <div>
+                <p className='text-center mb-4 text-gray-400'>{t('end')}</p>
+                <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
+                  <Calendar value={endDate} onChange={setEndDate} />
+                </div>
+              </div>
+            </div>
+            <div className='flex justify-center gap-5'>
+              <button
+                type='button'
+                className='px-8 py-3 text-gray-900 dark:bg-wdark-50 dark:rounded capitalize'
+                onClick={close}>
+                {t('cancel')}
+              </button>
+              <button
+                type='button'
+                className='px-8 py-3 bg-afexpurple dark:bg-wdark-300 text-white rounded capitalize'
+                onClick={() => {
+                  if (filterFunc) {
+                    filterFunc();
+                    close();
+                  }
+                  close();
+                }}>
+                {t('done')}
+              </button>
             </div>
           </div>
         </div>

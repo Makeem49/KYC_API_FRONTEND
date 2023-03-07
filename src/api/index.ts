@@ -51,5 +51,5 @@ export {
 } from './users';
 
 export { get_dashboard_stats, get_admin_name } from './dashboard';
-export { get_tracker_stats } from './tracker';
+export { get_tracker_stats, get_activity_log } from './tracker';
 export { get_single_client, get_a_client } from './single-client';

@@ -2,6 +2,7 @@ import React from 'react';
 // import cuddieLogo from '../../../assets/brand/logo-white.svg';
 import background from '../../../assets/brand/background.png';
 import { motion } from 'framer-motion';
+import cudiLogo from '../../../assets/brand/Cudi-Logo.png';
 
 const InitialOverlay = (props: { isVisible: boolean }) => {
   return (
@@ -14,7 +15,11 @@ const InitialOverlay = (props: { isVisible: boolean }) => {
           animate={{ transform: 'translateX(0%)', opacity: 1 }}
           exit={{ opacity: 0, transform: 'translate(0,0)' }}
           transition={{ duration: 2 }}>
-          <h1 className=' text-white text-[50px]'>Cudie</h1>
+          <div className='w-18 bg-white rounded-lg p-4'>
+            <img src={cudiLogo} alt='cudi' className='w-24' />
+          </div>
+
+          {/* <h1 className=' text-white text-[50px]'>Cudie</h1> */}
           {/* <img src={cuddieLogo} alt='Cuddie' /> */}
         </motion.div>
       )}

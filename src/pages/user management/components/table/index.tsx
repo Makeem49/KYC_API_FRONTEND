@@ -72,6 +72,13 @@ const Table = () => {
               static: true,
             },
             {
+              accessor: 'providers',
+              hidden: false,
+              name: 'Provider Name',
+              sortable: true,
+              static: true,
+            },
+            {
               accessor: 'lastLogin',
               hidden: false,
               name: 'Last Login',
