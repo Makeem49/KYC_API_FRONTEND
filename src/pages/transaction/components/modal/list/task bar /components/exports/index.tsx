@@ -13,21 +13,21 @@ const Exports = () => {
       position={'bottom-end'}>
       <Popover.Target>
         <button
-          className='py-4 px-3 flex gap-2 border items-center rounded-lg text-afexred-regular text-sm xl:text-[14px]  bg-[#FCE9E8] xl:h-[40px] w-full'
+          className='py-4 px-3 flex gap-2 border items-center rounded-lg text-afexpurple-regular text-sm xl:text-[14px] bg-afexpurple-lighter xl:h-[40px] w-full'
           onClick={() => {
             setOpened((o) => !o);
           }}>
-          <ExportSquare size='18' color='#E1261C' variant='Bulk' />
+          <ExportSquare size='18' color='#7738DD' variant='Bulk' />
           <span>EXPORT</span>
         </button>
       </Popover.Target>
 
       <Popover.Dropdown>
-        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
           PDF
         </button>
 
-        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight  rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
+        <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter  rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
           {' '}
           CSV
         </button>

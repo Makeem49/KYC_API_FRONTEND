@@ -5,7 +5,7 @@ import { calculatePercentageRadius } from '../../../../utils';
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 import { Skeleton } from '@mantine/core';
-
+import { t } from 'i18next';
 ChartJS.register(LinearScale, PointElement, Tooltip);
 
 export default function BubbleChart() {
@@ -51,7 +51,7 @@ export default function BubbleChart() {
   const data = {
     datasets: [
       {
-        label: 'Success',
+        label: `${t('Success')}`,
         extra: transactionStatus.successful,
         data: [
           {
@@ -63,7 +63,7 @@ export default function BubbleChart() {
         backgroundColor: '#38CB89',
       },
       {
-        label: 'Pending',
+        label: `${t('Pending')}`,
         extra: transactionStatus.pending,
         data: [
           {
@@ -76,7 +76,7 @@ export default function BubbleChart() {
       },
 
       {
-        label: 'Failed',
+        label: `${t('Failed')}`,
         extra: transactionStatus.failed,
         data: [
           {

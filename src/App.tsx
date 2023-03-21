@@ -4,7 +4,7 @@ import React from 'react';
 //  }
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { Sidebar } from './components';
-import bgImage from '../src/assets/svgs/bg-pattern.svg';
+// import bgImage from '../src/assets/svgs/bg-pattern.svg';
 
 import {
   ConfirmOverlay,
@@ -18,6 +18,7 @@ import {
   TrackerDashboard,
   SingleClient,
   Settings,
+  ErrorElement,
 } from './pages';
 import ContextProvider from './context';
 import './App.css';
@@ -28,12 +29,23 @@ import AuthProvider from './context/auth_context';
 // }
 import ForgotPassword from './pages/forgotPassword';
 import ResetPassword from './pages/resetPassword';
+import { MantineProvider } from '@mantine/core';
+import { useThemeCtx } from './context/theme_context';
 // import axios from 'axios';
 
-export const router = createBrowserRouter([
+// const decodedPermissions: any = localStorage.getItem('decoded-arrays');
+// const PermissionsArray = JSON.parse(decodedPermissions);
+// const permissions = PermissionsArray.permissions.map((el: any) => el);
+// const admin = PermissionsArray.username;
+// console.log(admin, 'lives');
+
+// console.log(permissions, 'here we go');
+
+const routes = [
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorElement />,
     children: [
       {
         index: true,
@@ -69,6 +81,10 @@ export const router = createBrowserRouter([
             element: <UserManagement />,
           },
         ],
+        // hide:
+        //   !permissions.find(
+        //     (permission: any) => permission.name === 'View Clients'
+        //   ) || !admin.find((admin: string) => admin === 'admin'),
       },
       {
         path: 'client-provider',
@@ -97,6 +113,7 @@ export const router = createBrowserRouter([
         element: <Settings />,
       },
     ],
+    // ].filter((route: any) => !route.hide),
   },
   {
     path: '/login',
@@ -114,17 +131,27 @@ export const router = createBrowserRouter([
     path: 'reset-password',
     element: <ResetPassword />,
   },
-]);
+];
+
+export const router = createBrowserRouter(routes);
+
+console.log(routes);
 
 function Root() {
+  const { theme } = useThemeCtx();
   return (
-    <AuthProvider>
-      <ContextProvider>
-        <ColumnProvider>
-          <App />
-        </ColumnProvider>
-      </ContextProvider>
-    </AuthProvider>
+    <MantineProvider
+      withNormalizeCSS
+      withGlobalStyles
+      theme={{ colorScheme: theme ?? 'light' }}>
+      <AuthProvider>
+        <ContextProvider>
+          <ColumnProvider>
+            <App />
+          </ColumnProvider>
+        </ContextProvider>
+      </AuthProvider>
+    </MantineProvider>
   );
 }
 
@@ -143,12 +170,14 @@ function App() {
 
   const isAuthorised = localStorage.getItem('cuddie-access-token');
   return (
-    <div className='flex bg-white text-[#54565B] text-sm xl:text-base'>
+    <div className='flex bg-white dark:bg-afexdark-verydark text-[#54565B] text-sm xl:text-base'>
       <Sidebar />
 
-      <div
-        className='w-[94%] bg-hero bg-[#F5F5F5]'
-        style={{ backgroundImage: `url(${bgImage})` }}>
+      <div className='w-[94%] bg-hero bg-[#F5F5F5] dark:bg-afexdark-verydark'>
+        {/* style=
+        {{
+          backgroundImage: `url(${bgImage})`,
+        }} */}
         {isAuthorised ? <Outlet /> : <Navigate to='/login' />}{' '}
       </div>
     </div>

@@ -11,6 +11,24 @@
   background-color: rgb(233, 230, 230);
 }
 
+html.dark ::-webkit-scrollbar-thumb {
+  @apply bg-afexdark-regular;
+}
+html.dark ::selection {
+  background-color: #b0b7c3;
+  color: #4b5568;
+}
+body {
+  @apply !text-textgrey-normal dark:!text-afexdark-regular transition-all duration-200;
+}
+html.dark .mantine-Paper-root {
+  background-color: #0d0d0d !important;
+  color: #b0b7c3 !important;
+}
+html.dark .mantine-Modal-title {
+  color: #b0b7c3 !important;
+}
+
 .mantine-Modal-modal {
   padding: 0;
   border-radius: 1.75rem;
@@ -73,6 +91,10 @@ a[aria-current='page'] svg path {
   cursor: pointer;
   margin-right: 20px;
 }
+html.dark .checkbox.checkbox.white::before,
+html.dark .checkbox::before {
+  background-color: #1e1e1e;
+}
 .checkbox:hover::before {
   background-color: #f1ebfc;
 }
@@ -80,11 +102,11 @@ a[aria-current='page'] svg path {
   content: '';
   position: absolute;
   left: 0;
-  top: 60%;
+  top: 50%;
   transform: translateY(-50%);
   height: 22px;
   width: 22px;
-  background-color: #f9f9fb;
+  background-color: #ffffff;
   border-radius: 5px;
   /* border-color: 5px solid #c1bebd; */
   border: 1px solid#b6b4b8;
@@ -97,7 +119,7 @@ a[aria-current='page'] svg path {
 .checkbox:checked::before {
   background-color: #f1ebfc;
   content: url('./assets/images/check.svg');
-  padding-top: 4px;
+  padding-top: 1px;
   padding-left: 5px;
   border: 1px solid#7738DD;
 }

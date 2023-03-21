@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 // import { useTransactionCtx } from '../../../../../context';
 import { useQuery } from 'react-query';
 import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
-
+import { t } from 'i18next';
 const BarChart = () => {
   // const { stats } = useTransactionCtx();
 
@@ -67,7 +67,7 @@ const BarChart = () => {
     },
   };
   const data = {
-    labels: stats?.transactionLocations?.map((el): string => el.name),
+    labels: stats?.transactionLocations?.map((el): string => t(el.name)),
 
     datasets: [
       {

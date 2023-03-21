@@ -12,7 +12,7 @@ import HighMaps from 'highcharts/highmaps';
 
 const HeatMap = () => {
   const map_data: [string, number][] = [
-    ['ng-ri', 10000],
+    ['ng-ri', 500],
     ['ng-kt', 11000],
     ['ng-so', 12000],
     ['ng-za', 13000],

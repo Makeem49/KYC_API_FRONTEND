@@ -8,7 +8,10 @@ import { RouterProvider } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { NotificationsProvider } from '@mantine/notifications';
-import { ThemeProvider } from '@material-tailwind/react';
+// import { ThemeProvider } from '@material-tailwind/react';
+import i18n from './localization/i18n';
+import { I18nextProvider } from 'react-i18next';
+import { ThemeProvider } from './context/theme_context';
 // import { ColumnProvider } from './context/column_context';
 
 const queryClient = new QueryClient({
@@ -26,15 +29,19 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        <NotificationsProvider limit={1} position='top-right'>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-          </QueryClientProvider>
-        </NotificationsProvider>
-      </MantineProvider>
-    </ThemeProvider>
+    <React.Suspense>
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider>
+          <MantineProvider withGlobalStyles withNormalizeCSS>
+            <NotificationsProvider limit={1} position='top-right'>
+              <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+              </QueryClientProvider>
+            </NotificationsProvider>
+          </MantineProvider>
+        </ThemeProvider>
+      </I18nextProvider>
+    </React.Suspense>
   </React.StrictMode>
 );
 

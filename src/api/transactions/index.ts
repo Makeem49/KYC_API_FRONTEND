@@ -7,6 +7,7 @@ import {
   checkCountryCode,
   currentNumberFormatter,
 } from '../../utils/formatter';
+import { t } from 'i18next';
 
 /**
  * =================================================================
@@ -42,7 +43,7 @@ export async function get_all_transactions(): Promise<TransactionList[]> {
         sessionId: el.sessionId.substr(0, 15) + '',
         amount: currentNumberFormatter(el.amount),
         transactionType: el.transactionType,
-        status: el.status ? 'Active' : 'Inactive',
+        status: el.status ? `${t('Active')}` : `${t('Inactive')}`,
         countryCode: checkCountryCode(el.client.countryCode),
         clientId: el.clientId ? el.clientId : '',
         // transactionLogId: el.transactionLogId ? el.transactionLogId : 'none',

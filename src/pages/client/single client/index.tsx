@@ -4,6 +4,7 @@ import ProfileBoard from './components/profile board';
 import SingleClientCard from './components/cards';
 import SingleClientTable from './components/single client table';
 import { Link } from 'react-router-dom';
+import { t } from 'i18next';
 
 const SingleClient = () => {
   return (
@@ -13,18 +14,20 @@ const SingleClient = () => {
         {/* Title */}
         <div className='flex w-full flex-col'>
           <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
-            Client Profile
+            {t('Client Profile')}
           </h2>
-          <p className=' text-textgrey-normal'>
+          <p className=' text-textgrey-normal dark:text-afexdark-dark'>
             <span>
               {' '}
-              <Link to='/'>Home/</Link>
+              <Link to='/'>{t('Home')}/</Link>
             </span>
             <span>
               {' '}
-              <Link to='/client'>Clients</Link>
+              <Link to='/client'>{t('Clients')}</Link>
             </span>{' '}
-            <span className=' text-textgrey-darker'>/Client profile</span>
+            <span className=' text-textgrey-darker dark:text-afexdark-regular'>
+              /{t('Client profile')}
+            </span>
           </p>
         </div>
         <ProfileBoard />

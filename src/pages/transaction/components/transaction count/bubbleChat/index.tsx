@@ -4,7 +4,7 @@ import { Bubble } from 'react-chartjs-2';
 import { calculatePercentageRadius } from '../../../../../utils';
 import { useQuery } from 'react-query';
 import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
-
+import { t } from 'i18next';
 ChartJS.register(LinearScale, PointElement, Tooltip);
 
 export default function BubbleChart() {
@@ -46,7 +46,7 @@ export default function BubbleChart() {
   const data = {
     datasets: [
       {
-        label: 'Withdrawal',
+        label: `${t('Withdrawal')}`,
         extra: transactionCounts?.withdrawal,
         data: [
           {
@@ -58,7 +58,7 @@ export default function BubbleChart() {
         backgroundColor: '#EC7670',
       },
       {
-        label: 'Deposit',
+        label: `${t('Deposit')}`,
         extra: transactionCounts?.deposit,
         data: [
           {
@@ -71,7 +71,7 @@ export default function BubbleChart() {
       },
 
       {
-        label: 'Transfer',
+        label: `${t('Transfer')}`,
         extra: transactionCounts?.transfer,
         data: [
           {

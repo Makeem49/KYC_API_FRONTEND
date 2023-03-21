@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import { useQuery, useQueryClient } from 'react-query';
 import { get_transaction_list_querry } from '../../queries/transaction_stats';
 import Locations from './components/locations_table';
+import { t } from 'i18next';
 
 function Transaction() {
   const queryClient = useQueryClient();
@@ -41,17 +42,17 @@ function Transaction() {
 
           <div className='flex w-full justify-between items-center'>
             <div className='flex w-full flex-col'>
-              <h2 className='  text-textgrey-darker text-[18px] font-bold '>
-                Transactions
+              <h2 className='  text-textgrey-darker dark:text-afexdark-lighter text-[18px] font-bold '>
+                {t('Transactions')}
               </h2>
               <p className='flex items-center gap-1 text-textgrey-normal'>
                 <Link className='flex items-center gap-1' to='/'>
                   {' '}
                   <ArrowLeft className=' w-5' />
-                  <span> Home</span>
+                  <span>{t('Home')}</span>
                 </Link>{' '}
                 <span>/</span>
-                <span className=' text-textgrey-dark'>Transactions</span>
+                <span className=' text-textgrey-dark'>{t('Transactions')}</span>
               </p>
             </div>
 
@@ -59,12 +60,10 @@ function Transaction() {
               <div
                 onClick={(e) => e.stopPropagation()}
                 className='flex relative w-full px-3 justify-end gap-2 text-[14px] font-normal items-center '>
-                <p>Switch Provider </p>
+                <p>{t('Switch Provider')} </p>
                 <button
-                  className={`border flex items-center border-[#BABABA] text-textgrey-darker p-2 rounded-lg ${
-                    showProviderOpt
-                      ? ' border-afexpurple-regular  '
-                      : ' border-transparent'
+                  className={`border flex items-center border-[#BABABA] text-textgrey-darker dark:text-afexdark-lighter p-2 rounded-lg ${
+                    showProviderOpt ? 'border-[#BABABA]' : 'border-[#BABABA]'
                   }`}
                   onClick={() => {
                     console.log('clicked');
@@ -75,12 +74,13 @@ function Transaction() {
                 </button>
 
                 <ul
-                  className={`flex gap-1 w-[120px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                  className={`flex gap-1 w-[120px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white dark:ring-afexdark-dark shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                     showProviderOpt &&
                     'max-h-[300px] opacity-100 overflow-scroll'
                   }`}>
-                  {providersArray?.providers?.map((el: any) => (
+                  {providersArray?.providers?.map((el: any, index: any) => (
                     <span
+                      key={index}
                       onClick={() => {
                         localStorage.setItem('decoded-token_providers', el.id);
                         localStorage.setItem(
@@ -96,7 +96,7 @@ function Transaction() {
                         console.log(localStorage);
                         setShowProviderOpt((s) => !s);
                       }}
-                      className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 text-base cursor-pointer m-1 py-2 px-2 capitalize'>
+                      className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-afexdark-dark text-base cursor-pointer m-1 py-2 px-2 capitalize'>
                       {' '}
                       {el.name}
                     </span>
@@ -130,7 +130,7 @@ function Transaction() {
         {/* Right Section */}
 
         <motion.div
-          className='bg-white flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]'
+          className='bg-white dark:bg-afexdark-darkest flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]'
           initial={{ transform: 'translateX(100%)', opacity: 0 }}
           animate={{ transform: 'translateX(0%)', opacity: 1 }}
           exit={{ opacity: 0, transform: 'translate(0,0)' }}

@@ -11,7 +11,8 @@ import { faker } from '@faker-js/faker';
 // import { useSingleClientCtx } from '../../../context/single_user.ctx';
 import { edit_client_provider_info } from '../../../../../../api';
 import { useMutation, useQueryClient } from 'react-query';
-import { toast } from '../../../../../../utils';
+// import { toast } from '../../../../../../utils';
+import * as Yup from 'yup';
 
 // import { useClientsCtx } from '../../../../../../context';
 // import MultiSelectDup from '../../../../../../components/form/multiselectDup';
@@ -30,7 +31,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clientProvider'] }); // To  invalidate and refetch
       close();
-      toast('success', 'Provider updated successfully');
+      // toast('success', 'Provider updated successfully');
     },
   });
 
@@ -86,7 +87,61 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
           setLoading(true);
           mutation.mutate(updateProvider);
           setLoading(false);
-        }}>
+        }}
+        validationSchema={Yup.object({
+          name: Yup.string().required('Name cannot be empty'),
+          code: Yup.string().required('Code cannot be empty'),
+          clientRepoUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          walletTransactionCallbackUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          inventoryPositionUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          inventoryTradeUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          locationsUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          loanCallbackUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+          transactionPhrase: Yup.string().required(
+            'Transaction phrase is required'
+          ),
+        })}>
         {({ resetForm }) => (
           <Form className='flex overflow-y-auto flex-col gap-y-4'>
             <FormImage
@@ -215,7 +270,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
             <div className='flex items-center mb-6 justify-center space-x-6'>
               <button
                 type='button'
-                className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                className='bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
                 onClick={() => {
                   resetForm();
                   close();

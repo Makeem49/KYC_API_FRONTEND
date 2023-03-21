@@ -4,6 +4,7 @@ import VirtualCards from './components/cards2';
 import ActivityStream from './components/activity stream';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
+import { t } from 'i18next';
 
 // import SortableTable from '../sortableTable';
 // import { CustomizedTable } from '../../components';
@@ -19,8 +20,8 @@ const TrackerDashboard = () => {
 
           <div className='flex justify-between items-center'>
             <div className='flex w-full flex-col'>
-              <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
-                Tracker System
+              <h2 className='dark:text-afexdark-lighter text-[18px] font-bold '>
+                {t('Tracker System')}
               </h2>
             </div>
 
@@ -51,7 +52,7 @@ const TrackerDashboard = () => {
           </motion.div>
 
           <motion.div
-            className='w-full flex flex-col gap-4 p-8 bg-[#ffff] rounded-lg'
+            className='w-full flex flex-col gap-4 p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg'
             initial={{ transform: 'translateY(100%)', opacity: 0 }}
             animate={{ transform: 'translateY(0%)', opacity: 1 }}
             exit={{ opacity: 0, transform: 'translate(0,0)' }}

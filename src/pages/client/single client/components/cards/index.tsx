@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { get_a_client_query } from '../../../../../queries/single_client';
 import { Skeleton } from '@mantine/core';
+import { t } from 'i18next';
 
 const SingleClientCard = () => {
   // const { stats } = useSingleClientCtx();
@@ -30,13 +31,13 @@ const SingleClientCard = () => {
   return (
     <div className='flex gap-4'>
       {/* Card One */}
-      <div className='flex flex-col gap-8 border-textgrey-light border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[16px] h-[200px] p-5 w-full'>
+      <div className='flex flex-col gap-8 border-textgrey-light border-b-4 bg-white dark:bg-afexdark-darkest   dark:border-afexdark-dark rounded-lg  text-[#8F8E91] text-[16px] h-[200px] p-5 w-full'>
         <div className='flex items-center justify-between w-full'>
           <Wallet1 size='30' color='#A982EA' variant='Bulk' />
         </div>
 
-        <span>TOTAL BALANCE</span>
-        <p className='text-[40px] font-bold text-textgrey-darker'>
+        <span>{t('TOTAL BALANCE')}</span>
+        <p className='text-[40px] font-bold text-textgrey-darker  dark:text-afexdark-dark'>
           {defaultCountryCode === 'NG'
             ? '₦'
             : defaultCountryCode === 'KE'
@@ -47,13 +48,13 @@ const SingleClientCard = () => {
       </div>
 
       {/* Card Two */}
-      <div className='flex flex-col gap-8  border-textgrey-light border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[16px]  h-[200px] p-5 w-full'>
+      <div className='flex flex-col gap-8  border-textgrey-light border-b-4 bg-white  dark:bg-afexdark-darkest dark:border-afexdark-dark  rounded-lg  text-[#8F8E91] text-[16px]  h-[200px] p-5 w-full'>
         <div className='flex items-center justify-between w-full'>
           <Wallet1 size='30' color='#A982EA' variant='Bulk' />
         </div>
 
-        <span>AVAILABLE BALANCE</span>
-        <p className='text-[40px] font-bold text-textgrey-darker'>
+        <span>{t('AVAILABLE BALANCE')}</span>
+        <p className='text-[40px] font-bold text-textgrey-darker  dark:text-afexdark-dark'>
           {defaultCountryCode === 'NG'
             ? '₦'
             : defaultCountryCode === 'KE'

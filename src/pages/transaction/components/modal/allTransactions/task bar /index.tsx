@@ -18,7 +18,7 @@ const TaskBar = () => {
           type='text'
           name=''
           id=''
-          placeholder="Search by client's name, id"
+          placeholder='Search by Location'
           className='py-2 px-14 rounded text-sm text-[#8F8E91] text-[12px] font-normal border outline-none focus:outline-none bg-[#FFFF] h-full w-[280px]'
         />
       </div>

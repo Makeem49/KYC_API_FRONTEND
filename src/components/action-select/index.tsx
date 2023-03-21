@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Export } from 'iconsax-react';
+import React, { useEffect, useState } from 'react';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 interface SelectInterface {
   data: Option[];
@@ -19,17 +19,28 @@ interface Option {
 
 const ActionSelect = (props: SelectInterface) => {
   const [options, setOptions] = useState<boolean>(false);
+  const { arrow = true, listClasses = '', Icon } = props;
 
-  const filled_style = `${props.className}  whitespace-nowrap bg-afexred-extralight gap-4 text-sm p-3 w-full flex justify-between items-center rounded-xl text-afexred-regular transition duration-150 hover:shadow-lg`;
-  const outline_style = `${props.className}  whitespace-nowrap bg-afexred-extralight gap-4 text-sm p-3 flex w-full justify-between items-center rounded-xl text-afexgreen hover:bg-afexgreen dark:hover:bg-afexgreen hover:text-white ring-1 ring-afexgreen`;
+  const filled_style = `${props.className} capitalize whitespace-nowrap bg-afexgreen gap-4 text-sm p-3 w-full flex justify-between items-center rounded-lg text-black transition duration-150 hover:shadow-lg`;
+  const outline_style = `${props.className} capitalize whitespace-nowrap bg-white dark:bg-transparent  gap-4 text-sm p-3 flex w-full justify-between items-center rounded-lg text-black hover:bg-afexgreen dark:hover:bg-afexgreen hover:text-white ring-1 ring-afexgreen`;
   const button_style = `${
     props.className
-  } whitespace-nowrap bg-afexred-regular text-afrexred-regular  gap-4  p-3 rounded-2xl hover:shadow  w-full h-full hover:cursor-pointer  flex justify-between items-center border dark:bg-wdark-400 h-14 dark:border-0 ${
-    options ? ' border-afe ' : ' border-transparent'
+  } capitalize whitespace-nowrap bg-white gap-4  px-3 rounded-2xl hover:shadow w-full h-full hover:cursor-pointer flex justify-between items-center border dark:bg-wdark-400 h-14 dark:border-0 ${
+    options ? ' border-afexpurple ' : 'border border-[#BABABA] '
   }'`;
 
+  useEffect(() => {
+    const close = () => setOptions(false);
+
+    document.addEventListener('click', close);
+  }, []);
+
+  console.log(props.data);
+
   return (
-    <div className='flex rounded-xl t font-semibold items-center relative'>
+    <div
+      className='flex items-center relative'
+      onClick={(e) => e.stopPropagation()}>
       <button
         className={
           props.type === 'filled'
@@ -39,13 +50,19 @@ const ActionSelect = (props: SelectInterface) => {
             : button_style
         }
         onClick={() => setOptions((s) => !s)}>
+        {Icon && <Icon />}
         {props.label}
-
-        <Export />
+        {arrow && (
+          <MdOutlineKeyboardArrowDown
+            className={`text-xl transition duration-300 ${
+              options && 'rotate-180'
+            }`}
+          />
+        )}
       </button>
       <ul
-        className={`flex flex-col absolute top-[110%] left-[50%] translate-x-[-50%] ring-1 ring-afexred-extralight dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 w-[150px] overflow-hidden transition-[max-height] duration-300 ${
-          options && 'max-h-96 opacity-100'
+        className={`flex flex-col absolute p-6 top-[110%] bg-white rounded-lg opacity-0  dark:bg-wdark-300 z-40 max-h-0 w-full transition-[max-height] duration-300 ${listClasses} ${
+          options && 'max-h-96 opacity-100 bg-white p-6'
         }`}>
         {props.data.map((el, index) => (
           <li
@@ -53,9 +70,16 @@ const ActionSelect = (props: SelectInterface) => {
               el.function();
               setOptions(false);
             }}
-            className='flex items-center gap-2 whitespace-nowrap text-sm hover:bg-afexred-lighter text-afexblue-dark dark:hover:bg-white dark:hover:bg-opacity-20 p-1 cursor-pointer m-1 rounded-xl '
+            className='flex flex-col gap-3 relative whitespace-nowrap text-sm hover:bg-afexpurple-lighter dark:hover:bg-white dark:hover:bg-opacity-20 p-1 cursor-pointer m-1 rounded-lg '
             key={index}>
-            <span className='text-gray-400 hover:text-[#53565b]'>{'hey '}</span>
+            {el.icon && (
+              <span className='bg-white p-[2px] rounded-md text-white inline'>
+                {el.icon}
+              </span>
+            )}
+            <span className='absolute top-[-300%] left-[-40%] text-textgrey-darker hover:text-[#53565b] capitalize'>
+              {el.label}{' '}
+            </span>
           </li>
         ))}
       </ul>

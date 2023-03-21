@@ -42,7 +42,7 @@ const ResetPassword = () => {
   return (
     <>
       <AuthProvider>
-        <div className='bg-afexgray w-screen h-screen absolute top-0 left-0 right-0 flex items-center'>
+        <div className='bg-afexgray dark:bg-afexdark-verydark w-screen h-screen absolute top-0 left-0 right-0 flex items-center'>
           <div className='flex flex-1 h-full w-full flex-col space-y-20 px-20'>
             <div className='relative p-8 '>
               <div className='top-[30%] absolute'>
@@ -86,7 +86,7 @@ const ResetPassword = () => {
                   'Passwords must match'
                 ),
               })}>
-              <Form className='w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-8 bg-white m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative'>
+              <Form className='w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-8 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative'>
                 <TextInput
                   id='username'
                   name='username'

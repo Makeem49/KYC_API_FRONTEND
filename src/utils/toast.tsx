@@ -1,6 +1,8 @@
 import { showNotification } from '@mantine/notifications';
 
-import { ShieldTick, CloseCircle, InfoCircle } from 'iconsax-react';
+// import { ShieldTick, CloseCircle, InfoCircle } from 'iconsax-react';
+
+import { RiShieldCheckFill, RiErrorWarningLine } from 'react-icons/ri';
 
 const toast = (
   id: 'success' | 'error' | 'info',
@@ -15,11 +17,19 @@ const toast = (
       : 'rgb(250, 232, 76)';
   const icon =
     id === 'success' ? (
-      <ShieldTick variant='Bulk' color='#38CB89' />
+      <div className=' bg-afexgreen-lighter z-50 rounded-full p-3'>
+        <RiShieldCheckFill color='#38CB89' size={30} />
+      </div>
     ) : id === 'error' ? (
-      'error' && <CloseCircle color='#F47373' />
+      'error' && (
+        <div className=' bg-afexred-lighter z-50 rounded-full p-3'>
+          <RiErrorWarningLine color='#FE1F11' size={30} />
+        </div>
+      )
     ) : (
-      <InfoCircle color='#dce775' />
+      <div className=' bg-afexwarning-lighter z-50 rounded-full p-3'>
+        <RiErrorWarningLine color='#dce775' size={30} />
+      </div>
     );
   //id = 'success' | 'warning' | 'error'
   return showNotification({
@@ -52,15 +62,17 @@ const toast = (
       <div
         className={`flex  items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
           id === 'success'
-            ? 'before:bg-afexgreen-lighter'
+            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
             : id === 'error'
-            ? 'before:bg-error-lighter'
-            : 'before:bg-warninig-lighter'
+            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
+            : 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
         }`}>
         {heading.length > 0 && (
           <div className='pl-5 z-50 pr-4 child:py-1'>
-            <p className='font-bold text-md '>{heading}</p>
-            <p className=''>{text}</p>
+            <p className='font-bold text-md dark:text-afexdark-regular '>
+              {heading}
+            </p>
+            <p className='dark:text-afexdark-regular'>{text}</p>
           </div>
         )}
       </div>

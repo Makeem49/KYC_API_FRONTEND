@@ -23,7 +23,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
     <>
       {props.isVisible && (
         <motion.div
-          className='bg-afexgray w-screen h-screen absolute top-0 left-0 right-0 flex items-center'
+          className='bg-afexgray dark:bg-afexdark-verydark w-screen h-screen absolute top-0 left-0 right-0 flex items-center'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -74,7 +74,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                 animate={{ transform: 'translateY(0%)', opacity: 1 }}
                 exit={{ opacity: 0, transform: 'translate(0,0)' }}
                 transition={{ duration: 2 }}>
-                <Form className='w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-8 bg-white m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative'>
+                <Form className='w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-8 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative'>
                   <TextInput
                     id='username'
                     name='username'

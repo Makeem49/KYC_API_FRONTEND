@@ -3,6 +3,7 @@ import { Popover } from '@mantine/core';
 import { ArrowDown2 } from 'iconsax-react';
 import AddUser from '../modal/edit user ';
 import DeactivateUser from '../modal/deactivate';
+import { t } from 'i18next';
 
 const UserAction = ({ data }: { data: User }) => {
   const [opened, setOpened] = useState(false);
@@ -16,7 +17,7 @@ const UserAction = ({ data }: { data: User }) => {
         <Popover.Target>
           <button
             onClick={() => setOpened((s) => !s)}
-            className=' flex items-center gap-2 bg-[#F0F0F0] rounded px-5 py-3 relative'>
+            className=' flex items-center gap-2 bg-[#F0F0F0] dark:bg-afexdark-verydark rounded px-5 py-3 relative'>
             <span>Actions</span>
             <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
           </button>
@@ -30,7 +31,7 @@ const UserAction = ({ data }: { data: User }) => {
               setEditUserModal((s) => !s);
               setOpened((s) => !s);
             }}>
-            Edit
+            {t('Edit')}
           </button>
 
           {data.isActive === 'Active' ? (
@@ -40,7 +41,7 @@ const UserAction = ({ data }: { data: User }) => {
                 setDeactivateUserModal((s) => !s);
                 setOpened((s) => !s);
               }}>
-              Deactivate
+              {t('Deactivate')}
             </p>
           ) : (
             <p

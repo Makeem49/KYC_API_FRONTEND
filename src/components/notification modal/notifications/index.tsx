@@ -7,7 +7,7 @@ const Notications = () => {
       {/* TODAY */}
       <p className=' font-semibold'>Today</p>
       {/* ADAMU ADAMU */}
-      <div className='w-full bg-[#F5F5F5] flex justify-between p-4 rounded-lg'>
+      <div className='w-full bg-[#F5F5F5] dark:bg-afexdark-verydark  flex justify-between p-4 rounded-lg'>
         <div className='flex gap-3 items-center'>
           <img src={adamsIcon} alt='adams' />
           <div className='flex flex-col gap-1'>
@@ -27,7 +27,7 @@ const Notications = () => {
       </div>
 
       {/* Belau Johnson */}
-      <div className='w-full bg-[#F5F5F5] flex justify-between p-4 rounded-lg'>
+      <div className='w-full bg-[#F5F5F5] dark:bg-afexdark-verydark flex justify-between p-4 rounded-lg'>
         <div className='flex gap-3 items-center'>
           <img src={adamsIcon} alt='adams' />
           <div className='flex flex-col gap-1'>
@@ -47,7 +47,7 @@ const Notications = () => {
       </div>
 
       {/* ADAMU ADAMU */}
-      <div className='w-full bg-[#F5F5F5] flex justify-between p-4 rounded-lg'>
+      <div className='w-full bg-[#F5F5F5] dark:bg-afexdark-verydark flex justify-between p-4 rounded-lg'>
         <div className='flex gap-3 items-center'>
           <img src={adamsIcon} alt='adams' />
           <div className='flex flex-col gap-1'>
@@ -69,7 +69,7 @@ const Notications = () => {
       {/* Yesterday */}
       <p className=' font-semibold'>Yesterday</p>
       {/* ADAMU ADAMU */}
-      <div className='w-full bg-[#F5F5F5] flex justify-between p-4 rounded-lg'>
+      <div className='w-full bg-[#F5F5F5] dark:bg-afexdark-verydark flex justify-between p-4 rounded-lg'>
         <div className='flex gap-3 items-center'>
           <img src={adamsIcon} alt='adams' />
           <div className='flex flex-col gap-1'>
@@ -89,7 +89,7 @@ const Notications = () => {
       </div>
 
       {/* Belau Johnson */}
-      <div className='w-full bg-[#F5F5F5] flex justify-between p-4 rounded-lg'>
+      <div className='w-full bg-[#F5F5F5] dark:bg-afexdark-verydark flex justify-between p-4 rounded-lg'>
         <div className='flex gap-3 items-center'>
           <img src={adamsIcon} alt='adams' />
           <div className='flex flex-col gap-1'>

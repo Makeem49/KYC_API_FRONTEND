@@ -9,3 +9,4 @@ export { default as ClientProvider } from './client provider';
 export { default as ApiRequest } from './api request';
 export { default as TrackerDashboard } from './tracker dashboard';
 export { default as Settings } from './settings';
+export { default as ErrorElement } from './error';

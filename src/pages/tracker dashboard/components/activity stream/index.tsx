@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { Skeleton } from '@mantine/core';
 import { get_activity_log_query } from '../../../../queries/tracker_board';
 import { Navigate } from 'react-router-dom';
+import { t } from 'i18next';
 
 // const ActionComponent = ({ data }: { data: any }) => {
 //   console.log({ data });
@@ -43,14 +44,14 @@ const ActivityStream = () => {
           {
             accessor: 'key',
             hidden: false,
-            name: 'Name',
+            name: `${t('Name')}`,
             sortable: true,
             static: true,
           },
           {
             accessor: 'type',
             hidden: false,
-            name: 'Type',
+            name: `${t('Type')}`,
             sortable: true,
             static: false,
           },
@@ -58,28 +59,28 @@ const ActivityStream = () => {
           {
             accessor: 'action',
             hidden: false,
-            name: 'Action Summary',
+            name: `${t('Action Summary')}`,
             sortable: true,
             static: false,
           },
           {
             accessor: 'description',
             hidden: false,
-            name: 'Details',
+            name: `${t('Details')}`,
             sortable: true,
             static: false,
           },
           {
             accessor: 'actionTime',
             hidden: false,
-            name: 'Date',
+            name: `${t('Date')}`,
             sortable: true,
             static: false,
           },
           {
             accessor: 'ref',
             hidden: false,
-            name: 'Reference Id',
+            name: `${t('Reference Id')}`,
             sortable: true,
             static: false,
           },

@@ -33,14 +33,14 @@ const DateRanges = ({
       className={`absolute top-[4.5rem] z-10 drop-shadow-2xl ${classes} right-2 capitalize`}
       onClick={(e) => e.stopPropagation()}>
       <OpacityContainer>
-        <div className='flex justify-between bg-[#F7F8F9] dark:bg-wdark-500 p-4 rounded-2xl z-20 w-fit'>
+        <div className='flex justify-between bg-[#F7F8F9] dark:bg-afexdark-verydark p-4 rounded-2xl z-20 w-fit'>
           <ul className='space-y-2 text-gray-500 mr-10 text-base child:whitespace-nowrap '>
             <li
               onClick={() => {
                 setStartDate(new Date(Date.now()));
                 setEndDate(new Date(Date.now()));
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter dark:hover:bg-afexdark-darkest hover:text-afexgreen rounded-2xl transition cursor-pointer'>
               {t('today')}
             </li>
             <li
@@ -48,7 +48,7 @@ const DateRanges = ({
                 setStartDate(new Date(Date.now() - 24 * 60 * 60 * 1000)); // 24 hours ago in milliseconds
                 setEndDate(new Date());
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter dark:hover:bg-afexdark-darkest hover:text-afexgreen rounded-2xl transition cursor-pointer'>
               {t('yesterday')}
             </li>
             <li
@@ -56,7 +56,7 @@ const DateRanges = ({
                 setStartDate(new Date(Date.now() - 24 * 7 * 60 * 60 * 1000)); // 7 days ago in milliseconds
                 setEndDate(new Date());
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter dark:hover:bg-afexdark-darkest hover:text-afexgreen rounded-2xl transition cursor-pointer'>
               {t('last 7 days')}
             </li>
             <li
@@ -68,11 +68,11 @@ const DateRanges = ({
                 );
                 setEndDate(new Date(Date.now())); // Setting the current day of month as 0 corresponds to the last day of the last month
               }}
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'>
+              className='p-2 hover:bg-afexpurple-lighter dark:hover:bg-afexdark-darkest hover:text-afexgreen rounded-2xl transition cursor-pointer'>
               {t('last month')}
             </li>
             <li
-              className='p-2 hover:bg-afexpurple-lighter hover:text-afexgreen rounded-2xl transition cursor-pointer'
+              className='p-2 hover:bg-afexpurple-lighter dark:hover:bg-afexdark-darkest hover:text-afexgreen rounded-2xl transition cursor-pointer'
               onClick={() => {
                 setStartDate(null);
                 setEndDate(null);
@@ -85,13 +85,13 @@ const DateRanges = ({
             <div className='flex gap-5'>
               <div>
                 <p className='text-center mb-4 text-gray-400'>{t('start')}</p>
-                <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
+                <div className='bg-white dark:bg-afexdark-darkest rounded-2xl p-4 py-6 '>
                   <Calendar value={startDate} onChange={setStartDate} />
                 </div>
               </div>
               <div>
                 <p className='text-center mb-4 text-gray-400'>{t('end')}</p>
-                <div className='bg-white dark:bg-wdark-400 rounded-2xl p-4 py-6 '>
+                <div className='bg-white dark:bg-afexdark-darkest rounded-2xl p-4 py-6 '>
                   <Calendar value={endDate} onChange={setEndDate} />
                 </div>
               </div>
@@ -99,7 +99,7 @@ const DateRanges = ({
             <div className='flex justify-center gap-5'>
               <button
                 type='button'
-                className='px-8 py-3 text-gray-900 dark:bg-wdark-50 dark:rounded capitalize'
+                className='px-8 py-3 text-gray-900 dark:text-afexdark-regular dark:bg-afexdark-darkest dark:rounded capitalize'
                 onClick={close}>
                 {t('cancel')}
               </button>

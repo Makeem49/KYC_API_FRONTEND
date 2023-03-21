@@ -15,13 +15,15 @@ import {
   searchText,
   searchSpecificText,
   insert,
+  exportToCSV,
+  get_nested_value,
 } from '../../utils/functions';
 
 import { DateRanges, Pagination } from '..';
 import { useNavigate } from 'react-router-dom';
 import { Popover } from '@mantine/core';
 
-import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { t } from 'i18next';
 
 // Data Headers
 export interface Header {
@@ -113,7 +115,9 @@ const DataGrid = ({
   // );
 
   const [opened, setOpened] = useState(false);
-  const [drawer, setDrawer] = useState(false);
+
+  const [openPdf, setOpenPdf] = useState(false);
+  const [openCsv, setOpenCsv] = useState(false);
 
   // SORTING ACTIONS
 
@@ -214,21 +218,17 @@ const DataGrid = ({
   const toggleVisibility = (header: Header) => {
     if (header.static) return;
 
-    if (
-      selectedColumns.findIndex((el) => el.accessor === header.accessor) >= 0
-    ) {
-      setSelectedColumns((prev) =>
-        prev.filter((el) => el.accessor !== header.accessor)
-      );
-    } else {
-      setSelectedColumns((prev) =>
-        insert(
-          prev,
-          headers.findIndex((el) => el.accessor === header.accessor),
-          header
-        )
-      );
-    }
+    setSelectedColumns((prev) =>
+      prev.map((el) => {
+        if (el.accessor === header.accessor) {
+          return {
+            ...el,
+            hidden: !el.hidden,
+          };
+        }
+        return el;
+      })
+    );
   };
 
   // Searching for any text
@@ -294,9 +294,6 @@ const DataGrid = ({
   const printCurrent = useRef(null);
   const printSelected = useRef(null);
   const printAllData = useRef(null);
-  // const printCurrentCsv = useRef(null);
-  // const componentRef = useRef(null);
-  // const AllComponentRef = useRef(null);
 
   const handlePrint = useReactToPrint({
     content: () => printCurrent.current,
@@ -311,16 +308,6 @@ const DataGrid = ({
     documentTitle: 'cuddie_client_table',
   });
 
-  console.log(currentItems);
-
-  // CSV EXPORT
-
-  // const { onDownload } = useDownloadExcel({
-  //   currentTableRef: tableRef.current,
-  //   filename: 'Users table',
-  //   sheet: 'Users',
-  // });
-
   return (
     <section className='h-full relative space-y-5'>
       <div className='hidden'>
@@ -329,7 +316,7 @@ const DataGrid = ({
           ref={printAllData}
           className='overflow-auto p-5 w-full mb-10 align-top'>
           <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
-            <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+            <tr className='child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize'>
               <th className='w-8'>S/N</th>
               {selectedColumns.map((column) => (
                 <th
@@ -382,7 +369,7 @@ const DataGrid = ({
           ref={printSelected}
           className='overflow-auto p-5 w-full mb-10 align-top'>
           <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
-            <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+            <tr className='child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize'>
               <th className='w-8'>S/N</th>
               {selectedColumns.map((column) => (
                 <th
@@ -435,7 +422,7 @@ const DataGrid = ({
           ref={printCurrent}
           className='overflow-auto p-5 w-full mb-10 align-top'>
           <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
-            <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+            <tr className='child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize'>
               <th className='w-8'>S/N</th>
               {selectedColumns.map((column) => (
                 <th
@@ -452,7 +439,7 @@ const DataGrid = ({
             {currentItems?.map((row, index) => (
               <tr
                 key={index}
-                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                className={`child:py-2 child:px-2 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
                 <td className='py-4'>{index + 1}</td>
 
                 {Object.keys(row).map((entry, index) => {
@@ -496,7 +483,7 @@ const DataGrid = ({
           <input
             type='text'
             placeholder={props.title}
-            className='py-3 mx-2 w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100  hover:shadow bg-white'
+            className='py-3 mx-2 w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100 dark:ring-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
             onChange={filterByTextSearch}
           />
           <span className='absolute left-4 text-2xl'>
@@ -510,7 +497,7 @@ const DataGrid = ({
           {/* COLUMN VISIBILITY FILTER */}
           <div className='relative' onClick={(e) => e.stopPropagation()}>
             <button
-              className={`h-full whitespace-nowrap bg-afexpurple-lighter gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark  gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
                 showColOpts
                   ? ' border-afexpurple-regular  '
                   : ' border-transparent'
@@ -522,36 +509,36 @@ const DataGrid = ({
                 variant='Bulk'
                 className='shrink-0 '
               />
-              {'COLUMNS'}
+              {t('COLUMNS')}
             </button>
             <ul
-              className={`flex gap-2 w-[200px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+              className={`flex gap-2 w-[200px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-afexdark-verydark  rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest  z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                 showColOpts && 'max-h-[300px] opacity-100 overflow-scroll'
               }`}>
               {headers.map((header) => (
                 <label
-                  key={header.accessor}
-                  htmlFor={header.accessor}
-                  className={`flex items-center gap-1 whitespace-nowrap  text-gray-900 text-base cursor-pointer m-1 rounded-md py-4 px-4 capitalize ${
+                  key={header.name}
+                  htmlFor={header.name}
+                  className={`flex items-center gap-1 whitespace-nowrap  text-gray-900  dark:text-afexdark-dark text-base cursor-pointer m-1 rounded-md py-4 px-4 capitalize ${
                     selectedColumns.findIndex(
-                      (el) => el.accessor === header.accessor
+                      (el) => el.name === header.name && !el.hidden
                     ) >= 0 && !header.static
-                      ? 'bg-afexpurple-lighter'
+                      ? 'bg-afexpurple-lighter dark:bg-afexdark-verydark'
                       : selectedColumns.findIndex(
-                          (el) => el.accessor === header.accessor
+                          (el) => el.name === header.name
                         ) >= 0 && header.static
-                      ? ' bg-afexpurple-lighter cursor-not-allowed'
+                      ? ' bg-afexpurple-lighter dark:bg-afexdark-verydark  cursor-not-allowed'
                       : undefined
                   }`}>
                   <input
                     className='checkbox'
                     type='checkbox'
-                    name={header.accessor}
-                    id={header.accessor}
+                    name={header.name}
+                    id={header.name}
                     disabled={header.static}
                     checked={
                       selectedColumns.findIndex(
-                        (el) => el.accessor === header.accessor
+                        (el) => el.name === header.name && !el.hidden
                       ) >= 0
                     }
                     onChange={() => toggleVisibility(header)}
@@ -566,7 +553,7 @@ const DataGrid = ({
 
           <div className='' onClick={(e) => e.stopPropagation()}>
             <button
-              className={`h-full whitespace-nowrap bg-afexpurple-lighter gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
                 showAllComp
                   ? ' border-afexpurple-regular  '
                   : ' border-transparent'
@@ -578,17 +565,17 @@ const DataGrid = ({
                 variant='Bulk'
                 className='shrink-0 '
               />
-              {'FILTERS'}
+              {t('FILTERS')}
             </button>
             {/* ALL COMPONENTS TO BE DISPLAYED */}
             <div
-              className={`flex gap-2  w-[340px] bg-white px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0  dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+              className={`flex gap-2  w-[340px] bg-white  dark:bg-afexdark-darkest px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md dark:ring-afexdark-dark rounded-xl opacity-0  dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                 showAllComp && 'max-h-[450px] opacity-100 overflow-scroll'
               }`}>
               {/* COLUMNS HEADER */}
               <div className='relative' onClick={(e) => e.stopPropagation()}>
                 <button
-                  className={`h-full w-full whitespace-nowrap  gap-2 text-base p-4 rounded-lg hover:shadow  hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+                  className={`h-full w-full whitespace-nowrap gap-2 text-base p-4 rounded-lg hover:shadow hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-afexdark-verydark dark:border-0 capitalize ${
                     showFilterColOpts
                       ? ' border-[#DAD9DA]'
                       : '  border-[#DAD9DA]'
@@ -603,14 +590,14 @@ const DataGrid = ({
                   />
                 </button>
                 <ul
-                  className={`flex gap-1 w-full px-1 py-2 flex-col absolute bg-white top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                  className={`flex gap-1 w-full px-1 py-2 flex-col absolute  dark:bg-afexdark-darkest bg-white top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                     showFilterColOpts && 'max-h-[300px] opacity-100 '
                   }`}>
                   {headerFilter.map((header) => (
                     <label
                       key={header.name}
                       htmlFor={header.name}
-                      className='flex items-center gap-1 whitespace-nowrap  text-gray-900 text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize'>
+                      className='flex items-center gap-1 whitespace-nowrap  text-gray-900  dark:text-afexdark-dark text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize'>
                       <input
                         type='checkbox'
                         className='checkbox'
@@ -629,7 +616,7 @@ const DataGrid = ({
                   <input
                     type='text'
                     placeholder='Input Query Value'
-                    className='py-3  w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  hover:shadow bg-white'
+                    className='py-3  w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  dark:border-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
                     onChange={filterBySpecificTextSearch}
                     ref={inputRef}
                   />
@@ -642,13 +629,13 @@ const DataGrid = ({
                       onButtonClick();
                       setshowAllComp((s) => !s);
                     }}
-                    className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light text-textgrey-darker'>
-                    Clear
+                    className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker  dark:text-afexdark-dark'>
+                    {t('Clear')}
                   </span>
                   <span
                     onClick={() => setshowAllComp((s) => !s)}
                     className='p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white '>
-                    Add
+                    {t('Add')}
                   </span>
                 </div>
               </div>
@@ -672,27 +659,27 @@ const DataGrid = ({
             position={'bottom-end'}>
             <Popover.Target>
               <button
-                className='py-6 px-3 flex font-semibold gap-2 border items-center rounded-lg text-afexpurple-regular text-sm xl:text-[14px] bg-afexpurple-lighter xl:h-[40px] w-[100px]'
+                className='py-6 px-3 flex font-semibold gap-2 items-center rounded-lg text-afexpurple-regular text-sm xl:text-[14px] bg-afexpurple-lighter  dark:bg-afexdark-verydark xl:h-[40px] w-[100px]'
                 onClick={() => {
                   setOpened((o) => !o);
                 }}>
                 <ExportSquare size='18' color='#7738DD' variant='Bulk' />
-                <span>EXPORT</span>
+                <span>{t('EXPORT')}</span>
               </button>
             </Popover.Target>
 
             <Popover.Dropdown>
               {/* PDF POPOVER */}
               <Popover
-                opened={drawer}
-                onChange={setDrawer}
+                opened={openPdf}
+                onChange={setOpenPdf}
                 width={140}
                 position='left-start'>
                 <Popover.Target>
                   <button
                     className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter  rounded-lg py-4 px-2 font-normal text-[14px] text-left'
                     onClick={() => {
-                      setDrawer((o) => !o);
+                      setOpenPdf((o) => !o);
                     }}>
                     PDF
                   </button>
@@ -704,51 +691,87 @@ const DataGrid = ({
                     onClick={() => {
                       handlePrintAllData();
                     }}>
-                    Export All
+                    {t('Export All')}
                   </span>
                   <span
                     className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
                     onClick={() => {
                       handlePrintSelected();
                     }}>
-                    Export Selected
+                    {t('Export Selected')}
                   </span>
                   <span
                     className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
                     onClick={() => {
                       handlePrint();
                     }}>
-                    Export Page{' '}
+                    {t('Export Page')}
                   </span>
                 </Popover.Dropdown>
-
-                {/* <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
-                  PDF
-                </button> */}
               </Popover>
+              {/* CSV POPOVER */}
+              <Popover
+                opened={openCsv}
+                onChange={setOpenCsv}
+                width={140}
+                position='left-start'>
+                <Popover.Target>
+                  <button
+                    className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left'
+                    onClick={() => {
+                      setOpenCsv((o) => !o);
+                    }}>
+                    {' '}
+                    CSV
+                  </button>
+                </Popover.Target>
 
-              <DownloadTableExcel
-                filename='users table'
-                sheet='users'
-                currentTableRef={printCurrent.current}>
-                <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
-                  {' '}
-                  CSV
-                  {/* <CSVLink
-                  filename={'TableContent.csv'}
-                  data={data}
-                  className='btn btn-primary'>
-                  Download csv
-                </CSVLink> */}
-                </button>
-              </DownloadTableExcel>
+                <Popover.Dropdown>
+                  <span
+                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
+                    onClick={() => {
+                      exportToCSV(
+                        data,
+                        selectedColumns
+                          .filter((el) => el.hidden)
+                          .map((el) => el.accessor)
+                      );
+                    }}>
+                    {t('Export All')}
+                  </span>
+                  <span
+                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
+                    onClick={() => {
+                      exportToCSV(
+                        selectedRows,
+                        selectedColumns
+                          .filter((el) => el.hidden)
+                          .map((el) => el.accessor)
+                      );
+                    }}>
+                    {t('Export Selected')}
+                  </span>
+                  <span
+                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
+                    onClick={() => {
+                      exportToCSV(
+                        currentItems,
+                        selectedColumns
+                          .filter((el) => el.hidden)
+                          .map((el) => el.accessor)
+                      );
+                    }}>
+                    {t('Export Page')}
+                  </span>
+                </Popover.Dropdown>
+              </Popover>
             </Popover.Dropdown>
           </Popover>
 
           {/* DATE FILTER ACTION */}
           {dateFilter.enabled && (
             <button
-              className='flex gap-6 items-center py-3 mx-2 text-base rounded-xl px-4 focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter cursor-pointer'
+              className='flex gap-6 items-center py-3 mx-2 text-base rounded-xl px-4 focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer'
               onClick={() => setShowDateCalendar((s) => !s)}>
               {/* <span className='capitalize whitespace-nowrap'>
                 {dateFilter.label}{' '}
@@ -776,28 +799,28 @@ const DataGrid = ({
       {/* Table */}
       <div className='h-full'>
         <div className='h-[40rem] xl:h-[50rem] relative pb-24'>
-          <div className='h-full table-auto overflow-auto w-full my-3'>
-            <style type='text/css'>
-              {`
+          <style type='text/css'>
+            {`
           @media print {
             .table {
               font-size: 16px;
               width: 100%;
             }
-            th, td {
-              border: 1px solid grey;
-              padding: 8px;
+             td {
+             
             }
             th {
-              
+              background-color: #E1261C;
+            
               
             }
           }
         `}
-            </style>
+          </style>
+          <div className='h-full table-auto overflow-auto w-full my-3'>
             <table className='overflow-auto p-5 w-full mb-10 align-top'>
-              <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
-                <tr className='child:px-3 border-b child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+              <thead className='sticky top-0 text-left whitespace-nowrap bg-white dark:bg-afexdark-darkest  z-[5]'>
+                <tr className='child:px-3 border-b dark:border-afexdark-dark child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
                   {props.withCheck && (
                     <th className='align-middle w-8 '>
                       <input
@@ -832,7 +855,7 @@ const DataGrid = ({
                   {props.withActions && <th>{'action'}</th>}
                 </tr>
               </thead>
-              <tbody className='bg-white'>
+              <tbody className='bg-white dark:bg-afexdark-darkest '>
                 {currentItems?.map((row: any, index) => (
                   <tr
                     onClick={
@@ -846,12 +869,12 @@ const DataGrid = ({
                         : undefined
                     }
                     key={index}
-                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100 dark:border-afexdark-dark cursor-default`}>
                     {props.withCheck && (
                       <td onClick={(e) => e.stopPropagation()}>
                         <input
                           type='checkbox'
-                          className='checkbox'
+                          className='checkbox dark:darkcheckbox'
                           checked={
                             selectedRows.findIndex((el) =>
                               isDeepEqual(el, row)
@@ -864,7 +887,7 @@ const DataGrid = ({
                     )}
                     <td className='py-4'>{index + 1}</td>
 
-                    {Object.keys(row).map((entry, index) => {
+                    {/* {Object.keys(row).map((entry, index) => {
                       const header = headers.find(
                         (el) => el.accessor === entry
                       );
@@ -899,7 +922,45 @@ const DataGrid = ({
                             : '--------'}
                         </td>
                       );
-                    })}
+                    })} */}
+
+                    {headers
+                      .sort((a, b) => {
+                        const headerKeys = headers.map((header) => header.name);
+                        return (
+                          headerKeys.indexOf(a.name) -
+                          headerKeys.indexOf(b.name)
+                        );
+                      })
+                      .map((_, i) => {
+                        const header = selectedColumns[i];
+                        const secondary_data = header?.secondary_key
+                          ? get_nested_value(row, header?.secondary_key)
+                          : '';
+                        const data =
+                          get_nested_value(row, header?.accessor) ?? '--------';
+                        return (
+                          <React.Fragment key={i}>
+                            {header && !header.hidden && (
+                              <td
+                                key={i}
+                                className={`text-${
+                                  header?.rowAlign
+                                } capitalize min-w-[6rem] ${
+                                  selectedColumns.findIndex(
+                                    (el) => el.accessor === header?.accessor
+                                  ) >= 0
+                                    ? 'visible'
+                                    : 'hidden'
+                                }`}>
+                                {header?.row
+                                  ? header.row(data, secondary_data, index)
+                                  : data}
+                              </td>
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
                     {props.withActions && (
                       <td>
                         {props.ActionComponent && (

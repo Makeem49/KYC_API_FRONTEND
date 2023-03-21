@@ -13,6 +13,7 @@ import { Line } from 'react-chartjs-2';
 
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
+import { useTranslation } from 'react-i18next';
 
 ChartJS.register(
   CategoryScale,
@@ -25,6 +26,7 @@ ChartJS.register(
 );
 
 export default function Chart2() {
+  const { t } = useTranslation();
   const {
     data: list,
     isLoading,
@@ -80,7 +82,7 @@ export default function Chart2() {
     ),
     datasets: [
       {
-        label: 'Total Withdrawals',
+        label: `${t('Total Withdrawals')}`,
         data: list!.performanceOverview.map((w): any => w.stats.withdrawals),
         borderColor: ' #EC7670',
         backgroundColor: ' #EC7670',
@@ -89,7 +91,7 @@ export default function Chart2() {
         borderWidth: 1.5,
       },
       {
-        label: 'Total Deposits',
+        label: `${t('Total Deposits')}`,
         data: list!.performanceOverview.map((d): any => d.stats.deposit),
         borderColor: ' #38CB89',
         backgroundColor: ' #38CB89',
@@ -99,7 +101,7 @@ export default function Chart2() {
       },
 
       {
-        label: 'Total Transfers',
+        label: `${t('Total Transfers')}`,
         data: list!.performanceOverview.map((t): any => t.stats.transfer),
         borderColor: '#F9C362',
         backgroundColor: '#F9C362',

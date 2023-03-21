@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { toast } from '../../utils';
 import { ArrowLeft } from 'iconsax-react';
 import { Link, useLocation } from 'react-router-dom';
+import { t } from 'i18next';
 
 const ApiRequest = () => {
   const { pathname } = useLocation();
@@ -30,16 +31,16 @@ const ApiRequest = () => {
         {/* Title */}
         <div className='flex w-full justify-between items-center'>
           <div className='flex w-full flex-col'>
-            <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
-              API Keys
+            <h2 className='dark:text-afexdark-lighter text-[18px] font-bold '>
+              {t('API Keys')}
             </h2>
             <p className='flex items-center gap-1 text-textgrey-normal'>
               <Link to='/client-provider'>
                 {' '}
                 <ArrowLeft className=' w-5' />
               </Link>{' '}
-              <span>Client's Providers/</span>
-              <span className=' text-textgrey-dark'>API Key</span>
+              <span>{t('Client Providers')}/</span>
+              <span className=' text-textgrey-dark'>{t('API Key')}</span>
             </p>
           </div>
 
@@ -49,8 +50,8 @@ const ApiRequest = () => {
               const ProvidedId = parseInt(providerId, 10);
               mutation.mutate(ProvidedId);
             }}>
-            <button className='flex w-full items-center gap-4 py-2 px-3 hover:bg-afexpurple-lighter hover:shadow text-afexpurple text-[14px] bg-afexpurple-lighter rounded-lg'>
-              <span className='w-full'>GENERATE API KEY</span>
+            <button className='flex w-full items-center gap-4 py-2 px-3 hover:bg-afexpurple-lighter hover:shadow text-afexpurple text-[14px] bg-afexpurple-lighter dark:bg-afexdark-darkest rounded-lg'>
+              <span className='w-full'>{t('GENERATE API KEY')}</span>
               <Add size='20' color='#7738DD' variant='Bulk' />
             </button>
           </div>

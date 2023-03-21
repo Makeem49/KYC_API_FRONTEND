@@ -7,6 +7,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { Skeleton } from '@mantine/core';
 import Box from '../../../../../../assets/images/box.png';
+import { t } from 'i18next';
 const Table = () => {
   // const { list } = useSingleClientCtx();
   const { pathname } = useLocation();
@@ -29,7 +30,7 @@ const Table = () => {
 
   return (
     <>
-      <div className='bg-white p-3'>
+      <div className='bg-white dark:bg-afexdark-darkest p-3'>
         {data!?.length > 0 ? (
           <DataGrid
             rows={10}
@@ -40,7 +41,7 @@ const Table = () => {
               {
                 accessor: 'createdAt',
                 hidden: false,
-                name: 'Date Created',
+                name: `${t('Date Created')}`,
                 sortable: true,
                 static: false,
                 row: (val) => <span>{shortDateFormatter(val)} </span>,
@@ -48,7 +49,7 @@ const Table = () => {
               {
                 accessor: 'amount',
                 hidden: false,
-                name: `Amount ${
+                name: `${t('Amount')} ${
                   defaultCountryCode === 'NG'
                     ? '₦'
                     : defaultCountryCode === 'KE'
@@ -61,7 +62,7 @@ const Table = () => {
               {
                 accessor: 'amountBefore',
                 hidden: false,
-                name: `Total Before ${
+                name: `${t('Total Before')} ${
                   defaultCountryCode === 'NG'
                     ? '₦'
                     : defaultCountryCode === 'KE'
@@ -75,7 +76,7 @@ const Table = () => {
               {
                 accessor: 'amountAfter',
                 hidden: false,
-                name: `Total After ${
+                name: `${t('Total After')} ${
                   defaultCountryCode === 'NG'
                     ? '₦'
                     : defaultCountryCode === 'KE'
@@ -89,7 +90,7 @@ const Table = () => {
               {
                 accessor: 'transactionType',
                 hidden: false,
-                name: 'Transaction Type',
+                name: `${t('Transaction Type')}`,
                 sortable: true,
                 static: false,
                 row: (val) => {
@@ -105,7 +106,7 @@ const Table = () => {
               {
                 accessor: 'ref',
                 hidden: false,
-                name: 'Reference ID',
+                name: `${t('Reference Id')}`,
                 sortable: true,
                 static: false,
               },
@@ -123,7 +124,7 @@ const Table = () => {
             {' '}
             <img src={Box} alt='' className='animate-bounce h-[50px]' />
             <p className=' text-[16px] font-semibold'>
-              No data to display
+              {t('No data to display')}
             </p>{' '}
           </div>
         )}

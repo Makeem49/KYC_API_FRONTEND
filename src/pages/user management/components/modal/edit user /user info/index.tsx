@@ -28,7 +28,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
       queryClient.invalidateQueries({ queryKey: ['users'] }); // To  invalidate and refetch
     },
   });
-  // console.log(data);
+  console.log(data, 'all here');
 
   const [loading, setLoading] = useState(false);
 
@@ -124,7 +124,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
               })}
               id='permissions'
               name='permissions'
-              label='Set applicable Permissions'
+              label='Permissions'
               required
               placeholder=''
             />
@@ -134,7 +134,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
               })}
               id='roles'
               name='roles'
-              label='Set applicable Roles'
+              label='Roles'
               required
               placeholder=''
             />
@@ -142,7 +142,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
             <div className='flex items-center justify-center pt-8 space-x-6'>
               <button
                 type='button'
-                className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                className='bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
                 onClick={() => {
                   resetForm();
                   close();

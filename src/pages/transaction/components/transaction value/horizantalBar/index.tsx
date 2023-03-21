@@ -12,7 +12,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useQuery } from 'react-query';
 import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
-
+import { t } from 'i18next';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -70,7 +70,7 @@ export default function BarChart() {
   if (isLoading) return <p>Loading....</p>;
 
   if (isError) return <p>Error!!!</p>;
-  const labels = ['Transfer', 'Deposit', 'Withdrawal'];
+  const labels = [`${t('Transfer')}`, `${t('Deposit')}`, `${t('Withdrawal')}`];
   const data = {
     labels,
     datasets: [

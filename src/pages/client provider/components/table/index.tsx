@@ -7,6 +7,7 @@ import DataGrid from '../../../../components/data-grid';
 import { shortDateFormatter } from '../../../../utils';
 import { Navigate } from 'react-router-dom';
 import { Skeleton } from '@mantine/core';
+import { t } from 'i18next';
 
 const Table = () => {
   const {
@@ -31,7 +32,7 @@ const Table = () => {
 
   return (
     <>
-      <div className='bg-white p-3'>
+      <div className='bg-white dark:bg-afexdark-darkest p-3'>
         <DataGrid
           title='Search'
           rows={10}
@@ -42,7 +43,7 @@ const Table = () => {
             {
               accessor: 'createdAt',
               hidden: false,
-              name: 'Date Created',
+              name: `${t('Date Created')}`,
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
@@ -50,14 +51,14 @@ const Table = () => {
             {
               accessor: 'name',
               hidden: false,
-              name: 'Provider Name',
+              name: `${t('Provider Name')}`,
               sortable: true,
               static: true,
             },
             {
               accessor: 'transactionPhrase',
               hidden: false,
-              name: 'Transaction Phrase',
+              name: `${t('Transaction Phrase')}`,
               sortable: true,
               static: false,
             },
@@ -74,29 +75,29 @@ const Table = () => {
             {
               accessor: 'apiKey',
               hidden: false,
-              name: 'Api Keys',
+              name: `${t('Api Keys')}`,
               sortable: true,
               static: false,
-              row: (val) => <span className=' underline'>{val}</span>,
+              row: (val) => <span className=' underline'>{t(val)}</span>,
             },
 
             {
               accessor: 'isActive',
               hidden: false,
-              name: 'Status',
+              name: `${t('Status')}`,
               sortable: true,
               static: false,
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexgreen-extralight  dark:bg-afexdark-verydark  dark:text-afexgreen-regular text-afexgreen-darker rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexred-extralight  dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 }

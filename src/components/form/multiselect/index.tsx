@@ -4,6 +4,7 @@ import { useField, FieldArray } from 'formik';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 //  MdClose;
 import FormLabel from '../label';
+import { t } from 'i18next';
 
 interface MultiSelectInterface {
   data: Array<Option>;
@@ -22,7 +23,10 @@ interface Option {
 const MultiSelect = (props: MultiSelectInterface) => {
   const [field, meta] = useField(props);
   const [showOpts, setShowOpts] = useState<boolean>(false);
-  const [showSelectOpts, setSelectShowOpts] = useState<string>('Select');
+  const inputLabel = t(props.label);
+  const InitialLabel = t('Select');
+  const afterLabel = t('View Selected');
+  const [showSelectOpts, setSelectShowOpts] = useState<string>(InitialLabel);
 
   useEffect(() => {
     document.body.addEventListener('click', () => setShowOpts(false));
@@ -36,7 +40,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
       <FormLabel
         htmlFor={props.id || props.name}
         requiredHint={props.required}
-        label={props.label}
+        label={inputLabel}
       />
 
       <FieldArray
@@ -50,8 +54,9 @@ const MultiSelect = (props: MultiSelectInterface) => {
                 setShowOpts((s) => !s);
               }}>
               <input
-                className={`block w-full p-3 bg-white border h-14 rounded-lg text-sm transition text-transparent ${
-                  showOpts && 'ring-1 ring-afexpurple-light'
+                className={`block w-full p-3 bg-white dark:bg-afexdark-verydark border dark:border-afexdark-dark h-14 rounded-lg text-sm transition text-transparent ${
+                  showOpts &&
+                  'ring-1 ring-afexpurple-light dark:ring-afexdark-dark'
                 }`}
                 type='text'
                 disabled
@@ -77,11 +82,12 @@ const MultiSelect = (props: MultiSelectInterface) => {
               </div> */}
               <MdKeyboardArrowDown className='absolute top-1/2 -translate-y-1/2 right-4 text-gray-400 text-lg' />
             </div>
-            <span className='absolute top-4 left-4'>
-              {showSelectOpts} {props.name}{' '}
+            <span className='absolute flex gap-1 top-4 left-4'>
+              <span> {showSelectOpts}</span>
+              <span> {inputLabel} </span>
             </span>
             <ul
-              className={`overflow-auto absolute z-40 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white w-full ring-1 ring-afexpurple-light rounded-lg opacity-0 ${
+              className={`overflow-auto absolute z-40 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white dark:bg-afexdark-verydark w-full ring-1 ring-afexpurple-light dark:ring-afexdark-dark rounded-lg opacity-0 ${
                 showOpts && 'max-h-72 opacity-100 my-2'
               }`}>
               {props.data.map((option, index) => (
@@ -98,7 +104,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
                   }}
                   className={`text-base font-light first:mt-0 rounded-lg flex items-center accent-afexpurple-regular p-3 ${
                     field?.value?.indexOf(option.value) > -1 &&
-                    'bg-afexpurple-lighter'
+                    'bg-afexpurple-lighter dark:bg-afexdark-darkest'
                   }`}>
                   <input
                     type='checkbox'
@@ -106,16 +112,18 @@ const MultiSelect = (props: MultiSelectInterface) => {
                     id={option.label}
                     className='checkbox'
                     onChange={(e) => {
+                         console.log(option, 'here');
                       if (field?.value?.includes(option.value)) {
                         return remove(field.value.indexOf(option.value));
                       }
                       return push(option.value);
                     }}
                     onClick={(e) => {
+                   
                       if (field?.value?.includes(option.value)) {
-                        setSelectShowOpts('Select');
+                        setSelectShowOpts(InitialLabel);
                       } else {
-                        setSelectShowOpts('View selected');
+                        setSelectShowOpts(afterLabel);
                       }
                     }}
                     checked={field?.value?.indexOf(option.value) > -1}

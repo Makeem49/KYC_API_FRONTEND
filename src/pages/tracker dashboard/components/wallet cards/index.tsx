@@ -5,6 +5,7 @@ import { get_tracker_stats_query } from '../../../../queries/tracker_board';
 import { useQuery } from 'react-query';
 import { Navigate } from 'react-router-dom';
 import { Skeleton } from '@mantine/core';
+import { t } from 'i18next';
 
 const WalletCards = () => {
   const {
@@ -27,10 +28,10 @@ const WalletCards = () => {
     <>
       <div className='flex gap-14 child:h-[200px]'>
         {/* Card One */}
-        <div className='relative  flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[450px]  gap-8'>
+        <div className='relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[450px]  gap-8'>
           <div className='flex items-center justify-between w-full'>
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
-              Client’s with no wallet
+              {t('Clients with no wallet')}
             </p>
             {list!?.overview?.noWallets > 0 ? (
               <img
@@ -54,10 +55,10 @@ const WalletCards = () => {
         </div>
 
         {/* Card Two */}
-        <div className='relative  flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[450px]  gap-8'>
+        <div className='relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[450px]  gap-8'>
           <div className='flex items-center justify-between w-full'>
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
-              Failed Funding
+              {t('Failed Funding')}
             </p>
 
             {list!?.overview?.failedFunding > 0 ? (
@@ -82,10 +83,10 @@ const WalletCards = () => {
         </div>
 
         {/* Card Three */}
-        <div className='relative  flex flex-col border-[#DBD9D9] border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[450px]  gap-8'>
+        <div className='relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[450px]  gap-8'>
           <div className='flex items-center justify-between w-full'>
             <p className=' font-medium text-[24px] text-[#8F8E91]'>
-              Unsynced Wallet Transfer
+              {t('Unsynced Wallet Transfer')}
             </p>
             {list!?.overview?.unSyncedWalletTransfer > 0 ? (
               <img

@@ -3,6 +3,7 @@ import { Popover } from '@mantine/core';
 import { ArrowDown2 } from 'iconsax-react';
 
 import DeactivateUser from '../modal/deactivate';
+import { t } from 'i18next';
 
 const UserAction = ({ data }: { data: ClientProviderToken }) => {
   const [opened, setOpened] = useState(false);
@@ -15,8 +16,8 @@ const UserAction = ({ data }: { data: ClientProviderToken }) => {
         <Popover.Target>
           <button
             onClick={() => setOpened((s) => !s)}
-            className=' flex items-center gap-2 bg-[#F0F0F0] rounded px-5 py-3 relative'>
-            <span>Actions</span>
+            className=' flex items-center gap-2 bg-[#F0F0F0] dark:bg-afexdark-verydark rounded px-5 py-3 relative'>
+            <span>{t('Actions')}</span>
             <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
           </button>
         </Popover.Target>
@@ -29,7 +30,7 @@ const UserAction = ({ data }: { data: ClientProviderToken }) => {
                 setDeactivateUserModal((s) => !s);
                 setOpened((s) => !s);
               }}>
-              Deactivate
+              {t('Deactivate')}
             </p>
           ) : (
             <p
@@ -38,12 +39,12 @@ const UserAction = ({ data }: { data: ClientProviderToken }) => {
                 setDeactivateUserModal((s) => !s);
                 setOpened((s) => !s);
               }}>
-              Activate
+              {t('Activate')}
             </p>
           )}
 
           <button className='text-[14px] text-afexred-dark rounded-md px-2 w-full text-left'>
-            Delete
+            {t('Delete')}
           </button>
         </Popover.Dropdown>
       </Popover>

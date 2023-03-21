@@ -4,6 +4,7 @@ import { shortDateFormatter } from '../../../../utils';
 import { useQuery } from 'react-query';
 import { get_client_list_query } from '../../../../queries/clients_stats';
 import { Skeleton } from '@mantine/core';
+import { t } from 'i18next';
 
 const ClientList = () => {
   const { data, isError, isLoading } = useQuery(get_client_list_query(1));
@@ -24,7 +25,7 @@ const ClientList = () => {
 
   return (
     <>
-      <div className='bg-white px-6 py-3'>
+      <div className='bg-white dark:bg-afexdark-darkest  px-6 py-3'>
         <DataGrid
           title='Search by client name, id..'
           rows={10}
@@ -38,7 +39,7 @@ const ClientList = () => {
             {
               accessor: 'createdAt',
               hidden: false,
-              name: 'Date Created',
+              name: `${t('Date Created')}`,
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
@@ -46,7 +47,7 @@ const ClientList = () => {
             {
               accessor: 'clientName',
               hidden: false,
-              name: 'Client Name',
+              name: `${t('Client Name')}`,
               sortable: true,
               static: true,
               secondary_key: 'platformId',
@@ -61,7 +62,7 @@ const ClientList = () => {
             {
               accessor: 'balance',
               hidden: false,
-              name: `Wallet Balance ${
+              name: `${t('Wallet Balance')} ${
                 defaultCountryCode === 'NG'
                   ? '₦'
                   : defaultCountryCode === 'KE'
@@ -75,7 +76,7 @@ const ClientList = () => {
             {
               accessor: 'phoneNumber',
               hidden: false,
-              name: 'Phone Number',
+              name: `${t('Phone Number')}`,
               sortable: true,
               static: false,
             },
@@ -83,19 +84,19 @@ const ClientList = () => {
             {
               accessor: 'isActive',
               hidden: false,
-              name: 'Status',
+              name: `${t('Status')}`,
               sortable: true,
               static: false,
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                    <span className=' bg-afexgreen-extralight  dark:bg-afexdark-verydark  text-afexgreen-darker  dark:text-afexgreen-regular  rounded-lg p-2'>
                       {val}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                    <span className=' bg-afexred-extralight  dark:bg-afexdark-verydark  dark:text-afexred-regular  text-afexred-dark rounded-lg p-2'>
                       {val}
                     </span>
                   );
@@ -105,30 +106,30 @@ const ClientList = () => {
 
             {
               accessor: 'providerName',
-              hidden: false,
-              name: 'Provider Name',
+              hidden: true,
+              name: `${t('Provider Name')}`,
               sortable: true,
               static: false,
             },
 
             {
               accessor: 'isVerified',
-              hidden: false,
-              name: 'Verification Status',
+              hidden: true,
+              name: `${t('Verification Status')}`,
               sortable: true,
               static: false,
 
               row: (val) => {
                 if (val === 'Verified') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexgreen-extralight  dark:bg-afexdark-verydark  text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexred-extralight  dark:bg-afexdark-verydark  text-afexred-dark  dark:text-afexred-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 }
@@ -137,8 +138,8 @@ const ClientList = () => {
 
             {
               accessor: 'valueOfTransactions',
-              hidden: false,
-              name: `Transaction Value ${
+              hidden: true,
+              name: `${t('Transaction Value')} ${
                 defaultCountryCode === 'NG'
                   ? '₦'
                   : defaultCountryCode === 'KE'

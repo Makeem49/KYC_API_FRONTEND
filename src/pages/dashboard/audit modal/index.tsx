@@ -2,10 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import { Drawer, Popover, Group } from '@mantine/core';
 import SystemLog from './system log';
-import reciptIcon from '../../../assets/images/xsd.svg';
+import reciptIcon from '../../../assets/brand/recpt.png';
+import { useTranslation } from 'react-i18next';
 
 const AuditModal = () => {
   const [opened, setOpened] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
       <Drawer
@@ -42,17 +44,16 @@ const AuditModal = () => {
             },
           }}>
           <Popover.Target>
-            <img
-              src={reciptIcon}
-              alt='rcpt'
-              className='absolute bottom-[-150%] right-0'
-            />
+            <div className=' bg-afexred-regular absolute bottom-[-150%] right-0 p-3 rounded-full'>
+              {' '}
+              <img src={reciptIcon} alt='rcpt' className='' />
+            </div>
           </Popover.Target>
           <Popover.Dropdown className='flex flex-col rounded-xl'>
             <button
               onClick={() => setOpened(true)}
               className='cursor-pointer  hover:bg-transparent w-full'>
-              Run Audit
+              {t('Run Audit')}
             </button>
           </Popover.Dropdown>
         </Popover>

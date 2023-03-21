@@ -15,7 +15,7 @@ const UserAction = ({ data }: { data: ClientProvider }) => {
         <Popover.Target>
           <button
             onClick={() => setOpened((s) => !s)}
-            className=' flex items-center gap-2 bg-[#F0F0F0] rounded px-5 py-3 relative'>
+            className=' flex items-center gap-2 bg-[#F0F0F0]  dark:bg-afexdark-verydark rounded px-5 py-3 relative'>
             <span>Actions</span>
             <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
           </button>

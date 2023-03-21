@@ -8,6 +8,7 @@ import { get_users_query } from '../../../../queries/user_management';
 import { useQuery } from 'react-query';
 import { Navigate } from 'react-router-dom';
 import { Skeleton } from '@mantine/core';
+import { t } from 'i18next';
 
 const Table = () => {
   const { data: list, isError, isLoading } = useQuery(get_users_query());
@@ -23,6 +24,7 @@ const Table = () => {
     );
 
   if (isError) return <Navigate to='/login' />;
+  const searchText = t('Search');
 
   const ActionComponent = ({ data }: { data: User }) => (
     <UserAction data={data} />
@@ -30,9 +32,9 @@ const Table = () => {
 
   return (
     <>
-      <div className='bg-white p-3'>
+      <div className='bg-white  dark:bg-afexdark-darkest p-3'>
         <DataGrid
-          title='Search'
+          title={searchText}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
           data={list!}
@@ -41,7 +43,7 @@ const Table = () => {
             {
               accessor: 'user',
               hidden: false,
-              name: 'User',
+              name: `${t('User')}`,
               sortable: true,
               static: false,
               secondary_key: 'email',
@@ -67,25 +69,25 @@ const Table = () => {
             {
               accessor: 'username',
               hidden: false,
-              name: 'User Name',
+              name: `${t('User Name')}`,
               sortable: true,
               static: true,
             },
             {
               accessor: 'providers',
               hidden: false,
-              name: 'Provider Name',
+              name: `${t('Provider Name')}`,
               sortable: true,
               static: true,
             },
             {
               accessor: 'lastLogin',
               hidden: false,
-              name: 'Last Login',
+              name: `${t('Last Login')}`,
               sortable: true,
               static: false,
               row: () => (
-                <span className='font-medium bg-[#F1F0F0] text-[#948E8E] p-1  rounded '>
+                <span className='font-medium bg-[#F1F0F0]  dark:bg-afexdark-verydark text-[#948E8E] p-1  rounded '>
                   {moment(new Date()).fromNow()}
                 </span>
               ),
@@ -94,11 +96,11 @@ const Table = () => {
             {
               accessor: 'twoStepEnabled',
               hidden: false,
-              name: 'Two Step',
+              name: `${t('Two Step')}`,
               sortable: true,
               static: false,
               row: (val) => (
-                <span className=' bg-afexgreen-extralight rounded-lg p-2'>
+                <span className=' bg-afexgreen-extralight dark:bg-afexdark-verydark rounded-lg p-2'>
                   {val ? 'Enabled' : 'Disabled'}{' '}
                 </span>
               ),
@@ -107,21 +109,21 @@ const Table = () => {
             {
               accessor: 'isActive',
               hidden: false,
-              name: 'Status',
+              name: `${t('Status')}`,
               sortable: true,
               static: false,
 
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexgreen-extralight dark:bg-afexdark-verydark text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 }
@@ -145,7 +147,7 @@ const Table = () => {
             {
               accessor: 'createdAt',
               hidden: false,
-              name: 'Date Created',
+              name: `${t('Date Created')}`,
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,

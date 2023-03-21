@@ -18,6 +18,7 @@ import { create_user } from '../../../../../../api';
 import { useUsersCtx } from '../../../../../../context';
 import { toast } from '../../../../../../utils';
 import * as Yup from 'yup';
+import { t } from 'i18next';
 
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
   const { item, itemTwo } = useUsersCtx();
@@ -88,7 +89,12 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           // }
         }}
         validationSchema={Yup.object({
-          fullName: Yup.string().required('Full name is required'),
+          fullName: Yup.string()
+            .matches(
+              /^[^\s]+(\s[^\s]+)?$/,
+              'String must not have more than one space.'
+            )
+            .required('Full name is required'),
           username: Yup.string().required('Username is required'),
           email: Yup.string().required('Email is required'),
         })}>
@@ -105,7 +111,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
               id='fullName'
               name='fullName'
               label='Full Name'
-              placeholder='Full name'
+              placeholder='Full Name'
               required
               type='text'
               autocomplete='name'
@@ -124,8 +130,8 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                 <FormInput
                   id='username'
                   name='username'
-                  label='Username'
-                  placeholder='Username'
+                  label='User Name'
+                  placeholder='User Name'
                   required
                   type='text'
                   autocomplete='username'
@@ -153,7 +159,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                 })}
                 id='permissions'
                 name='permissions'
-                label=' Permissions'
+                label='Permissions'
                 required
                 placeholder=''
               />
@@ -195,17 +201,19 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             <div className='flex items-center justify-center pt-8 space-x-6'>
               <button
                 type='button'
-                className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                className='bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
                 onClick={() => {
                   resetForm();
                   closeModal();
                 }}>
-                Discard
+                {t('Discard')}
               </button>
               <Button
                 type='submit'
                 text={
-                  <span className='flex items-center space-x-6'>Submit</span>
+                  <span className='flex items-center space-x-6'>
+                    {t('Submit')}
+                  </span>
                 }
                 loading={loading}
               />

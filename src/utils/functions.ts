@@ -1,4 +1,7 @@
 import React from 'react';
+import { json2csv } from 'json-2-csv';
+import { saveAs } from 'file-saver';
+
 export async function fetchAll<T>(
   fn: (pageNo: number) => Promise<T[]>,
   pageNo = 1
@@ -112,4 +115,45 @@ export function get_nested_value(
     obj = obj[keys[i]];
   }
   return obj as unknown as string;
+}
+
+function omit(obj: Record<string, any>, arr: string[]) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (arr.includes(key)) {
+        delete obj[key];
+      } else if (Array.isArray(obj[key])) {
+        for (let i = 0; i < obj[key].length; i++) {
+          omit(obj[key][i], arr);
+        }
+      } else if (typeof obj[key] === 'object') {
+        omit(obj[key], arr);
+      }
+    }
+  }
+  return obj;
+}
+
+export function exportToCSV(
+  array: Record<string, any>[],
+  keysToHide: string[]
+) {
+  const newArray = array.map((el) => omit(el, keysToHide));
+
+  return json2csv(
+    newArray,
+    (err, csv) => {
+      if (err) {
+        // handle Error
+        console.log(err);
+      }
+
+      const blob = new Blob([csv!], { type: 'text/csv;charset=utf-8;' });
+      saveAs(blob, 'data.csv');
+      // Add a Toast
+    },
+    {
+      expandArrayObjects: true,
+    }
+  );
 }

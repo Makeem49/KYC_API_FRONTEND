@@ -8,8 +8,8 @@ const Settings = () => {
       {/* Left Section */}
       <div className='w-[35%] h-[100vh] flex flex-col gap-10 overflow-y-auto p-10'>
         {/* Title */}
-        <div className='flex w-full flex-col'>
-          <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
+        <div className='flex w-full dark:text-afexdark-dark flex-col'>
+          <h2 className='dark:text-afexdark-lighter text-[18px] font-bold '>
             User Profile
           </h2>
           <p>

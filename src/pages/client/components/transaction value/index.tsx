@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { Skeleton } from '@mantine/core';
 import Box from '../../../../assets/images/box.png';
 import { commaformatter } from '../../../../utils';
+import { t } from 'i18next';
 
 const TransactionValue = () => {
   const { data: topVal, isLoading } = useQuery(
@@ -23,25 +24,27 @@ const TransactionValue = () => {
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
-    <div className='flex flex-col border border-afexpurple-lighter rounded-lg'>
-      <div className='relative text-sm  bg-afexpurple-dark  rounded-t text-white p-5'>
+    <div className='flex flex-col border border-afexpurple-lighter  dark:border-afexdark-dark  rounded-lg'>
+      <div className='relative text-sm  bg-afexpurple-dark dark:bg-afexdark-darkest rounded-t text-white  dark:text-afexdark-regular p-5'>
         <img
           src={halfCirc}
           alt='hafcirc'
-          className='absolute -rotate-90 left-[-7%] top-[-30%] '
+          className=' dark:hidden absolute -rotate-90 left-[-7%] top-[-30%] '
         />
         <img
           src={halfCirc}
           alt='hafcirc'
-          className='absolute rotate-140 left-[40%] bottom-[-65%] '
+          className=' dark:hidden absolute rotate-140 left-[40%] bottom-[-65%] '
         />
 
         <img
           src={halfCirc}
           alt='hafcirc'
-          className='absolute rotate-20 right-[-7%] top-[-30%] '
+          className=' dark:hidden absolute rotate-20 right-[-7%] top-[-30%] '
         />
-        <p className='text-xl font-bold'>Transaction Values (Top Users)</p>
+        <p className='text-xl font-bold'>
+          {t('Transaction Values')} ({t('Top Users')})
+        </p>
       </div>
 
       <div className='h-full rounded pb-2'>
@@ -49,12 +52,12 @@ const TransactionValue = () => {
           <div className='overflow-auto w-full rounded'>
             <table className='overflow-auto w-full align-top text-[12px] xl:text-[14px]'>
               <thead className='text-[10px] bg-[#F5F5F5] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
-                <tr className=' border-b child:p-2 bg-afexpurple-lighter child:text-[14px] child:font-normal child:cursor-default child:align-middle'>
+                <tr className=' border-b  dark:border-afexdark-dark  child:p-2 bg-afexpurple-lighter dark:bg-afexdark-darkest  child:text-[14px] child:font-normal child:cursor-default child:align-middle'>
                   <th className=''>S/N</th>
-                  <th className=''>Clients' Name</th>
-                  <th className=''>Client's Id</th>
+                  <th className=''>{t("Client's Name")}</th>
+                  <th className=''>{t("Client's Id")}</th>
                   <th className=''>
-                    Value{' '}
+                    {t('Value')}
                     {defaultCountryCode === 'NG'
                       ? '₦'
                       : defaultCountryCode === 'KE'
@@ -64,8 +67,10 @@ const TransactionValue = () => {
                 </tr>
               </thead>
               <tbody className='text-[12px] xl:text-[14px]'>
-                {topVal!.map((el: any) => (
-                  <tr className=' text-left child:p-2 border-b border-dashed '>
+                {topVal!.map((el: any, index) => (
+                  <tr
+                    key={index}
+                    className=' text-left child:p-2 border-b border-dashed  dark:border-afexdark-dark  '>
                     <td>
                       <span>{topVal!.indexOf(el) + 1}.</span>
                     </td>

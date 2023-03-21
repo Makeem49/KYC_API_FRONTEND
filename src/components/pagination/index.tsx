@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import React from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
@@ -20,12 +21,12 @@ const Pagination = (props: PaginationProps) => {
     <div className='bottom-0 right-0 left-0 w-full'>
       <div className='flex justify-between items-center px-6 rounded-md'>
         <span>
-          showing &nbsp;
+          {t('showing')} &nbsp;
           {props.itemsOffset + 1} -&nbsp;
           {props.perPage + props.itemsOffset > props.dataLength
             ? props.dataLength
             : props.perPage + props.itemsOffset}
-          &nbsp; of {props.dataLength} entries
+          &nbsp; {t('of')} {props.dataLength} {t('entries')}
         </span>
 
         <ReactPaginate

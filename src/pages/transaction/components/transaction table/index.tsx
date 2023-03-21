@@ -1,14 +1,15 @@
 import React from 'react';
 import DataGrid from '../../../../components/data-grid';
 import { shortDateFormatter } from '../../../../utils';
+import { t } from 'i18next';
 const TransactionTable = ({ data }: { data: TransactionList[] }) => {
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
-
+  const searchText = t('Search by client name, id');
   return (
     <>
-      <div className='p-4 bg-white w-full'>
+      <div className='p-4 bg-white dark:bg-afexdark-darkest w-full'>
         <DataGrid
-          title='Search by client name, id..'
+          title={searchText}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
           data={data}
@@ -17,7 +18,7 @@ const TransactionTable = ({ data }: { data: TransactionList[] }) => {
             {
               accessor: 'createdAt',
               hidden: false,
-              name: 'Date Created',
+              name: `${t('Date Created')}`,
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
@@ -26,14 +27,14 @@ const TransactionTable = ({ data }: { data: TransactionList[] }) => {
             {
               accessor: 'time',
               hidden: false,
-              name: 'Time',
+              name: `${t('Time')}`,
               sortable: true,
               static: false,
             },
             {
               accessor: 'clientName',
               hidden: false,
-              name: 'Client Name',
+              name: `${t('Client Name')}`,
               sortable: true,
               static: true,
               secondary_key: 'lastName',
@@ -49,14 +50,14 @@ const TransactionTable = ({ data }: { data: TransactionList[] }) => {
             {
               accessor: 'sessionId',
               hidden: false,
-              name: 'Transaction Id',
+              name: `${t('Transaction Id')}`,
               sortable: true,
               static: false,
             },
             {
               accessor: 'amount',
               hidden: false,
-              name: `Value ${
+              name: `${t('Value')} ${
                 defaultCountryCode === 'NG'
                   ? '₦'
                   : defaultCountryCode === 'KE'
@@ -70,14 +71,18 @@ const TransactionTable = ({ data }: { data: TransactionList[] }) => {
             {
               accessor: 'transactionType',
               hidden: false,
-              name: 'Transaction Type',
+              name: `${t('Transaction Type')}`,
               sortable: true,
               static: false,
               row: (val) => {
                 if (val === 'Credit') {
-                  return <span className=' text-afexgreen-regular'>{val}</span>;
+                  return (
+                    <span className=' text-afexgreen-regular'>{t(val)}</span>
+                  );
                 } else {
-                  return <span className=' text-afexred-regular'>{val}</span>;
+                  return (
+                    <span className=' text-afexred-regular'>{t(val)}</span>
+                  );
                 }
               },
             },
@@ -85,21 +90,21 @@ const TransactionTable = ({ data }: { data: TransactionList[] }) => {
             {
               accessor: 'status',
               hidden: false,
-              name: 'Status',
+              name: `${t('Status')}`,
               sortable: true,
               static: false,
 
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexgreen-extralight text-afexgreen-darker dark:bg-afexdark-verydark dark:text-afexgreen-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
-                      {val}
+                    <span className=' bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
+                      {t(val)}
                     </span>
                   );
                 }

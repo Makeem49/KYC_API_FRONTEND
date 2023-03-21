@@ -14,7 +14,9 @@ import { create_client_provider } from '../../../../../../api';
 
 import { faker } from '@faker-js/faker';
 import { useMutation, useQueryClient } from 'react-query';
-import { toast } from '../../../../../../utils';
+// import { toast } from '../../../../../../utils';
+import { t } from 'i18next';
+import * as Yup from 'yup';
 
 // import DoubleForm from '../../../../../../components/dynamicInput';
 
@@ -26,9 +28,9 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
   const mutation = useMutation({
     mutationFn: create_client_provider,
     onSuccess: () => {
-      queryProvider.invalidateQueries({ queryKey: ['client_provider'] });
+      queryProvider.invalidateQueries({ queryKey: ['clientProvider'] });
       closeModal();
-      toast('success', 'client provider created successfully');
+      // toast('success', 'Client Provider created successfully');
       // To  invalidate and refetch
     },
   });
@@ -82,7 +84,61 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           mutation.mutate(newProvider);
           setLoading(false);
           // console.log(newProvider);
-        }}>
+        }}
+        validationSchema={Yup.object({
+          name: Yup.string().required('Name cannot be empty'),
+          code: Yup.string().required('Code cannot be empty'),
+          clientRepoUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          walletTransactionCallbackUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          inventoryPositionUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          inventoryTradeUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          locationsUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+
+          loanCallbackUrl: Yup.string()
+            .matches(
+              /^(http:\/\/|https:\/\/)/,
+              'URL must start with http:// or https://'
+            )
+            .url('Invalid URL')
+            .required('Required'),
+          transactionPhrase: Yup.string().required(
+            'Transaction phrase is required'
+          ),
+        })}>
         {({ resetForm }) => (
           <Form className='flex overflow-y-auto flex-col gap-y-4'>
             <FormImage
@@ -94,7 +150,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             <FormInput
               id='name'
               name='name'
-              label=' Name'
+              label='Name'
               placeholder='Enter name'
               required
               type='text'
@@ -211,17 +267,19 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
             <div className='flex items-center mb-6 justify-center space-x-6'>
               <button
                 type='button'
-                className='bg-gray-200 p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                className='bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
                 onClick={() => {
                   resetForm();
                   closeModal();
                 }}>
-                Discard
+                {t('Discard')}
               </button>
               <Button
                 type='submit'
                 text={
-                  <span className='flex items-center space-x-6'>Submit</span>
+                  <span className='flex items-center space-x-6'>
+                    {t('Submit')}
+                  </span>
                 }
                 loading={loading}
               />

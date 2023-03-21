@@ -22,7 +22,7 @@ const Table = () => {
 
               <td>
                 {' '}
-                <span className='font-normal '>Kaduna1</span>
+                <span className='font-normal '>Kaduna</span>
               </td>
 
               <td>
@@ -39,12 +39,12 @@ const Table = () => {
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-normal'>1</span>
+                <span className='font-normal'>2</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-normal '>Kaduna1</span>
+                <span className='font-normal '>Kano</span>
               </td>
 
               <td>
@@ -61,12 +61,12 @@ const Table = () => {
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-normal'>1</span>
+                <span className='font-normal'>3</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-normal '>Kaduna1</span>
+                <span className='font-normal '>Nassarawa</span>
               </td>
 
               <td>
@@ -83,12 +83,12 @@ const Table = () => {
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-normal'>1</span>
+                <span className='font-normal'>4</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-normal '>Kaduna1</span>
+                <span className='font-normal '>Bauchi</span>
               </td>
 
               <td>
@@ -105,12 +105,12 @@ const Table = () => {
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-normal'>1</span>
+                <span className='font-normal'>5</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-normal '>Kaduna1</span>
+                <span className='font-normal '>Kebbi</span>
               </td>
 
               <td>

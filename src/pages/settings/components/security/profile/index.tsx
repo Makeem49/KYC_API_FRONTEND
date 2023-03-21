@@ -28,16 +28,19 @@ const Profile = () => {
   });
 
   return (
-    <div className=' bg-white flex flex-col bg-[#ffff] w-full p-6 mtrounded'>
-      <p className='text-[#000] text-[18px] font-semibold'> Profile</p>
+    <div className=' bg-white dark:bg-afexdark-darkest flex flex-col bg-[#ffff] w-full p-6 mtrounded'>
+      <p className='text-[#000] dark:text-afexdark-regular text-[18px] font-semibold'>
+        {' '}
+        Profile
+      </p>
 
-      <div className='w-full flex justify-between items-center border-b py-3 mt-6'>
+      <div className='w-full flex justify-between items-center border-b dark:border-afexdark-dark py-3 mt-6'>
         <p>Email</p>
         <span>{user!?.email}</span>
         <LockSlash size='15' color='#8f8e91' variant='Bulk' />
       </div>
 
-      <div className='w-full flex justify-between items-center border-b py-3 mt-6'>
+      <div className='w-full flex justify-between items-center border-b dark:border-afexdark-dark py-3 mt-6'>
         <p>Password</p>
         <span></span>
 
@@ -45,7 +48,7 @@ const Profile = () => {
           onClick={() => {
             setOpened((s) => !s);
           }}
-          className=' bg-afexpurple-lighter text-afexpurple-regular p-3 rounded-lg cursor-pointer hover:shadow text-base'>
+          className=' bg-afexpurple-lighter dark:bg-afexdark-verydark text-afexpurple-regular p-3 rounded-lg cursor-pointer hover:shadow text-base'>
           Reset Password
         </span>
       </div>

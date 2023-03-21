@@ -7,6 +7,7 @@ import { get_tokens_query } from '../../../../../../queries/api_tokens';
 import { Navigate, useLocation } from 'react-router-dom';
 import UserAction from '../drop down';
 import { Skeleton } from '@mantine/core';
+import { t } from 'i18next';
 const Table = () => {
   // const { list } = useApiTokenCtx();
   // console.log(list);
@@ -35,7 +36,7 @@ const Table = () => {
 
   return (
     <>
-      <div className='bg-white p-3'>
+      <div className='bg-white dark:bg-afexdark-darkest p-3'>
         <DataGrid
           title='Search'
           rows={10}
@@ -46,7 +47,7 @@ const Table = () => {
             {
               accessor: 'createdAt',
               hidden: false,
-              name: 'Date Created',
+              name: `${t('Date Created')}`,
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
@@ -55,14 +56,14 @@ const Table = () => {
             {
               accessor: 'apiKey',
               hidden: false,
-              name: 'API Key',
+              name: `${t('Api Key')}`,
               sortable: true,
               static: true,
             },
             {
               accessor: 'noOfRequests',
               hidden: false,
-              name: 'No of Requests',
+              name: `${t('No Of Requests')}`,
               sortable: true,
               static: false,
             },
@@ -70,7 +71,7 @@ const Table = () => {
             {
               accessor: 'lastUsedAt',
               hidden: false,
-              name: 'Last Used',
+              name: `${t('Last Used')}`,
               sortable: true,
               static: false,
             },
@@ -78,20 +79,20 @@ const Table = () => {
             {
               accessor: 'isActive',
               hidden: false,
-              name: 'Status',
+              name: `${t('Status')}`,
               sortable: true,
               static: false,
 
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker rounded-lg p-2'>
+                    <span className=' bg-afexgreen-extralight dark:bg-afexdark-verydark text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2'>
                       {val}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight text-afexred-dark rounded-lg p-2'>
+                    <span className=' bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
                       {val}
                     </span>
                   );

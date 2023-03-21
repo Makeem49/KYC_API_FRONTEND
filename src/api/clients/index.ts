@@ -1,10 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { apiRequest } from '../../utils';
 import { shortDateFormatter } from '../../utils';
-import {
-  checkCountryCode,
-  currentNumberFormatter,
-} from '../../utils/formatter';
+import { currentNumberFormatter } from '../../utils/formatter';
+import { t } from 'i18next';
 
 export function create_client(
   data: ClientIntegration[]
@@ -39,14 +37,14 @@ export async function get_client_list(pageNo: number): Promise<ClientList[]> {
         clientName: `${el.firstName} ${el.lastName}`,
         balance: currentNumberFormatter(el.balance),
         phoneNumber: el.phoneNumber,
-        isActive: el.isActive ? 'Active' : 'Inactive',
+        isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}`,
         providerName: el.providers[0].name,
-        isVerified: el.isVerified ? 'Verified' : 'Unverified',
+        isVerified: el.isVerified ? `${t('Verified')}` : `${t('Unverified')}`,
         valueOfTransactions: el.valueOfTransactions
           ? el.valueOfTransactions
           : ',',
-        providerId: el.providers[0].id,
-        countryCode: checkCountryCode(el.countryCode),
+        // providerId: el.providers[0].id,
+        // countryCode: checkCountryCode(el.countryCode),
         platformId: el.providers[0].clientProviderClient.platformId,
         // platformId: el.providers.map(
         //   (el: any) => `${el[0].clientProviderClient.platformId}`

@@ -29,7 +29,9 @@ const NotificationModal = () => {
       </Drawer>
 
       <Group position='center'>
-        <Button onClick={() => setOpened(true)} className=' hover:bg-white'>
+        <Button
+          onClick={() => setOpened(true)}
+          className=' hover:bg-white dark:hover:bg-[#2B2930] '>
           <img src={NotifiIcon} alt='notify_icon' />
         </Button>
       </Group>

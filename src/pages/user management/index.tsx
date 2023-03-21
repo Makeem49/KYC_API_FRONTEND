@@ -9,6 +9,7 @@ import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { useQuery, useQueryClient } from 'react-query';
 import { get_users_query } from '../../queries/user_management';
+import { t } from 'i18next';
 
 const UserManagement = () => {
   const queryClient = useQueryClient();
@@ -31,30 +32,30 @@ const UserManagement = () => {
             {/* Title */}
             <div className='flex w-full justify-between p-5 items-center'>
               <div className='flex w-full flex-col'>
-                <h2 className='  text-textgrey-Bold text-[18px] font-bold '>
-                  User Manangement
+                <h2 className=' dark:text-afexdark-lighter text-[18px] font-bold '>
+                  {t('User Management')}
                 </h2>
                 <p className='flex items-center gap-1 text-textgrey-normal'>
                   <Link className='flex items-center gap-1' to='/'>
                     {' '}
                     <ArrowLeft className=' w-5' />
-                    <span> Home </span>
+                    <span> {t('Home')} </span>
                   </Link>
                   <span>/</span>
-                  <span className=' text-textgrey-dark'>User Management</span>
+                  <span className=' text-textgrey-dark'>
+                    {t('User Management')}
+                  </span>
                 </p>
               </div>
 
               <div className='flex w-full justify-between px-3 text-[14px] font-normal items-center '>
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className='flex relative w-full px-3 justify-end gap-2 text-[14px] font-normal items-center '>
-                  <p>Switch Provider </p>
+                  className='flex relative w-full px-3 justify-end gap-2 text-[14px]  dark:text-afexdark-dark font-normal items-center '>
+                  <p>{t('Switch Provider')}</p>
                   <button
-                    className={`border flex items-center border-[#BABABA] text-textgrey-darker p-2 rounded-lg ${
-                      showProviderOpt
-                        ? ' border-afexpurple-regular  '
-                        : ' border-transparent'
+                    className={`border flex items-center border-[#BABABA] text-textgrey-darker  dark:text-afexdark-lighter p-2 rounded-lg ${
+                      showProviderOpt ? 'border-[#BABABA]' : 'border-[#BABABA]'
                     }`}
                     onClick={() => {
                       setShowProviderOpt((s) => !s);
@@ -68,8 +69,9 @@ const UserManagement = () => {
                       showProviderOpt &&
                       'max-h-[300px] opacity-100 overflow-scroll'
                     }`}>
-                    {providersArray?.providers?.map((el: any) => (
+                    {providersArray?.providers?.map((el: any, index: any) => (
                       <span
+                        key={index}
                         onClick={() => {
                           localStorage.setItem(
                             'decoded-token_providers',
@@ -106,7 +108,7 @@ const UserManagement = () => {
               animate={{ transform: 'translateY(0%)', opacity: 1 }}
               exit={{ opacity: 0, transform: 'translate(0,0)' }}
               transition={{ duration: 2 }}>
-              <div className='w-full flex flex-col gap-4 p-8 bg-[#ffff] rounded-lg'>
+              <div className='w-full flex flex-col gap-4 p-8 bg-[#ffff]  dark:bg-afexdark-darkest rounded-lg'>
                 {/* <TaskBar /> */}
                 <Table />
               </div>
