@@ -1,13 +1,11 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useReactToPrint } from 'react-to-print';
-// import { DownloadTableExcel } from 'react-export-table-to-excel';
-// import { CSVLink } from 'react-csv';
+
 import { ExportSquare, Filter, RowHorizontal } from 'iconsax-react';
 import { ArrowDown2 } from 'iconsax-react';
 import { SearchNormal } from 'iconsax-react';
-// import { HiDownload } from 'react-icons/hi';
+
 import { Calendar } from 'iconsax-react';
-// import { useTranslation } from 'react-i18next';
 
 import {
   useDebouncedEffect,
@@ -820,7 +818,7 @@ const DataGrid = ({
           <div className='h-full table-auto overflow-auto w-full my-3'>
             <table className='overflow-auto p-5 w-full mb-10 align-top'>
               <thead className='sticky top-0 text-left whitespace-nowrap bg-white dark:bg-afexdark-darkest  z-[5]'>
-                <tr className='child:px-3 border-b dark:border-afexdark-dark child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
+                <tr className='child:px-3 border-b dark:border-[#333233] child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
                   {props.withCheck && (
                     <th className='align-middle w-8 '>
                       <input
@@ -869,7 +867,7 @@ const DataGrid = ({
                         : undefined
                     }
                     key={index}
-                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100 dark:border-afexdark-dark cursor-default`}>
+                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
                     {props.withCheck && (
                       <td onClick={(e) => e.stopPropagation()}>
                         <input

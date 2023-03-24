@@ -143,7 +143,7 @@ function Root() {
     <MantineProvider
       withNormalizeCSS
       withGlobalStyles
-      theme={{ colorScheme: theme ?? 'light' }}>
+      theme={{ colorScheme: theme }}>
       <AuthProvider>
         <ContextProvider>
           <ColumnProvider>

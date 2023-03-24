@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import ClientCard from './components/cards';
-import ClientList from './components/client list';
-import RecentSearch from './components/recent search';
-import TransactionCount from './components/transaction count';
-import TransactionValue from './components/transaction value';
+import ClientList from './components/client_list';
+import RecentSearch from './components/recent_search';
+import TransactionCount from './components/transaction_count';
+import TransactionValue from './components/transaction_value';
 import { ArrowDown2, ArrowLeft } from 'iconsax-react';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
@@ -64,7 +64,7 @@ function Client() {
               </button>
 
               <ul
-                className={`flex gap-1 w-[120px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest dark:text-afexdark-regular z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                className={`flex gap-1 w-[160px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest dark:text-afexdark-regular z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                   showProviderOpt && 'max-h-[300px] opacity-100 overflow-scroll'
                 }`}>
                 {providersArray?.providers?.map((el: any, index: any) => (

@@ -19,7 +19,7 @@ import {
 } from 'iconsax-react';
 
 import { useAuthCtx } from '../../context';
-import NotificationModal from '../notification modal';
+import NotificationModal from '../notification-modal';
 import { useQuery } from 'react-query';
 import { get_admin_query } from '../../queries/dash_board';
 import { t } from 'i18next';
@@ -184,7 +184,7 @@ function Sidebar() {
             <div className=''>
               <p
                 onClick={() => {
-                  setTheme(null);
+                  setTheme('light');
                   setIsOpened(false);
                 }}
                 className='flex dark:hover:bg-[#2B2930]  text-[#000] dark:text-afexdark-regular rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>

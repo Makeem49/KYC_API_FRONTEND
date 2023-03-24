@@ -14,6 +14,7 @@ import { Line } from 'react-chartjs-2';
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 import { useTranslation } from 'react-i18next';
+import { useThemeCtx } from '../../../../context/theme_context';
 
 ChartJS.register(
   CategoryScale,
@@ -26,6 +27,7 @@ ChartJS.register(
 );
 
 export default function Chart2() {
+  const { theme } = useThemeCtx();
   const { t } = useTranslation();
   const {
     data: list,
@@ -55,7 +57,7 @@ export default function Chart2() {
 
       y: {
         grid: {
-          color: '#F0F0F0',
+          color: theme === 'dark' ? '#333233' : '#F0F0F0',
 
           drawBorder: false,
         },

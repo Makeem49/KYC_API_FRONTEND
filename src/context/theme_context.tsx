@@ -1,42 +1,56 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ThemeInterface {
-  theme: 'dark' | null;
-  setTheme: (theme: 'dark' | null) => void;
+  theme: 'dark' | 'light';
+  setTheme: (theme: 'dark' | 'light') => void;
+  disable: () => void;
 }
 
 const ThemeContext = createContext<ThemeInterface>({} as ThemeInterface);
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [themeMode, setThemeMode] = useState<'dark' | null>(() => {
-    const inLocal = localStorage.getItem('theme');
-    if (!inLocal) return null;
+  const [themeMode, setThemeMode] = useState<'dark' | 'light'>('light');
+  const isStored = localStorage.getItem('theme');
+  // const [isStored, setIsStored] = useState(localStorage.getItem('theme'));
+  const [enabled, setEnabled] = useState(true);
 
-    if (window.matchMedia('(prefers-color-scheme: dark)')) {
-      return 'dark';
-    }
-    return null;
-  });
-
-  const setTheme = (theme: 'dark' | null) => {
+  // const [themeMode, setThemeMode] = useState();
+  const setTheme = (theme: 'dark' | 'light') => {
     setThemeMode(theme);
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', theme);
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.removeItem('theme');
     }
+    enabled && localStorage.setItem('theme', theme);
   };
+  useEffect(() => {
+    console.log('stored state', !isStored, isStored);
+    if (!isStored) setEnabled(false);
+  }, [isStored]);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)')) {
-      setTheme(null);
-    }
-  }, []);
+    console.log('enable changed');
+    if (isStored && enabled) {
+      setEnabled(true);
+      setTheme(isStored as 'dark' | 'light');
+    } else {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
+    } // eslint-disable-next-line
+  }, [enabled]);
 
+  console.log('it reloads', enabled);
+  const disable = () => {
+    console.log('setting enabled', enabled);
+    setEnabled(false);
+    localStorage.removeItem('theme');
+  };
   return (
-    <ThemeContext.Provider value={{ theme: themeMode, setTheme }}>
+    <ThemeContext.Provider value={{ theme: themeMode, setTheme, disable }}>
       {children}
     </ThemeContext.Provider>
   );

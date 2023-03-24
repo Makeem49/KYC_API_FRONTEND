@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Header from './header';
 import Card from './cards';
 import Chart from './chart';
-import RecentTransaction from './recent transaction';
-import TransactionStatus from './transaction status';
-import ChanneSource from './channel source';
-import WalletBallance from './wallet balance';
+import RecentTransaction from './recent-transaction';
+import TransactionStatus from './transaction-status';
+import ChanneSource from './channe-source';
+import WalletBallance from './wallet-balance';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { ArrowDown2 } from 'iconsax-react';
@@ -120,7 +120,7 @@ const Dashboard = () => {
               </button>
 
               <ul
-                className={`flex gap-1 w-[120px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:ring-wdark-500  dark:bg-afexdark-darkest z-40 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                className={`flex gap-1 w-[160px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:ring-wdark-500  dark:bg-afexdark-darkest z-40 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                   showLangOpt && 'max-h-[300px] opacity-100 overflow-scroll'
                 }`}>
                 {changeLanguage.map((el: any, index: any) => (

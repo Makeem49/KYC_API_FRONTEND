@@ -7,6 +7,7 @@ import //  capitalizeWords,
 import { useQuery } from 'react-query';
 import { get_dashboard_stats_query } from '../../../../queries/dash_board';
 import { useTranslation } from 'react-i18next';
+import { useThemeCtx } from '../../../../context/theme_context';
 // import { nFormatter } from '../../../../utils/formatter';
 
 const Chart1 = () => {
@@ -17,7 +18,7 @@ const Chart1 = () => {
   } = useQuery(get_dashboard_stats_query());
   // console.log(list?.performanceOverview, 'here');
   const { t } = useTranslation();
-
+  const { theme } = useThemeCtx();
   if (isLoading) return <p>Loading....</p>;
 
   if (isError) return <p>Error!!!</p>;
@@ -55,9 +56,8 @@ const Chart1 = () => {
 
       y: {
         grid: {
-          color: '#F0F0F0',
-
-          drawBorder: false,
+          color: theme === 'dark' ? '#333233' : '#F0F0F0',
+          drawBorder: true,
         },
       },
     },
