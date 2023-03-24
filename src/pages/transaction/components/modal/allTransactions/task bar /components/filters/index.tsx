@@ -12,16 +12,16 @@ const Filter = () => {
       position={'bottom-end'}>
       <Popover.Target>
         <button
-          className='py-4 px-3 flex gap-2 border items-center rounded-lg text-afexred-regular text-sm xl:text-[14px]  bg-[#FCE9E8] xl:h-[40px] w-full'
+          className='py-4 px-3 flex gap-2 border items-center rounded-lg text-afexpurple-regular text-sm xl:text-[14px] bg-afexpurple-lighter xl:h-[40px] w-full'
           onClick={() => {
             setOpened((o) => !o);
           }}>
-          <FilterEdit size='18' variant='Bold' color='#E1261C' />
+          <FilterEdit size='18' variant='Bold' color='#7738DD' />
           <span>FILTERS</span>
         </button>
       </Popover.Target>
 
-      <Popover.Dropdown>
+      {/* <Popover.Dropdown>
         <button className=' flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexred-extralight rounded-lg py-4 px-2 font-normal text-[14px] text-left'>
           <input type='checkbox' id='remember' className='checkbox white' />
           Activate all
@@ -31,7 +31,7 @@ const Filter = () => {
           <input type='checkbox' id='remember' className='checkbox white' />{' '}
           Deactivate all
         </button>
-      </Popover.Dropdown>
+      </Popover.Dropdown> */}
     </Popover>
   );
 };

@@ -1,4 +1,5 @@
 // import { AxiosResponse } from 'axios';
+import { t } from 'i18next';
 import { apiRequest } from '../../utils';
 import { shortDateFormatter } from '../../utils';
 
@@ -32,7 +33,7 @@ export async function get_token_list(
         apiKey: el.apiKey.substr(0, 15) + '...',
         noOfRequests: el.noOfRequests ? el.noOfRequests : '0',
         lastUsedAt: el.lastUsedAt ? el.lastUsedAt : 'unavailable',
-        isActive: el.isActive ? 'Active' : 'Inactive',
+        isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}`,
       } as ClientProviderToken)
   );
 }

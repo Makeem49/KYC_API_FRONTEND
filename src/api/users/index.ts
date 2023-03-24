@@ -36,7 +36,7 @@ export async function get_users(): Promise<User[]> {
         image: el.image,
         lastName: el.lastName,
         firstName: el.firstName,
-        // permissions: el.permissions.map((el: any) => el) ?? '',
+        permissions: el.permissions.map((el: any) => el.id) ?? '',
         // roles: el.roles.map((el: any) => el) ?? '',
 
         updatedAt: shortDateFormatter(el.updatedAt),

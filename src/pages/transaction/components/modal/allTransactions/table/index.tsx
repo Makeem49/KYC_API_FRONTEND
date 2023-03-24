@@ -40,34 +40,34 @@ const Table = () => {
 
               <td>
                 {' '}
-                <span className='font-normal '>Workbench</span>
+                <span className='font-normal '>AFTL Uganda</span>
               </td>
 
               <td>
-                <span className='font-normal '>Kaduna</span>
+                <span className='font-normal '>Kad</span>
               </td>
 
               <td>
-                <span className='font-normal '>Soba</span>
+                <span className='font-normal '>Sob</span>
               </td>
             </tr>
 
             <tr className=' text-left child:py-4 border-b'>
               <td>
-                <span className='font-normal'>2</span>
+                <span className='font-normal'>3</span>
               </td>
 
               <td>
                 {' '}
-                <span className='font-normal '>Workbench</span>
+                <span className='font-normal '>AFTL Kenya</span>
               </td>
 
               <td>
-                <span className='font-normal '>Kaduna</span>
+                <span className='font-normal '>aduna</span>
               </td>
 
               <td>
-                <span className='font-normal '>Pampaida</span>
+                <span className='font-normal '>mpada</span>
               </td>
             </tr>
           </tbody>

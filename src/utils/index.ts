@@ -16,3 +16,5 @@ export {
   calculatePercentageRadius,
   calculateTotal,
 } from './formatter';
+
+export { exportToCSV, get_nested_value } from './functions';

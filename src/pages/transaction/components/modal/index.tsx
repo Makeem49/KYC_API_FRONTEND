@@ -11,14 +11,16 @@ function RightModal() {
   const [opened, setOpened] = useState(false);
   const [showList, setShowList] = useState(true);
   const [showAllTransactions, setShowAllTransactions] = useState(false);
-
+  const [showTitle, setShowTitle] = useState(false);
+  const allLocation = 'Locations Management';
+  const byLocation = 'Transactions by Locations';
   return (
     <>
       <Drawer
         position='right'
         opened={opened}
         onClose={() => setOpened(false)}
-        title='Transaction by location'
+        title=''
         padding='xl'
         size='50%'
         className='flex flex-col gap-5 font-bold'>
@@ -28,13 +30,20 @@ function RightModal() {
           onClick={() => {
             setShowList((o) => !o);
             setShowAllTransactions((o) => !o);
+            setShowTitle((o) => !o);
           }}>
-          Show all Transactions
+          {showTitle ? 'Transactions by Location' : 'Locations Management'}
         </button>
         {/* <NigerianMap /> */}
-        {showList && <HeatMap />}
-        {showList && <List />}
-        {showAllTransactions && <AllTransactions />}
+        <div className='relative'>
+          {showList && <p className='absolute top-[-8%]'>{byLocation}</p>}
+          {showList && <HeatMap />}
+          {showList && <List />}
+          {showAllTransactions && (
+            <p className='absolute top-[-25%]'>{allLocation}</p>
+          )}
+          {showAllTransactions && <AllTransactions />}
+        </div>
       </Drawer>
 
       <Group position='center'>

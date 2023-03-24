@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { apiRequest, shortDateFormatter } from '../../utils';
+import { apiRequest, shortDateFormatter, toast } from '../../utils';
 
 /**
  * =================================================================
@@ -84,37 +84,67 @@ export async function get_client_providers(): Promise<ClientProvider[]> {
  */
 export async function create_client_provider(
   data: Partial<ClientProvider>
-): Promise<string> {
-  const resp = await apiRequest.post('client-providers', {
-    name: data.name,
-    code: data.code,
-    logo: data.logo,
-    clientRepoUrl: data.clientRepoUrl,
-    walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
-    inventoryPositionUrl: data.inventoryPositionUrl,
-    inventoryTradeUrl: data.inventoryTradeUrl,
-    locationsUrl: data.locationsUrl,
-    loanCallbackUrl: data.loanCallbackUrl,
-    transactionPhrase: data.transactionPhrase,
-    checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
-    tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
-    requestHeaders: {
-      API_KEY: 'kUvOHKMrkd',
-      REQUEST_TS: new Date().toISOString(),
-      HASH_KEY: 'TNiD1NXGW0Pk8Gou7XfuHSpi8SBJRYIA',
-    },
-    allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
-    countryCode: data.countryCode,
+): Promise<string | undefined> {
+  try {
+    const resp = await apiRequest.post('client-providers', {
+      name: data.name,
+      code: data.code,
+      logo: data.logo,
+      clientRepoUrl: data.clientRepoUrl,
+      walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
+      inventoryPositionUrl: data.inventoryPositionUrl,
+      inventoryTradeUrl: data.inventoryTradeUrl,
+      locationsUrl: data.locationsUrl,
+      loanCallbackUrl: data.loanCallbackUrl,
+      transactionPhrase: data.transactionPhrase,
+      checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
+      tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
+      requestHeaders: {
+        API_KEY: 'kUvOHKMrkd',
+        REQUEST_TS: new Date().toISOString(),
+        HASH_KEY: 'TNiD1NXGW0Pk8Gou7XfuHSpi8SBJRYIA',
+      },
+      allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
+      countryCode: data.countryCode,
+    });
 
-    // checkWalletBalanceEnabled: data.checkWalletBalanceEnabled,
-    // bankTransferEnabled: data.bankTransferEnabled,
-    // clientTransferEnabled: data.clientTransferEnabled,
-    // header: data.header,
-  });
+    if (!resp.data) return 'Bad request. Unable to create client provider';
+    toast('success', 'Client Provider created successfully');
+    return resp.data.message;
+  } catch (error: any) {
+    toast('error', 'Unable to login', `${error.response.data.error}`);
+  }
+}
 
-  if (!resp.data) return 'Bad request. Unable to create client provider';
-
-  return resp.data.message;
+export async function edit_client_provider_info(
+  id: number,
+  data: Partial<ClientProvider>
+): Promise<string | undefined> {
+  try {
+    const resp = await apiRequest.put(`client-providers/${id}`, {
+      id: data.id,
+      name: data.name,
+      code: data.code,
+      logo: data.logo,
+      clientRepoUrl: data.clientRepoUrl,
+      walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
+      inventoryPositionUrl: data.inventoryPositionUrl,
+      inventoryTradeUrl: data.inventoryTradeUrl,
+      locationsUrl: data.locationsUrl,
+      loanCallbackUrl: data.loanCallbackUrl,
+      transactionPhrase: data.transactionPhrase,
+      checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
+      tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
+      requestHeaders: data.requestHeaders,
+      allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
+      countryCode: data.countryCode,
+    });
+    if (!resp.data) return 'unable to create user';
+    toast('success', 'Provider updated successfully');
+    return resp.data.message;
+  } catch (error: any) {
+    toast('error', 'Unable to login', `${error.response.data.error}`);
+  }
 }
 
 /**
@@ -199,34 +229,6 @@ export function get_client_provider_bank_info(
  * }
  * @returns
  */
-
-export async function edit_client_provider_info(
-  id: number,
-  data: Partial<ClientProvider>
-): Promise<string> {
-  const resp = await apiRequest.put(`client-providers/${id}`, {
-    id: data.id,
-    name: data.name,
-    code: data.code,
-    logo: data.logo,
-    clientRepoUrl: data.clientRepoUrl,
-    walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
-    inventoryPositionUrl: data.inventoryPositionUrl,
-    inventoryTradeUrl: data.inventoryTradeUrl,
-    locationsUrl: data.locationsUrl,
-    loanCallbackUrl: data.loanCallbackUrl,
-    transactionPhrase: data.transactionPhrase,
-    checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
-    tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
-    requestHeaders: data.requestHeaders,
-    allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
-    countryCode: data.countryCode,
-  });
-
-  if (!resp.data) return 'unable to create user';
-
-  return resp.data.message;
-}
 
 /**
  * Deactivate or activate a client provider

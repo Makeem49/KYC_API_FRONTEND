@@ -3,6 +3,7 @@ import { useField } from 'formik';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 import FormLabel from '../label';
+import { t } from 'i18next';
 
 interface FormInputInterface {
   id: string;
@@ -20,6 +21,9 @@ const FormInput = ({ label, ...props }: FormInputInterface) => {
   const [field, meta] = useField(props);
   const [type, setType] = useState(props.type);
 
+  const placeHolder = t(props.placeholder!);
+  const inputLabel = t(label);
+
   const toggleVisibility = () => {
     if (type === 'password') {
       return setType('text');
@@ -30,10 +34,10 @@ const FormInput = ({ label, ...props }: FormInputInterface) => {
 
   return (
     <div className='gap-1 flex flex-col'>
-      {label && (
+      {inputLabel && (
         <FormLabel
           requiredHint={props.required}
-          label={label}
+          label={inputLabel}
           htmlFor={props.id || props.name}
         />
       )}
@@ -43,10 +47,10 @@ const FormInput = ({ label, ...props }: FormInputInterface) => {
           type={type}
           id={props.id || props.name}
           pattern={props.pattern}
-          placeholder={props.placeholder}
+          placeholder={placeHolder}
           autoComplete={props.autocomplete}
           autoFocus={props.autoFocus}
-          className='block w-full appearance-none outline-none tracking-wide rounded-lg text-sm p-3 font-normal text-textgrey-darker bg-white h-14 border focus:border-afexpurple-light transition '
+          className='block w-full appearance-none outline-none tracking-wide rounded-lg text-sm p-3 font-normal text-textgrey-darker dark:text-afexdark-regular bg-white dark:bg-afexdark-verydark h-14 border dark:border-afexdark-verydark focus:border-afexpurple-light transition '
           {...field}
         />
         {props.type === 'password' && type === 'password' && (

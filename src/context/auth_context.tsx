@@ -71,6 +71,9 @@ const AuthProvider = (props: WithChildren) => {
       decodedToken.providers[0].countryCode
     );
 
+    localStorage.setItem('decoded-user-permissions', decodedToken.permissions);
+    localStorage.setItem('default_lang', 'EN');
+
     const myArrayString = JSON.stringify(decodedToken);
     localStorage.setItem('decoded-arrays', myArrayString);
 

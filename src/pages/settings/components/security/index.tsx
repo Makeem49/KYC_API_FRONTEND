@@ -7,8 +7,10 @@ const Security = () => {
   return (
     <div className='w-full flex flex-col gap-8'>
       {/* TITLE */}
-      <div className='flex gap-3 mt-28  items-center'>
-        <p className=' font-semibold text-afexpurple-dark'>Security</p>
+      <div className='flex gap-3 mt-28 dark:text-afexdark-regular items-center'>
+        <p className=' font-semibold text-afexpurple-dark dark:text-afexpurple-regular'>
+          Security
+        </p>
         <p>Events & Logs</p>
       </div>
       <Profile />
