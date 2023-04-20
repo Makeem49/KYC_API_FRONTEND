@@ -1,8 +1,9 @@
-import { DataGrid } from '../../../../components';
-import React from 'react';
-import { shortDateFormatter } from '../../../../utils';
 import { t } from 'i18next';
+import React from 'react';
+
+import { DataGrid } from '../../../../components';
 import { useGetTransactionList } from '../../../../queries';
+import { shortDateFormatter } from '../../../../utils';
 
 const TransactionTable = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -101,6 +102,17 @@ const TransactionTable = () => {
                   );
                 }
               },
+            },
+
+            {
+              accessor: 'description',
+              hidden: false,
+              name: `${t('Description')}`,
+              sortable: true,
+              static: false,
+              row: (val, second) => (
+                <span className='flex w-[250px]'>{val}</span>
+              ),
             },
 
             {

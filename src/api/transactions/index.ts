@@ -1,13 +1,13 @@
+import { AxiosResponse } from 'axios';
+import { t } from 'i18next';
+
+import { timeFormatter } from './../../utils/formatter';
+import { paramsSerializer, shortDateFormatter } from '../../utils';
+import { apiRequest } from '../../utils';
 import {
   checkCountryCode,
   currentNumberFormatter,
 } from '../../utils/formatter';
-import { paramsSerializer, shortDateFormatter } from '../../utils';
-
-import { AxiosResponse } from 'axios';
-import { apiRequest } from '../../utils';
-import { t } from 'i18next';
-import { timeFormatter } from './../../utils/formatter';
 
 /**
  * =================================================================
@@ -73,6 +73,7 @@ export async function get_all_transactions(
           sessionId: el.sessionId.substr(0, 15) + '',
           amount: currentNumberFormatter(el.amount),
           transactionType: el.transactionType,
+          description: el.description,
           status: el.status ? `${t('Active')}` : `${t('Inactive')}`,
           countryCode: checkCountryCode(el.client.countryCode),
           clientId: el.clientId ? el.clientId : '',
