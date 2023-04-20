@@ -25,12 +25,10 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     enabled && localStorage.setItem('theme', theme);
   };
   useEffect(() => {
-    console.log('stored state', !isStored, isStored);
     if (!isStored) setEnabled(false);
   }, [isStored]);
 
   useEffect(() => {
-    console.log('enable changed');
     if (isStored && enabled) {
       setEnabled(true);
       setTheme(isStored as 'dark' | 'light');
@@ -43,7 +41,6 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     } // eslint-disable-next-line
   }, [enabled]);
 
-  console.log('it reloads', enabled);
   const disable = () => {
     console.log('setting enabled', enabled);
     setEnabled(false);

@@ -36,7 +36,7 @@ const RecentTransaction = () => {
           </Link>
         </div>
       </div>
-      {data!?.length > 0 ? (
+      {data!?.data?.length > 0 ? (
         <Table />
       ) : (
         <div className=' p-10 h-[500px] flex flex-col gap-10 items-center'>

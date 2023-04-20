@@ -1,8 +1,9 @@
+import { RiErrorWarningLine, RiShieldCheckFill } from 'react-icons/ri';
+
 import { showNotification } from '@mantine/notifications';
 
 // import { ShieldTick, CloseCircle, InfoCircle } from 'iconsax-react';
 
-import { RiShieldCheckFill, RiErrorWarningLine } from 'react-icons/ri';
 
 const toast = (
   id: 'success' | 'error' | 'info',
@@ -77,7 +78,7 @@ const toast = (
         )}
       </div>
     ),
-    autoClose: 10000,
+    autoClose: 5000,
   });
 };
 export default toast;

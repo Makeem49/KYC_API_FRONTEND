@@ -1,20 +1,21 @@
-import React from 'react';
 import {
   UserCirlceAdd,
-  UserTick,
   UserOctagon,
   UserRemove,
+  UserTick,
 } from 'iconsax-react';
-import { Change } from '../../../../components';
-import { calculatePercentageChange } from '../../../../utils';
 
-import { useQuery } from 'react-query';
-import { get_client_stats_query } from '../../../../queries/clients_stats';
+import { Change } from '../../../../components';
+import React from 'react';
 import { Skeleton } from '@mantine/core';
+import { calculatePercentageChange } from '../../../../utils';
+import { get_client_stats_query } from '../../../../queries/clients_stats';
 import { t } from 'i18next';
+import { useQuery } from 'react-query';
 
 const ClientCard = () => {
   const { data: stats, isLoading } = useQuery(get_client_stats_query());
+  console.log(stats, 'here');
 
   if (isLoading)
     return (

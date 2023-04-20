@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { Formik, Form } from 'formik';
 // import { useSingleUserCtx } from '../../../context/single_user.ctx';
-import { useUsersCtx } from '../../../../../../context';
+
 import { update_user } from '../../../../../../api';
 import {
   FormImage,
@@ -12,14 +12,13 @@ import {
 import Button from '../../../../../../components/button';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast } from '../../../../../../utils';
+import { useGetPermissions, useGetRoles } from '../../../../../../queries';
 
 interface AddUserProps extends ModalControllerType {
   data: User;
 }
 
 const UserInfo = ({ data, close, show }: AddUserProps) => {
-  const { item, itemTwo, refreshContext } = useUsersCtx();
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -28,7 +27,8 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
       queryClient.invalidateQueries({ queryKey: ['users'] }); // To  invalidate and refetch
     },
   });
-  console.log(data, 'all here');
+  const { data: item } = useGetPermissions();
+  const { data: itemTwo } = useGetRoles();
 
   const [loading, setLoading] = useState(false);
 
@@ -63,8 +63,6 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
           setLoading(false);
           toast('success', 'User created successfully');
           console.log(updateUser);
-
-          refreshContext();
         }}>
         {({ resetForm }) => (
           <Form className='flex flex-col gap-y-4'>
@@ -119,7 +117,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
             </div>
 
             <FormMultiSelect
-              data={item?.map((a) => {
+              data={item!?.map((a) => {
                 return { value: a.id, label: a.name };
               })}
               id='permissions'
@@ -129,7 +127,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
               placeholder=''
             />
             <FormMultiSelect
-              data={itemTwo?.map((b) => {
+              data={itemTwo!?.map((b) => {
                 return { value: b.id, label: b.name };
               })}
               id='roles'

@@ -12,7 +12,7 @@ const Table = () => {
 
   if (isError) return <p>Error!!!</p>;
 
-  const arr = data!.slice(0, 10);
+  const arr = data?.data!.slice(0, 10);
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
@@ -44,12 +44,14 @@ const Table = () => {
             </tr>
           </thead>
           <tbody className='text-[10px] xl:text-[14px] text-[#49474D]'>
-            {arr.map((el, index) => (
+            {arr!.map((el, index) => (
               <tr
                 key={index}
                 className=' text-left child:py-8 dark:border-[#333233]  child:px-1 border-b'>
                 <td>
-                  <span className='font-normal'>{data!.indexOf(el) + 1}</span>
+                  <span className='font-normal'>
+                    {data!?.data!.indexOf(el) + 1}
+                  </span>
                 </td>
 
                 <td>

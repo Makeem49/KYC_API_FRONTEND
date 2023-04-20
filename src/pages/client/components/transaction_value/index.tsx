@@ -1,13 +1,16 @@
 import React from 'react';
-import halfCirc from '../../../../assets/images/ell.svg';
-import { get_top_clients_by_trans_value_query } from '../../../../queries/clients_stats';
 import { useQuery } from 'react-query';
 import { Skeleton } from '@mantine/core';
-import Box from '../../../../assets/images/box.png';
+import { useTranslation } from 'react-i18next';
+
+import { get_top_clients_by_trans_value_query } from '../../../../queries/clients_stats';
 import { commaformatter } from '../../../../utils';
-import { t } from 'i18next';
+
+import Box from '../../../../assets/images/box.png';
+import halfCirc from '../../../../assets/images/ell.svg';
 
 const TransactionValue = () => {
+  const { t } = useTranslation();
   const { data: topVal, isLoading } = useQuery(
     get_top_clients_by_trans_value_query()
   );
@@ -53,10 +56,10 @@ const TransactionValue = () => {
             <table className='overflow-auto w-full align-top text-[12px] xl:text-[14px]'>
               <thead className='text-[10px] bg-[#F5F5F5] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
                 <tr className=' border-b  dark:border-afexdark-dark  child:p-2 bg-afexpurple-lighter dark:bg-afexdark-darkest  child:text-[14px] child:font-normal child:cursor-default child:align-middle'>
-                  <th className=''>S/N</th>
-                  <th className=''>{t("Client's Name")}</th>
-                  <th className=''>{t("Client's Id")}</th>
-                  <th className=''>
+                  <th>S/N</th>
+                  <th>{t("Client's Name")}</th>
+                  <th>{t("Client's Id")}</th>
+                  <th>
                     {t('Value')}
                     {defaultCountryCode === 'NG'
                       ? '₦'

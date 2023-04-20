@@ -5,6 +5,8 @@ import {
   FormInput,
   // FormMultiSelect,
 } from '../../../../../../components/form';
+// import DynamicFormInputs from '../../../../../../components/myForm';
+
 import MultiSelectDup from '../../../../../../components/form/multiselectDup';
 // import DoubleInput from '../../../../../../components/dynamicInput';
 import Button from '../../../../../../components/button';
@@ -231,6 +233,8 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
               type='text'
               autocomplete='URL'
             />
+
+            {/* <DynamicFormInputs /> */}
 
             <MultiSelectDup
               data={[

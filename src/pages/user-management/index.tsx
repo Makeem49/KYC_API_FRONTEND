@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { t } from 'i18next';
 import { ArrowDown2, ArrowLeft } from 'iconsax-react';
+import React, { useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { Link } from 'react-router-dom';
+
+import { useDebouncedEffect } from '../../utils/functions';
+import { SingleUserProvider } from './components/context/single_user.ctx';
 import AddUser from './components/modal/add user';
 // import TaskBar from './components/task bar';
 import Table from './components/table';
-import { SingleUserProvider } from './components/context/single_user.ctx';
-import { AnimatePresence } from 'framer-motion';
-import { motion } from 'framer-motion';
-import { useQueryClient } from 'react-query';
-
-import { t } from 'i18next';
 
 const UserManagement = () => {
   const queryClient = useQueryClient();
   const [showProviderOpt, setShowProviderOpt] = useState<boolean>(false);
+
+  useDebouncedEffect(
+    () => {
+      document.addEventListener('click', () => {
+        setShowProviderOpt(false);
+      });
+
+      return () => {
+        document.removeEventListener('click', () => {
+          setShowProviderOpt(false);
+        });
+      };
+    },
+    [],
+    50
+  );
 
   const decodedDefaultVal: any = localStorage.getItem(
     'decoded-token_providers_name'

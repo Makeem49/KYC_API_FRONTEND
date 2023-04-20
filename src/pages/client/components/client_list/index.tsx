@@ -1,13 +1,20 @@
+import { DataGrid } from '../../../../components';
 import React from 'react';
-import DataGrid from '../../../../components/data-grid';
-import { shortDateFormatter } from '../../../../utils';
-import { useQuery } from 'react-query';
-import { get_client_list_query } from '../../../../queries/clients_stats';
 import { Skeleton } from '@mantine/core';
+import { shortDateFormatter } from '../../../../utils';
 import { t } from 'i18next';
+import { useGetClientList } from '../../../../queries';
 
 const ClientList = () => {
-  const { data, isError, isLoading } = useQuery(get_client_list_query(1));
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setSearch] = React.useState('');
+  const [filters, setFilters] = React.useState('');
+
+  const { data, isError, isLoading } = useGetClientList(
+    currentPage,
+    filter,
+    filters
+  );
 
   if (isLoading)
     return (
@@ -19,21 +26,26 @@ const ClientList = () => {
       />
     );
 
-  if (isError) return <p>Error!!!</p>;
+  if (isError || !data) return <p>Error!!!</p>;
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <>
-      <div className='bg-white dark:bg-afexdark-darkest  px-6 py-3'>
+      <div className='bg-white dark:bg-afexdark-darkest px-6 py-3'>
         <DataGrid
+          loadMore={setCurrentPage}
+          lastPage={data.lastPage}
+          total={data.total}
           title='Search by client name, id..'
+          setSearch={setSearch}
+          setFilters={setFilters}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
-          data={data!}
+          data={data?.data!}
           headerFilter={[
-            { name: 'Activity Status' },
-            { name: 'Verification Status' },
+            { name: 'Activity Status', accessor: 'isActive' },
+            { name: 'Verification Status', accessor: 'isVerified' },
           ]}
           headers={[
             {
@@ -149,22 +161,6 @@ const ClientList = () => {
               sortable: true,
               static: false,
             },
-
-            // {
-            //   accessor: 'providerId',
-            //   hidden: false,
-            //   name: 'Provider Id',
-            //   sortable: true,
-            //   static: false,
-            // },
-
-            // {
-            //   accessor: 'platformId',
-            //   hidden: false,
-            //   name: 'Platform Id',
-            //   sortable: true,
-            //   static: true,
-            // },
           ]}
           withExport
           withGlobalFilters

@@ -1,19 +1,13 @@
-import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import React from 'react';
 // import { useTransactionCtx } from '../../../../../context';
-import { useQuery } from 'react-query';
-import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
 import { t } from 'i18next';
+import { useGetTransLocation } from '../../../../../queries';
 import { useThemeCtx } from '../../../../../context/theme_context';
 
 const BarChart = () => {
-  // const { stats } = useTransactionCtx();
   const { theme } = useThemeCtx();
-  const {
-    data: stats,
-    isError,
-    isLoading,
-  } = useQuery(get_transaction_stats_query());
+  const { data: stats, isError, isLoading } = useGetTransLocation();
 
   if (isLoading) return <p>Loading....</p>;
 
@@ -69,7 +63,7 @@ const BarChart = () => {
     },
   };
   const data = {
-    labels: stats?.transactionLocations?.map((el): string => t(el.name)),
+    labels: stats?.data.map((el): string => t(el.name)),
 
     datasets: [
       {
@@ -78,8 +72,8 @@ const BarChart = () => {
         borderWidth: 1,
         hoverBackgroundColor: ['#38CB89', '#38CB89', '#38CB89', '#38CB89'],
         hoverBorderColor: ['#38CB89', '#38CB89', '#38CB89', '#38CB89'],
-        data: stats?.transactionLocations?.map(
-          (el): string | number => el.value
+        data: stats?.data.map(
+          (el): string | number => el.total_transactions_value
         ),
         borderRadius: Number.MAX_VALUE,
       },

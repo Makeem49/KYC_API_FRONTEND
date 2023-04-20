@@ -1,16 +1,17 @@
-import React from 'react';
-import { Add } from 'iconsax-react';
-import ApiKeys from './components/api-keys';
-import { create_token } from '../../api';
 import { useMutation, useQueryClient } from 'react-query';
-import { toast } from '../../utils';
-import { ArrowLeft } from 'iconsax-react';
 import { Link, useLocation } from 'react-router-dom';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { ArrowLeft, Add } from 'iconsax-react';
+
+import ApiKeys from './components/api-keys';
+
+import { create_token } from '../../api';
+import { toast } from '../../utils';
 
 const ApiRequest = () => {
   const { pathname } = useLocation();
   const providerId = pathname.split('/')[3];
+  const { t } = useTranslation();
 
   const queryClient = useQueryClient();
 
@@ -26,8 +27,8 @@ const ApiRequest = () => {
   });
 
   return (
-    <div className='w-full h-[100vh]  overflow-y-auto flex'>
-      <div className='w-full h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
+    <div className='w-full h-screen  overflow-y-auto flex'>
+      <div className='w-full h-screen flex flex-col gap-14 overflow-y-auto p-10'>
         {/* Title */}
         <div className='flex w-full justify-between items-center'>
           <div className='flex w-full flex-col'>
@@ -45,7 +46,7 @@ const ApiRequest = () => {
           </div>
 
           <div
-            className='flex w-[250px] py-2 px-3 justify-end gap-4 text-[14px] font-normal items-center '
+            className='flex w-[250px] py-2 px-3 justify-end gap-4 text-base font-normal items-center '
             onClick={() => {
               const ProvidedId = parseInt(providerId, 10);
               mutation.mutate(ProvidedId);

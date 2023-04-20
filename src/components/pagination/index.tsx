@@ -4,28 +4,29 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 
 interface PaginationProps {
-  itemsOffset: number;
-  perPage: number;
-  setItemsOffset: React.Dispatch<React.SetStateAction<number>>;
-  page: number;
+  pageCount: number;
   dataLength: number;
+  loadMore: (page: number) => void;
 }
 
 const Pagination = (props: PaginationProps) => {
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const { loadMore } = props;
   // Change the page
   const handlePageChange = (event: any) => {
-    const newOffset = (event.selected * props.perPage) % props.dataLength;
-    props.setItemsOffset(newOffset);
+    const current = event.selected * 1;
+    setCurrentPage(current);
+    loadMore(current + 1);
   };
   return (
     <div className='bottom-0 right-0 left-0 w-full'>
       <div className='flex justify-between items-center px-6 rounded-md'>
         <span>
           {t('showing')} &nbsp;
-          {props.itemsOffset + 1} -&nbsp;
-          {props.perPage + props.itemsOffset > props.dataLength
+          {10 * currentPage + 1} -&nbsp;
+          {10 + 10 * currentPage > props.dataLength
             ? props.dataLength
-            : props.perPage + props.itemsOffset}
+            : 10 + 10 * currentPage}
           &nbsp; {t('of')} {props.dataLength} {t('entries')}
         </span>
 
@@ -38,7 +39,7 @@ const Pagination = (props: PaginationProps) => {
             <MdKeyboardArrowRight className='text-4xl bg-afexpurple-regular text-white rounded-lg cursor-pointer ' />
           }
           onPageChange={handlePageChange}
-          pageCount={props.page}
+          pageCount={props.pageCount}
           pageRangeDisplayed={2}
           marginPagesDisplayed={1}
           className='flex justify-end items-center  gap-2 child:child:p-2 child:m-1 child:child:rounded'

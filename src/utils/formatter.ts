@@ -19,7 +19,9 @@ export const decimalFormatter = (value: number | string): string => {
 
 export const uniques = (arr: any[]): any[] => [...Array.from(new Set(arr))];
 
-export const shortDateFormatter = (value: string | Date): string => {
+export const shortDateFormatter = (value: string | Date | null): string => {
+  if (!value) return 'Not specified';
+
   return new Date(value).toLocaleDateString('en-US', {
     day: '2-digit',
     month: 'short',

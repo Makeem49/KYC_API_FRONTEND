@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
-import {
-  FormImage,
-  FormInput,
-  // FormMultiSelect,
-} from '../../../../../../components/form';
-import Button from '../../../../../../components/button';
-import ToggleButton from '../../../../../../components/toggleButton';
-import { faker } from '@faker-js/faker';
-// import { useSingleClientCtx } from '../../../context/single_user.ctx';
-import { edit_client_provider_info } from '../../../../../../api';
+import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-// import { toast } from '../../../../../../utils';
 import * as Yup from 'yup';
+
+import { faker } from '@faker-js/faker';
+
+import { edit_client_provider_info } from '../../../../../../api';
+import Button from '../../../../../../components/button';
+import { FormImage, FormInput } from '../../../../../../components/form';
+import ToggleButton from '../../../../../../components/toggleButton';
 
 // import { useClientsCtx } from '../../../../../../context';
 // import MultiSelectDup from '../../../../../../components/form/multiselectDup';
@@ -20,9 +16,6 @@ interface AddUserProps extends ModalControllerType {
   data: ClientProvider;
 }
 const UserInfo = ({ data, close, show }: AddUserProps) => {
-  // const { data } = useSingleClientCtx();
-  console.log(data, 'update');
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({

@@ -1,15 +1,10 @@
-import ApiTokensProvider, { useApiTokenCtx } from './api_tokens_context';
-import { useAuthCtx } from './auth_context';
-import ClientsContextProvider, { useClientsCtx } from './clients_context';
-import UsersProvider, { useUsersCtx } from './users_context';
-import SingleClientProvider, {
-  useSingleClientCtx,
-} from './single_clients_context';
 import { ColumnProvider, useColumnCtx } from './column_context';
-import { useNavigate } from 'react-router-dom';
+
+import { toast } from '../utils';
+import { useAuthCtx } from './auth_context';
 import { useEffect } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
-import { toast } from '../utils';
+import { useNavigate } from 'react-router-dom';
 
 // Context wrapper for all the context managers
 const ContextProvider = (props: WithChildren) => {
@@ -46,26 +41,9 @@ const ContextProvider = (props: WithChildren) => {
     }
     //eslint-disable-next-line
   }, [isAuthenticated]);
-  return (
-    <ColumnProvider>
-      <ClientsContextProvider>
-        <ApiTokensProvider>
-          <UsersProvider>
-            <SingleClientProvider>{props.children}</SingleClientProvider>
-          </UsersProvider>
-        </ApiTokensProvider>
-      </ClientsContextProvider>
-    </ColumnProvider>
-  );
+  return <ColumnProvider>{props.children}</ColumnProvider>;
 };
 
-export {
-  useApiTokenCtx,
-  useAuthCtx,
-  useClientsCtx,
-  useUsersCtx,
-  useSingleClientCtx,
-  useColumnCtx,
-};
+export { useAuthCtx, useColumnCtx };
 
 export default ContextProvider;

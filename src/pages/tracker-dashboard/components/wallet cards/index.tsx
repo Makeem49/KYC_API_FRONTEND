@@ -1,11 +1,13 @@
+import { t } from 'i18next';
 import React from 'react';
+import { useQuery } from 'react-query';
+import { Navigate } from 'react-router-dom';
+
+import { Skeleton } from '@mantine/core';
+
 import UnverifyIcon from '../../../../assets/images/verify.png';
 import verifyIcon from '../../../../assets/images/verifyIcon.png';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
-import { useQuery } from 'react-query';
-import { Navigate } from 'react-router-dom';
-import { Skeleton } from '@mantine/core';
-import { t } from 'i18next';
 
 const WalletCards = () => {
   const {

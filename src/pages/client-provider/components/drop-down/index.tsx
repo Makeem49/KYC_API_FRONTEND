@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Popover } from '@mantine/core';
 import { ArrowDown2 } from 'iconsax-react';
-import AddUser from '../modal/edit user ';
+import { useState } from 'react';
+
+import { Popover } from '@mantine/core';
+
 import DeactivateUser from '../modal/deactivate';
+import AddUser from '../modal/edit user ';
 
 const UserAction = ({ data }: { data: ClientProvider }) => {
   const [opened, setOpened] = useState(false);
@@ -14,7 +16,10 @@ const UserAction = ({ data }: { data: ClientProvider }) => {
       <Popover opened={opened} onChange={setOpened} width={150}>
         <Popover.Target>
           <button
-            onClick={() => setOpened((s) => !s)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpened((s) => !s);
+            }}
             className=' flex items-center gap-2 bg-[#F0F0F0]  dark:bg-afexdark-verydark rounded px-5 py-3 relative'>
             <span>Actions</span>
             <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />

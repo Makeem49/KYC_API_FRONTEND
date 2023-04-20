@@ -1,6 +1,8 @@
 export { default as ConfirmOverlay } from './confirm';
 export { default as Authentication } from './auth';
+export { default as Banks } from './banks';
 export { default as Client } from './client';
+export { default as FundRequest } from './fund-request';
 export { default as SingleClient } from './client/single-client';
 export { default as Dashboard } from './dashboard';
 export { default as Transaction } from './transaction';

@@ -1,16 +1,15 @@
-import React from 'react';
-import userImg from '../../../../../assets/images/user.png';
 // import verifiedIcon from '../../../../../assets/svgs/verify.svg';
 import { ArrowDown2 } from 'iconsax-react';
+import React from 'react';
+import { Skeleton } from '@mantine/core';
 // import { useSingleClientCtx } from '../../../../../context';
 import { get_a_client_query } from '../../../../../queries/single_client';
+import { t } from 'i18next';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { Skeleton } from '@mantine/core';
-import { t } from 'i18next';
-const ProfileBoard = () => {
-  // const { stats! } = useSingleClientCtx();
+import userImg from '../../../../../assets/images/user.png';
 
+const ProfileBoard = () => {
   const { pathname } = useLocation();
   const clientId = pathname.split('/')[2];
   const { data: stats, isLoading } = useQuery(
@@ -145,14 +144,14 @@ const ProfileBoard = () => {
           <p className=' text-textgrey-darker  dark:text-afexdark-dark font-bold'>
             {t('Virtual Account')}: <br />
             <span className=' text-textgrey-normal font-normal'>
-              {t('none')}
+              {stats!.bankAccount ? stats!.bankAccount : t('none')}
             </span>
           </p>
 
           <p className=' text-textgrey-darker  dark:text-afexdark-dark font-bold'>
             {t('Bank')}: <br />
             <span className=' text-textgrey-normal font-normal'>
-              {t('none')}
+              {stats!?.bankName ? stats!?.bankName : t('none')}
             </span>
           </p>
 

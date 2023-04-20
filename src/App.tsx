@@ -1,45 +1,47 @@
+import './App.css';
+
 import React from 'react';
 //  {
 //    useEffect;
 //  }
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import { Sidebar } from './components';
-// import bgImage from '../src/assets/svgs/bg-pattern.svg';
+import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom';
 
-import {
-  ConfirmOverlay,
-  Authentication,
-  Client,
-  Dashboard,
-  Transaction,
-  ApiRequest,
-  UserManagement,
-  ClientProvider,
-  TrackerDashboard,
-  SingleClient,
-  Settings,
-  ErrorElement,
-} from './pages';
+import { MantineProvider } from '@mantine/core';
+
+import { Sidebar } from './components';
 import ContextProvider from './context';
-import './App.css';
-import { ColumnProvider } from './context/column_context';
 import AuthProvider from './context/auth_context';
+import { ColumnProvider } from './context/column_context';
+import { useThemeCtx } from './context/theme_context';
+import {
+  ApiRequest,
+  Authentication,
+  Banks,
+  Client,
+  ClientProvider,
+  ConfirmOverlay,
+  Dashboard,
+  ErrorElement,
+  FundRequest,
+  Settings,
+  SingleClient,
+  TrackerDashboard,
+  Transaction,
+  UserManagement,
+} from './pages';
 // {
 //   useAuthCtx;
 // }
 import ForgotPassword from './pages/forgotPassword';
 import ResetPassword from './pages/resetPassword';
-import { MantineProvider } from '@mantine/core';
-import { useThemeCtx } from './context/theme_context';
-// import axios from 'axios';
 
+// import bgImage from '../src/assets/svgs/bg-pattern.svg';
+
+// import axios from 'axios';
 // const decodedPermissions: any = localStorage.getItem('decoded-arrays');
 // const PermissionsArray = JSON.parse(decodedPermissions);
 // const permissions = PermissionsArray.permissions.map((el: any) => el);
 // const admin = PermissionsArray.username;
-// console.log(admin, 'lives');
-
-// console.log(permissions, 'here we go');
 
 const routes = [
   {
@@ -99,6 +101,27 @@ const routes = [
           },
         ],
       },
+
+      {
+        path: 'banks',
+        children: [
+          {
+            index: true,
+            element: <Banks />,
+          },
+        ],
+      },
+
+      {
+        path: 'fund-request',
+        children: [
+          {
+            index: true,
+            element: <FundRequest />,
+          },
+        ],
+      },
+
       {
         path: 'tracker-dashboard',
         children: [
@@ -134,8 +157,6 @@ const routes = [
 ];
 
 export const router = createBrowserRouter(routes);
-
-console.log(routes);
 
 function Root() {
   const { theme } = useThemeCtx();

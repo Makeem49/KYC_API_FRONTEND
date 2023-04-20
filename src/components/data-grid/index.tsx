@@ -1,27 +1,29 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import { t } from 'i18next';
+import {
+  ArrowDown2,
+  Calendar,
+  ExportSquare,
+  Filter,
+  RowHorizontal,
+  SearchNormal,
+} from 'iconsax-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+// import { useAsyncDebounce } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 
-import { ExportSquare, Filter, RowHorizontal } from 'iconsax-react';
-import { ArrowDown2 } from 'iconsax-react';
-import { SearchNormal } from 'iconsax-react';
-
-import { Calendar } from 'iconsax-react';
-
-import {
-  useDebouncedEffect,
-  isDeepEqual,
-  searchText,
-  searchSpecificText,
-  insert,
-  exportToCSV,
-  get_nested_value,
-} from '../../utils/functions';
-
-import { DateRanges, Pagination } from '..';
-import { useNavigate } from 'react-router-dom';
 import { Popover } from '@mantine/core';
 
-import { t } from 'i18next';
+import Box from '../../assets/images/box.png';
+import {
+  addToObj,
+  exportToCSV,
+  get_nested_value,
+  insert,
+  isDeepEqual,
+  useDebouncedEffect,
+} from '../../utils/functions';
+import { DateRanges, Pagination } from '..';
 
 // Data Headers
 export interface Header {
@@ -41,6 +43,7 @@ export interface Header {
 
 export interface HeaderFilter {
   name: string;
+  accessor: string;
 }
 
 // Table properties (Required)
@@ -54,6 +57,11 @@ interface DataGridRequiredProps {
   };
   headerFilter: HeaderFilter[];
   rows: number;
+  loadMore: (page: number) => void;
+  lastPage: number;
+  total: number;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setFilters: React.Dispatch<React.SetStateAction<any>>;
 }
 
 interface ActionComponentProps {
@@ -61,7 +69,7 @@ interface ActionComponentProps {
 }
 
 // Table properties (Optional)
-interface DataGridOptionalProps extends DataGridRequiredProps {
+interface DataGridOptionalProps {
   title?: string;
   withGlobalFilters?: boolean;
   filterKeys?: string[];
@@ -74,9 +82,10 @@ interface DataGridOptionalProps extends DataGridRequiredProps {
   withNavigation?: boolean;
   withRowNavigation?: boolean;
   navigationProps?: { baseRoute: string; accessor: string };
+  setSelectedData?: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-interface DataGridProps extends DataGridOptionalProps {}
+type DataGridProps = DataGridRequiredProps & DataGridOptionalProps;
 
 const DataGrid = ({
   data,
@@ -101,38 +110,66 @@ const DataGrid = ({
   const [start, setStart] = useState<Date | null>(null); // Date Range Start
   const [end, setEnd] = useState<Date | null>(null); // Date Range End
   const [showDateCalendar, setShowDateCalendar] = useState<boolean>(false); // Show Date Calendar
-  // const [showFilter, setShowFilter] = useState<boolean>(false); // Filtering
-  // const [filterObj, setFilterObj] = useState<{ [key: string]: string[] }>(
-  //   () => {
-  //     if (props.filterKeys) {
-  //       return props.filterKeys.reduce((a, b) => ({ ...a, [b]: [] }), {});
-  //     }
 
-  //     return { '': [] };
-  //   }
-  // );
+  //filter parameters state
+  const [checkboxState, setCheckboxState] = useState({
+    isChecked: false,
+    value: '',
+  });
+  const [inputValue, setInputValue] = useState('');
+  const filterData = addToObj(checkboxState.value, inputValue);
+
+  // useEffect(() => {
+  //   props.setFilters(filterData);
+  // }, [filterData]);
 
   const [opened, setOpened] = useState(false);
-
   const [openPdf, setOpenPdf] = useState(false);
   const [openCsv, setOpenCsv] = useState(false);
 
-  // SORTING ACTIONS
-
+  // const debounceSearch = useAsyncDebounce;
   const useSortableData = (items: any, config: any) => {
     const [sortConfig, setSortConfig] = React.useState(config);
 
     const sortedItems = React.useMemo(() => {
-      let sortableItems = [...items];
+      let sortableItems = items;
       if (sortConfig !== null) {
-        sortableItems.sort((a, b) => {
-          if (a[sortConfig.key] < b[sortConfig.key]) {
+        sortableItems?.sort((a: any, b: any) => {
+          // Check if the values are numbers
+          const aValueIsNumber = !isNaN(parseFloat(a[sortConfig.key]));
+          const bValueIsNumber = !isNaN(parseFloat(b[sortConfig.key]));
+
+          if (aValueIsNumber && bValueIsNumber) {
+            // If both values are numbers, compare them numerically
+            return parseFloat(a[sortConfig.key].replace(/,/g, '')) -
+              parseFloat(b[sortConfig.key].replace(/,/g, '')) >
+              0
+              ? sortConfig.direction === 'ascending'
+                ? 1
+                : -1
+              : sortConfig.direction === 'ascending'
+              ? -1
+              : 1;
+          } else if (aValueIsNumber) {
+            // If only the first value is a number, sort it before the second value
             return sortConfig.direction === 'ascending' ? -1 : 1;
-          }
-          if (a[sortConfig.key] > b[sortConfig.key]) {
+          } else if (bValueIsNumber) {
+            // If only the second value is a number, sort it before the first value
             return sortConfig.direction === 'ascending' ? 1 : -1;
+          } else {
+            // If neither value is a number, compare them as strings
+            const aVal =
+              a[sortConfig.key] !== undefined ? a[sortConfig.key] : '';
+            const bVal =
+              b[sortConfig.key] !== undefined ? b[sortConfig.key] : '';
+            if (aVal < bVal) {
+              return sortConfig.direction === 'ascending' ? -1 : 1;
+            }
+            if (aVal > bVal) {
+              return sortConfig.direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
           }
-          return 0;
         });
       }
       return sortableItems;
@@ -153,7 +190,7 @@ const DataGrid = ({
     return { items: sortedItems, requestSort, sortConfig };
   };
 
-  const { items, requestSort, sortConfig } = useSortableData(availableData, '');
+  const { requestSort, sortConfig } = useSortableData(availableData, '');
   const getClassNamesFor = (name: any) => {
     if (!sortConfig) {
       return;
@@ -162,16 +199,7 @@ const DataGrid = ({
   };
   getClassNamesFor('');
 
-  // Pagination Controls // Rows per page
-  const [currentItems, setCurrentItems] = useState<typeof data>([]); // Current list displayed
-  const [page, setPage] = useState<number>(1); // Current page
-  const [itemsOffset, setItemsOffset] = useState<number>(0); // offset from index
-
-  useEffect(() => {
-    const endOffset = itemsOffset + rows;
-    setCurrentItems(availableData.slice(itemsOffset, endOffset));
-    setPage(Math.ceil(availableData.length / rows));
-  }, [itemsOffset, rows, availableData]);
+  // Pagination Controls // Rows per page // Current list displayed
 
   // Select/Deselect a particular row
   const toggleRow = (row: ArrayElement<typeof data>) => {
@@ -181,22 +209,50 @@ const DataGrid = ({
       setSelectedRows((prev) =>
         insert(
           prev,
-          currentItems.findIndex((el) => isDeepEqual(el, row)),
+          data.findIndex((el) => isDeepEqual(el, row)),
           row
         )
       );
     }
+    if (props.setSelectedData) {
+      if (selectedRows.includes(row)) {
+        props.setSelectedData((prev) =>
+          prev.filter((el) => !isDeepEqual(el, row))
+        );
+      } else {
+        props.setSelectedData((prev) =>
+          insert(
+            prev,
+            data.findIndex((el) => isDeepEqual(el, row)),
+            row
+          )
+        );
+      }
+    }
   };
 
-  // Select current displayed rows
   const selectCurrent = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.currentTarget;
     if (checked) {
-      setSelectedRows(currentItems);
+      setSelectedRows(data);
+      if (props.setSelectedData) {
+        props.setSelectedData(data);
+      }
     } else {
       setSelectedRows([]);
+      props.setSelectedData?.([]);
     }
   };
+
+  // Select current displayed rows
+  // const selectCurrent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { checked } = e.currentTarget;
+  //   if (checked) {
+  //     setSelectedRows(data);
+  //   } else {
+  //     setSelectedRows([]);
+  //   }
+  // };
 
   // Filter Date use******
   const filterByDate = useCallback(() => {
@@ -229,66 +285,61 @@ const DataGrid = ({
     );
   };
 
-  // Searching for any text
-  const filterByTextSearch = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.currentTarget;
-      setAvailableData(() => searchText(data, value));
-    },
-    [data]
-  );
-
-  const filterBySpecificTextSearch = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.currentTarget;
-      setAvailableData(() => searchSpecificText(data, value));
-    },
-    [data]
-  );
-  const inputRef = useRef(null);
-
-  const onButtonClick = () => {
-    // @ts-ignore (us this comment if typescript raises an error)
-    inputRef.current.value = '';
-  };
-  //  const clearFilterByTextSearch = useCallback(
-  //    (e: React.ChangeEvent<HTMLInputElement>) => {
-  //      const { value } = e.currentTarget;
-  //      setAvailableData(() => searchText(data, ''));
-  //    },
-  //    [data]
-  //  );
+  // const SelectIds = () => {
+  //   props.setSelectedData(selectedRows.map((el) => el!?.id));
+  // };
+  //Search Filter Function
+  // const handleInputChange = (event: {
+  //   target: { value: React.SetStateAction<string> };
+  // }) => {
+  //   setInputValue(event.target.value);
+  // };
 
   useDebouncedEffect(
     () => {
-      // Handle Pagination on load
-      const endOffset = itemsOffset + rows;
-      setCurrentItems(items.slice(itemsOffset, endOffset));
-      setPage(Math.ceil(items.length / rows));
-      document.addEventListener('click', () => setShowColOpts(false));
+      document.addEventListener('click', () => {
+        setShowColOpts(false);
+        setshowAllComp(false);
+      });
+
+      return () => {
+        document.removeEventListener('click', () => {
+          setShowColOpts(false);
+          setshowAllComp(false);
+        });
+      };
     },
-    [itemsOffset, rows, items, data],
+    [],
     50
   );
 
-  // Generate the Filter Object
-  // useDebouncedEffect(
-  //   () => {
-  //     if (props.withGlobalFilters && props.filterKeys) {
-  //       setFilterObj(
-  //         props.filterKeys.reduce((a, b) => ({ ...a, [b]: [] }), {})
-  //       );
-  //     }
+  const handleInputChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    const newValue = event.target.value;
+    const isActive = newValue === 'active';
+
+    setInputValue(
+      isActive ? 'true' : newValue === 'inactive' ? 'false' : newValue
+    );
+  };
+
+  // Searching for any text
+  // const filterByTextSearch = useCallback(
+  //   (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     const { value } = e.currentTarget;
+  //     setAvailableData(() => searchText(data, value));
   //   },
-  //   [props.withGlobalFilters],
-  //   100
+  //   [data]
   // );
+
+  //
+
   useEffect(() => {
     setAvailableData(data);
   }, [data]);
 
   // PDF EXPORT
-
   const printCurrent = useRef(null);
   const printSelected = useRef(null);
   const printAllData = useRef(null);
@@ -316,7 +367,7 @@ const DataGrid = ({
           <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
             <tr className='child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize'>
               <th className='w-8'>S/N</th>
-              {selectedColumns.map((column) => (
+              {selectedColumns?.map((column) => (
                 <th
                   key={column.accessor}
                   className={`${column.hidden && 'hidden'}`}>
@@ -328,36 +379,50 @@ const DataGrid = ({
             </tr>
           </thead>
           <tbody className='bg-white'>
-            {data.map((row, index) => (
+            {data?.map((row, index) => (
               <tr
                 key={index}
                 className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
                 <td className='py-4'>{index + 1}</td>
+                {headers
+                  .sort((a, b) => {
+                    const headerKeys = headers.map((header) => header.accessor);
 
-                {Object.keys(row).map((entry, index) => {
-                  const header = headers.find((el) => el.accessor === entry);
-                  const secondary_data = header?.secondary_key
-                    ? row[header.secondary_key]
-                    : '';
-                  const data = row[entry];
-                  return (
-                    <td
-                      key={index}
-                      className={`text-${header?.rowAlign}  ${
-                        selectedColumns.findIndex(
-                          (el) => el.accessor === header?.accessor
-                        ) >= 0
-                          ? 'visible'
-                          : 'hidden'
-                      }`}>
-                      {header?.row && data !== null
-                        ? header?.row(data, secondary_data)
-                        : data?.length > 0
-                        ? data
-                        : '--------'}
-                    </td>
-                  );
-                })}
+                    return (
+                      headerKeys.indexOf(a.accessor) -
+                      headerKeys.indexOf(b.accessor)
+                    );
+                  })
+                  .map((_, i) => {
+                    const header = selectedColumns[i];
+
+                    const secondary_data = header?.secondary_key
+                      ? get_nested_value(row, header.secondary_key)
+                      : '';
+
+                    const data =
+                      get_nested_value(row, header.accessor) ?? 'Not Specified';
+
+                    return (
+                      <React.Fragment key={i}>
+                        {header && !header.hidden && (
+                          <td
+                            key={index}
+                            className={`text-${header?.rowAlign ?? 'left'}  ${
+                              selectedColumns.findIndex(
+                                (el) => el.accessor === header?.accessor
+                              ) >= 0
+                                ? 'visible'
+                                : 'hidden'
+                            }`}>
+                            {header?.row
+                              ? header?.row(data, secondary_data, index)
+                              : data}
+                          </td>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
               </tr>
             ))}
           </tbody>
@@ -369,7 +434,7 @@ const DataGrid = ({
           <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
             <tr className='child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize'>
               <th className='w-8'>S/N</th>
-              {selectedColumns.map((column) => (
+              {selectedColumns?.map((column) => (
                 <th
                   key={column.accessor}
                   className={`${column.hidden && 'hidden'}`}>
@@ -381,13 +446,13 @@ const DataGrid = ({
             </tr>
           </thead>
           <tbody className='bg-white'>
-            {selectedRows.map((row, index) => (
+            {selectedRows?.map((row, index) => (
               <tr
                 key={index}
                 className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
                 <td className='py-4'>{index + 1}</td>
 
-                {Object.keys(row).map((entry, index) => {
+                {Object?.keys(row).map((entry, index) => {
                   const header = headers.find((el) => el.accessor === entry);
                   const secondary_data = header?.secondary_key
                     ? row[header.secondary_key]
@@ -422,7 +487,7 @@ const DataGrid = ({
           <thead className='sticky top-0 text-left whitespace-nowrap bg-white z-[5]'>
             <tr className='child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize'>
               <th className='w-8'>S/N</th>
-              {selectedColumns.map((column) => (
+              {selectedColumns?.map((column) => (
                 <th
                   key={column.accessor}
                   className={`${column.hidden && 'hidden'}`}>
@@ -434,13 +499,13 @@ const DataGrid = ({
             </tr>
           </thead>
           <tbody className='bg-white'>
-            {currentItems?.map((row, index) => (
+            {data?.map((row, index) => (
               <tr
                 key={index}
                 className={`child:py-2 child:px-2 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
                 <td className='py-4'>{index + 1}</td>
 
-                {Object.keys(row).map((entry, index) => {
+                {Object?.keys(row).map((entry, index) => {
                   const header = headers.find((el) => el.accessor === entry);
                   const secondary_data = header?.secondary_key
                     ? row[header.secondary_key]
@@ -470,19 +535,19 @@ const DataGrid = ({
         </table>
       </div>
       {/* Top Task Bar */}
-      <div className='flex justify-between items-center  border-[#F3F3F3] dark:border-wdark-300 relative'>
+      <div className='flex justify-between items-center border-[#F3F3F3] dark:border-wdark-300 relative'>
         <h2 className='text-xl font-bold ml-3 capitalize'>{''}</h2>
 
         <div className='flex items-center space-x-5 relative text-base'></div>
       </div>
       <div className='flex items-center'>
-        {/* SEARCH */}
+        {/* GENERAL SEARCH */}
         <div className='relative flex items-center w-72 2xl:w-96 '>
           <input
             type='text'
             placeholder={props.title}
             className='py-3 mx-2 w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100 dark:ring-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
-            onChange={filterByTextSearch}
+            onChange={(e) => props.setSearch(e.currentTarget.value)}
           />
           <span className='absolute left-4 text-2xl'>
             <SearchNormal size='20' color='#8f8e91' variant='Bulk' />
@@ -548,7 +613,6 @@ const DataGrid = ({
           </div>
 
           {/* FILTER ACTION */}
-
           <div className='' onClick={(e) => e.stopPropagation()}>
             <button
               className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
@@ -595,12 +659,22 @@ const DataGrid = ({
                     <label
                       key={header.name}
                       htmlFor={header.name}
-                      className='flex items-center gap-1 whitespace-nowrap  text-gray-900  dark:text-afexdark-dark text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize'>
+                      className={`flex items-center gap-1 whitespace-nowrap  text-gray-900  dark:text-afexdark-dark text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize ${
+                        checkboxState.value === header.accessor &&
+                        'bg-afexpurple-lighter'
+                      }`}>
                       <input
                         type='checkbox'
                         className='checkbox'
-                        name={header.name}
-                        id={header.name}
+                        name={header.accessor}
+                        id={header.accessor}
+                        checked={checkboxState.value === header.accessor}
+                        onClick={() => {
+                          setCheckboxState({
+                            isChecked: true,
+                            value: header.accessor,
+                          });
+                        }}
                       />
                       {header.name}{' '}
                     </label>
@@ -615,23 +689,29 @@ const DataGrid = ({
                     type='text'
                     placeholder='Input Query Value'
                     className='py-3  w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  dark:border-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
-                    onChange={filterBySpecificTextSearch}
-                    ref={inputRef}
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    // onChange={(e) => props.setSearch(e.currentTarget.value)}
                   />
                 </div>
                 {/* BUTTONS */}
                 <div className='flex justify-end gap-2 py-5 w-full'>
                   <span
                     onClick={() => {
+                      setCheckboxState({ isChecked: false, value: '' });
+                      props.setFilters('');
+                      setInputValue('');
                       setAvailableData(data);
-                      onButtonClick();
                       setshowAllComp((s) => !s);
                     }}
                     className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker  dark:text-afexdark-dark'>
                     {t('Clear')}
                   </span>
                   <span
-                    onClick={() => setshowAllComp((s) => !s)}
+                    onClick={() => {
+                      props.setFilters(filterData);
+                      setshowAllComp((s) => !s);
+                    }}
                     className='p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white '>
                     {t('Add')}
                   </span>
@@ -753,7 +833,7 @@ const DataGrid = ({
                     className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
                     onClick={() => {
                       exportToCSV(
-                        currentItems,
+                        data,
                         selectedColumns
                           .filter((el) => el.hidden)
                           .map((el) => el.accessor)
@@ -815,25 +895,25 @@ const DataGrid = ({
           }
         `}
           </style>
-          <div className='h-full table-auto overflow-auto w-full my-3'>
+          <div className='h-[100%] table-auto overflow-auto w-full my-3'>
             <table className='overflow-auto p-5 w-full mb-10 align-top'>
               <thead className='sticky top-0 text-left whitespace-nowrap bg-white dark:bg-afexdark-darkest  z-[5]'>
                 <tr className='child:px-3 border-b dark:border-[#333233] child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize'>
-                  {props.withCheck && (
+                  {props?.withCheck && (
                     <th className='align-middle w-8 '>
                       <input
                         type='checkbox'
                         className='checkbox'
                         checked={
-                          selectedRows.length === currentItems.length &&
-                          selectedRows.length !== 0
+                          selectedRows?.length === data?.length &&
+                          selectedRows?.length !== 0
                         }
                         onChange={selectCurrent}
                       />
                     </th>
                   )}
                   <th className='w-8'>S/N</th>
-                  {selectedColumns.map((column) => (
+                  {selectedColumns?.map((column) => (
                     <th
                       key={column.accessor}
                       className={`${column.hidden && 'hidden'}`}>
@@ -850,149 +930,114 @@ const DataGrid = ({
                       }
                     </th>
                   ))}
-                  {props.withActions && <th>{'action'}</th>}
+                  {props?.withActions && <th>{'action'}</th>}
                 </tr>
               </thead>
-              <tbody className='bg-white dark:bg-afexdark-darkest '>
-                {currentItems?.map((row: any, index) => (
-                  <tr
-                    onClick={
-                      props.withNavigation && props.navigationProps
-                        ? () =>
-                            navigate(
-                              `/${props.navigationProps?.baseRoute}/${
-                                row[props.navigationProps?.accessor!]
-                              }`
-                            )
-                        : undefined
-                    }
-                    key={index}
-                    className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
-                    {props.withCheck && (
-                      <td onClick={(e) => e.stopPropagation()}>
-                        <input
-                          type='checkbox'
-                          className='checkbox dark:darkcheckbox'
-                          checked={
-                            selectedRows.findIndex((el) =>
-                              isDeepEqual(el, row)
-                            ) >= 0
-                          }
-                          onClick={(e) => e.stopPropagation()}
-                          onChange={() => toggleRow(row)}
-                        />
-                      </td>
-                    )}
-                    <td className='py-4'>{index + 1}</td>
 
-                    {/* {Object.keys(row).map((entry, index) => {
-                      const header = headers.find(
-                        (el) => el.accessor === entry
-                      );
-                      const secondary_data = header?.secondary_key
-                        ? row[header.secondary_key]
-                        : '';
-                      const data = row[entry];
-                      return (
-                        <td
-                          onClick={
-                            props.withRowNavigation && props.navigationProps
-                              ? () =>
-                                  navigate(
-                                    `/${props.navigationProps?.baseRoute}/${
-                                      row[props.navigationProps?.accessor!]
-                                    }`
-                                  )
-                              : undefined
-                          }
-                          key={index}
-                          className={`text-${header?.rowAlign}  ${
-                            selectedColumns.findIndex(
-                              (el) => el.accessor === header?.accessor
-                            ) >= 0
-                              ? 'visible'
-                              : 'hidden'
-                          }`}>
-                          {header?.row && data !== null
-                            ? header?.row(data, secondary_data)
-                            : data?.length > 0
-                            ? data
-                            : '--------'}
+              {data!?.length > 0 ? (
+                <tbody className='bg-white dark:bg-afexdark-darkest '>
+                  {data?.map((row: any, index) => (
+                    <tr
+                      onClick={
+                        props.withNavigation && props.navigationProps
+                          ? () =>
+                              navigate(
+                                `/${props.navigationProps?.baseRoute}/${
+                                  row[props.navigationProps?.accessor!]
+                                }`
+                              )
+                          : undefined
+                      }
+                      key={index}
+                      className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:text-[#49474D]  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
+                      {props?.withCheck && (
+                        <td onClick={(e) => e.stopPropagation()}>
+                          <input
+                            type='checkbox'
+                            className='checkbox dark:darkcheckbox'
+                            checked={
+                              selectedRows.findIndex((el) =>
+                                isDeepEqual(el, row)
+                              ) >= 0
+                            }
+                            onClick={(e) => e.stopPropagation()}
+                            onChange={() => toggleRow(row)}
+                          />
                         </td>
-                      );
-                    })} */}
-
-                    {headers
-                      .sort((a, b) => {
-                        const headerKeys = headers.map((header) => header.name);
-                        return (
-                          headerKeys.indexOf(a.name) -
-                          headerKeys.indexOf(b.name)
-                        );
-                      })
-                      .map((_, i) => {
-                        const header = selectedColumns[i];
-                        const secondary_data = header?.secondary_key
-                          ? get_nested_value(row, header?.secondary_key)
-                          : '';
-                        const data =
-                          get_nested_value(row, header?.accessor) ?? '--------';
-                        return (
-                          <React.Fragment key={i}>
-                            {header && !header.hidden && (
-                              <td
-                                key={i}
-                                className={`text-${
-                                  header?.rowAlign
-                                } capitalize min-w-[6rem] ${
-                                  selectedColumns.findIndex(
-                                    (el) => el.accessor === header?.accessor
-                                  ) >= 0
-                                    ? 'visible'
-                                    : 'hidden'
-                                }`}>
-                                {header?.row
-                                  ? header.row(data, secondary_data, index)
-                                  : data}
-                              </td>
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
-                    {props.withActions && (
-                      <td>
-                        {props.ActionComponent && (
-                          <props.ActionComponent data={row} />
-                        )}
-                      </td>
-                    )}
+                      )}
+                      <td className='py-4'>{index + 1}</td>
+                      {headers
+                        .sort((a, b) => {
+                          const headerKeys = headers.map(
+                            (header) => header.name
+                          );
+                          return (
+                            headerKeys.indexOf(a.name) -
+                            headerKeys.indexOf(b.name)
+                          );
+                        })
+                        .map((_, i) => {
+                          const header = selectedColumns[i];
+                          const secondary_data = header?.secondary_key
+                            ? get_nested_value(row, header?.secondary_key)
+                            : '';
+                          const data = get_nested_value(row, header?.accessor);
+                          return (
+                            <React.Fragment key={i}>
+                              {header && !header.hidden && (
+                                <td
+                                  key={i}
+                                  className={`text-${
+                                    header?.rowAlign
+                                  } capitalize min-w-[6rem] ${
+                                    selectedColumns.findIndex(
+                                      (el) => el.accessor === header?.accessor
+                                    ) >= 0
+                                      ? 'visible'
+                                      : 'hidden'
+                                  }`}>
+                                  {header?.row
+                                    ? header.row(data, secondary_data, index)
+                                    : data}
+                                </td>
+                              )}
+                            </React.Fragment>
+                          );
+                        })}
+                      {props.withActions && (
+                        <td
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}>
+                          {props?.ActionComponent && (
+                            <props.ActionComponent data={row} />
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              ) : (
+                <tbody className='relative bg-white dark:bg-afexdark-darkest '>
+                  {' '}
+                  <tr className='absolute gap-2 top-[250px] left-[400px] flex flex-col items-center w-40'>
+                    <img src={Box} alt='' className='animate-bounce h-[50px]' />
+                    <p className=' text-[16px] font-semibold'>
+                      {t('No data to display')}
+                    </p>{' '}
                   </tr>
-                ))}
-              </tbody>
+                </tbody>
+              )}
             </table>
           </div>
 
           <Pagination
-            dataLength={availableData.length}
-            itemsOffset={itemsOffset}
-            setItemsOffset={setItemsOffset}
-            page={page}
-            perPage={rows}
+            dataLength={props.total}
+            pageCount={props.lastPage!}
+            loadMore={props.loadMore}
           />
         </div>
       </div>
-
-      {/* {props.withGlobalFilters && props.filterKeys && (
-        <GenericFilter
-          close={() => setShowFilter(false)}
-          filterObj={filterObj}
-          setFilterObj={setFilterObj}
-          data={props.filterKeys.map((key) => ({
-            [key]: [...new Set(data.map((el) => el[key]))],
-          }))}
-          show={showFilter}
-        />
-      )} */}
     </section>
   );
 };

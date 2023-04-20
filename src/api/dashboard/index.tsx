@@ -20,6 +20,14 @@ export async function get_dashboard_stats(): Promise<ResponseSect | null> {
   return resp.data as ResponseSect;
 }
 
+export async function get_dashboard_audit(): Promise<Audit | null> {
+  const resp = await apiRequest.get('admin/transactions/audit?');
+
+  if (!resp.data) return null;
+
+  return resp.data.data as Audit;
+}
+
 /**
  * List all the registered users
  * @returns

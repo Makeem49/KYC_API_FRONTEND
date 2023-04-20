@@ -12,3 +12,5 @@ export { default as DateRanges } from './dateRanges';
 export { default as ExportOptions } from './export-options';
 export { default as GenericFilter } from './filter';
 export { default as CustomizedTable } from './customTable';
+
+export { default as DataGrid } from './data-grid';

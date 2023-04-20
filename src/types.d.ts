@@ -7,6 +7,15 @@ type WithChildren = {
   children: React.ReactNode;
 };
 
+type Banks = {
+  id: number;
+  name: string;
+  code: string;
+  paymentPortalCode: string;
+  countryCode: string;
+  createdAt: string;
+};
+
 type Client = {
   name: string;
   email: string;
@@ -104,6 +113,17 @@ type ClientIntegration = {
   platformId: string;
 };
 
+type FundRequest = {
+  id: number;
+  amount: string;
+  ref: string;
+  description: string;
+  requestType: string;
+  status: string;
+  clientName: string;
+  phoneNumber: string;
+};
+
 type User = {
   user: any;
   id: number;
@@ -145,6 +165,24 @@ type Roles = {
   createdAt: string | Date;
   updatedAt: string | Date;
   permissions: [];
+};
+
+type Audit = {
+  inflow: number;
+  outflow: number;
+};
+
+type LocationStats = {
+  id: number;
+  code: string;
+  name: string;
+  state: string;
+  country: string;
+  createdAt: string;
+  updatedAt: string;
+  total_transactions_value: string;
+  transactions_count: string;
+  total_clients: string;
 };
 
 type ClientProviderToken = {
@@ -266,7 +304,8 @@ type SingleClient = {
 type ClientBio = {
   accountId: number;
   balance: string;
-  bankAccount: null;
+  bankAccount: string;
+  bankName: string;
   bvn: string;
   clientProviderId: null;
   createdAt: string;
@@ -290,6 +329,18 @@ type ClientBio = {
     clientProviderClient: {};
   };
   clientProviderClient: string[];
+};
+
+type Notifications = {
+  id: number;
+  title: string;
+  summary: string;
+  module: string;
+  targetId: string;
+  userId: string;
+  isRead: booleen;
+  createdAt: string;
+  updatedAt: string;
 };
 
 interface GenericContextInterface<T> {
@@ -503,3 +554,11 @@ type Employee = {
 };
 
 type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
+
+interface QueryArgs {
+  page: number;
+  searchQuery: string;
+  filters?: Record<string, any>;
+  fromDate?: Date;
+  toDate?: Date;
+}

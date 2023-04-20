@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import Header from './header';
-import Card from './cards';
-import Chart from './chart';
-import RecentTransaction from './recent-transaction';
-import TransactionStatus from './transaction-status';
-import ChanneSource from './channe-source';
-import WalletBallance from './wallet-balance';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { ArrowDown2 } from 'iconsax-react';
-import { useQueryClient } from 'react-query';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from 'react-query';
+
 import ActionSelect from '../../components/action-select';
+import { useDebouncedEffect } from '../../utils/functions';
+import Card from './cards';
+import ChanneSource from './channe-source';
+import Chart from './chart';
+import Header from './header';
+import RecentTransaction from './recent-transaction';
+import TransactionStatus from './transaction-status';
+import WalletBallance from './wallet-balance';
 
 const Dashboard = () => {
   const queryClient = useQueryClient();
@@ -21,9 +23,7 @@ const Dashboard = () => {
     'decoded-token_providers_name'
   );
   const Decoded: any = localStorage.getItem('decoded-arrays');
-
   const providersArray = JSON.parse(Decoded);
-  console.log(providersArray);
   const { i18n, t } = useTranslation();
   const [locale, setLocale] = useState<string>(i18n.language);
 
@@ -45,8 +45,23 @@ const Dashboard = () => {
   const langVal: any = localStorage.getItem('default_lang');
   const [showVal, setShowVal] = useState<string>(langVal);
 
-  console.log(langVal, 'is it on');
+  useDebouncedEffect(
+    () => {
+      document.addEventListener('click', () => {
+        setShowProviderOpt(false);
+        setShowLangOpt(false);
+      });
 
+      return () => {
+        document.removeEventListener('click', () => {
+          setShowProviderOpt(false);
+          setShowLangOpt(false);
+        });
+      };
+    },
+    [],
+    50
+  );
   return (
     <AnimatePresence>
       <div className='w-full h-[100vh] overflow-y-auto flex'>
@@ -129,7 +144,7 @@ const Dashboard = () => {
                     onClick={() => {
                       localStorage.setItem('default_lang', el.label);
                       setShowVal(el.label);
-                      console.log(localStorage.getItem('default_lang'));
+
                       setLocale(el.lang);
                       i18n.changeLanguage(el.lang);
                       queryClient.invalidateQueries();

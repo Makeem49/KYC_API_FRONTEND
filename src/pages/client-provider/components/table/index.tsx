@@ -1,20 +1,23 @@
-import React from 'react';
-import UserAction from '../drop-down';
-// import { useSingleClientCtx } from '../context/single_user.ctx';
-import { useQuery } from 'react-query';
-import { get_client_provider_query } from '../../../../queries/client_provider';
-import DataGrid from '../../../../components/data-grid';
-import { shortDateFormatter } from '../../../../utils';
-import { Navigate } from 'react-router-dom';
-import { Skeleton } from '@mantine/core';
 import { t } from 'i18next';
+import React from 'react';
+import { useQuery } from 'react-query';
+import { Navigate } from 'react-router-dom';
+
+import { Skeleton } from '@mantine/core';
+
+import DataGrid from '../../../../components/data-grid';
+import { get_client_provider_query } from '../../../../queries/client_provider';
+import { shortDateFormatter } from '../../../../utils';
+import UserAction from '../drop-down';
 
 const Table = () => {
-  const {
-    data: list,
-    isError,
-    isLoading,
-  } = useQuery(get_client_provider_query());
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setSearch] = React.useState('');
+  const [filters, setFilters] = React.useState('');
+
+  const { data, isError, isLoading } = useQuery(
+    get_client_provider_query(currentPage, filter, filters)
+  );
   if (isLoading)
     return (
       <Skeleton
@@ -34,11 +37,16 @@ const Table = () => {
     <>
       <div className='bg-white dark:bg-afexdark-darkest p-3'>
         <DataGrid
+          loadMore={setCurrentPage}
+          lastPage={1}
+          total={data?.data.length!}
           title='Search'
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
-          data={list!}
-          headerFilter={[{ name: 'Status' }]}
+          data={data?.data!}
+          headerFilter={[{ name: 'Status', accessor: 'isActive' }]}
+          setSearch={setSearch}
+          setFilters={setFilters}
           headers={[
             {
               accessor: 'createdAt',
@@ -63,14 +71,13 @@ const Table = () => {
               static: false,
             },
 
-            // {
-            //   accessor: 'numberOfClients',
-            //   hidden: false,
-            //   name: 'Number of Clients',
-            //   sortable: true,
-            //   static: false,
-            //   row: (val) => <span>0</span>,
-            // },
+            {
+              accessor: 'noOfClients',
+              hidden: false,
+              name: 'Number of Clients',
+              sortable: true,
+              static: false,
+            },
 
             {
               accessor: 'apiKey',

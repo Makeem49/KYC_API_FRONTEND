@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import React from 'react';
 import { json2csv } from 'json-2-csv';
 import { saveAs } from 'file-saver';
@@ -156,4 +158,20 @@ export function exportToCSV(
       expandArrayObjects: true,
     }
   );
+}
+
+export function paramsSerializer(params: Record<string, unknown>) {
+  return Object.entries(Object.assign({}, params))
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+}
+
+export function addToObj(key: string, value: unknown) {
+  if (value === 'active') {
+    return Object.assign({}, { [key]: 'true' });
+  } else if (value === 'inactive') {
+    return Object.assign({}, { [key]: 'false' });
+  } else {
+    return Object.assign({}, { [key]: value });
+  }
 }

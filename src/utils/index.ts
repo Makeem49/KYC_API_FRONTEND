@@ -17,4 +17,4 @@ export {
   calculateTotal,
 } from './formatter';
 
-export { exportToCSV, get_nested_value } from './functions';
+export { exportToCSV, get_nested_value, paramsSerializer } from './functions';

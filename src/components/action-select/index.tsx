@@ -35,8 +35,6 @@ const ActionSelect = (props: SelectInterface) => {
     document.addEventListener('click', close);
   }, []);
 
-  console.log(props.data);
-
   return (
     <div
       className='flex items-center relative'

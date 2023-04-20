@@ -19,6 +19,8 @@ export {
   get_clients_by_value_of_transactions,
 } from './clients';
 
+export { get_fund_request, approve_fund_request } from '../api/fund_request';
+
 export {
   create_client_provider,
   edit_client_provider_info,
@@ -50,6 +52,7 @@ export {
   get_roles,
 } from './users';
 
+export { get_banks, update_remote_banks, refresh_bank_list } from './banks';
 export { get_dashboard_stats, get_admin_name } from './dashboard';
 export { get_tracker_stats, get_activity_log } from './tracker';
 export { get_single_client, get_a_client } from './single-client';

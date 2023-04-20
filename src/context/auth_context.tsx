@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { authenticate } from '../api';
 import decodeJwt from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+
 // import { toast } from '../utils';
 // import UseInvalidateAll from '../hooks/useInvalidateAll';
 
@@ -49,13 +51,13 @@ const AuthProvider = (props: WithChildren) => {
     // toast('success', 'Sucess!!', 'Login successfully');
 
     // Drop success toast
-    console.log(resp);
 
     const decodedToken: any = decodeJwt(resp.access_token);
     decodedToken.providers.sort((a: any, b: any) => {
       return a.id > b.id ? 1 : -1;
     });
 
+    console.log(decodedToken, 'here');
     localStorage.setItem(
       'decoded-token_providers',
       decodedToken.providers[0].id
@@ -72,12 +74,11 @@ const AuthProvider = (props: WithChildren) => {
     );
 
     localStorage.setItem('decoded-user-permissions', decodedToken.permissions);
+
     localStorage.setItem('default_lang', 'EN');
 
     const myArrayString = JSON.stringify(decodedToken);
     localStorage.setItem('decoded-arrays', myArrayString);
-
-    console.log(decodedToken.providers);
 
     localStorage.setItem('cuddie-access-token', resp.access_token);
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { Modal, Group } from '@mantine/core';
-
-import { BsQuestionCircle } from 'react-icons/bs';
-import { BsCheckCircle } from 'react-icons/bs';
-import { toggle_token_availability } from '../../../../../api';
+import { BsQuestionCircle, BsCheckCircle } from 'react-icons/bs';
 import { useMutation, useQueryClient } from 'react-query';
+
+import { toggle_token_availability } from '../../../../../api';
 interface AddUserProps extends ModalControllerType {
   data: ClientProviderToken;
 }

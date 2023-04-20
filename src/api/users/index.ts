@@ -1,6 +1,6 @@
+import { apiRequest, paramsSerializer, shortDateFormatter } from '../../utils';
+
 import { AxiosResponse } from 'axios';
-import { User } from 'iconsax-react';
-import { apiRequest, shortDateFormatter } from '../../utils';
 
 /**
  * =================================================================
@@ -14,34 +14,63 @@ import { apiRequest, shortDateFormatter } from '../../utils';
  * List all the registered users
  * @returns
  */
-export async function get_users(): Promise<User[]> {
-  const resp = await apiRequest.get('users');
 
-  if (!resp.data) return [];
+export async function get_users(
+  page: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: User[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get('users', {
+    params: {
+      page,
+      page_size: 10,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
 
-  if (resp.data.data.length < 1) return [];
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
 
-  return resp.data.data.map(
-    (el: any) =>
-      ({
-        id: el.id,
-        user: `${el.firstName} ${el.lastName}`,
-        username: el.username,
-        providers: el.providers.map((el: any) => el.name) ?? '',
-        lastLogin: el.lastLogin ? el.lastLogin : '',
-        twoStepEnabled: false,
-        isActive: el.isActive ? 'Active' : 'Inactive',
-        createdAt: shortDateFormatter(el.createdAt),
-        email: el.email,
-        image: el.image,
-        lastName: el.lastName,
-        firstName: el.firstName,
-        permissions: el.permissions.map((el: any) => el.id) ?? '',
-        // roles: el.roles.map((el: any) => el) ?? '',
-
-        updatedAt: shortDateFormatter(el.updatedAt),
-      } as User)
-  );
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          user: `${el.firstName} ${el.lastName}`,
+          username: el.username,
+          providers: el.providers.map((el: any) => el.name) ?? '',
+          lastLogin: el.lastLogin,
+          twoStepEnabled: false,
+          isActive: el.isActive ? 'Active' : 'Inactive',
+          createdAt: el.createdAt,
+          email: el.email,
+          image: el.image,
+          lastName: el.lastName,
+          firstName: el.firstName,
+          permissions: el.permissions.map((el: any) => el.id) ?? '',
+          roles: el.roles.map((el: any) => el.id) ?? '',
+          updatedAt: el.updatedAt,
+        } as User)
+    ),
+    total: resp.data.total,
+    lastPage: resp.data.lastPage,
+  };
 }
 
 /**
@@ -114,7 +143,6 @@ export async function create_user(data: Partial<User>): Promise<string> {
     roles: data.roles,
     image: data.image,
   });
-  console.log(resp.data, 'is okay');
 
   if (!resp.data) return 'unable to create user';
 

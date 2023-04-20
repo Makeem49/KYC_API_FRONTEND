@@ -1,5 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { apiRequest, shortDateFormatter, toast } from '../../utils';
+
+import {
+  apiRequest,
+  paramsSerializer,
+  shortDateFormatter,
+  toast,
+} from '../../utils';
 
 /**
  * =================================================================
@@ -13,52 +19,77 @@ import { apiRequest, shortDateFormatter, toast } from '../../utils';
  * GET A LIST OF ALL CLIENT PROVIDERS
  * @returns
  */
-export async function get_client_providers(): Promise<ClientProvider[]> {
-  const resp = await apiRequest.get('client-providers');
 
-  return resp.data.data.map(
-    (el: any) =>
-      ({
-        id: el.id,
-        createdAt: shortDateFormatter(el.createdAt),
-        name: el.name,
-        transactionPhrase: el.transactionPhrase,
-        apiKey: el.apiKey ? el.apiKey : 'Api Keys',
-        isActive: el.isActive ? 'Active' : 'Inactive',
-        noOfClients: el.noOfClients ? el.noOfClients : '',
-        code: el.code ? el.code : '',
-        logo: el.logo ? el.logo : '',
-        clientRepoUrl: el.clientRepoUrl,
-        walletTransactionCallbackUrl: el.walletTransactionCallbackUrl,
-        inventoryPositionUrl: el.inventoryPositionUrl,
-        inventoryTradeUrl: el.inventoryTradeUrl ? el.inventoryTradeUrl : '',
-        locationsUrl: el.locationsUrl,
+export async function get_client_providers(
+  page: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: ClientProvider[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get(`client-providers`, {
+    params: {
+      page,
+      page_size: 10,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
 
-        loanCallbackUrl: el.loanCallbackUrl ? el.loanCallbackUrl : '',
-        countryCode: el.countryCode,
-        // checkWalletBalanceEnabled: el.checkWalletBalanceEnabled
-        //   ? el.checkWalletBalanceEnabled
-        //   : '',
-        // bankTransferEnabled: el.bankTransferEnabled
-        //   ? el.bankTransferEnabled
-        //   : '',
-        // clientTransferEnabled: el.clientTransferEnabled
-        //   ? el.clientTransferEnabled
-        //   : '',
-        checkInventoryPositionEnabled: el.checkInventoryPositionEnabled,
-        tradeInventoryTransactionEnabled: el.tradeInventoryTransactionEnabled,
-        requestHeaders: el.requestHeaders,
-        allowAutoApproveFundRequest: el.allowAutoApproveFundRequest,
-        createdBy: el.createdBy,
-        image: el.image ? el.image : '',
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
 
-        clientProviderToken: el.clientProviderToken
-          ? el.clientProviderToken
-          : '',
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          createdAt: shortDateFormatter(el.createdAt),
+          name: el.name,
+          transactionPhrase: el.transactionPhrase,
+          apiKey: el.apiKey ? el.apiKey : 'Api Keys',
+          isActive: el.isActive ? 'Active' : 'Inactive',
+          noOfClients: el.noOfClients ? el.noOfClients : '',
+          code: el.code ? el.code : '',
+          logo: el.logo ? el.logo : '',
+          clientRepoUrl: el.clientRepoUrl,
+          walletTransactionCallbackUrl: el.walletTransactionCallbackUrl,
+          inventoryPositionUrl: el.inventoryPositionUrl,
+          inventoryTradeUrl: el.inventoryTradeUrl ? el.inventoryTradeUrl : '',
+          locationsUrl: el.locationsUrl,
 
-        updatedAt: el.updatedAt,
-      } as ClientProvider)
-  );
+          loanCallbackUrl: el.loanCallbackUrl ? el.loanCallbackUrl : '',
+          countryCode: el.countryCode,
+          checkInventoryPositionEnabled: el.checkInventoryPositionEnabled,
+          tradeInventoryTransactionEnabled: el.tradeInventoryTransactionEnabled,
+          requestHeaders: el.requestHeaders,
+          allowAutoApproveFundRequest: el.allowAutoApproveFundRequest,
+          createdBy: el.createdBy,
+          image: el.image ? el.image : '',
+
+          clientProviderToken: el.clientProviderToken
+            ? el.clientProviderToken
+            : '',
+
+          updatedAt: el.updatedAt,
+        } as ClientProvider)
+    ),
+    total: resp.data,
+    lastPage: resp.data.lastPage,
+  };
 }
 
 /**
@@ -143,7 +174,7 @@ export async function edit_client_provider_info(
     toast('success', 'Provider updated successfully');
     return resp.data.message;
   } catch (error: any) {
-    toast('error', 'Unable to login', `${error.response.data.error}`);
+    toast('error', 'Unable to Update', `${error.response.data.error}`);
   }
 }
 

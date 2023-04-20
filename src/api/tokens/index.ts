@@ -1,7 +1,8 @@
+import { paramsSerializer, shortDateFormatter } from '../../utils';
+
+import { apiRequest } from '../../utils';
 // import { AxiosResponse } from 'axios';
 import { t } from 'i18next';
-import { apiRequest } from '../../utils';
-import { shortDateFormatter } from '../../utils';
 
 /**
  * =================================================================
@@ -16,26 +17,55 @@ import { shortDateFormatter } from '../../utils';
  * @param providerId The ID of the provider
  * @returns
  */
+
 export async function get_token_list(
-  providerId: number
-): Promise<ClientProviderToken[]> {
-  const resp = await apiRequest.get(`api-tokens?providerId=${providerId}`);
+  providerId: number,
+  page: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: ClientProviderToken[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get(`api-tokens?providerId=${providerId}`, {
+    params: {
+      page,
+      page_size: 10,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
 
-  if (!resp.data) return [];
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
 
-  if (resp.data.data.length < 1) return [];
-
-  return resp.data.data.map(
-    (el: any) =>
-      ({
-        id: el.id,
-        createdAt: shortDateFormatter(el.createdAt),
-        apiKey: el.apiKey.substr(0, 15) + '...',
-        noOfRequests: el.noOfRequests ? el.noOfRequests : '0',
-        lastUsedAt: el.lastUsedAt ? el.lastUsedAt : 'unavailable',
-        isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}`,
-      } as ClientProviderToken)
-  );
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          createdAt: shortDateFormatter(el.createdAt),
+          apiKey: el.apiKey.substr(0, 15) + '...',
+          noOfRequests: el.noOfRequests ? el.noOfRequests : '0',
+          lastUsedAt: el.lastUsedAt ? el.lastUsedAt : 'unavailable',
+          isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}`,
+        } as ClientProviderToken)
+    ),
+    total: resp.data.total,
+    lastPage: resp.data.lastPage,
+  };
 }
 
 /**

@@ -1,18 +1,18 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { MdKeyboardArrowRight } from 'react-icons/md';
 
-import { useNavigate } from 'react-router-dom';
-import { TextInput } from '../../../components';
+import { Form, Formik } from 'formik';
+
 import Button from '../../../components/button';
-
+import { MdKeyboardArrowRight } from 'react-icons/md';
+import React from 'react';
+import { TextInput } from '../../../components';
+import afexLogo from '../../../assets/brand/AFEX-logo.png';
+import cudiLogo from '../../../assets/brand/Cudi-Logo.png';
 // import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
 import flap from '../../../assets/brand/flap.svg';
-import afexLogo from '../../../assets/brand/AFEX-logo.png';
+import { motion } from 'framer-motion';
 import { useAuthCtx } from '../../../context';
-import cudiLogo from '../../../assets/brand/Cudi-Logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const LoginOverlay = (props: { isVisible: boolean }) => {
   const { login, loading } = useAuthCtx();
@@ -67,7 +67,8 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
               validationSchema={Yup.object({
                 username: Yup.string().required('Username is required'),
                 password: Yup.string().required('Password is required'),
-              })}>
+              })
+              }>
               <motion.div
                 className=' z-40'
                 initial={{ transform: 'translateY(-100%)', opacity: 0 }}

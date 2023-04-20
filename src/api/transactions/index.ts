@@ -1,13 +1,13 @@
-import { timeFormatter } from './../../utils/formatter';
-import { AxiosResponse } from 'axios';
-import { apiRequest } from '../../utils';
-import { shortDateFormatter } from '../../utils';
-
 import {
   checkCountryCode,
   currentNumberFormatter,
 } from '../../utils/formatter';
+import { paramsSerializer, shortDateFormatter } from '../../utils';
+
+import { AxiosResponse } from 'axios';
+import { apiRequest } from '../../utils';
 import { t } from 'i18next';
+import { timeFormatter } from './../../utils/formatter';
 
 /**
  * =================================================================
@@ -30,39 +30,107 @@ export function get_transactions_overview(): Promise<AxiosResponse<any, any>> {
  *
  * @returns
  */
-export async function get_all_transactions(): Promise<TransactionList[]> {
-  const resp = await apiRequest.get('transactions');
+export async function get_all_transactions(
+  page: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: TransactionList[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get(`transactions`, {
+    params: {
+      page,
+      page_size: 10,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
 
-  return resp.data.data.map(
-    (el: any) =>
-      ({
-        id: el.id,
-        createdAt: shortDateFormatter(el.createdAt),
-        time: timeFormatter(el.createdAt),
-        clientName: `${el.client.firstName} ${el.client.lastName}`,
-        sessionId: el.sessionId.substr(0, 15) + '',
-        amount: currentNumberFormatter(el.amount),
-        transactionType: el.transactionType,
-        status: el.status ? `${t('Active')}` : `${t('Inactive')}`,
-        countryCode: checkCountryCode(el.client.countryCode),
-        clientId: el.clientId ? el.clientId : '',
-        // transactionLogId: el.transactionLogId ? el.transactionLogId : 'none',
-        // channel: el.channel,
-        // amountBefore: currentNumberFormatter(el.amountBefore),
-        // amountAfter: currentNumberFormatter(el.amountAfter),
-        // description: el.description,
-        // comment: el.comment ? el.comment : '',
-        // ref: el.ref,
-        // isPlatformSynced: el.isPlatformSynced ? el.isPlatformSynced : '',
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
 
-        // updatedAt: el.updatedAt,
-        // deletedAt: el.deletedAt ? el.deletedAt : '',
-        // clientId: el.clientId ? el.clientId : '',
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          createdAt: shortDateFormatter(el.createdAt),
+          time: timeFormatter(el.createdAt),
+          clientName: `${el.client.firstName} ${el.client.lastName}`,
+          sessionId: el.sessionId.substr(0, 15) + '',
+          amount: currentNumberFormatter(el.amount),
+          transactionType: el.transactionType,
+          status: el.status ? `${t('Active')}` : `${t('Inactive')}`,
+          countryCode: checkCountryCode(el.client.countryCode),
+          clientId: el.clientId ? el.clientId : '',
+        } as TransactionList)
+    ),
+    total: resp.data.total,
+    lastPage: resp.data.lastPage,
+  };
+}
 
-        // clientBalance: el.client.balance,
-        // clientPlatformId: el.client.platformId ? el.client.platformId : '',
-      } as TransactionList)
-  );
+export async function get_trans_locations(
+  page: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: LocationStats[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get(`admin/transactions/locations`, {
+    params: {
+      page,
+      page_size: 10,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
+
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          code: el.code,
+          name: el.name,
+          state: el.state,
+          total_transactions_value: el.total_transactions_value,
+          transactions_count: el.transactions_count,
+          total_clients: el.total_clients,
+        } as LocationStats)
+    ),
+    total: resp.data.total,
+    lastPage: resp.data.lastPage,
+  };
 }
 
 /**

@@ -1,22 +1,39 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import TransactionCards from './components/cards';
-import { ArrowDown2, ArrowLeft } from 'iconsax-react';
-import TransactionTable from './components/transaction_table';
-import TransactionCount from './components/transaction_count';
-import TransactionValue from './components/transaction_value';
-import TopTransaction from './components/top_transaction';
-import RightModal from './components/modal';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { useQuery, useQueryClient } from 'react-query';
-import { get_transaction_list_querry } from '../../queries/transaction_stats';
-import Locations from './components/locations_table';
 import { t } from 'i18next';
+import { ArrowDown2, ArrowLeft } from 'iconsax-react';
+import React, { useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { Link } from 'react-router-dom';
+
+import { useDebouncedEffect } from '../../utils/functions';
+import TransactionCards from './components/cards';
+import Locations from './components/locations_table';
+import RightModal from './components/modal';
+import TopTransaction from './components/top_transaction';
+import TransactionCount from './components/transaction_count';
+import TransactionTable from './components/transaction_table';
+import TransactionValue from './components/transaction_value';
 
 function Transaction() {
   const queryClient = useQueryClient();
   const [showProviderOpt, setShowProviderOpt] = useState<boolean>(false);
+
+  useDebouncedEffect(
+    () => {
+      document.addEventListener('click', () => {
+        setShowProviderOpt(false);
+      });
+
+      return () => {
+        document.removeEventListener('click', () => {
+          setShowProviderOpt(false);
+        });
+      };
+    },
+    [],
+    50
+  );
 
   const decodedDefaultVal: any = localStorage.getItem(
     'decoded-token_providers_name'
@@ -24,14 +41,6 @@ function Transaction() {
   const Decoded: any = localStorage.getItem('decoded-arrays');
 
   const providersArray = JSON.parse(Decoded);
-
-  const { data, isError, isLoading } = useQuery(get_transaction_list_querry(1));
-
-  if (isLoading) return <p>Loading....</p>;
-
-  if (isError) return <p>Error!!!</p>;
-
-  // console.log(data);
 
   return (
     <AnimatePresence>
@@ -74,7 +83,7 @@ function Transaction() {
                 </button>
 
                 <ul
-                  className={`flex gap-1 w-[160px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white dark:ring-afexdark-dark shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                  className={`flex gap-1 w-[150px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white dark:ring-afexdark-dark shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
                     showProviderOpt &&
                     'max-h-[300px] opacity-100 overflow-scroll'
                   }`}>
@@ -123,7 +132,7 @@ function Transaction() {
             exit={{ opacity: 0, transform: 'translate(0,0)' }}
             transition={{ duration: 2 }}>
             {' '}
-            <TransactionTable data={data!} />
+            <TransactionTable />
           </motion.div>
         </div>
 

@@ -1,14 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+
+import { Skeleton } from '@mantine/core';
+
 import hafCirc from '../../../assets/images/half.svg';
-import { commaformatter } from '../../../utils';
+import waving from '../../../assets/svgs/waving.svg';
 import {
   get_admin_query,
   get_dashboard_stats_query,
 } from '../../../queries/dash_board';
-import { useQuery } from 'react-query';
-import waving from '../../../assets/svgs/waving.svg';
-import { Skeleton } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+import { commaformatter } from '../../../utils';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -33,8 +35,6 @@ const Header = () => {
     hour: '2-digit',
     minute: '2-digit',
   });
-
-  console.log(today, 'needs fix');
 
   return (
     <div className='relative flex justify-between text-[14px] items-center rounded-lg bg-[#54289D] dark:bg-afexdark-darkest w-full h-[94px] p-5 text-[#F1EBFC] '>

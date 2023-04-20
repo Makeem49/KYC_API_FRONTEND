@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import { faker } from '@faker-js/faker';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { get_client_provider_query } from '../../../../../../queries/client_provider';
+import { useGetPermissions, useGetRoles } from '../../../../../../queries';
 
 import {
   FormImage,
@@ -15,13 +16,11 @@ import Button from '../../../../../../components/button';
 
 import { create_user } from '../../../../../../api';
 
-import { useUsersCtx } from '../../../../../../context';
 import { toast } from '../../../../../../utils';
 import * as Yup from 'yup';
 import { t } from 'i18next';
 
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
-  const { item, itemTwo } = useUsersCtx();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -40,11 +39,13 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const { data: item } = useGetPermissions();
+  const { data: itemTwo } = useGetRoles();
   const {
     data: list,
     isError,
     isLoading,
-  } = useQuery(get_client_provider_query());
+  } = useQuery(get_client_provider_query(1));
   if (isLoading) return <span> Loading......</span>;
   if (isError) return <span> Error!!!</span>;
 
@@ -154,7 +155,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                 Select Applicable Permissions
               </p>{' '} */}
               <FormMultiSelect
-                data={item?.map((a) => {
+                data={item!?.map((a) => {
                   return { value: a.id, label: a.name };
                 })}
                 id='permissions'
@@ -170,7 +171,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
                 Select Applicable Roles
               </p> */}
               <FormMultiSelect
-                data={itemTwo?.map((b) => {
+                data={itemTwo!?.map((b) => {
                   return { value: b.id, label: b.name };
                 })}
                 id='roles'
@@ -187,7 +188,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
               </p> */}
 
               <FormMultiSelect
-                data={list!?.map((b) => {
+                data={list!?.data?.map((b: any) => {
                   return { value: b.id, label: b.name };
                 })}
                 id='providers'

@@ -1,19 +1,35 @@
+import { DataGrid } from '../../../../components';
 import React from 'react';
-import DataGrid from '../../../../components/data-grid';
 import { shortDateFormatter } from '../../../../utils';
 import { t } from 'i18next';
-const TransactionTable = ({ data }: { data: TransactionList[] }) => {
+import { useGetTransactionList } from '../../../../queries';
+
+const TransactionTable = () => {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setSearch] = React.useState('');
+  const [filters, setFilters] = React.useState('');
+
+  const { data } = useGetTransactionList(currentPage, filter, filters);
+
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
   const searchText = t('Search by client name, id');
   return (
     <>
       <div className='p-4 bg-white dark:bg-afexdark-darkest w-full'>
         <DataGrid
+          loadMore={setCurrentPage}
+          lastPage={data?.lastPage!}
+          total={data?.total!}
+          setSearch={setSearch}
+          setFilters={setFilters}
           title={searchText}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
-          data={data}
-          headerFilter={[{ name: 'Transaction Type' }, { name: 'Status' }]}
+          data={data?.data!}
+          headerFilter={[
+            { name: 'Transaction Type', accessor: 'transactionType' },
+            { name: 'Status', accessor: 'isActive' },
+          ]}
           headers={[
             {
               accessor: 'createdAt',

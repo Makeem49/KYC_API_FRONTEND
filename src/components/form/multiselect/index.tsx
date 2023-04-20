@@ -26,7 +26,14 @@ const MultiSelect = (props: MultiSelectInterface) => {
   const inputLabel = t(props.label);
   const InitialLabel = t('Select');
   const afterLabel = t('View Selected');
-  const [showSelectOpts, setSelectShowOpts] = useState<string>(InitialLabel);
+
+  const setValue = () => {
+    if (field?.value?.length <= 0) {
+      return InitialLabel;
+    } else {
+      return afterLabel;
+    }
+  };
 
   useEffect(() => {
     document.body.addEventListener('click', () => setShowOpts(false));
@@ -83,14 +90,14 @@ const MultiSelect = (props: MultiSelectInterface) => {
               <MdKeyboardArrowDown className='absolute top-1/2 -translate-y-1/2 right-4 text-gray-400 text-lg' />
             </div>
             <span className='absolute flex gap-1 top-4 left-4'>
-              <span> {showSelectOpts}</span>
+              <span> {setValue()}</span>
               <span> {inputLabel} </span>
             </span>
             <ul
               className={`overflow-auto absolute z-40 max-h-0 transition-[max-height] child:cursor-pointer child:my-2 child:ml-2 bg-white dark:bg-afexdark-verydark w-full ring-1 ring-afexpurple-light dark:ring-afexdark-dark rounded-lg opacity-0 ${
                 showOpts && 'max-h-72 opacity-100 my-2'
               }`}>
-              {props.data.map((option, index) => (
+              {props?.data?.map((option, index) => (
                 <li
                   key={option.value}
                   onClick={(e) => {
@@ -112,19 +119,10 @@ const MultiSelect = (props: MultiSelectInterface) => {
                     id={option.label}
                     className='checkbox'
                     onChange={(e) => {
-                         console.log(option, 'here');
                       if (field?.value?.includes(option.value)) {
                         return remove(field.value.indexOf(option.value));
                       }
                       return push(option.value);
-                    }}
-                    onClick={(e) => {
-                   
-                      if (field?.value?.includes(option.value)) {
-                        setSelectShowOpts(InitialLabel);
-                      } else {
-                        setSelectShowOpts(afterLabel);
-                      }
                     }}
                     checked={field?.value?.indexOf(option.value) > -1}
                   />

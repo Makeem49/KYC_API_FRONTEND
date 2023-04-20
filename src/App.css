@@ -22,9 +22,14 @@ body {
   @apply !text-textgrey-normal dark:!text-afexdark-regular transition-all duration-200;
 }
 html.dark .mantine-Paper-root {
-  background-color: #0d0d0d !important;
+  background-color: #1a171f !important;
   color: #b0b7c3 !important;
 }
+
+html.dark .mantine-Popover-dropdown {
+  background-color: #1a171f !important;
+}
+
 html.dark .mantine-Modal-title {
   color: #b0b7c3 !important;
 }

@@ -107,6 +107,7 @@ const DateRanges = ({
                 type='button'
                 className='px-8 py-3 bg-afexpurple dark:bg-wdark-300 text-white rounded capitalize'
                 onClick={() => {
+                  console.log(endDate, startDate);
                   if (filterFunc) {
                     filterFunc();
                     close();

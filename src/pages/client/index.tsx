@@ -1,22 +1,40 @@
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { t } from 'i18next';
+import { ArrowDown2, ArrowLeft } from 'iconsax-react';
 import React, { useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { Link, Navigate } from 'react-router-dom';
+
+import { useGetTransactionList } from '../../queries';
+import { useDebouncedEffect } from '../../utils/functions';
 import ClientCard from './components/cards';
 import ClientList from './components/client_list';
 import RecentSearch from './components/recent_search';
 import TransactionCount from './components/transaction_count';
 import TransactionValue from './components/transaction_value';
-import { ArrowDown2, ArrowLeft } from 'iconsax-react';
-import { AnimatePresence } from 'framer-motion';
-import { motion } from 'framer-motion';
-import { useQuery, useQueryClient } from 'react-query';
-import { get_transaction_list_querry } from '../../queries/transaction_stats';
-import { t } from 'i18next';
 
 function Client() {
   const queryClient = useQueryClient();
+  const { isError } = useGetTransactionList();
   const [showProviderOpt, setShowProviderOpt] = useState<boolean>(false);
 
-  const { isError } = useQuery(get_transaction_list_querry(1));
+  useDebouncedEffect(
+    () => {
+      document.addEventListener('click', () => {
+        setShowProviderOpt(false);
+      });
+
+      return () => {
+        document.removeEventListener('click', () => {
+          setShowProviderOpt(false);
+        });
+      };
+    },
+    [],
+    50
+  );
+
   if (isError) return <Navigate to='/login' />;
 
   const decodedDefaultVal: any = localStorage.getItem(
@@ -28,9 +46,9 @@ function Client() {
 
   return (
     <AnimatePresence>
-      <div className='w-full h-[100vh] overflow-y-auto flex'>
+      <div className='w-full h-[100vh] flex'>
         {/* Left Section */}
-        <div className='w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
+        <div className='w-[68%] h-[100%] flex flex-col gap-14 overflow-y-auto p-10'>
           {/* Title */}
           <div className='flex justify-between items-center'>
             <div className='flex w-full flex-col'>
