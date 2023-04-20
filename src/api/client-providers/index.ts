@@ -1,5 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { apiRequest } from '../../utils';
+
+import {
+  apiRequest,
+  paramsSerializer,
+  shortDateFormatter,
+  toast,
+} from '../../utils';
 
 /**
  * =================================================================
@@ -8,8 +14,82 @@ import { apiRequest } from '../../utils';
  *
  * =================================================================
  */
-export function get_client_providers(): Promise<AxiosResponse<any, any>> {
-  return apiRequest.get('client-providers');
+
+/**
+ * GET A LIST OF ALL CLIENT PROVIDERS
+ * @returns
+ */
+
+export async function get_client_providers(
+  page: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: ClientProvider[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get(`client-providers`, {
+    params: {
+      page,
+      page_size: 10,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
+
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          createdAt: shortDateFormatter(el.createdAt),
+          name: el.name,
+          transactionPhrase: el.transactionPhrase,
+          apiKey: el.apiKey ? el.apiKey : 'Api Keys',
+          isActive: el.isActive ? 'Active' : 'Inactive',
+          noOfClients: el.noOfClients ? el.noOfClients : '',
+          code: el.code ? el.code : '',
+          logo: el.logo ? el.logo : '',
+          clientRepoUrl: el.clientRepoUrl,
+          walletTransactionCallbackUrl: el.walletTransactionCallbackUrl,
+          inventoryPositionUrl: el.inventoryPositionUrl,
+          inventoryTradeUrl: el.inventoryTradeUrl ? el.inventoryTradeUrl : '',
+          locationsUrl: el.locationsUrl,
+
+          loanCallbackUrl: el.loanCallbackUrl ? el.loanCallbackUrl : '',
+          countryCode: el.countryCode,
+          checkInventoryPositionEnabled: el.checkInventoryPositionEnabled,
+          tradeInventoryTransactionEnabled: el.tradeInventoryTransactionEnabled,
+          requestHeaders: el.requestHeaders,
+          allowAutoApproveFundRequest: el.allowAutoApproveFundRequest,
+          createdBy: el.createdBy,
+          image: el.image ? el.image : '',
+
+          clientProviderToken: el.clientProviderToken
+            ? el.clientProviderToken
+            : '',
+
+          updatedAt: el.updatedAt,
+        } as ClientProvider)
+    ),
+    total: resp.data,
+    lastPage: resp.data.lastPage,
+  };
 }
 
 /**
@@ -29,13 +109,73 @@ export function get_client_providers(): Promise<AxiosResponse<any, any>> {
  *    "clientTransferEnabled": true,
  *    "checkInventoryPositionEnabled": true,
  *    "tradeInventoryTransactionEnabled": true
+ *
  * }
  * @returns
  */
-export function create_client_provider(
-  data: ClientProvider
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.post('client-providers', data);
+export async function create_client_provider(
+  data: Partial<ClientProvider>
+): Promise<string | undefined> {
+  try {
+    const resp = await apiRequest.post('client-providers', {
+      name: data.name,
+      code: data.code,
+      logo: data.logo,
+      clientRepoUrl: data.clientRepoUrl,
+      walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
+      inventoryPositionUrl: data.inventoryPositionUrl,
+      inventoryTradeUrl: data.inventoryTradeUrl,
+      locationsUrl: data.locationsUrl,
+      loanCallbackUrl: data.loanCallbackUrl,
+      transactionPhrase: data.transactionPhrase,
+      checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
+      tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
+      requestHeaders: {
+        API_KEY: 'kUvOHKMrkd',
+        REQUEST_TS: new Date().toISOString(),
+        HASH_KEY: 'TNiD1NXGW0Pk8Gou7XfuHSpi8SBJRYIA',
+      },
+      allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
+      countryCode: data.countryCode,
+    });
+
+    if (!resp.data) return 'Bad request. Unable to create client provider';
+    toast('success', 'Client Provider created successfully');
+    return resp.data.message;
+  } catch (error: any) {
+    toast('error', 'Unable to login', `${error.response.data.error}`);
+  }
+}
+
+export async function edit_client_provider_info(
+  id: number,
+  data: Partial<ClientProvider>
+): Promise<string | undefined> {
+  try {
+    const resp = await apiRequest.put(`client-providers/${id}`, {
+      id: data.id,
+      name: data.name,
+      code: data.code,
+      logo: data.logo,
+      clientRepoUrl: data.clientRepoUrl,
+      walletTransactionCallbackUrl: data.walletTransactionCallbackUrl,
+      inventoryPositionUrl: data.inventoryPositionUrl,
+      inventoryTradeUrl: data.inventoryTradeUrl,
+      locationsUrl: data.locationsUrl,
+      loanCallbackUrl: data.loanCallbackUrl,
+      transactionPhrase: data.transactionPhrase,
+      checkInventoryPositionEnabled: data.checkInventoryPositionEnabled,
+      tradeInventoryTransactionEnabled: data.tradeInventoryTransactionEnabled,
+      requestHeaders: data.requestHeaders,
+      allowAutoApproveFundRequest: data.allowAutoApproveFundRequest,
+      countryCode: data.countryCode,
+    });
+    if (!resp.data) return 'unable to create user';
+    toast('success', 'Provider updated successfully');
+    return resp.data.message;
+  } catch (error: any) {
+    toast('error', 'Unable to Update', `${error.response.data.error}`);
+  }
 }
 
 /**
@@ -50,10 +190,16 @@ export function create_client_provider(
  * @param id ID of the client
  * @returns
  */
-export function get_client_provider_details(
+export async function get_client_provider_details(
   id: string
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.get(`client-providers/${id}`);
+): Promise<ClientProvider | null> {
+  const resp = await apiRequest.get(`client-providers/${id}`);
+
+  if (!resp.data) return null;
+
+  const { data }: { data: ClientProvider } = resp.data;
+
+  return data;
 }
 
 /**
@@ -115,24 +261,22 @@ export function get_client_provider_bank_info(
  * @returns
  */
 
-export function edit_client_provider_info(
-  id: string,
-  data: Partial<ClientProvider>
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.put(`clients/${id}/`, data);
-}
-
 /**
  * Deactivate or activate a client provider
  * @param id ID of the client
  * @param data {isActive: true or false}
  * @returns
  */
-export function toggle_client_provider_status(
-  id: string,
-  data: { isActive: boolean }
-): Promise<AxiosResponse<any, any>> {
-  return apiRequest.put(`client-providers/${id}/enable-or-disable`, data);
+export async function toggle_client_provider_status(
+  id: number,
+  isActive: boolean
+): Promise<string> {
+  const resp = await apiRequest.put(
+    `client-providers/${id}/enable-or-disable`,
+    { isActive }
+  );
+  if (!resp.data) return 'unable to disable provider';
+  return resp.data.message;
 }
 
 /**
@@ -142,6 +286,6 @@ export function toggle_client_provider_status(
  */
 export function get_clients_under_provider(
   id: string
-): Promise<AxiosResponse<any, any>> {
+): Promise<AxiosResponse<string>> {
   return apiRequest.get(`client-providers/${id}/clients`);
 }

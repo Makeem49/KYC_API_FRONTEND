@@ -1,66 +1,117 @@
+import {
+  UserCirlceAdd,
+  UserOctagon,
+  UserRemove,
+  UserTick,
+} from 'iconsax-react';
+
+import { Change } from '../../../../components';
 import React from 'react';
-import { UserSquare } from 'iconsax-react';
-import { Wallet1 } from 'iconsax-react';
-import { Receipt } from 'iconsax-react';
+import { Skeleton } from '@mantine/core';
+import { calculatePercentageChange } from '../../../../utils';
+import { get_client_stats_query } from '../../../../queries/clients_stats';
+import { t } from 'i18next';
+import { useQuery } from 'react-query';
 
 const ClientCard = () => {
+  const { data: stats, isLoading } = useQuery(get_client_stats_query());
+  console.log(stats, 'here');
+
+  if (isLoading)
+    return (
+      <Skeleton
+        height={150}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
+
   return (
-    <div className='flex gap-4'>
+    <div className='flex gap-8 child:h-[134px]'>
       {/* Card One */}
-      <div className='relative flex flex-col border-[#DECFF7] border border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7]  dark:border-afexdark-dark  border-b-4 bg-white  dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>TOTAL CLIENTS</p>
-          <UserSquare size='20' color='#a982ea' variant='Bulk' />
+          <p className=' font-normal text-textgrey-normal'>
+            {t('TOTAL ClIENTS')}
+          </p>
+          <UserCirlceAdd size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-Bold'>
-            N2,000 <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {stats?.sectionOne?.totalClients?.today}
+            <Change
+              value={calculatePercentageChange(
+                stats?.sectionOne?.totalClients?.today ?? 0,
+                stats?.sectionOne?.totalClients?.previousDay ?? 0
+              )}
+            />
           </p>
-          <span>vs previous day</span>
+          <span>{t('vs previous day')}</span>
         </div>
       </div>
 
       {/* Card Two */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col  border-[#DECFF7]  dark:border-afexdark-dark  border-b-4 bg-white  dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>VERIFIED CLIENTS</p>
-          <Wallet1 size='20' color='#a982ea' variant='Bulk' />
+          <p className=' font-normal text-textgrey-normal'>
+            {t('VERIFIED CLIENTS')}
+          </p>
+          <UserTick size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] font-bold text-textgrey-Bold'>
-            N1,000 <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+            {stats?.sectionOne?.verifiedClients?.today}
+            <Change
+              value={calculatePercentageChange(
+                stats?.sectionOne?.verifiedClients?.today ?? 0,
+                stats?.sectionOne?.verifiedClients?.previousDay ?? 0
+              )}
+            />
           </p>
-          <span>vs previous day</span>
+          <span>{t('vs previous day')}</span>
         </div>
       </div>
 
       {/* Card Three */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col  border-[#DECFF7]  dark:border-afexdark-dark  border-b-4 bg-white  dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>UNVERIFIED CLIENTS</p>
-          <Receipt size='20' color='#a982ea' variant='Bulk' />
+          <p className=' font-normal text-textgrey-normal'>
+            {t('UNVERIFIED CLIENTS')}
+          </p>
+          <UserRemove size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-Bold'>
-            N200,000,000{' '}
-            <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+          <p className='text-[18px] w-full font-bold text-textgrey-dark'>
+            0{' '}
+            <span className='text-[#ff5653] font-normal  text-[13px]'>
+              {' '}
+              0.00%{' '}
+            </span>
           </p>
-          <span>vs previous day</span>
+          <span>{t('vs previous day')}</span>
         </div>
       </div>
 
       {/* Card Four */}
-      <div className='relative flex flex-col border border-[#DECFF7] border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
+      <div className='relative flex flex-col border-[#DECFF7]  dark:border-afexdark-dark  border-b-4 bg-white  dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
         <div className='flex items-center justify-between w-full'>
-          <p className=' font-semibold text-[#8F8E91]'>ACTIVE CLIENTS</p>
-          <Receipt size='20' color='#a982ea' variant='Bulk' />
+          <p className=' font-normal text-textgrey-normal'>
+            {t('ACTIVE CLIENTS')}
+          </p>
+          <UserOctagon size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-Bold'>
-            N200,000,000{' '}
-            <span className='text-[#0DBF66] text-[13px]'> + 36% </span>
+          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+            {stats?.sectionOne?.activeClients?.today}
+            <Change
+              value={calculatePercentageChange(
+                stats?.sectionOne?.activeClients?.today ?? 0,
+                stats?.sectionOne?.activeClients?.previousDay ?? 0
+              )}
+            />
           </p>
-          <span>vs previous day</span>
+          <span>{t('vs previous day')}</span>
         </div>
       </div>
     </div>

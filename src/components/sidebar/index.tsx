@@ -1,90 +1,186 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Popover } from '@mantine/core';
-import { Logout, Notification, Setting2 } from 'iconsax-react';
-
+import { t } from 'i18next';
 import {
-  HomeHashtag,
-  People,
-  Book1,
-  UserAdd,
   ArrowSwapHorizontal,
+  Bank,
+  Book1,
+  HomeHashtag,
   KeyboardOpen,
+  Logout,
+  MoneyArchive,
+  Moon,
+  People,
+  ProfileCircle,
+  Setting2,
+  Sun1,
+  UserCirlceAdd,
 } from 'iconsax-react';
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import { NavLink } from 'react-router-dom';
 
-import cuddieLogo from '../../assets/brand/Cuddie.svg';
-import profIcon from '../../assets/images/profile_img.svg';
-import NotificationModal from '../notification modal';
+import { Popover } from '@mantine/core';
 import { Tooltip } from '@mantine/core';
 
+import cudiLogo from '../../assets/brand/Cudi-Logo.png';
+import { useAuthCtx } from '../../context';
+import { useThemeCtx } from '../../context/theme_context';
+import { get_admin_query } from '../../queries/dash_board';
+import NotificationModal from '../notification-modal';
+
 function Sidebar() {
+  const { data: user } = useQuery(get_admin_query());
+  const { setTheme } = useThemeCtx();
+
+  const { logout } = useAuthCtx();
+  const [opened, setOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
+
+  const state = localStorage.getItem('decoded-arrays');
+  const loggedin_user = JSON.parse(state ?? '{}');
+
+  const hideRoute = (required_permissions: string[]) => {
+    if (!state || !loggedin_user) return false;
+    if (loggedin_user!?.username === 'admin') return false;
+
+    return !required_permissions!?.every((permission) =>
+      loggedin_user!?.permissions
+        .map((el: Record<string, any>) => el.name)
+        .includes(permission)
+    );
+  };
+
   const routes = [
     {
-      to: '/dashboard',
-      icon: <HomeHashtag size='20' variant='Bulk' />,
+      to: '/',
+      icon: (
+        <HomeHashtag
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
       label: 'Dashboard',
+      hidden: false,
     },
     {
       to: '/client',
-      icon: <People size='20' variant='Bulk' />,
-      label: 'Client',
+      icon: (
+        <People
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
+      label: 'Clients',
+      hidden: hideRoute(['View Clients']),
     },
     {
       to: '/transaction',
-      icon: <Book1 size='20' variant='Bulk' />,
-      label: 'Transaction',
+      icon: (
+        <Book1
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
+      label: 'Transactions',
+      hidden: hideRoute(['View Client Transactions']),
     },
+
     {
-      to: '/user_management',
-      icon: <UserAdd size='20' variant='Bulk' />,
+      to: '/user-management',
+      icon: (
+        <UserCirlceAdd
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
       label: 'User Management',
+      hidden: hideRoute(['View Users']),
     },
 
     {
-      to: '/api_request',
-      icon: <ArrowSwapHorizontal size='20' variant='Bulk' />,
-      label: 'Api Request',
+      to: '/client-provider',
+      icon: (
+        <ArrowSwapHorizontal
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
+      label: 'Client Providers',
+      hidden: hideRoute(['View Client Provider']),
     },
 
     {
-      to: '/tracker_dashboard',
-      icon: <KeyboardOpen size='20' variant='Bulk' />,
+      to: '/banks',
+      icon: (
+        <Bank
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
+      label: 'Banks',
+      hidden: false,
+    },
+
+    {
+      to: '/fund-request',
+      icon: (
+        <MoneyArchive
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
+      label: 'Fund Request',
+      hidden: false,
+    },
+
+    {
+      to: '/tracker-dashboard',
+      icon: (
+        <KeyboardOpen
+          variant='Bulk'
+          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
+        />
+      ),
       label: 'Tracker Dashboard',
+      hidden: false,
     },
-  ];
+  ].filter((route) => !route.hidden);
 
   const activeStyle =
-    'bg-[#FAF8FF] flex items-center border-l-4 border-[#7738DD] text-[#7738DD] w-full p-8';
+    'bg-[#F1EBFC] dark:bg-[#2B2930] flex justify-center items-center border-l-4 border-[#7738DD] text-[#7738DD]  w-full lg:p-4 2xl:p-8';
   const baseStyle =
-    'hover:bg-[#FAF8FF] flex items-center hover:text-[#7738DD] text-[#A982EA] opacity-0.5 p-8 w-full';
+    'hover:bg-[#F1EBFC] justify-center flex items-center hover:text-[#7738DD] dark:hover:bg-[#2B2930] text-[#7738DD] dark:text-[#5D5B60]  opacity-0.5 lg:p-4 2xl:p-8 w-full';
 
   return (
-    <div className=' relative flex flex-col items-center w-[6%] h-[100vh] text-gray-400 bg-[#FFFFF] shadow-xl p-5 rounded'>
+    <div className=' relative flex flex-col items-center w-[6%] h-[100vh] text-gray-400 bg-[#FFFFF] dark:bg-afexdark-darkest shadow-xl p-5 rounded'>
       {/* Cuddie logo */}
       <div className='absolute top-[5%]'>
-        <img src={cuddieLogo} alt='cuddi_Logo' className='w-12' />
+        <img src={cudiLogo} alt='cudiLogo' className='w-10 xl:w-20' />
       </div>
 
       {/* Dashboard Icons */}
 
-      <div className='absolute top-[17%]  w-full gap-0 justify-between items-center flex flex-col'>
-        {routes.map((route) => {
+      <div className='absolute lg:top-[10%] 2xl:top-[12%]  w-full gap-0 justify-between items-center flex flex-col'>
+        {routes!?.map((route, index) => {
           return (
             <Tooltip
-              label={route.label}
+              key={index}
+              label={t(route.label)}
               position='right'
               radius='md'
               style={{
-                backgroundColor: '#44207E',
+                backgroundColor: '#7738DD',
                 border: 0,
                 padding: 12,
                 color: '#fffff',
+                display: 'flex',
+                flexDirection: 'column',
               }}>
               <NavLink
                 to={route.to}
                 className={({ isActive }) =>
                   isActive ? activeStyle : baseStyle
-                }>
+                }
+                end>
                 {route.icon}
               </NavLink>
             </Tooltip>
@@ -92,43 +188,110 @@ function Sidebar() {
         })}
       </div>
 
-      <div className='absolute bottom-[13%]'>
-        <NotificationModal />
-      </div>
-
       {/* Profile */}
-      <div className='absolute bottom-[4%]'>
+      <div className='absolute lg:bottom-[6%] 2xl:bottom-[3%]'>
         <Popover
           width={250}
+          opened={opened}
+          onClose={() => setOpened(false)}
           styles={{
             dropdown: {
-              top: '-280% !important',
-              left: '160% !important',
+              top: '-480% !important',
+              left: '180% !important',
             },
           }}>
           <Popover.Target>
-            <img src={profIcon} alt='user_icon' />
+            <ProfileCircle
+              variant='Bulk'
+              color='#7738DD'
+              className='h-[25px] w-[25px] xl:w-[35px] xl:h-[35px]'
+              onClick={() => setOpened(true)}
+            />
           </Popover.Target>
           <Popover.Dropdown className='flex flex-col'>
-            <div className=' flex items-center text-[12px] text-[#000] font-semibold p-1 gap-2 border-b'>
-              <img src={profIcon} alt='user_icon' />
+            <div className=' flex items-center text-[12px] text-[#000] font-semibold p-1 gap-2 border-b  dark:border-afexdark-dark'>
               <p>
-                Adamu Adamu <br />{' '}
-                <span className=' text-[#bfbdc2]'>makanni@afexnigeria.com</span>
+                <span className='capitalize dark:text-afexdark-regular'>
+                  {user?.firstName} {user?.lastName}{' '}
+                </span>
+                <br /> <span className=' text-[#bfbdc2]'>{user?.email} </span>
               </p>
             </div>
-            <div className='mt-1 p-2'>
-              <p className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
-                <Notification size='16' color='#8f8e91' variant='Bulk' />
-                Notification
+
+            <div className=' flex flex-col gap-2 mt-1'>
+              {/* Notification */}
+              <p className='flex text-[#000]  dark:text-afexdark-regular dark:hover:bg-[#2B2930]  rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                <NotificationModal />
               </p>
+
+              {/* Settings */}
               <NavLink
                 to='/settings'
-                className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                onClick={() => setOpened(false)}
+                className='flex w-full text-[#000]  dark:text-afexdark-regular dark:hover:bg-[#2B2930]  rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
                 <Setting2 size='16' color='#8f8e91' variant='Bulk' />
                 Settings
               </NavLink>
-              <p className='flex text-[#000] rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+
+              {/* Themes */}
+              {/* TOGGLE LIGHT AND DARK MODE */}
+              <div className='flex text-[#000] dark:text-afexdark-regular dark:hover:bg-[#2B2930]  rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                <Popover
+                  width={200}
+                  opened={isOpened}
+                  styles={{
+                    dropdown: {
+                      top: '15% !important',
+                      left: '102% !important',
+                    },
+                  }}>
+                  <Popover.Target>
+                    <button
+                      onClick={() => setIsOpened((s) => !s)}
+                      className='flex items-center gap-1 text-afexdark-darkest'>
+                      {' '}
+                      <Sun1
+                        className='w-[18px] h-[18px] '
+                        color='#c1c0c2'
+                        variant='Bulk'
+                      />
+                      Themes
+                    </button>
+                  </Popover.Target>
+                  <Popover.Dropdown className='flex flex-col gap-2'>
+                    <div className=''>
+                      <p
+                        onClick={() => {
+                          setTheme('light');
+                          setIsOpened(false);
+                          setOpened(false);
+                        }}
+                        className='flex dark:hover:bg-[#2B2930]  text-[#000] dark:text-afexdark-regular rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'>
+                        <Sun1 size='16' color='#8f8e91' variant='Bulk' />
+                        Light
+                      </p>
+                      <p
+                        className='flex dark:hover:bg-[#2B2930]  text-[#000] dark:text-afexdark-regular rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'
+                        onClick={() => {
+                          setTheme('dark');
+                          setIsOpened(false);
+                          setOpened(false);
+                        }}>
+                        <Moon size='16' color='#8f8e91' variant='Bulk' />
+                        Dark
+                      </p>
+                    </div>
+                  </Popover.Dropdown>
+                </Popover>
+              </div>
+
+              {/* Logout */}
+              <p
+                className='flex text-[#000]  dark:text-afexdark-regular dark:hover:bg-[#2B2930]  rounded cursor-pointer gap-2 hover:bg-[#F0F0F0] py-1 items-center'
+                onClick={() => {
+                  logout();
+                  setOpened(false);
+                }}>
                 <Logout size='16' color='#8f8e91' variant='Bulk' />
                 Logout
               </p>

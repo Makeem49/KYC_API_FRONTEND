@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react';
 import { Edit2, Trash } from 'iconsax-react';
 const TwoStepAuthentication = () => {
   return (
-    <div className=' bg-white flex flex-col bg-[#ffff] w-full p-6 mtrounded'>
+    <div className=' bg-white dark:bg-afexdark-darkest flex flex-col w-full p-6 mtrounded'>
       <div className='w-full flex justify-between'>
-        <p className='w-full text-[#000] text-[18px] font-semibold'>
+        <p className='w-full text-[#000] dark:text-afexdark-regular text-[18px] font-semibold'>
           {' '}
           Two Step Authentication <br />
           <span className='text-[12px] text-textgrey-Light font-normal'>
@@ -13,13 +13,13 @@ const TwoStepAuthentication = () => {
           </span>
         </p>
 
-        <div className='flex gap-2 w-[280px] items-center justify-center bg-[#F1EBFC] font-bold rounded text-afexpurple-dark'>
+        <div className='flex gap-2 w-[280px] items-center justify-center bg-afexpurple-lighter dark:bg-afexdark-verydark font-bold rounded text-afexpurple-regular'>
           <Icon icon='system-uicons:fingerprint' className='text-[20px]' />
           <p className='text-[10px]'>ADD AUTHENTICATION STEP</p>
         </div>
       </div>
 
-      <div className='w-full flex justify-between gap-4 items-center border-b py-3 mt-2'>
+      <div className='w-full flex justify-between gap-4 items-center border-b dark:border-afexdark-dark py-3 mt-2'>
         <p className='w-full text-[10px] font-semibold'>
           {' '}
           SMS <br />
