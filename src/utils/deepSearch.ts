@@ -50,33 +50,3 @@ export function deepSearchWithinArray(
   });
   return result;
 }
-
-console.log(
-  deepSearchWithinArray(
-    [
-      {
-        commodity: ['MAZ', 'CC'],
-        with_search: true,
-      },
-      {
-        sources: ['Saminka', 'Lagos'],
-        with_search: true,
-      },
-      {
-        logistics_partner: [
-          'Bege Ayuba Logistics',
-          'Hussaini Musa Movers',
-          'Ibrahim Aliyu Movement',
-          'Takur Magaji Movement',
-          'Bege Ayuba Logistics',
-          'Abdullahi Haruna Logistics',
-          'God is Good Logistics',
-          'DHL Logistics',
-        ],
-        with_search: true,
-      },
-    ],
-    'commodity',
-    'bn'
-  )
-);

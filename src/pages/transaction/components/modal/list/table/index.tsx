@@ -1,132 +1,75 @@
+import DataGrid from '../../../../../../components/data-grid';
 import React from 'react';
-
+import { commaformatter } from '../../../../../../utils';
+import { t } from 'i18next';
+import { useGetTransLocation } from '../../../../../../queries';
 const Table = () => {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setSearch] = React.useState('');
+  const [filters, setFilters] = React.useState('');
+  const { data } = useGetTransLocation(currentPage, filter, filters);
+
+  const defaultCountryCode = localStorage.getItem('decoded-country-code');
+  const searchText = t('Search by client name, id');
   return (
     <div className='h-full mt-4 pb-5'>
-      <div className='overflow-auto w-full '>
-        <table className='overflow-auto w-full align-top  text-[#54565B] text-[12px] xl:text-[14px]'>
-          <thead className='text-[12px] sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className='child:py-2 border-b border-dashed child:cursor-default child:align-middle'>
-              <th>S/N</th>
-              <th>Location</th>
-              <th>Active Users</th>
-              <th>Count of Transaction</th>
-              <th>Value(N)</th>
-            </tr>
-          </thead>
-          <tbody className='text-[10px] xl:text-[12px]'>
-            <tr className=' text-left child:py-4 border-b'>
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
+      <DataGrid
+        loadMore={setCurrentPage}
+        lastPage={1}
+        total={data!?.data.length}
+        setSearch={setSearch}
+        setFilters={setFilters}
+        title={searchText}
+        rows={10}
+        dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
+        data={data!?.data}
+        headerFilter={[
+          { name: '', accessor: '' },
+          { name: '', accessor: '' },
+        ]}
+        headers={[
+          {
+            accessor: 'name',
+            hidden: false,
+            name: `${t('Location')}`,
+            sortable: true,
+            static: false,
+          },
 
-              <td>
-                {' '}
-                <span className='font-medium '>Kaduna1</span>
-              </td>
+          {
+            accessor: 'total_clients',
+            hidden: false,
+            name: `${t('Active Users')}`,
+            sortable: true,
+            static: false,
+          },
+          {
+            accessor: 'transactions_count',
+            hidden: false,
+            name: `${t('Count of Transactions')}`,
+            sortable: true,
+            static: true,
+          },
 
-              <td>
-                <span className='font-medium '>20</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>1,000</span>
-              </td>
-              <td>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-4 border-b'>
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-medium '>Kaduna1</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>20</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>1,000</span>
-              </td>
-              <td>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-4 border-b'>
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-medium '>Kaduna1</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>20</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>1,000</span>
-              </td>
-              <td>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-4 border-b'>
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-medium '>Kaduna1</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>20</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>1,000</span>
-              </td>
-              <td>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-            </tr>
-
-            <tr className=' text-left child:py-4 border-b'>
-              <td>
-                <span className='font-medium'>1</span>
-              </td>
-
-              <td>
-                {' '}
-                <span className='font-medium '>Kaduna1</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>20</span>
-              </td>
-
-              <td>
-                <span className='font-medium '>1,000</span>
-              </td>
-              <td>
-                <span className='font-medium '>N20,100.00</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          {
+            accessor: 'total_transactions_value',
+            hidden: false,
+            name: `${t('Value')} ${
+              defaultCountryCode === 'NG'
+                ? '₦'
+                : defaultCountryCode === 'KE'
+                ? 'KES'
+                : 'UGX'
+            }`,
+            sortable: true,
+            static: false,
+            row: (val) => <span>{commaformatter(val)} </span>,
+          },
+        ]}
+        withExport
+        withGlobalFilters
+        withCheck
+      />
     </div>
   );
 };

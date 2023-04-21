@@ -1,8 +1,9 @@
+import { RiErrorWarningLine, RiShieldCheckFill } from 'react-icons/ri';
+
 import { showNotification } from '@mantine/notifications';
 
-import successIcon from '../assets/svgs/successBadge.svg';
-import error from '../assets/svgs/error.svg';
-import info from '../assets/svgs/info.svg';
+// import { ShieldTick, CloseCircle, InfoCircle } from 'iconsax-react';
+
 
 const toast = (
   id: 'success' | 'error' | 'info',
@@ -17,11 +18,19 @@ const toast = (
       : 'rgb(250, 232, 76)';
   const icon =
     id === 'success' ? (
-      <img src={successIcon} alt='success icon' />
+      <div className=' bg-afexgreen-lighter z-50 rounded-full p-3'>
+        <RiShieldCheckFill color='#38CB89' size={30} />
+      </div>
     ) : id === 'error' ? (
-      'error' && <img src={error} alt='error icon' />
+      'error' && (
+        <div className=' bg-afexred-lighter z-50 rounded-full p-3'>
+          <RiErrorWarningLine color='#FE1F11' size={30} />
+        </div>
+      )
     ) : (
-      <img src={info} alt='warning icon' />
+      <div className=' bg-afexwarning-lighter z-50 rounded-full p-3'>
+        <RiErrorWarningLine color='#dce775' size={30} />
+      </div>
     );
   //id = 'success' | 'warning' | 'error'
   return showNotification({
@@ -29,9 +38,11 @@ const toast = (
       root: {
         borderRadius: '1rem',
         backgroundColor: '#fff',
+        top: '50px',
         border: `1px solid ${borderColor}`,
         padding: '0 1.5rem 0 0 ',
-        position: 'relative',
+        position: 'absolute',
+        zIndex: '-moz-initial',
       },
       body: { padding: '1.5rem 1.5rem 1.5rem 0' },
       closeButton: {
@@ -50,22 +61,24 @@ const toast = (
     icon: icon,
     message: (
       <div
-        className={`flex items-start  rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
+        className={`flex  items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
           id === 'success'
-            ? 'before:bg-afexgreen-lighter'
+            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
             : id === 'error'
-            ? 'before:bg-error-lighter'
-            : 'before:bg-warninig-lighter'
+            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
+            : 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
         }`}>
         {heading.length > 0 && (
-          <div className='pl-5 pr-4 child:py-1'>
-            <p className='font-bold text-md '>{heading}</p>
-            <p className=''>{text}</p>
+          <div className='pl-5 z-50 pr-4 child:py-1'>
+            <p className='font-bold text-md dark:text-afexdark-regular '>
+              {heading}
+            </p>
+            <p className='dark:text-afexdark-regular'>{text}</p>
           </div>
         )}
       </div>
     ),
-    autoClose: 3000,
+    autoClose: 5000,
   });
 };
 export default toast;
