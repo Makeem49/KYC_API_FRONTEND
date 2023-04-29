@@ -27,6 +27,11 @@ import { useThemeCtx } from '../../context/theme_context';
 import { get_admin_query } from '../../queries/dash_board';
 import NotificationModal from '../notification-modal';
 
+type Role = {
+  name: string;
+  id: number;
+};
+
 function Sidebar() {
   const { data: user } = useQuery(get_admin_query());
   const { setTheme } = useThemeCtx();
@@ -40,7 +45,8 @@ function Sidebar() {
 
   const hideRoute = (required_permissions: string[]) => {
     if (!state || !loggedin_user) return false;
-    if (loggedin_user!?.roles[0].name === 'SYSADMIN') return false;
+    if (loggedin_user!?.roles.find((role: Role) => role.name === 'SYSADMIN'))
+      return false;
 
     return !required_permissions!?.every((permission) =>
       loggedin_user!?.permissions
