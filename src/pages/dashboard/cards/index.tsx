@@ -1,15 +1,17 @@
+import { Chart, Receipt, UserSquare, Wallet1 } from 'iconsax-react';
 import React from 'react';
-import { UserSquare, Chart, Wallet1, Receipt } from 'iconsax-react';
-import redDot from '../../../assets/images/_Dot.svg';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+
+import { Skeleton } from '@mantine/core';
+
 import greenDot from '../../../assets/images/Dot.svg';
+import redDot from '../../../assets/images/_Dot.svg';
 import { Change } from '../../../components';
+import { get_client_stats_query } from '../../../queries/clients_stats';
+import { get_dashboard_stats_query } from '../../../queries/dash_board';
 import { calculatePercentageChange } from '../../../utils';
 import { commaformatter } from '../../../utils';
-import { get_dashboard_stats_query } from '../../../queries/dash_board';
-import { get_client_stats_query } from '../../../queries/clients_stats';
-import { useQuery } from 'react-query';
-import { Skeleton } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
 
 const Card = () => {
   const {
@@ -53,7 +55,7 @@ const Card = () => {
           <UserSquare size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
-          <p className=' flex items-center gap-1 text-[22px] font-bold text-textgrey-dark'>
+          <p className=' flex items-center gap-1 text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {commaformatter(data?.sectionOne?.totalClients?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
@@ -87,7 +89,7 @@ const Card = () => {
           <Wallet1 size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[22px] font-bold text-textgrey-dark'>
+          <p className='flex items-center gap-1 text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {commaformatter(list?.sectionOne?.transactions?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
@@ -109,7 +111,7 @@ const Card = () => {
           <Receipt size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[22px] w-full font-bold  text-textgrey-dark'>
+          <p className='flex items-center gap-1 text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal'>
             {defaultCountryCode === 'NG'
               ? '₦'
               : defaultCountryCode === 'KE'

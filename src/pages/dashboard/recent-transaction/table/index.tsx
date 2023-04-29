@@ -1,9 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+
+import { get_transaction_list_querry } from '../../../../queries/transaction_stats';
 // import { ArrowDown, ArrowUp } from 'iconsax-react';
 import { commaformatter } from '../../../../utils';
-import { get_transaction_list_querry } from '../../../../queries/transaction_stats';
-import { useQuery } from 'react-query';
-import { useTranslation } from 'react-i18next';
 
 const Table = () => {
   const { data, isError, isLoading } = useQuery(get_transaction_list_querry(1));
@@ -21,7 +22,7 @@ const Table = () => {
       <div className='overflow-auto w-full '>
         <table className='overflow-auto w-full align-top'>
           <thead className='text-[12px] sticky top-0 text-left whitespace-nowrap z-[5]'>
-            <tr className='child:py-4 border-b dark:border-[#333233] text-[#C1C0C2] font-normal child:px-1 child:cursor-default child:align-middle'>
+            <tr className='child:py-4 border-b dark:border-[#333233] text-[#C1C0C2]  font-normal child:px-1 child:cursor-default child:align-middle'>
               <th className='flex items-center'>
                 S/N{' '}
                 {/* <span className='flex'>
@@ -43,11 +44,11 @@ const Table = () => {
               <th>{t('Status')}</th>
             </tr>
           </thead>
-          <tbody className='text-[10px] xl:text-[14px] text-[#49474D]'>
+          <tbody className='text-[10px] xl:text-[14px] text-[#49474D] dark:text-textgrey-normal'>
             {arr!.map((el, index) => (
               <tr
                 key={index}
-                className=' text-left child:py-8 dark:border-[#333233]  child:px-1 border-b'>
+                className=' text-left child:py-8 dark:border-[#333233] dark:child:text-textgrey-normal  child:px-1 border-b'>
                 <td>
                   <span className='font-normal'>
                     {data!?.data!.indexOf(el) + 1}

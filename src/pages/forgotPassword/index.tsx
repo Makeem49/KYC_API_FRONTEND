@@ -1,23 +1,21 @@
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import { toast } from '../../utils';
+import { useMutation, useQueryClient } from 'react-query';
+import * as Yup from 'yup';
 
-import { TextInput } from '../../components';
-import Button from '../../components/button';
-
-// import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
-import flap from '../../assets/brand/flap.svg';
-import afexLogo from '../../assets/brand/AFEX-logo.png';
-// import { useAuthCtx } from '../../context';
-import AuthProvider from '../../context/auth_context';
-
+import cudiLogo from '../././../assets/brand/Cudi-Logo.png';
 // import { useNavigate } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 import { request_password_reset } from '../../api';
-import { useMutation, useQueryClient } from 'react-query';
-import cudiLogo from '../././../assets/brand/Cudi-Logo.png';
+import afexLogo from '../../assets/brand/AFEX-logo.png';
+// import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
+import flap from '../../assets/brand/flap.svg';
+import { TextInput } from '../../components';
+import Button from '../../components/button';
+// import { useAuthCtx } from '../../context';
+import AuthProvider from '../../context/auth_context';
+import { toast } from '../../utils';
 
 const ForgotPassword = () => {
   // const { search } = useLocation();
@@ -55,11 +53,11 @@ const ForgotPassword = () => {
               </div>
 
               <div className=' mt-20'>
-                <h3 className='text-center text-2xl font-semibold'>
+                <h3 className='text-center dark:text-textgrey-normal text-2xl font-semibold'>
                   Reset your password
                 </h3>
 
-                <p className='p-5 mb-0 text-center mt-3 text-xl'>
+                <p className='p-5 mb-0 dark:text-textgrey-normal text-center mt-3 text-xl'>
                   Instructions to reset your account will be sent to the email
                   associatied with your account
                 </p>

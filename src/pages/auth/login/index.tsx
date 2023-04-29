@@ -1,18 +1,17 @@
+import { Form, Formik } from 'formik';
+import { motion } from 'framer-motion';
+import React from 'react';
+import { MdKeyboardArrowRight } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { Form, Formik } from 'formik';
-
-import Button from '../../../components/button';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import React from 'react';
-import { TextInput } from '../../../components';
 import afexLogo from '../../../assets/brand/AFEX-logo.png';
 import cudiLogo from '../../../assets/brand/Cudi-Logo.png';
 // import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
 import flap from '../../../assets/brand/flap.svg';
-import { motion } from 'framer-motion';
+import { TextInput } from '../../../components';
+import Button from '../../../components/button';
 import { useAuthCtx } from '../../../context';
-import { useNavigate } from 'react-router-dom';
 
 const LoginOverlay = (props: { isVisible: boolean }) => {
   const { login, loading } = useAuthCtx();
@@ -56,7 +55,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                 <img src={cudiLogo} alt='cudi' className='w-24' />
               </motion.div>
 
-              <h3 className=' mt-20 text-center text-2xl font-semibold'>
+              <h3 className=' mt-20 text-center dark:text-textgrey-normal text-2xl font-semibold'>
                 Welcome to Cudie!
               </h3>
             </div>
@@ -67,8 +66,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
               validationSchema={Yup.object({
                 username: Yup.string().required('Username is required'),
                 password: Yup.string().required('Password is required'),
-              })
-              }>
+              })}>
               <motion.div
                 className=' z-40'
                 initial={{ transform: 'translateY(-100%)', opacity: 0 }}
@@ -101,7 +99,11 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                         id='remember'
                         className='checkbox white'
                       />
-                      <label htmlFor='remember'>Remember me</label>
+                      <label
+                        className='dark:text-textgrey-normal'
+                        htmlFor='remember'>
+                        Remember me
+                      </label>
                     </div>
                   </div>
 

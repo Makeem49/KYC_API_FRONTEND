@@ -20,7 +20,7 @@ const Pagination = (props: PaginationProps) => {
   };
   return (
     <div className='bottom-0 right-0 left-0 w-full'>
-      <div className='flex justify-between items-center px-6 rounded-md'>
+      <div className='flex justify-between dark:text-textgrey-normal items-center px-6 rounded-md'>
         <span>
           {t('showing')} &nbsp;
           {10 * currentPage + 1} -&nbsp;
@@ -42,7 +42,7 @@ const Pagination = (props: PaginationProps) => {
           pageCount={props.pageCount}
           pageRangeDisplayed={2}
           marginPagesDisplayed={1}
-          className='flex justify-end items-center  gap-2 child:child:p-2 child:m-1 child:child:rounded'
+          className='flex justify-end items-center dark:child:text-textgrey-normal  gap-2 child:child:p-2 child:m-1 child:child:rounded'
         />
       </div>
     </div>

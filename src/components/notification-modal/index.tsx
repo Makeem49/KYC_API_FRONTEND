@@ -58,7 +58,10 @@ const NotificationModal = () => {
           <Notification className=' w-[18px] h-[18px]' color='#49474D' />
 
           <div className='flex items-center gap-24 w-[200px]'>
-            <p className=' font-normal text-afexdark-darkest'> Notifications</p>
+            <p className=' font-normal text-afexdark-darkest dark:text-textgrey-normal'>
+              {' '}
+              Notifications
+            </p>
             {notification!?.length > 0 ? (
               <p className=' text-[12px] text-center text-white bg-afexred-regular dark:text-afexdark-verydark  rounded-full p-1'>
                 {noOfNotifications}

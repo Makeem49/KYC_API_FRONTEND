@@ -1,7 +1,8 @@
-import React from 'react';
-import { commaformatter } from '../../../../utils';
 import { t } from 'i18next';
+import React from 'react';
+
 import { useGetTransLocation } from '../../../../queries';
+import { commaformatter } from '../../../../utils';
 
 const Locations = () => {
   const { data: arr } = useGetTransLocation();
@@ -17,7 +18,7 @@ const Locations = () => {
               <th>{t('Count')}</th>
             </tr>
           </thead>
-          <tbody className='text-[10px] xl:text-[14px] text-[#49474D] dark:text-[#333233]'>
+          <tbody className='text-[10px] xl:text-[14px] text-[#49474D] dark:text-textgrey-normal'>
             {arr?.data.map((el) => (
               <tr className=' text-left font-normal child:py-2 child:px-2 border-b dark:border-[#333233]'>
                 <td>{el.name}</td>

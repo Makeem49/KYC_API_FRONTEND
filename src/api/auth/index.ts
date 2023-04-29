@@ -1,6 +1,6 @@
-import { apiRequest, toast } from '../../utils';
-
 import { AxiosResponse } from 'axios';
+
+import { apiRequest, toast } from '../../utils';
 
 /**
  * =================================================================
@@ -28,13 +28,12 @@ export async function authenticate(username: string, password: string) {
   } catch (error: any) {
     if (error.response) {
       // This error was caused by a server response that returned a non 2xx status code
-      const message = error.response.data
-        ? error.response.data.message
-        : 'Unknown error';
+      const message = error.message ? error.message : 'Unknown error';
       toast('error', 'Unable to login', message);
-    } else if (error.request) {
+    } else if (error.code === 'ERR_NETWORK') {
       // This error was caused by a network error
-      toast('error', 'Unable to login', 'Network error');
+
+      toast('error', 'Unable to login', 'no internet connection');
     } else {
       // This error was caused by something else
       toast('error', 'Unable to login', 'Something went wrong');

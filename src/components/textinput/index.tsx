@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { useField } from 'formik';
-import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import React, { useState } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 interface TextInputInterface {
   id: string;
@@ -35,7 +35,7 @@ const TextInput = ({
       {props.label && (
         <label
           htmlFor={props.name || props.id}
-          className={`${labelClass} block mb-5 text-base tracking-wide text-[#54565b] capitalize`}>
+          className={`${labelClass} block mb-5 text-base tracking-wide text-[#54565b] dark:text-textgrey-normal capitalize`}>
           {props.label}{' '}
           {props.required && <span className='text-red-400'>*</span>}
         </label>
@@ -46,7 +46,7 @@ const TextInput = ({
         autoFocus={props.autoFocus}
         autoComplete={props.autocomplete}
         pattern={props.pattern}
-        className={`block w-full appearance-none outline-none dark:bg-afexdark-verydark tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91] ${inputClass} `}
+        className={`block w-full appearance-none outline-none dark:bg-afexdark-verydark dark:text-textgrey-normal tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91] ${inputClass} `}
         placeholder={props.placeholder}
         {...field}
       />

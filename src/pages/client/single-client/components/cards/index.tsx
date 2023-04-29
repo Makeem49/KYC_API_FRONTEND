@@ -1,13 +1,14 @@
-import React from 'react';
-import { currentNumberFormatter } from '../../../../../utils/formatter';
-
+import { t } from 'i18next';
 import { Wallet1 } from 'iconsax-react';
+import React from 'react';
+import { useQuery } from 'react-query';
 // import { useSingleClientCtx } from '../../../../../context';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { get_a_client_query } from '../../../../../queries/single_client';
+
 import { Skeleton } from '@mantine/core';
-import { t } from 'i18next';
+
+import { get_a_client_query } from '../../../../../queries/single_client';
+import { currentNumberFormatter } from '../../../../../utils/formatter';
 
 const SingleClientCard = () => {
   // const { stats } = useSingleClientCtx();
@@ -37,7 +38,7 @@ const SingleClientCard = () => {
         </div>
 
         <span>{t('TOTAL BALANCE')}</span>
-        <p className='text-[40px] font-bold text-textgrey-darker  dark:text-afexdark-dark'>
+        <p className='text-[40px] font-bold text-textgrey-darker  dark:text-textgrey-normal'>
           {defaultCountryCode === 'NG'
             ? '₦'
             : defaultCountryCode === 'KE'
@@ -54,7 +55,7 @@ const SingleClientCard = () => {
         </div>
 
         <span>{t('AVAILABLE BALANCE')}</span>
-        <p className='text-[40px] font-bold text-textgrey-darker  dark:text-afexdark-dark'>
+        <p className='text-[40px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
           {defaultCountryCode === 'NG'
             ? '₦'
             : defaultCountryCode === 'KE'

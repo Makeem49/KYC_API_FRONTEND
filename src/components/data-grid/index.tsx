@@ -348,10 +348,10 @@ const DataGrid = ({
     content: () => printCurrent.current,
     documentTitle: 'cuddie_client_table',
   });
-  const handlePrintAllData = useReactToPrint({
-    content: () => printAllData.current,
-    documentTitle: 'cuddie_client_table',
-  });
+  // const handlePrintAllData = useReactToPrint({
+  //   content: () => printAllData.current,
+  //   documentTitle: 'cuddie_client_table',
+  // });
   const handlePrintSelected = useReactToPrint({
     content: () => printSelected.current,
     documentTitle: 'cuddie_client_table',
@@ -546,7 +546,7 @@ const DataGrid = ({
           <input
             type='text'
             placeholder={props.title}
-            className='py-3 mx-2 w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100 dark:ring-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
+            className='py-3 mx-2 w-full text-base dark:text-textgrey-normal rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100 dark:ring-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
             onChange={(e) => props.setSearch(e.currentTarget.value)}
           />
           <span className='absolute left-4 text-2xl'>
@@ -582,7 +582,7 @@ const DataGrid = ({
                 <label
                   key={header.name}
                   htmlFor={header.name}
-                  className={`flex items-center gap-1 whitespace-nowrap  text-gray-900  dark:text-afexdark-dark text-base cursor-pointer m-1 rounded-md py-4 px-4 capitalize ${
+                  className={`flex items-center gap-1 whitespace-nowrap  text-gray-900 dark:text-textgrey-normal text-base cursor-pointer m-1 rounded-md py-4 px-4 capitalize ${
                     selectedColumns.findIndex(
                       (el) => el.name === header.name && !el.hidden
                     ) >= 0 && !header.static
@@ -637,7 +637,7 @@ const DataGrid = ({
               {/* COLUMNS HEADER */}
               <div className='relative' onClick={(e) => e.stopPropagation()}>
                 <button
-                  className={`h-full w-full whitespace-nowrap gap-2 text-base p-4 rounded-lg hover:shadow hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-afexdark-verydark dark:border-0 capitalize ${
+                  className={`h-full w-full dark:text-textgrey-normal whitespace-nowrap gap-2 text-base p-4 rounded-lg hover:shadow hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-afexdark-verydark dark:border-0 capitalize ${
                     showFilterColOpts
                       ? ' border-[#DAD9DA]'
                       : '  border-[#DAD9DA]'
@@ -659,7 +659,7 @@ const DataGrid = ({
                     <label
                       key={header.name}
                       htmlFor={header.name}
-                      className={`flex items-center gap-1 whitespace-nowrap  text-gray-900  dark:text-afexdark-dark text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize ${
+                      className={`flex items-center gap-1 whitespace-nowrap  text-gray-900 dark:text-textgrey-normal text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize ${
                         checkboxState.value === header.accessor &&
                         'bg-afexpurple-lighter'
                       }`}>
@@ -688,7 +688,7 @@ const DataGrid = ({
                   <input
                     type='text'
                     placeholder='Input Query Value'
-                    className='py-3  w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  dark:border-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
+                    className='py-3  w-full text-base dark:text-textgrey-normal rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  dark:border-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest '
                     value={inputValue}
                     onChange={handleInputChange}
                     // onChange={(e) => props.setSearch(e.currentTarget.value)}
@@ -704,7 +704,7 @@ const DataGrid = ({
                       setAvailableData(data);
                       setshowAllComp((s) => !s);
                     }}
-                    className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker  dark:text-afexdark-dark'>
+                    className='p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker dark:text-textgrey-normal'>
                     {t('Clear')}
                   </span>
                   <span
@@ -767,14 +767,9 @@ const DataGrid = ({
                   <span
                     className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
                     onClick={() => {
-                      handlePrintAllData();
-                    }}>
-                    {t('Export All')}
-                  </span>
-                  <span
-                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
-                    onClick={() => {
                       handlePrintSelected();
+                      setOpenPdf((o) => !o);
+                      setOpened((o) => !o);
                     }}>
                     {t('Export Selected')}
                   </span>
@@ -782,6 +777,8 @@ const DataGrid = ({
                     className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
                     onClick={() => {
                       handlePrint();
+                      setOpenPdf((o) => !o);
+                      setOpened((o) => !o);
                     }}>
                     {t('Export Page')}
                   </span>
@@ -809,23 +806,13 @@ const DataGrid = ({
                     className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
                     onClick={() => {
                       exportToCSV(
-                        data,
-                        selectedColumns
-                          .filter((el) => el.hidden)
-                          .map((el) => el.accessor)
-                      );
-                    }}>
-                    {t('Export All')}
-                  </span>
-                  <span
-                    className='text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark'
-                    onClick={() => {
-                      exportToCSV(
                         selectedRows,
                         selectedColumns
                           .filter((el) => el.hidden)
                           .map((el) => el.accessor)
                       );
+                      setOpenCsv((o) => !o);
+                      setOpened((o) => !o);
                     }}>
                     {t('Export Selected')}
                   </span>
@@ -838,6 +825,8 @@ const DataGrid = ({
                           .filter((el) => el.hidden)
                           .map((el) => el.accessor)
                       );
+                      setOpenCsv((o) => !o);
+                      setOpened((o) => !o);
                     }}>
                     {t('Export Page')}
                   </span>
@@ -949,7 +938,7 @@ const DataGrid = ({
                           : undefined
                       }
                       key={index}
-                      className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:text-[#49474D]  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
+                      className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:text-[#49474D] dark:child:text-textgrey-normal  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
                       {props?.withCheck && (
                         <td onClick={(e) => e.stopPropagation()}>
                           <input
@@ -965,7 +954,9 @@ const DataGrid = ({
                           />
                         </td>
                       )}
-                      <td className='py-4'>{index + 1}</td>
+                      <td className='py-4 dark:text-textgrey-normal'>
+                        {index + 1}
+                      </td>
                       {headers
                         .sort((a, b) => {
                           const headerKeys = headers.map(
@@ -1022,7 +1013,7 @@ const DataGrid = ({
                   {' '}
                   <tr className='absolute gap-2 top-[250px] left-[400px] flex flex-col items-center w-40'>
                     <img src={Box} alt='' className='animate-bounce h-[50px]' />
-                    <p className=' text-[16px] font-semibold'>
+                    <p className=' text-[16px] font-semibold dark:text-textgrey-normal'>
                       {t('No data to display')}
                     </p>{' '}
                   </tr>
