@@ -27,7 +27,7 @@ const Table = () => {
       />
     );
 
-  if (isError || !data) return <Navigate to='/login' />;
+  if (isError) return <Navigate to='/login' />;
 
   const ActionComponent = ({ data }: { data: User }) => (
     <UserAction data={data} />
@@ -38,8 +38,8 @@ const Table = () => {
       <div className='bg-white  dark:bg-afexdark-darkest p-3'>
         <DataGrid
           loadMore={setCurrentPage}
-          lastPage={data.lastPage}
-          total={data.total}
+          lastPage={data!?.lastPage}
+          total={data!?.total}
           title={`${t('Search')}`}
           setSearch={setSearch}
           setFilters={setFilters}

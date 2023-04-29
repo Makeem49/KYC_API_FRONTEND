@@ -1,18 +1,18 @@
-import React from 'react';
-import { nFormatter } from '../../../../../utils/formatter';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  LinearScale,
   Title,
   Tooltip,
-  // Legend
 } from 'chart.js';
+import { t } from 'i18next';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useQuery } from 'react-query';
+
 import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
-import { t } from 'i18next';
+import { nFormatter } from '../../../../../utils/formatter';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -61,15 +61,8 @@ export const options = {
 };
 
 export default function BarChart() {
-  const {
-    data: stats,
-    isLoading,
-    isError,
-  } = useQuery(get_transaction_stats_query());
+  const { data: stats } = useQuery(get_transaction_stats_query());
 
-  if (isLoading) return <p>Loading....</p>;
-
-  if (isError) return <p>Error!!!</p>;
   const labels = [`${t('Transfer')}`, `${t('Deposit')}`, `${t('Withdrawal')}`];
   const data = {
     labels,

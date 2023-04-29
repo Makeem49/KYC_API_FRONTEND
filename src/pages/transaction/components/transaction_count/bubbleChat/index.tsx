@@ -1,24 +1,17 @@
-import React from 'react';
 import { Chart as ChartJS, LinearScale, PointElement, Tooltip } from 'chart.js';
-import { Bubble } from 'react-chartjs-2';
-import { calculatePercentageRadius } from '../../../../../utils';
-import { useQuery } from 'react-query';
-import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
 import { t } from 'i18next';
+import React from 'react';
+import { Bubble } from 'react-chartjs-2';
+import { useQuery } from 'react-query';
+
 import { useThemeCtx } from '../../../../../context/theme_context';
+import { get_transaction_stats_query } from '../../../../../queries/transaction_stats';
+import { calculatePercentageRadius } from '../../../../../utils';
 ChartJS.register(LinearScale, PointElement, Tooltip);
 
 export default function BubbleChart() {
   const { theme } = useThemeCtx();
-  const {
-    data: stats,
-    isLoading,
-    isError,
-  } = useQuery(get_transaction_stats_query());
-
-  if (isLoading) return <p>Loading....</p>;
-
-  if (isError) return <p>Error!!!</p>;
+  const { data: stats } = useQuery(get_transaction_stats_query());
 
   const total =
     (stats?.transactionCounts?.withdrawals ?? 0) +

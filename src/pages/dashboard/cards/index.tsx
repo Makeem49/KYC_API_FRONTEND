@@ -57,14 +57,7 @@ const Card = () => {
         <div className='w-full flex flex-col gap-2 mb-3 mt-2'>
           <p className=' flex items-center gap-1 text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {commaformatter(data?.sectionOne?.totalClients?.today ?? 0)}
-            <Change
-              value={calculatePercentageChange(
-                data!?.sectionOne?.totalClients?.today ?? 0,
-                data!?.sectionOne?.totalClients?.previousDay ?? 0
-              )}
-            />
           </p>
-          <span>{t('vs previous day')}</span>
         </div>
 
         <div className='absolute bottom-[-10%]  gap-2 flex item-center justify-items-center w-full'>

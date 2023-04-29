@@ -1,17 +1,14 @@
-import { Bar } from 'react-chartjs-2';
-import React from 'react';
 // import { useTransactionCtx } from '../../../../../context';
 import { t } from 'i18next';
-import { useGetTransLocation } from '../../../../../queries';
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
+
 import { useThemeCtx } from '../../../../../context/theme_context';
+import { useGetTransLocation } from '../../../../../queries';
 
 const BarChart = () => {
   const { theme } = useThemeCtx();
-  const { data: stats, isError, isLoading } = useGetTransLocation();
-
-  if (isLoading) return <p>Loading....</p>;
-
-  if (isError) return <p>Error!!!</p>;
+  const { data: stats } = useGetTransLocation();
 
   const OPTIONS = {
     plugins: {
