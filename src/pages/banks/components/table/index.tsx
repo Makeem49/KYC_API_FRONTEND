@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { Skeleton } from '@mantine/core';
 
@@ -29,7 +30,7 @@ const BankList = () => {
       />
     );
 
-  if (isError || !data) return <p>Error!!!</p>;
+  if (isError) return <Navigate to='/login' />;
 
   const ActionComponent = ({ data }: { data: Banks }) => (
     <UserAction data={data} />
@@ -41,7 +42,7 @@ const BankList = () => {
         <DataGrid
           loadMore={setCurrentPage}
           lastPage={1}
-          total={data.data.length}
+          total={data!?.data.length}
           title='Search'
           setSearch={setSearch}
           setFilters={setFilters}

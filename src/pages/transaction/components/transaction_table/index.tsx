@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { DataGrid } from '../../../../components';
 import { useGetTransactionList } from '../../../../queries';
@@ -10,10 +11,13 @@ const TransactionTable = () => {
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
 
-  const { data } = useGetTransactionList(currentPage, filter, filters);
+  const { data, isError } = useGetTransactionList(currentPage, filter, filters);
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
   const searchText = t('Search by client name, id');
+
+  if (isError) return <Navigate to='/login' />;
+
   return (
     <>
       <div className='p-4 bg-white dark:bg-afexdark-darkest w-full'>

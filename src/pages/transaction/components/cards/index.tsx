@@ -1,22 +1,27 @@
-import React from 'react';
-import { WalletCheck, SaveAdd, MoneySend, CardCoin } from 'iconsax-react';
-import { calculatePercentageChange } from '../../../../utils';
-import { Change } from '../../../../components';
-import { commaformatter } from '../../../../utils';
-import { useQuery } from 'react-query';
-import { get_transaction_stats_query } from '../../../../queries/transaction_stats';
 import { t } from 'i18next';
+import { CardCoin, MoneySend, SaveAdd, WalletCheck } from 'iconsax-react';
+import React from 'react';
+import { useQuery } from 'react-query';
+
+import { Skeleton } from '@mantine/core';
+
+import { Change } from '../../../../components';
+import { get_transaction_stats_query } from '../../../../queries/transaction_stats';
+import { calculatePercentageChange } from '../../../../utils';
+import { commaformatter } from '../../../../utils';
 
 const TransactionCards = () => {
-  const {
-    data: stats,
-    isLoading,
-    isError,
-  } = useQuery(get_transaction_stats_query());
+  const { data: stats, isLoading } = useQuery(get_transaction_stats_query());
 
-  if (isLoading) return <p>Loading....</p>;
-
-  if (isError) return <p>Error!!!</p>;
+  if (isLoading)
+    return (
+      <Skeleton
+        height={150}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 

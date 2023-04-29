@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
+import { Navigate } from 'react-router-dom';
 
 import { get_transaction_list_querry } from '../../../../queries/transaction_stats';
 // import { ArrowDown, ArrowUp } from 'iconsax-react';
@@ -11,7 +12,7 @@ const Table = () => {
   const { t } = useTranslation();
   if (isLoading) return <p>Loading....</p>;
 
-  if (isError) return <p>Error!!!</p>;
+  if (isError) return <Navigate to='/login' />;
 
   const arr = data?.data!.slice(0, 10);
 

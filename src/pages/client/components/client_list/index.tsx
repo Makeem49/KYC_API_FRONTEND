@@ -1,9 +1,12 @@
-import { DataGrid } from '../../../../components';
-import React from 'react';
-import { Skeleton } from '@mantine/core';
-import { shortDateFormatter } from '../../../../utils';
 import { t } from 'i18next';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+
+import { Skeleton } from '@mantine/core';
+
+import { DataGrid } from '../../../../components';
 import { useGetClientList } from '../../../../queries';
+import { shortDateFormatter } from '../../../../utils';
 
 const ClientList = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -26,7 +29,7 @@ const ClientList = () => {
       />
     );
 
-  if (isError || !data) return <p>Error!!!</p>;
+  if (isError) return <Navigate to='/login' />;
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
@@ -35,8 +38,8 @@ const ClientList = () => {
       <div className='bg-white dark:bg-afexdark-darkest px-6 py-3'>
         <DataGrid
           loadMore={setCurrentPage}
-          lastPage={data.lastPage}
-          total={data.total}
+          lastPage={data!?.lastPage}
+          total={data!?.total}
           title='Search by client name, id..'
           setSearch={setSearch}
           setFilters={setFilters}

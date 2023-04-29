@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { Skeleton } from '@mantine/core';
 
@@ -28,7 +29,7 @@ const FundRequestList = ({ setGetRequestId }: any) => {
       />
     );
 
-  if (isError || !data) return <p>Error!!!</p>;
+  if (isError) return <Navigate to='/login' />;
 
   return (
     <>
@@ -36,7 +37,7 @@ const FundRequestList = ({ setGetRequestId }: any) => {
         <DataGrid
           loadMore={setCurrentPage}
           lastPage={1}
-          total={data.data.length}
+          total={data!?.data.length}
           title='Search'
           setSearch={setSearch}
           setFilters={setFilters}

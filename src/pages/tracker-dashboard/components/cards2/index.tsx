@@ -1,6 +1,7 @@
 import { t } from 'i18next';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { Navigate } from 'react-router-dom';
 
 import { Skeleton } from '@mantine/core';
 
@@ -9,7 +10,11 @@ import verifyIcon from '../../../../assets/images/verifyIcon.png';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
 
 const VirtualCards = () => {
-  const { data: list, isLoading } = useQuery(get_tracker_stats_query());
+  const {
+    data: list,
+    isLoading,
+    isError,
+  } = useQuery(get_tracker_stats_query());
   if (isLoading)
     return (
       <Skeleton
@@ -19,6 +24,8 @@ const VirtualCards = () => {
         }}
       />
     );
+
+  if (isError) return <Navigate to='/login' />;
   return (
     <>
       <div className='w-[66%] flex gap-14 child:h-[200px]'>

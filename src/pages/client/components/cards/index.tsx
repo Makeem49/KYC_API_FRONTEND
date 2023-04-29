@@ -40,14 +40,7 @@ const ClientCard = () => {
         <div className='w-full mb-3 mt-2'>
           <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {stats?.sectionOne?.totalClients?.today}
-            <Change
-              value={calculatePercentageChange(
-                stats?.sectionOne?.totalClients?.today ?? 0,
-                stats?.sectionOne?.totalClients?.previousDay ?? 0
-              )}
-            />
           </p>
-          <span>{t('vs previous day')}</span>
         </div>
       </div>
 

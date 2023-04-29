@@ -1009,9 +1009,9 @@ const DataGrid = ({
                   ))}
                 </tbody>
               ) : (
-                <tbody className='relative bg-white dark:bg-afexdark-darkest '>
+                <tbody className='bg-white dark:bg-afexdark-darkest flex justify-center '>
                   {' '}
-                  <tr className='absolute gap-2 top-[250px] left-[400px] flex flex-col items-center w-40'>
+                  <tr className='absolute gap-2 top-[50%] left-[45%] flex flex-col items-center w-40'>
                     <img src={Box} alt='' className='animate-bounce h-[50px]' />
                     <p className=' text-[16px] font-semibold dark:text-textgrey-normal'>
                       {t('No data to display')}
