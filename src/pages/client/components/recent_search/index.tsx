@@ -1,10 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'iconsax-react';
-import { useQuery } from 'react-query';
-import { get_top_clients_searches_query } from '../../../../queries/clients_stats';
-import { Skeleton } from '@mantine/core';
 import { t } from 'i18next';
+import { ArrowRight } from 'iconsax-react';
+import React from 'react';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+
+import { Skeleton } from '@mantine/core';
+
+import { get_top_clients_searches_query } from '../../../../queries/clients_stats';
 
 const RecentSearch = () => {
   const navigate = useNavigate();
@@ -41,10 +43,10 @@ const RecentSearch = () => {
           {' '}
           <div className='flex items-center gap-3 text-normal'>
             {' '}
-            <span className='p-3 font-bold rounded bg-[#E7F9F0]  dark:bg-afexdark-verydark dark:text-afexdark-regular'>
+            <span className='p-3 font-bold rounded bg-[#E7F9F0]  dark:bg-afexdark-verydark dark:text-textgrey-normal'>
               {el.firstName.substring(0, 1)} {el.lastName.substring(0, 1)}
             </span>
-            <p className='text-[#000] dark:text-afexdark-dark font-medium'>
+            <p className='text-[#000] dark:text-textgrey-normal font-medium'>
               {el.firstName} {el.lastName}
               <br />{' '}
               <span className=' font-normal text-textgrey-normal'>

@@ -1,12 +1,14 @@
-import React from 'react';
 import { Eye } from 'iconsax-react';
-import Table from './table';
-import { Link, Navigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { get_transaction_list_querry } from '../../../queries/transaction_stats';
-import { Skeleton } from '@mantine/core';
-import Box from '../../../assets/images/box.png';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+import { Link, Navigate } from 'react-router-dom';
+
+import { Skeleton } from '@mantine/core';
+
+import Box from '../../../assets/images/box.png';
+import { get_transaction_list_querry } from '../../../queries/transaction_stats';
+import Table from './table';
 
 const RecentTransaction = () => {
   const { data, isError, isLoading } = useQuery(get_transaction_list_querry(1));
@@ -42,7 +44,7 @@ const RecentTransaction = () => {
         <div className=' p-10 h-[500px] flex flex-col gap-10 items-center'>
           {' '}
           <img src={Box} alt='' className='animate-bounce h-[80px]' />
-          <p className=' text-[18px] font-semibold'>
+          <p className='dark:text-textgrey-normal text-[18px] font-semibold'>
             {t('No data to display')}
           </p>{' '}
         </div>

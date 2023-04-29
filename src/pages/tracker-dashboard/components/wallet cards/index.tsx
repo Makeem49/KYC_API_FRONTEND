@@ -1,7 +1,6 @@
 import { t } from 'i18next';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { Navigate } from 'react-router-dom';
 
 import { Skeleton } from '@mantine/core';
 
@@ -10,11 +9,7 @@ import verifyIcon from '../../../../assets/images/verifyIcon.png';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
 
 const WalletCards = () => {
-  const {
-    data: list,
-    isLoading,
-    isError,
-  } = useQuery(get_tracker_stats_query());
+  const { data: list, isLoading } = useQuery(get_tracker_stats_query());
   if (isLoading)
     return (
       <Skeleton
@@ -25,7 +20,6 @@ const WalletCards = () => {
       />
     );
 
-  if (isError) return <Navigate to='/login' />;
   return (
     <>
       <div className='flex gap-14 child:h-[200px]'>
@@ -50,7 +44,7 @@ const WalletCards = () => {
             )}
           </div>
           <div className='w-full mb-3 mt-2'>
-            <p className='text-[48px] font-bold text-textgrey-darker'>
+            <p className='text-[48px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
               {list?.overview?.noWallets ?? 0}
             </p>
           </div>
@@ -78,7 +72,7 @@ const WalletCards = () => {
             )}
           </div>
           <div className='w-full mb-3 mt-2'>
-            <p className='text-[48px] font-bold text-textgrey-darker'>
+            <p className='text-[48px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
               {list?.overview?.failedFunding ?? 0}
             </p>
           </div>
@@ -105,7 +99,7 @@ const WalletCards = () => {
             )}
           </div>
           <div className='w-full mb-3 mt-2'>
-            <p className='text-[48px] font-bold text-textgrey-darker'>
+            <p className='text-[48px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
               {list?.overview?.unSyncedWalletTransfer ?? 0}
             </p>
           </div>

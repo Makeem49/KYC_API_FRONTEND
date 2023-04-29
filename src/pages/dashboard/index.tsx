@@ -112,7 +112,7 @@ const Dashboard = () => {
                       console.log(localStorage);
                       setShowProviderOpt((s) => !s);
                     }}
-                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-afexdark-regular  text-base cursor-pointer m-1 py-2 px-2 capitalize'>
+                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize'>
                     {' '}
                     {el.name}
                   </span>
@@ -150,7 +150,7 @@ const Dashboard = () => {
                       queryClient.invalidateQueries();
                       setShowLangOpt((s) => !s);
                     }}
-                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-afexdark-regular  text-base cursor-pointer m-1 py-2 px-2 capitalize'>
+                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize'>
                     {' '}
                     {el.label}
                   </span>

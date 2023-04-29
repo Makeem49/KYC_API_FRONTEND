@@ -1,23 +1,21 @@
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import { toast } from '../../utils';
-
-import { TextInput } from '../../components';
-import Button from '../../components/button';
-
-// import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
-import flap from '../../assets/brand/flap.svg';
-import afexLogo from '../../assets/brand/AFEX-logo.png';
-// import { useAuthCtx } from '../../context';
-import AuthProvider from '../../context/auth_context';
-
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { reset__user_Password } from '../../api';
-import { useMutation, useQueryClient } from 'react-query';
+import * as Yup from 'yup';
+
 import cudiLogo from '../././../assets/brand/Cudi-Logo.png';
+import { reset__user_Password } from '../../api';
+import afexLogo from '../../assets/brand/AFEX-logo.png';
+// import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
+import flap from '../../assets/brand/flap.svg';
+import { TextInput } from '../../components';
+import Button from '../../components/button';
+// import { useAuthCtx } from '../../context';
+import AuthProvider from '../../context/auth_context';
+import { toast } from '../../utils';
 
 const ResetPassword = () => {
   const { search } = useLocation();
@@ -49,7 +47,7 @@ const ResetPassword = () => {
                 <img src={cudiLogo} alt='' className=' w-20 ' />
               </div>
 
-              <h3 className='mt-20 text-center  text-2xl font-semibold'>
+              <h3 className='mt-20 text-center dark:text-textgrey-normal text-2xl font-semibold'>
                 Reset Password!
               </h3>
             </div>

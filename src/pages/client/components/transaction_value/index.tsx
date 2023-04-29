@@ -1,13 +1,13 @@
 import React from 'react';
-import { useQuery } from 'react-query';
-import { Skeleton } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
 
-import { get_top_clients_by_trans_value_query } from '../../../../queries/clients_stats';
-import { commaformatter } from '../../../../utils';
+import { Skeleton } from '@mantine/core';
 
 import Box from '../../../../assets/images/box.png';
 import halfCirc from '../../../../assets/images/ell.svg';
+import { get_top_clients_by_trans_value_query } from '../../../../queries/clients_stats';
+import { commaformatter } from '../../../../utils';
 
 const TransactionValue = () => {
   const { t } = useTranslation();
@@ -28,21 +28,21 @@ const TransactionValue = () => {
 
   return (
     <div className='flex flex-col border border-afexpurple-lighter  dark:border-afexdark-dark  rounded-lg'>
-      <div className='relative text-sm  bg-afexpurple-dark dark:bg-afexdark-darkest rounded-t text-white  dark:text-afexdark-regular p-5'>
+      <div className='relative text-sm  bg-afexpurple-dark dark:bg-afexdark-darkest rounded-t text-white dark:text-textgrey-normal p-5'>
         <img
           src={halfCirc}
-          alt='hafcirc'
+          alt=''
           className=' dark:hidden absolute -rotate-90 left-[-7%] top-[-30%] '
         />
         <img
           src={halfCirc}
-          alt='hafcirc'
+          alt=''
           className=' dark:hidden absolute rotate-140 left-[40%] bottom-[-65%] '
         />
 
         <img
           src={halfCirc}
-          alt='hafcirc'
+          alt=''
           className=' dark:hidden absolute rotate-20 right-[-7%] top-[-30%] '
         />
         <p className='text-xl font-bold'>
@@ -73,7 +73,7 @@ const TransactionValue = () => {
                 {topVal!.map((el: any, index) => (
                   <tr
                     key={index}
-                    className=' text-left child:p-2 border-b border-dashed  dark:border-afexdark-dark  '>
+                    className=' text-left child:p-2 border-b border-dashed  dark:text-textgrey-normal dark:border-afexdark-dark  '>
                     <td>
                       <span>{topVal!.indexOf(el) + 1}.</span>
                     </td>

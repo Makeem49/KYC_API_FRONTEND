@@ -1,9 +1,11 @@
+import { t } from 'i18next';
 import React from 'react';
+import { useQuery } from 'react-query';
+
+import { Skeleton } from '@mantine/core';
+
 import halfCirc from '../../../../assets/images/ell.svg';
 import { get_top_transactions_query } from '../../../../queries/clients_stats';
-import { useQuery } from 'react-query';
-import { Skeleton } from '@mantine/core';
-import { t } from 'i18next';
 
 const TransactionCount = () => {
   const { data, isError, isLoading } = useQuery(get_top_transactions_query());
@@ -22,26 +24,26 @@ const TransactionCount = () => {
 
   return (
     <div className=' flex flex-col border border-afexpurple-lighter  dark:border-afexdark-dark rounded-lg'>
-      <div className=' relative text-sm text-textgrey-darker bg-afexpurple-dark  dark:bg-afexdark-darkest  rounded-t p-5'>
+      <div className=' relative text-sm text-textgrey-darker dark:text-textgrey-normal bg-afexpurple-dark  dark:bg-afexdark-darkest  rounded-t p-5'>
         <img
           src={halfCirc}
-          alt='hafcirc'
+          alt=''
           className=' dark:hidden absolute -rotate-90 left-[-7%] top-[-30%] '
         />
 
         <img
           src={halfCirc}
-          alt='hafcirc'
+          alt=''
           className=' dark:hidden absolute rotate-140 left-[40%] bottom-[-65%] '
         />
 
         <img
           src={halfCirc}
-          alt='hafcirc'
+          alt=''
           className=' dark:hidden absolute rotate-20 right-[-7%] top-[-30%] '
         />
 
-        <p className='text-xl text-white  dark:text-afexdark-regular font-bold'>
+        <p className='text-xl text-white  dark:text-textgrey-normal font-bold'>
           {t('Transaction Count')} ({t('Top Users')})
         </p>
       </div>
@@ -50,7 +52,7 @@ const TransactionCount = () => {
         <div className='overflow-auto w-full rounded'>
           <table className='overflow-auto w-full align-top text-[#54565B] text-[12px] xl:text-[14px]'>
             <thead className=' z-10 text-[10px] bg-[#F5F5F5] rounded-full sticky top-0 text-left whitespace-nowrap'>
-              <tr className=' border-b  dark:border-afexdark-dark child:font-normal text-[#5D5B60]  dark:text-afexdark-regular bg-afexpurple-lighter dark:bg-afexdark-darkest child:text-[14px] child:p-2 child:cursor-default child:align-middle'>
+              <tr className=' border-b  dark:border-afexdark-dark child:font-normal text-[#5D5B60]  dark:text-textgrey-normal bg-afexpurple-lighter dark:bg-afexdark-darkest child:text-[14px] child:p-2 child:cursor-default child:align-middle'>
                 <th>S/N</th>
                 <th>{t("Client's Name")}</th>
                 <th>{t("Client's Id")}</th>

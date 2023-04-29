@@ -1,8 +1,7 @@
-import 'react-toastify/dist/ReactToastify.css';
-
-import React from 'react';
-import { json2csv } from 'json-2-csv';
 import { saveAs } from 'file-saver';
+import { json2csv } from 'json-2-csv';
+import React from 'react';
+import { toast } from 'react-toastify';
 
 export async function fetchAll<T>(
   fn: (pageNo: number) => Promise<T[]>,
@@ -136,10 +135,37 @@ function omit(obj: Record<string, any>, arr: string[]) {
   return obj;
 }
 
+// export function exportToCSV(
+//   array: Record<string, any>[],
+//   keysToHide: string[]
+// ) {
+//   const newArray = array.map((el) => omit(el, keysToHide));
+
+//   return json2csv(
+//     newArray,
+//     (err, csv) => {
+//       if (err) {
+//         // handle Error
+//         console.log(err);
+//       }
+
+//       const blob = new Blob([csv!], { type: 'text/csv;charset=utf-8;' });
+//       saveAs(blob, 'data.csv');
+//       // Add a Toast
+//     },
+//     {
+//       expandArrayObjects: true,
+//     }
+//   );
+// }
+
 export function exportToCSV(
   array: Record<string, any>[],
   keysToHide: string[]
 ) {
+  // Display loading toast
+  const toastId = toast.info('Exporting data...', { autoClose: false });
+
   const newArray = array.map((el) => omit(el, keysToHide));
 
   return json2csv(
@@ -148,11 +174,16 @@ export function exportToCSV(
       if (err) {
         // handle Error
         console.log(err);
+        // Hide loading toast and show error toast
+        toast.error('Error exporting data');
+      } else {
+        const blob = new Blob([csv!], { type: 'text/csv;charset=utf-8;' });
+        saveAs(blob, 'data.csv');
+        // Hide loading toast and show success toast
+        toast.success('Data exported successfully');
       }
-
-      const blob = new Blob([csv!], { type: 'text/csv;charset=utf-8;' });
-      saveAs(blob, 'data.csv');
-      // Add a Toast
+      // Remove the loading toast
+      toast.dismiss(toastId);
     },
     {
       expandArrayObjects: true,

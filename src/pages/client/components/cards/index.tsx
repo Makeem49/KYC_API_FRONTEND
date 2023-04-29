@@ -38,7 +38,7 @@ const ClientCard = () => {
           <UserCirlceAdd size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {stats?.sectionOne?.totalClients?.today}
             <Change
               value={calculatePercentageChange(
@@ -60,7 +60,7 @@ const ClientCard = () => {
           <UserTick size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {stats?.sectionOne?.verifiedClients?.today}
             <Change
               value={calculatePercentageChange(
@@ -82,7 +82,7 @@ const ClientCard = () => {
           <UserRemove size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='text-[18px] w-full font-bold text-textgrey-dark'>
+          <p className='text-[18px] w-full font-bold text-textgrey-dark dark:text-textgrey-normal'>
             0{' '}
             <span className='text-[#ff5653] font-normal  text-[13px]'>
               {' '}
@@ -102,7 +102,7 @@ const ClientCard = () => {
           <UserOctagon size='25' color='#A982EA' variant='Bulk' />
         </div>
         <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark dark:text-textgrey-normal'>
             {stats?.sectionOne?.activeClients?.today}
             <Change
               value={calculatePercentageChange(

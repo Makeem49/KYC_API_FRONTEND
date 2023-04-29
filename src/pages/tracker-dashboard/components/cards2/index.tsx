@@ -1,10 +1,12 @@
+import { t } from 'i18next';
 import React from 'react';
+import { useQuery } from 'react-query';
+
+import { Skeleton } from '@mantine/core';
+
 import UnverifyIcon from '../../../../assets/images/verify.png';
 import verifyIcon from '../../../../assets/images/verifyIcon.png';
-import { useQuery } from 'react-query';
 import { get_tracker_stats_query } from '../../../../queries/tracker_board';
-import { Skeleton } from '@mantine/core';
-import { t } from 'i18next';
 
 const VirtualCards = () => {
   const { data: list, isLoading } = useQuery(get_tracker_stats_query());
@@ -41,7 +43,7 @@ const VirtualCards = () => {
             )}
           </div>
           <div className='w-full mb-3 mt-2'>
-            <p className='text-[48px] font-bold text-textgrey-darker'>
+            <p className='text-[48px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
               {list?.overview?.noVirtualAccount ?? 0}
             </p>
           </div>
@@ -68,7 +70,7 @@ const VirtualCards = () => {
             )}
           </div>
           <div className='w-full mb-3 mt-2'>
-            <p className='text-[48px] font-bold text-textgrey-darker'>
+            <p className='text-[48px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
               {list?.overview?.unsyncedWithdrawal ?? 0}
             </p>
           </div>
