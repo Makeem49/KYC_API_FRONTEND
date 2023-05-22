@@ -37,7 +37,7 @@ const ActionSelect = (props: SelectInterface) => {
 
   return (
     <div
-      className='flex items-center relative'
+      className="flex items-center relative"
       onClick={(e) => e.stopPropagation()}>
       <button
         className={
@@ -68,14 +68,14 @@ const ActionSelect = (props: SelectInterface) => {
               el.function();
               setOptions(false);
             }}
-            className='flex flex-col gap-3 relative whitespace-nowrap text-sm hover:bg-afexpurple-lighter dark:hover:bg-white dark:hover:bg-opacity-20 p-1 cursor-pointer m-1 rounded-lg '
+            className="flex flex-col gap-3 relative whitespace-nowrap text-sm hover:bg-afexpurple-lighter dark:hover:bg-white dark:hover:bg-opacity-20 p-1 cursor-pointer m-1 rounded-lg "
             key={index}>
             {el.icon && (
-              <span className='bg-white p-[2px] rounded-md text-white inline'>
+              <span className="bg-white p-[2px] rounded-md text-white inline">
                 {el.icon}
               </span>
             )}
-            <span className='absolute top-[-300%] left-[-40%] text-textgrey-darker hover:text-[#53565b] capitalize'>
+            <span className="absolute top-[-300%] left-[-40%] text-textgrey-darker hover:text-[#53565b] capitalize">
               {el.label}{' '}
             </span>
           </li>

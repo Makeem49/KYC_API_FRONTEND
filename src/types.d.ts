@@ -52,6 +52,9 @@ type ClientList = {
   clientId: number;
   valueOfTransactions: string;
   clientName: string;
+  status: string;
+  comment: string;
+  location: string;
 };
 
 type ClientProvider = {
@@ -137,6 +140,7 @@ type User = {
   permissions: number[] | any;
   roles: number[] | any;
   providers: number[] | any;
+  providerId: number[] | any;
   image: string;
   createdAt: string | Date;
   updatedAt: string | Date;
@@ -322,6 +326,10 @@ type ClientBio = {
   locationId: number;
   noOfTransactions: number;
   otherNames: string;
+  location: {
+    name: string;
+  };
+  name: string;
   phoneNumber: string;
   platformId: string;
   providers: {
@@ -530,6 +538,31 @@ interface TrackerSect {
   description: string;
   actionTime: string;
   ref: string;
+  time: string;
+}
+
+interface TrackerBoardLists {
+  id: number;
+  clientName: string;
+  accountName: string;
+  bankAccount: string;
+  bankName: string;
+  bankCode: string;
+  idCardType: string;
+  idCardNumber: string;
+  platformId: string;
+  location: string;
+  phoneNumber: string;
+  amount: string;
+  ref: string;
+  description: string;
+  requestType: string;
+  status: string;
+  isVerified: string;
+  balance: string;
+  noOfTransactions: number;
+  lastTransactionDate: string | Date;
+  createdAt: string | Date;
 }
 
 type Me = {

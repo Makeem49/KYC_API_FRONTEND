@@ -26,15 +26,15 @@ const TransactionCards = () => {
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
-    <div className='flex gap-4 child:h-[134px]'>
+    <div className="flex gap-4 child:h-[134px]">
       {/* Card One */}
-      <div className='relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <p className=' font-normal text-textgrey-normal'>{t('DEPOSITS')}</p>
-          <SaveAdd size='20' color='#A982EA' variant='Bulk' />
+      <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
+        <div className="flex items-center justify-between w-full">
+          <p className=" font-normal text-textgrey-normal">{t('DEPOSITS')}</p>
+          <SaveAdd size="20" color="#A982EA" variant="Bulk" />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+        <div className="w-full mb-3 mt-2">
+          <p className="flex items-center gap-1 text-[18px] font-bold text-textgrey-dark">
             {defaultCountryCode === 'NG'
               ? '₦'
               : defaultCountryCode === 'KE'
@@ -53,13 +53,13 @@ const TransactionCards = () => {
       </div>
 
       {/* Card Two */}
-      <div className='relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <p className=' font-normal text-textgrey-normal'>{t('WITHDRAWAL')}</p>
-          <MoneySend size='20' color='#A982EA' variant='Bulk' />
+      <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
+        <div className="flex items-center justify-between w-full">
+          <p className=" font-normal text-textgrey-normal">{t('WITHDRAWAL')}</p>
+          <MoneySend size="20" color="#A982EA" variant="Bulk" />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] font-bold text-textgrey-dark'>
+        <div className="w-full mb-3 mt-2">
+          <p className="flex items-center gap-1 text-[18px] font-bold text-textgrey-dark">
             {defaultCountryCode === 'NG'
               ? '₦'
               : defaultCountryCode === 'KE'
@@ -78,15 +78,15 @@ const TransactionCards = () => {
       </div>
 
       {/* Card Three */}
-      <div className='relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <p className=' font-normal text-textgrey-normal'>
+      <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
+        <div className="flex items-center justify-between w-full">
+          <p className=" font-normal text-textgrey-normal">
             {t('WALLET TRANSFER')}
           </p>
-          <WalletCheck size='20' color='#A982EA' variant='Bulk' />
+          <WalletCheck size="20" color="#A982EA" variant="Bulk" />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+        <div className="w-full mb-3 mt-2">
+          <p className="flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark">
             {defaultCountryCode === 'NG'
               ? '₦'
               : defaultCountryCode === 'KE'
@@ -105,13 +105,13 @@ const TransactionCards = () => {
       </div>
 
       {/* Card Four */}
-      <div className='relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <p className=' font-normal text-textgrey-normal'>{t('FEES')}</p>
-          <CardCoin size='20' color='#A982EA' variant='Bulk' />
+      <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
+        <div className="flex items-center justify-between w-full">
+          <p className=" font-normal text-textgrey-normal">{t('FEES')}</p>
+          <CardCoin size="20" color="#A982EA" variant="Bulk" />
         </div>
-        <div className='w-full mb-3 mt-2'>
-          <p className='flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark'>
+        <div className="w-full mb-3 mt-2">
+          <p className="flex items-center gap-1 text-[18px] w-full font-bold text-textgrey-dark">
             {defaultCountryCode === 'NG'
               ? '₦'
               : defaultCountryCode === 'KE'

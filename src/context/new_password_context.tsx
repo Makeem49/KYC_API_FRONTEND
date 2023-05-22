@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { authenticate } from '../api';
 import { toast } from '../utils';
 
@@ -47,7 +48,7 @@ const AuthProvider = (props: WithChildren) => {
     // toast('success', 'Sucess!!', 'Login successfully');
 
     // Drop success toast
-    console.log(resp);
+
     localStorage.setItem('cuddie-access-token', resp.access_token);
     localStorage.setItem('cuddie-auth-status', 'true');
     setIsAuthenticated(true);

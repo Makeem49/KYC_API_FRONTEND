@@ -1,19 +1,5 @@
 import { t } from 'i18next';
-import {
-  ArrowSwapHorizontal,
-  Bank,
-  Book1,
-  HomeHashtag,
-  KeyboardOpen,
-  Logout,
-  MoneyArchive,
-  Moon,
-  People,
-  ProfileCircle,
-  Setting2,
-  Sun1,
-  UserCirlceAdd,
-} from 'iconsax-react';
+import { Logout, Moon, ProfileCircle, Setting2, Sun1 } from 'iconsax-react';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { NavLink } from 'react-router-dom';
@@ -23,14 +9,10 @@ import { Tooltip } from '@mantine/core';
 
 import cudiLogo from '../../assets/brand/Cudi-Logo.png';
 import { useAuthCtx } from '../../context';
+import { menu } from '../../context/routes';
 import { useThemeCtx } from '../../context/theme_context';
 import { get_admin_query } from '../../queries/dash_board';
 import NotificationModal from '../notification-modal';
-
-type Role = {
-  name: string;
-  id: number;
-};
 
 function Sidebar() {
   const { data: user } = useQuery(get_admin_query());
@@ -40,116 +22,42 @@ function Sidebar() {
   const [opened, setOpened] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
 
-  const state = localStorage.getItem('decoded-arrays');
-  const loggedin_user = JSON.parse(state ?? '{}');
+  // const state = localStorage.getItem('decoded-arrays');
+  // const loggedin_user = JSON.parse(state ?? '{}');
 
-  const hideRoute = (required_permissions: string[]) => {
-    if (!state || !loggedin_user) return false;
-    if (loggedin_user!?.roles.find((role: Role) => role.name === 'SYSADMIN'))
-      return false;
+  // const loggedin_user = {
+  //   name: 'afex-admin',
+  //   username: 'afex-admin',
+  //   id: 1,
+  //   roles: [
+  //     {
+  //       name: '',
+  //       id: 1,
+  //     },
+  //   ],
+  //   permissions: [{ id: 1, name: 'View Clients' }],
+  //   providers: [
+  //     {
+  //       countryCode: 'NG',
+  //       name: 'AFTL Nigeria',
+  //       id: 1,
+  //     },
+  //   ],
+  //   iat: 1682714929,
+  //   exp: 1682887729,
+  // };
 
-    return !required_permissions!?.every((permission) =>
-      loggedin_user!?.permissions
-        .map((el: Record<string, any>) => el.name)
-        .includes(permission)
-    );
-  };
+  // const hideRoute = (required_permissions: string[]) => {
+  //   // if (!state || !loggedin_user) return false;
+  //   if (loggedin_user!?.roles.find((role: Role) => role.name === 'SYSADMIN'))
+  //     return false;
 
-  const routes = [
-    {
-      to: '/',
-      icon: (
-        <HomeHashtag
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Dashboard',
-      hidden: false,
-    },
-    {
-      to: '/client',
-      icon: (
-        <People
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Clients',
-      hidden: hideRoute(['View Clients']),
-    },
-    {
-      to: '/transaction',
-      icon: (
-        <Book1
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Transactions',
-      hidden: hideRoute(['View Client Transactions']),
-    },
-
-    {
-      to: '/user-management',
-      icon: (
-        <UserCirlceAdd
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'User Management',
-      hidden: hideRoute(['View Users']),
-    },
-
-    {
-      to: '/client-provider',
-      icon: (
-        <ArrowSwapHorizontal
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Client Providers',
-      hidden: hideRoute(['View Client Provider']),
-    },
-
-    {
-      to: '/banks',
-      icon: (
-        <Bank
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Banks',
-      hidden: false,
-    },
-
-    {
-      to: '/fund-request',
-      icon: (
-        <MoneyArchive
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Fund Request',
-      hidden: false,
-    },
-
-    {
-      to: '/tracker-dashboard',
-      icon: (
-        <KeyboardOpen
-          variant='Bulk'
-          className='h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]'
-        />
-      ),
-      label: 'Tracker Dashboard',
-      hidden: false,
-    },
-  ].filter((route) => !route.hidden);
+  //   return !required_permissions!?.every((permission) =>
+  //     loggedin_user!?.permissions
+  //       .map((el: Record<string, any>) => el.name)
+  //       .includes(permission)
+  //   );
+  // };
 
   const activeStyle =
     'bg-[#F1EBFC] dark:bg-[#2B2930] flex justify-center items-center border-l-4 border-[#7738DD] text-[#7738DD]  w-full lg:p-4 2xl:p-8';
@@ -166,11 +74,11 @@ function Sidebar() {
       {/* Dashboard Icons */}
 
       <div className='absolute lg:top-[10%] 2xl:top-[12%]  w-full gap-0 justify-between items-center flex flex-col'>
-        {routes!?.map((route, index) => {
+        {menu?.map((route, index) => {
           return (
             <Tooltip
               key={index}
-              label={t(route.label)}
+              label={t(route?.label ?? '')}
               position='right'
               radius='md'
               style={{
@@ -182,7 +90,7 @@ function Sidebar() {
                 flexDirection: 'column',
               }}>
               <NavLink
-                to={route.to}
+                to={route.path ?? ''}
                 className={({ isActive }) =>
                   isActive ? activeStyle : baseStyle
                 }

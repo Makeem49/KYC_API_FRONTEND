@@ -10,6 +10,7 @@ import { shortDateFormatter } from '../../../../../../utils';
 
 const Table = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
   const { pathname } = useLocation();
@@ -18,6 +19,7 @@ const Table = () => {
   const { data, isError, isLoading } = useGetClientTransaction(
     parseInt(clientId, 10),
     currentPage,
+    pageSize,
     filter,
     filters
   );
@@ -31,19 +33,20 @@ const Table = () => {
         }}
       />
     );
-  if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
     <>
-      <div className='bg-white dark:bg-afexdark-darkest p-3'>
+      <div className="bg-white dark:bg-afexdark-darkest p-3">
         <DataGrid
           loadMore={setCurrentPage}
           lastPage={data?.lastPage!}
           total={data?.total!}
           setSearch={setSearch}
           setFilters={setFilters}
+          setSelectedEntries={setPageSize}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
           data={data?.data!}
@@ -108,9 +111,9 @@ const Table = () => {
               static: false,
               row: (val) => {
                 if (val === 'Credit') {
-                  return <span className=' text-afexgreen-regular'>{val}</span>;
+                  return <span className=" text-afexgreen-regular">{val}</span>;
                 } else {
-                  return <span className=' text-afexred-regular'>{val}</span>;
+                  return <span className=" text-afexred-regular">{val}</span>;
                 }
               },
             },

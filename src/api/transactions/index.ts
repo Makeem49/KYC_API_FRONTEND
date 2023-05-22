@@ -32,6 +32,7 @@ export function get_transactions_overview(): Promise<AxiosResponse<any, any>> {
  */
 export async function get_all_transactions(
   page: number,
+  page_size?: number,
   filter?: string,
   filters?: any
 ): Promise<{
@@ -42,7 +43,7 @@ export async function get_all_transactions(
   const resp = await apiRequest.get(`transactions`, {
     params: {
       page,
-      page_size: 10,
+      page_size: page_size ?? 0,
       filter: filter ?? '',
       ...filters,
     },
@@ -69,13 +70,13 @@ export async function get_all_transactions(
           id: el.id,
           createdAt: shortDateFormatter(el.createdAt),
           time: timeFormatter(el.createdAt),
-          clientName: `${el.client.firstName} ${el.client.lastName}`,
-          sessionId: el.sessionId.substr(0, 15) + '',
-          amount: currentNumberFormatter(el.amount),
-          transactionType: el.transactionType,
-          description: el.description,
+          clientName: `${el.client.firstName} ${el.client.lastName}` ?? '',
+          sessionId: el.sessionId.substr(0, 15) + '' ?? '',
+          amount: currentNumberFormatter(el.amount) ?? '',
+          transactionType: el.transactionType ?? '',
+          description: el.description ?? '',
           status: el.status ? `${t('Active')}` : `${t('Inactive')}`,
-          countryCode: checkCountryCode(el.client.countryCode),
+          countryCode: checkCountryCode(el.client.countryCode) ?? '',
           clientId: el.clientId ? el.clientId : '',
         } as TransactionList)
     ),
@@ -86,6 +87,7 @@ export async function get_all_transactions(
 
 export async function get_trans_locations(
   page: number,
+  page_size?: number,
   filter?: string,
   filters?: any
 ): Promise<{
@@ -96,7 +98,7 @@ export async function get_trans_locations(
   const resp = await apiRequest.get(`admin/transactions/locations`, {
     params: {
       page,
-      page_size: 10,
+      page_size: page_size ?? 0,
       filter: filter ?? '',
       ...filters,
     },
@@ -120,13 +122,13 @@ export async function get_trans_locations(
     data: resp.data.data.map(
       (el: any) =>
         ({
-          id: el.id,
-          code: el.code,
-          name: el.name,
-          state: el.state,
-          total_transactions_value: el.total_transactions_value,
-          transactions_count: el.transactions_count,
-          total_clients: el.total_clients,
+          id: el.id ?? 0,
+          code: el.code ?? '',
+          name: el.name ?? '',
+          state: el.state ?? '',
+          total_transactions_value: el.total_transactions_value ?? '0',
+          transactions_count: el.transactions_count ?? '0',
+          total_clients: el.total_clients ?? '0',
         } as LocationStats)
     ),
     total: resp.data.total,

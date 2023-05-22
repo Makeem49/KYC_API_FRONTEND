@@ -19,7 +19,6 @@ const RefreshBanks = () => {
     // manually trigger the query when the button is clicked
     queryClient.refetchQueries('refreshBankList');
     if (isSuccess) {
-      setOpened((s) => !s);
       queryProvider.invalidateQueries({ queryKey: ['banks'] });
     }
   };
@@ -30,37 +29,42 @@ const RefreshBanks = () => {
         onClick={() => {
           setOpened((s) => !s);
         }}
-        className=' bg-afexpurple-regular  text-white p-3 rounded-lg cursor-pointer hover:shadow text-base'>
+        className=" bg-afexpurple-regular  text-white p-3 rounded-lg cursor-pointer hover:shadow text-base">
         REFRESH BANK LIST
       </button>
 
       <Modal
-        size='25%'
+        size="25%"
         withCloseButton={false}
         centered
         opened={opened}
         onClose={() => setOpened((s) => !s)}>
         {/* Map Component */}
-        <div className='flex flex-col mt-0 items-center gap-4 text-center p-8'>
-          <BsQuestionCircle color='#E1891C' size={70} />
+        <div className="flex flex-col mt-0 items-center gap-4 text-center p-8">
+          <BsQuestionCircle color="#E1891C" size={70} />
 
-          <p className='text-[14px] text-gray-400 rounded-md'>
+          <p className="text-[14px] text-gray-400 rounded-md">
             Are you sure you would like to refresh?
           </p>
 
-          <div className='flex w-full px-10 justify-center gap-4'>
+          <div className="flex w-full px-10 justify-center gap-4">
             <button
               onClick={() => {
                 handleUpdateBanks();
+                queryProvider.invalidateQueries({
+                  queryKey: ['banks'],
+                });
+
+                setOpened((s) => !s);
               }}
-              className='w-full bg-[#7738DD] p-4 rounded-lg text-white'>
+              className="w-full bg-[#7738DD] p-4 rounded-lg text-white">
               yes, please
             </button>
             <button
               onClick={() => {
                 setOpened((s) => !s);
               }}
-              className='w-full p-4 hover:shadow rounded-lg'>
+              className="w-full p-4 hover:shadow rounded-lg">
               no, return
             </button>
           </div>

@@ -1,24 +1,28 @@
-import DataGrid from '../../../../../../components/data-grid';
-import React from 'react';
-import { commaformatter } from '../../../../../../utils';
 import { t } from 'i18next';
+import React from 'react';
+
+import DataGrid from '../../../../../../components/data-grid';
 import { useGetTransLocation } from '../../../../../../queries';
+import { commaformatter } from '../../../../../../utils';
+
 const Table = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
-  const { data } = useGetTransLocation(currentPage, filter, filters);
+  const { data } = useGetTransLocation(currentPage, pageSize, filter, filters);
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
   const searchText = t('Search by client name, id');
   return (
-    <div className='h-full mt-4 pb-5'>
+    <div className="h-full mt-4 pb-5">
       <DataGrid
         loadMore={setCurrentPage}
         lastPage={1}
         total={data!?.data.length}
         setSearch={setSearch}
         setFilters={setFilters}
+        setSelectedEntries={setPageSize}
         title={searchText}
         rows={10}
         dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
@@ -49,6 +53,7 @@ const Table = () => {
             name: `${t('Count of Transactions')}`,
             sortable: true,
             static: true,
+            row: (val) => <span>{commaformatter(val)} </span>,
           },
 
           {

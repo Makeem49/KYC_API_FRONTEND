@@ -25,7 +25,7 @@ const Notications = ({ setOpened, data }: NotificationProps) => {
     <div className='flex flex-col gap-5 px-8 font-normal mb-5'>
       {/* TODAY */}
       {/* <p className=' font-semibold'>Today</p> */}
-      {data.map((el) => (
+      {data!?.map((el) => (
         <Link
           onClick={() => {
             mutation.mutate({
@@ -45,9 +45,13 @@ const Notications = ({ setOpened, data }: NotificationProps) => {
           <div className='flex gap-3 items-center'>
             <img src={adamsIcon} alt='adams' />
             <div className='flex flex-col gap-1'>
-              <p className='text-[14px] font-semibold'>{el.title}</p>
-              <span className='text-[12px] text-[#C1C0C2]'>{el.targetId}</span>
-              <span className='text-[12px] text-[#5D5B60]'>{el.summary}</span>
+              <p className='text-[14px] font-semibold'>{el.title ?? ''}</p>
+              <span className='text-[12px] text-[#C1C0C2]'>
+                {el.targetId ?? 0}
+              </span>
+              <span className='text-[12px] text-[#5D5B60]'>
+                {el.summary ?? ''}
+              </span>
             </div>
           </div>
 

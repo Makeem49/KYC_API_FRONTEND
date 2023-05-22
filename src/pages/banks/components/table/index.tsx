@@ -11,11 +11,13 @@ import UserAction from '../dropdown';
 
 const BankList = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
 
   const { data, isError, isLoading } = useGetBankList(
     currentPage,
+    pageSize,
     filter,
     filters
   );
@@ -30,7 +32,7 @@ const BankList = () => {
       />
     );
 
-  if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   const ActionComponent = ({ data }: { data: Banks }) => (
     <UserAction data={data} />
@@ -38,14 +40,15 @@ const BankList = () => {
 
   return (
     <>
-      <div className='bg-white dark:bg-afexdark-darkest px-6 py-3'>
+      <div className="bg-white dark:bg-afexdark-darkest px-6 py-3">
         <DataGrid
           loadMore={setCurrentPage}
-          lastPage={1}
-          total={data!?.data.length}
-          title='Search'
+          lastPage={data!?.lastPage}
+          total={data!?.total}
+          title="Search"
           setSearch={setSearch}
           setFilters={setFilters}
+          setSelectedEntries={setPageSize}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
           data={data?.data!}
@@ -67,7 +70,7 @@ const BankList = () => {
               hidden: false,
               name: `${t('Bank Name')}`,
               sortable: true,
-              static: true,
+              static: false,
             },
 
             {

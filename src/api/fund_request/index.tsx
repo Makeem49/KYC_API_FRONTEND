@@ -1,7 +1,13 @@
-import { apiRequest, paramsSerializer, toast } from '../../utils';
+import {
+  apiRequest,
+  commaformatter,
+  paramsSerializer,
+  toast,
+} from '../../utils';
 
 export async function get_fund_request(
   page: number,
+  page_size?: number,
   filter?: string,
   filters?: any
 ): Promise<{
@@ -12,7 +18,7 @@ export async function get_fund_request(
   const resp = await apiRequest.get(`admin/fund-requests`, {
     params: {
       page,
-      page_no: 10,
+      page_size: page_size ?? 0,
       filter: filter ?? '',
       ...filters,
     },
@@ -38,7 +44,7 @@ export async function get_fund_request(
         ({
           id: el.id,
           createdAt: el.createdAt,
-          amount: el.amount,
+          amount: commaformatter(el.amount),
           ref: el.ref,
           description: el.description,
           requestType: el.requestType,
@@ -47,7 +53,7 @@ export async function get_fund_request(
           phoneNumber: el.client.phoneNumber,
         } as FundRequest)
     ),
-    total: resp.data,
+    total: resp.data.total,
     lastPage: resp.data.lastPage,
   };
 }
@@ -59,11 +65,10 @@ export async function approve_fund_request(
     const resp = await apiRequest.post('admin/fund-requests/approve', id);
 
     if (!resp.data) return 'unable to approve fund request';
-    console.log(resp);
+
     toast('success', `${resp.data.message}`);
     return resp.data.data;
   } catch (error: any) {
-    console.log(error.response.data);
     toast('error', 'Unable to Aprrove Request', `${error.response.data.error}`);
   }
 }

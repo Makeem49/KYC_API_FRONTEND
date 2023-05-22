@@ -1,11 +1,13 @@
-import React from 'react';
-import { Icon } from '@iconify/react';
 import { Edit2, Trash } from 'iconsax-react';
+import React from 'react';
+
+import { Icon } from '@iconify/react';
+
 const TwoStepAuthentication = () => {
   return (
     <div className=' bg-white dark:bg-afexdark-darkest flex flex-col w-full p-6 mtrounded'>
       <div className='w-full flex justify-between'>
-        <p className='w-full text-[#000] dark:text-afexdark-regular text-[18px] font-semibold'>
+        <p className='w-full text-[#000] dark:text-textgrey-normal text-[18px] font-semibold'>
           {' '}
           Two Step Authentication <br />
           <span className='text-[12px] text-textgrey-Light font-normal'>
@@ -19,13 +21,11 @@ const TwoStepAuthentication = () => {
         </div>
       </div>
 
-      <div className='w-full flex justify-between gap-4 items-center border-b dark:border-afexdark-dark py-3 mt-2'>
+      <div className='w-full flex justify-between gap-4 items-center border-b dark:border-afexdark-dark dark:text-textgrey-normal py-3 mt-2'>
         <p className='w-full text-[10px] font-semibold'>
           {' '}
           SMS <br />
-          <span className='text-[12px] text-textgrey-Light font-normal'>
-            +234 703 234 264
-          </span>
+          <span className='text-[12px]  font-normal'>+234 703 234 264</span>
         </p>
         <Edit2 size='15' color='#8f8e91' variant='Bulk' />
         <Trash size='15' color='#8f8e91' variant='Bulk' />

@@ -27,7 +27,7 @@ const Table = () => {
       />
     );
 
-  if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   const ActionComponent = ({ data }: { data: User }) => (
     <UserAction data={data} />
@@ -35,7 +35,7 @@ const Table = () => {
 
   return (
     <>
-      <div className='bg-white  dark:bg-afexdark-darkest p-3'>
+      <div className="bg-white  dark:bg-afexdark-darkest p-3">
         <DataGrid
           loadMore={setCurrentPage}
           lastPage={data!?.lastPage}
@@ -59,21 +59,21 @@ const Table = () => {
               static: false,
               secondary_key: 'email',
               row: (val, secondary_key) => (
-                <span className='flex flex-col'>
+                <span className="flex flex-col">
                   {' '}
-                  <span className=' relative  flex items-center gap-2'>
+                  <span className=" relative  flex items-center gap-2">
                     {' '}
                     <img
-                      className='w-10 h-10 top-[-5px] absolute'
+                      className="w-10 h-10 top-[-5px] absolute"
                       src={userImg}
-                      alt='olvimg'
+                      alt="olvimg"
                     />
-                    <span className=' absolute top-[-18] left-12 '>
+                    <span className=" absolute top-[-18] left-12 ">
                       {' '}
                       {val}{' '}
                     </span>
                   </span>
-                  <span className='mt-4 ml-12'>{secondary_key}</span>
+                  <span className="mt-4 ml-12">{secondary_key}</span>
                 </span>
               ),
             },
@@ -82,7 +82,7 @@ const Table = () => {
               hidden: false,
               name: `${t('User Name')}`,
               sortable: true,
-              static: true,
+              static: false,
             },
             {
               accessor: 'providers',
@@ -107,7 +107,7 @@ const Table = () => {
               sortable: true,
               static: false,
               row: (val) => (
-                <span className=' bg-afexgreen-extralight dark:bg-afexdark-verydark rounded-lg p-2'>
+                <span className="bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-regular rounded-lg p-2">
                   {val ? 'Enabled' : 'Disabled'}{' '}
                 </span>
               ),
@@ -123,13 +123,13 @@ const Table = () => {
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight dark:bg-afexdark-verydark text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2'>
+                    <span className=" bg-afexgreen-extralight dark:bg-afexdark-verydark text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2">
                       {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
+                    <span className=" bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2">
                       {t(val)}
                     </span>
                   );
@@ -144,6 +144,14 @@ const Table = () => {
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
+            },
+
+            {
+              accessor: 'providerId',
+              hidden: true,
+              name: `${t('Provider Id')}`,
+              sortable: true,
+              static: true,
             },
           ]}
           withExport

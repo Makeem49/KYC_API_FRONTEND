@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import cudiLogo from '../././../assets/brand/Cudi-Logo.png';
@@ -15,28 +16,16 @@ import { TextInput } from '../../components';
 import Button from '../../components/button';
 // import { useAuthCtx } from '../../context';
 import AuthProvider from '../../context/auth_context';
-import { toast } from '../../utils';
 
 const ForgotPassword = () => {
-  // const { search } = useLocation();
-  // const token = search.split('=')[1];
-  // console.log(token);
-
-  // const accessRoken = pathname.split('/')[2];
-  // const navigate = useNavigate();
-  // const { login, loading } = useAuthCtx();
-
   const queryProvider = useQueryClient();
+
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: request_password_reset,
     onSuccess: () => {
       queryProvider.invalidateQueries({ queryKey: ['reset-user'] }); // To  invalidate and refetch
-      toast(
-        'success',
-        'Please check your mail',
-        'A password reset link will be sent to you shortly'
-      );
     },
   });
 
@@ -46,14 +35,14 @@ const ForgotPassword = () => {
     <>
       <AuthProvider>
         <div className='bg-afexgray dark:bg-afexdark-verydark w-screen h-screen absolute top-0 left-0 right-0 flex items-center'>
-          <div className='flex flex-1 h-full w-full flex-col space-y-20 px-20'>
+          <div className='flex flex-1 h-full w-full flex-col space-y-6 px-20'>
             <div className='relative p-8 '>
-              <div className='top-[30%] absolute'>
-                <img src={cudiLogo} alt='' className=' w-20 ' />
+              <div className='top-[25%] absolute'>
+                <img src={cudiLogo} alt='' className=' w-24 ' />
               </div>
 
               <div className=' mt-20'>
-                <h3 className='text-center dark:text-textgrey-normal text-2xl font-semibold'>
+                <h3 className=' text-center dark:text-textgrey-normal text-2xl font-semibold'>
                   Reset your password
                 </h3>
 
@@ -89,18 +78,6 @@ const ForgotPassword = () => {
                   label='Enter your email'
                 />
 
-                {/* 
-              <div className='flex justify-between items-center'>
-                <div className='flex items-center space-x-4'>
-                  <input
-                    type='checkbox'
-                    id='remember'
-                    className='checkbox white'
-                  />
-                  <label htmlFor='remember'>Remember me</label>
-                </div>
-              </div> */}
-
                 <div className='flex items-center justify-center flex-col pt-12 space-y-4'>
                   <Button
                     type='submit'
@@ -112,20 +89,14 @@ const ForgotPassword = () => {
                     }
                     loading={loading}
                   />
-                  {/* <button
-                    className='bg-[#E1261C] text-white flex justify-center  font-bold px-5 p-4 rounded-lg items-center w-1/2 hover:shadow-md'
-                    type='submit'>
-                    Sign in
-                    <MdKeyboardArrowRight className='text-3xl ' />
-                  </button> */}
 
-                  {/* <span
-                    // onClick={() => {
-                    //   navigate('/login');
-                    // }}
+                  <span
+                    onClick={() => {
+                      navigate('/login');
+                    }}
                     className='text-bg-afexpurple text-red-400 font-semibole hover:underline cursor-pointer'>
                     Log in
-                  </span> */}
+                  </span>
                 </div>
               </Form>
             </Formik>

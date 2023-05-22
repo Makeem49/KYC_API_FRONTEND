@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ProfileBoard from './components/profile board';
 import Security from './components/security';
 
@@ -8,7 +9,7 @@ const Settings = () => {
       {/* Left Section */}
       <div className='w-[35%] h-[100vh] flex flex-col gap-10 overflow-y-auto p-10'>
         {/* Title */}
-        <div className='flex w-full dark:text-afexdark-dark flex-col'>
+        <div className='flex w-full dark:text-textgrey-normal flex-col'>
           <h2 className='dark:text-afexdark-lighter text-[18px] font-bold '>
             User Profile
           </h2>

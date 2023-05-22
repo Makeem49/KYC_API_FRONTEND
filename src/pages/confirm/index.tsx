@@ -15,16 +15,13 @@ import { TextInput } from '../../components';
 import Button from '../../components/button';
 // import { useAuthCtx } from '../../context';
 import AuthProvider from '../../context/auth_context';
-import { toast } from '../../utils';
 
 const ConfirmOverlay = () => {
   const { search } = useLocation();
   const token = search.split('=')[1];
-  console.log(token);
 
   // const accessRoken = pathname.split('/')[2];
   const navigate = useNavigate();
-  // const { login, loading } = useAuthCtx();
 
   const queryProvider = useQueryClient();
 
@@ -32,10 +29,6 @@ const ConfirmOverlay = () => {
     mutationFn: activateUser,
     onSuccess: () => {
       queryProvider.invalidateQueries({ queryKey: ['activate-user'] }); // To  invalidate and refetch
-      toast('success', 'Request Accepted', 'User Account created succesfully');
-    },
-    onError: () => {
-      toast('error', 'unable to activate', 'please try again');
     },
   });
 
@@ -67,7 +60,6 @@ const ConfirmOverlay = () => {
                 setLoading(true);
                 mutation.mutate(activated);
                 setLoading(false);
-                navigate('/login');
               }}
               validationSchema={Yup.object({
                 username: Yup.string().required('Username is required'),

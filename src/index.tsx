@@ -1,18 +1,21 @@
+import './index.css';
+import './App.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import { router } from './App';
-import reportWebVitals from './reportWebVitals';
+import { I18nextProvider } from 'react-i18next';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider } from 'react-router-dom';
+
 // import ContextProvider from './context';
 import { MantineProvider } from '@mantine/core';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { NotificationsProvider } from '@mantine/notifications';
+
+import { router } from './context/routes';
+import { ThemeProvider, useThemeCtx } from './context/theme_context';
 // import { ThemeProvider } from '@material-tailwind/react';
 import i18n from './localization/i18n';
-import { I18nextProvider } from 'react-i18next';
-import { ThemeProvider } from './context/theme_context';
-// import { ColumnProvider } from './context/column_context';
+import reportWebVitals from './reportWebVitals';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,24 +27,33 @@ const queryClient = new QueryClient({
   },
 });
 
+function App() {
+  const { theme } = useThemeCtx();
+
+  return (
+    <I18nextProvider i18n={i18n}>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{ colorScheme: theme }}>
+        <NotificationsProvider limit={1} position='top-right'>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </NotificationsProvider>
+      </MantineProvider>
+    </I18nextProvider>
+  );
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <React.Suspense>
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider>
-          <MantineProvider withGlobalStyles withNormalizeCSS>
-            <NotificationsProvider limit={1} position='top-right'>
-              <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
-              </QueryClientProvider>
-            </NotificationsProvider>
-          </MantineProvider>
-        </ThemeProvider>
-      </I18nextProvider>
-    </React.Suspense>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

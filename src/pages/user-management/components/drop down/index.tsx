@@ -21,15 +21,15 @@ const UserAction = ({ data }: { data: User }) => {
               e.stopPropagation();
               setOpened((s) => !s);
             }}
-            className=' flex items-center gap-2 bg-[#F0F0F0] dark:bg-afexdark-verydark rounded px-5 py-3 relative'>
+            className=" flex items-center gap-2 bg-[#F0F0F0] dark:bg-afexdark-verydark rounded px-5 py-3 relative">
             <span>Actions</span>
-            <ArrowDown2 size='16' color='#8F8E91' variant='Bold' />
+            <ArrowDown2 size="16" color="#8F8E91" variant="Bold" />
           </button>
         </Popover.Target>
 
-        <Popover.Dropdown className='child:cursor-pointer rounded-lg hover:child:bg-afexred-extralight child:p-2'>
+        <Popover.Dropdown className="child:cursor-pointer rounded-lg hover:child:bg-afexpurple-lighter child:p-2">
           <button
-            className='text-[14px] text-gray-400 rounded-md px-2 w-full text-left'
+            className="text-[14px] text-gray-400 rounded-md px-2 w-full text-left"
             onClick={(e) => {
               e.stopPropagation();
               setEditUserModal((s) => !s);
@@ -40,7 +40,7 @@ const UserAction = ({ data }: { data: User }) => {
 
           {data.isActive === 'Active' ? (
             <p
-              className='text-[14px] text-gray-400 rounded-md'
+              className="text-[14px] text-gray-400 rounded-md"
               onClick={() => {
                 setDeactivateUserModal((s) => !s);
                 setOpened((s) => !s);
@@ -49,7 +49,7 @@ const UserAction = ({ data }: { data: User }) => {
             </p>
           ) : (
             <p
-              className='text-[14px] text-gray-400 rounded-md'
+              className="text-[14px] text-gray-400 rounded-md"
               onClick={() => {
                 setDeactivateUserModal((s) => !s);
                 setOpened((s) => !s);

@@ -10,11 +10,13 @@ import { shortDateFormatter } from '../../../../utils';
 
 const FundRequestList = ({ setGetRequestId }: any) => {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
 
   const { data, isError, isLoading } = useGetFundRequest(
     currentPage,
+    pageSize,
     filter,
     filters
   );
@@ -29,18 +31,19 @@ const FundRequestList = ({ setGetRequestId }: any) => {
       />
     );
 
-  if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   return (
     <>
-      <div className='bg-white dark:bg-afexdark-darkest px-6 py-3'>
+      <div className="bg-white dark:bg-afexdark-darkest px-6 py-3">
         <DataGrid
           loadMore={setCurrentPage}
-          lastPage={1}
-          total={data!?.data.length}
-          title='Search'
+          lastPage={data!?.lastPage}
+          total={data!?.total}
+          title="Search"
           setSearch={setSearch}
           setFilters={setFilters}
+          setSelectedEntries={setPageSize}
           setSelectedData={setGetRequestId}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
@@ -71,7 +74,7 @@ const FundRequestList = ({ setGetRequestId }: any) => {
               hidden: false,
               name: `${t('Amount')}`,
               sortable: true,
-              static: true,
+              static: false,
             },
 
             {
@@ -92,11 +95,11 @@ const FundRequestList = ({ setGetRequestId }: any) => {
               row: (val) => {
                 if (val === 'Credit') {
                   return (
-                    <span className=' text-afexgreen-regular'>{t(val)}</span>
+                    <span className=" text-afexgreen-regular">{t(val)}</span>
                   );
                 } else {
                   return (
-                    <span className=' text-afexred-regular'>{t(val)}</span>
+                    <span className=" text-afexred-regular">{t(val)}</span>
                   );
                 }
               },
@@ -127,13 +130,19 @@ const FundRequestList = ({ setGetRequestId }: any) => {
               row: (val) => {
                 if (val === 'Successful') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker dark:bg-afexdark-verydark dark:text-afexgreen-regular rounded-lg p-2'>
+                    <span className=" bg-afexgreen-extralight text-afexgreen-darker dark:bg-afexdark-verydark dark:text-afexgreen-regular rounded-lg p-2">
+                      {t(val)}
+                    </span>
+                  );
+                } else if (val === 'Pending') {
+                  return (
+                    <span className=" bg-afexblue-extralight dark:text-afexblue-darker text-afexblue-darker dark:bg-afexdark-verydark rounded-lg p-2">
                       {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexblue-extralight dark:bg-afexdark-verydark text-afexblue-darker dark:text-afexred-regular rounded-lg p-2'>
+                    <span className=" bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-regular rounded-lg p-2">
                       {t(val)}
                     </span>
                   );

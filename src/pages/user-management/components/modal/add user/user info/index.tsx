@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
-import { faker } from '@faker-js/faker';
+import { t } from 'i18next';
+import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { get_client_provider_query } from '../../../../../../queries/client_provider';
-import { useGetPermissions, useGetRoles } from '../../../../../../queries';
+import * as Yup from 'yup';
 
+import { faker } from '@faker-js/faker';
+
+import { create_user } from '../../../../../../api';
+// import MultiSelectDup from '../../../../../../components/form/multiselectDup';
+import Button from '../../../../../../components/button';
 import {
   FormImage,
   FormInput,
   FormMultiSelect,
-  // FromLabel,
 } from '../../../../../../components/form';
-// import MultiSelectDup from '../../../../../../components/form/multiselectDup';
-import Button from '../../../../../../components/button';
-
-import { create_user } from '../../../../../../api';
-
+import { useGetPermissions, useGetRoles } from '../../../../../../queries';
+import { get_client_provider_query } from '../../../../../../queries/client_provider';
 import { toast } from '../../../../../../utils';
-import * as Yup from 'yup';
-import { t } from 'i18next';
 
 const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
   const queryClient = useQueryClient();
@@ -33,7 +31,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
       toast(
         'error',
         'unable to create user',
-        'please ensure you enter the required credentials'
+        'please ensure you enter the required credentials correctly'
       );
     },
   });
@@ -58,7 +56,7 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           fullName: '',
           username: '',
           email: '',
-          // password: 'Password@1',
+
           roles: [],
           permissions: [],
           image: '',
@@ -78,16 +76,8 @@ const UserInfo = ({ closeModal }: { closeModal: () => void }) => {
           };
           setLoading(true);
           mutation.mutate(newUser);
-          console.log(newUser);
           setLoading(false);
           closeModal();
-
-          // const message = await create_user(newUser);
-
-          // if (message === 'unable to create user') {
-          //   alert(message);
-          //   setLoading(false);
-          // }
         }}
         validationSchema={Yup.object({
           fullName: Yup.string()

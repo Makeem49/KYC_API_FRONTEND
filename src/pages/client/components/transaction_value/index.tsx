@@ -55,7 +55,7 @@ const TransactionValue = () => {
           <div className='overflow-auto w-full rounded'>
             <table className='overflow-auto w-full align-top text-[12px] xl:text-[14px]'>
               <thead className='text-[10px] bg-[#F5F5F5] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
-                <tr className=' border-b  dark:border-afexdark-dark  child:p-2 bg-afexpurple-lighter dark:bg-afexdark-darkest  child:text-[14px] child:font-normal child:cursor-default child:align-middle'>
+                <tr className=' border-b  dark:border-afexdark-dark  child:p-2 bg-afexpurple-lighter dark:bg-afexdark-darkest  child:text-[14px] dark:text-[#C1C0C2] child:font-normal child:cursor-default child:align-middle'>
                   <th>S/N</th>
                   <th>{t("Client's Name")}</th>
                   <th>{t("Client's Id")}</th>
@@ -70,7 +70,7 @@ const TransactionValue = () => {
                 </tr>
               </thead>
               <tbody className='text-[12px] xl:text-[14px]'>
-                {topVal!.map((el: any, index) => (
+                {topVal!?.map((el: any, index) => (
                   <tr
                     key={index}
                     className=' text-left child:p-2 border-b border-dashed  dark:text-textgrey-normal dark:border-afexdark-dark  '>

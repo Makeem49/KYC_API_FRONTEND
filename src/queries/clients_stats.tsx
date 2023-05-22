@@ -4,15 +4,28 @@ import {
   get_clients_by_value_of_transactions,
   get_top_clients_by_search,
   get_top_clients_by_transactions,
+  get_unverified_client_list,
 } from '../api';
 
 export const get_client_list_query = (
   page: number,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => ({
-  queryKey: ['clientsList', page, filter, filters],
-  queryFn: async () => await get_client_list(page, filter, filters),
+  queryKey: ['clientsList', page, page_size, filter, filters],
+  queryFn: async () => await get_client_list(page, page_size, filter, filters),
+});
+
+export const get_unverified_client_list_query = (
+  page: number,
+  page_size: number = 0,
+  filter: string = '',
+  filters: string = ''
+) => ({
+  queryKey: ['unverifiedClients', page, page_size, filter, filters],
+  queryFn: async () =>
+    await get_unverified_client_list(page, page_size, filter, filters),
 });
 
 export const get_client_stats_query = () => ({

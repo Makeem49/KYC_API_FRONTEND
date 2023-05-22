@@ -4,7 +4,6 @@ import { showNotification } from '@mantine/notifications';
 
 // import { ShieldTick, CloseCircle, InfoCircle } from 'iconsax-react';
 
-
 const toast = (
   id: 'success' | 'error' | 'info',
   heading: string,
@@ -63,17 +62,17 @@ const toast = (
       <div
         className={`flex  items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
           id === 'success'
-            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
+            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-darkest'
             : id === 'error'
-            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
-            : 'before:bg-[#FFFFFF] dark:before:bg-afexdark-verydark'
+            ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-darkest'
+            : 'before:bg-[#FFFFFF] dark:before:bg-afexdark-darkest'
         }`}>
         {heading.length > 0 && (
           <div className='pl-5 z-50 pr-4 child:py-1'>
-            <p className='font-bold text-md dark:text-afexdark-regular '>
+            <p className='font-bold text-md dark:text-textgrey-normal '>
               {heading}
             </p>
-            <p className='dark:text-afexdark-regular'>{text}</p>
+            <p className=' dark:text-textgrey-normal'>{text}</p>
           </div>
         )}
       </div>

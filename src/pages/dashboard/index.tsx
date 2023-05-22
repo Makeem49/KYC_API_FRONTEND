@@ -64,18 +64,18 @@ const Dashboard = () => {
   );
   return (
     <AnimatePresence>
-      <div className='w-full h-[100vh] overflow-y-auto flex'>
+      <div className="w-full h-[100vh]  flex">
         {/* Left Section */}
-        <div className='w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
+        <div className="w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
           {/* Title */}
-          <div className='flex w-full justify-between items-center'>
-            <h2 className=' text-textgrey-darker dark:text-afexdark-extralight min-w-[200px] text-[18px] font-bold '>
+          <div className="flex w-full justify-between items-center">
+            <h2 className=" text-textgrey-darker dark:text-afexdark-extralight min-w-[200px] text-[18px] font-bold ">
               {t('Dashboard')}
             </h2>
             {/* SWITCHER DROPDOWN */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className='flex relative w-full px-3 dark:text-afexdark-regular  justify-end gap-2 text-[14px] font-normal items-center '>
+              className="flex relative w-full px-3 dark:text-textgrey-normal  justify-end gap-2 text-[14px] font-normal items-center ">
               <p>{t('Switch Provider')} </p>
 
               <button
@@ -83,11 +83,10 @@ const Dashboard = () => {
                   showProviderOpt ? 'border-[#BABABA]' : ' border-[#BABABA]'
                 }`}
                 onClick={() => {
-                  console.log('clicked');
                   setShowProviderOpt((s) => !s);
                 }}>
                 {decodedDefaultVal}
-                <ArrowDown2 size='14' color='#2B2930' variant='Bold' />
+                <ArrowDown2 size="14" color="#2B2930" variant="Bold" />
               </button>
 
               <ul
@@ -112,7 +111,7 @@ const Dashboard = () => {
                       console.log(localStorage);
                       setShowProviderOpt((s) => !s);
                     }}
-                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize'>
+                    className="flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize">
                     {' '}
                     {el.name}
                   </span>
@@ -122,7 +121,7 @@ const Dashboard = () => {
             {/* LANGUAGE TRANSLATION */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className='flex relative px-1 min-w-[50px] justify-end gap-2 text-[14px] font-normal items-center '>
+              className="flex relative px-1 min-w-[50px] justify-end gap-2 text-[14px] font-normal items-center ">
               <button
                 className={`border flex items-center border-[#BABABA] text-textgrey-darker  dark:text-afexdark-lighter  p-2 rounded-lg ${
                   showLangOpt ? 'border-[#BABABA] ' : 'border-[#BABABA]'
@@ -131,7 +130,7 @@ const Dashboard = () => {
                   setShowLangOpt((s) => !s);
                 }}>
                 {showVal}
-                <ArrowDown2 size='14' color='#2B2930' variant='Bold' />
+                <ArrowDown2 size="14" color="#2B2930" variant="Bold" />
               </button>
 
               <ul
@@ -150,7 +149,7 @@ const Dashboard = () => {
                       queryClient.invalidateQueries();
                       setShowLangOpt((s) => !s);
                     }}
-                    className='flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize'>
+                    className="flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize">
                     {' '}
                     {el.label}
                   </span>
@@ -158,7 +157,7 @@ const Dashboard = () => {
               </ul>
             </div>
             <ActionSelect
-              className='hidden'
+              className="hidden"
               data={[
                 {
                   label: 'EN',
@@ -177,7 +176,7 @@ const Dashboard = () => {
                 },
               ]}
               label={locale?.toUpperCase()}
-              type='button'
+              type="button"
             />
           </div>
           <Header />
@@ -192,7 +191,7 @@ const Dashboard = () => {
           </motion.div>
 
           <motion.div
-            className='flex flex-col gap-14'
+            className="flex flex-col gap-14"
             initial={{ transform: 'translateY(100%)', opacity: 0 }}
             animate={{ transform: 'translateY(0%)', opacity: 1 }}
             exit={{ opacity: 0, transform: 'translate(0,0)' }}
@@ -206,12 +205,12 @@ const Dashboard = () => {
         {/* Right Section */}
 
         <motion.div
-          className='bg-white dark:bg-afexdark-darkest flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]'
+          className="bg-white dark:bg-afexdark-darkest flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]"
           initial={{ transform: 'translateX(100%)', opacity: 0 }}
           animate={{ transform: 'translateX(0%)', opacity: 1 }}
           exit={{ opacity: 0, transform: 'translate(0,0)' }}
           transition={{ duration: 2 }}>
-          <div className='bg-white  dark:bg-afexdark-darkest flex flex-col gap-14'>
+          <div className="bg-white  dark:bg-afexdark-darkest flex flex-col gap-14">
             <WalletBallance />
             <TransactionStatus />
             <ChanneSource />

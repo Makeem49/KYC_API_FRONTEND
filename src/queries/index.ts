@@ -13,6 +13,7 @@ import {
   get_top_clients_by_trans_value_query,
   get_top_clients_searches_query,
   get_top_transactions_query,
+  get_unverified_client_list_query,
 } from './clients_stats';
 import { create_a_client_query } from './create_user';
 import {
@@ -27,6 +28,8 @@ import {
 } from './single_client';
 import {
   get_activity_log_query,
+  get_failed_fund_request_query,
+  get_no_virtual_account_query,
   get_tracker_stats_query,
 } from './tracker_board';
 import {
@@ -59,18 +62,31 @@ export const useGetClientProvider = (
 
 export const useGetFundRequest = (
   page: number = 1,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => {
-  return useQuery(get_fund_request_query(page, filter, filters));
+  return useQuery(get_fund_request_query(page, page_size, filter, filters));
 };
 
 export const useGetClientList = (
   page: number = 1,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => {
-  return useQuery(get_client_list_query(page, filter, filters));
+  return useQuery(get_client_list_query(page, page_size, filter, filters));
+};
+
+export const useGetUnVerifiedClientList = (
+  page: number = 1,
+  page_size: number = 0,
+  filter: string = '',
+  filters: string = ''
+) => {
+  return useQuery(
+    get_unverified_client_list_query(page, page_size, filter, filters)
+  );
 };
 
 export const useGetClientsStats = () => {
@@ -91,10 +107,11 @@ export const useTopTransactions = () => {
 
 export const useGetTransLocation = (
   page = 1,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => {
-  return useQuery(get_trans_location_query(page, filter, filters));
+  return useQuery(get_trans_location_query(page, page_size, filter, filters));
 };
 
 export const useCreateClient = (user: any) => {
@@ -121,11 +138,12 @@ export const useGetAClient = (clientId: number) => {
 export const useGetClientTransaction = (
   clientId: number,
   pageNo: number,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => {
   return useQuery(
-    get_client_transactions_query(clientId, pageNo, filter, filters)
+    get_client_transactions_query(clientId, pageNo, page_size, filter, filters)
   );
 };
 
@@ -137,16 +155,41 @@ export const useGetActivityLog = (
   return useQuery(get_activity_log_query(page, filter, filters));
 };
 
+export const useGetFailedFundRequest = (
+  page: number = 1,
+  page_size: number = 0,
+  filter: string = '',
+  filters: string = ''
+) => {
+  return useQuery(
+    get_failed_fund_request_query(page, page_size, filter, filters)
+  );
+};
+
+export const useGetNoVirtualAccount = (
+  page: number = 1,
+  page_size: number = 0,
+  filter: string = '',
+  filters: string = ''
+) => {
+  return useQuery(
+    get_no_virtual_account_query(page, page_size, filter, filters)
+  );
+};
+
 export const useGetTrackerStats = () => {
   return useQuery(get_tracker_stats_query());
 };
 
 export const useGetTransactionList = (
   page: number = 1,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => {
-  return useQuery(get_transaction_list_querry(page, filter, filters));
+  return useQuery(
+    get_transaction_list_querry(page, page_size, filter, filters)
+  );
 };
 
 export const useGetTransactionStats = () => {
@@ -170,10 +213,11 @@ export const useGetRoles = () => {
 
 export const useGetBankList = (
   page: number = 1,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => {
-  return useQuery(get_bank_list_query(page, filter, filters));
+  return useQuery(get_bank_list_query(page, page_size, filter, filters));
 };
 
 export const useGetRefeshBanks = () => {

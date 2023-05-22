@@ -61,7 +61,7 @@ const Table = () => {
               hidden: false,
               name: `${t('Provider Name')}`,
               sortable: true,
-              static: true,
+              static: false,
             },
             {
               accessor: 'transactionPhrase',

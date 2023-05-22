@@ -4,7 +4,6 @@ import {
   paramsSerializer,
   shortDateFormatter,
 } from '../../utils';
-
 import { checkCountryCode } from '../../utils/formatter';
 
 /**
@@ -24,6 +23,7 @@ import { checkCountryCode } from '../../utils/formatter';
 export async function get_single_client(
   clientId: number,
   page: number,
+  page_size?: number,
   filter?: string,
   filters?: any
 ): Promise<{
@@ -35,7 +35,7 @@ export async function get_single_client(
     params: {
       clientId,
       page,
-      page_size: 10,
+      page_size: page_size ?? 0,
       filter: filter ?? '',
       ...filters,
     },

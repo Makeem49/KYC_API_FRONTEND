@@ -1,88 +1,97 @@
 import { t } from 'i18next';
 import React from 'react';
+import { Navigate } from 'react-router-dom';
+
+import { Skeleton } from '@mantine/core';
 
 import DataGrid from '../../../../components/data-grid';
-// import { useGetActivityLog } from '../../../../queries';
-import tableData1 from '../../../../tableData1.json';
+import { useGetActivityLog } from '../../../../queries';
+import { shortDateFormatter } from '../../../../utils';
 
-// import { Navigate } from 'react-router-dom';
-
-// import { Skeleton } from '@mantine/core';
+// import tableData1 from '../../../../tableData1.json';
 
 const ActivityStream = () => {
-  const [, setCurrentPage] = React.useState(1);
-  const [, setSearch] = React.useState('');
-  const [, setFilters] = React.useState('');
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [filter, setSearch] = React.useState('');
+  const [filters, setFilters] = React.useState('');
 
-  // const { data, isEr } = useGetActivityLog(
-  //   currentPage,
-  //   filter,
-  //   filters
-  // );
+  const { data, isError, isLoading } = useGetActivityLog(
+    currentPage,
+    filter,
+    filters
+  );
 
-  // if (isLoading)
-  //   return (
-  //     <Skeleton
-  //       height={500}
-  //       style={{
-  //         borderRadius: '25px',
-  //       }}
-  //     />
-  //   );
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: '25px',
+        }}
+      />
+    );
 
-  // if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   return (
     <>
       <DataGrid
         loadMore={setCurrentPage}
         lastPage={1}
-        total={tableData1.length}
-        title='Search'
+        total={data!?.data.length}
+        title="Search"
         setSearch={setSearch}
         setFilters={setFilters}
         rows={10}
         dateFilter={{ enabled: true, label: '', accessor: 'dateCreated' }}
-        data={tableData1}
+        data={data!?.data}
         headerFilter={[{ name: 'Status', accessor: 'isActive' }]}
         headers={[
           {
-            accessor: 'userName',
+            accessor: 'key',
             hidden: false,
             name: `${t('Name')}`,
             sortable: true,
-            static: true,
-          },
-          {
-            accessor: 'email',
-            hidden: false,
-            name: `${t('Email')}`,
-            sortable: true,
-            static: true,
+            static: false,
           },
 
           {
-            accessor: 'actionSummarry',
+            accessor: 'action',
             hidden: false,
-            name: `${t('Action Sumarry')}`,
+            name: `${t('Action')}`,
             sortable: true,
-            static: true,
+            static: false,
           },
 
           {
-            accessor: 'details',
+            accessor: 'type',
+            hidden: false,
+            name: `${t('Type')}`,
+            sortable: true,
+            static: false,
+          },
+          {
+            accessor: 'actionTime',
+            hidden: false,
+            name: `${t('Action Date')}`,
+            sortable: true,
+            static: false,
+            row: (val) => <span>{shortDateFormatter(val)} </span>,
+          },
+          {
+            accessor: 'time',
+            hidden: false,
+            name: `${t('Action Time')}`,
+            sortable: true,
+            static: false,
+          },
+
+          {
+            accessor: 'description',
             hidden: false,
             name: `${t('Details')}`,
             sortable: true,
-            static: true,
-          },
-
-          {
-            accessor: 'dateCreated',
-            hidden: false,
-            name: `${t('Date')}`,
-            sortable: true,
-            static: true,
+            static: false,
           },
 
           // {
@@ -90,7 +99,7 @@ const ActivityStream = () => {
           //   hidden: false,
           //   name: `${t('Name')}`,
           //   sortable: true,
-          //   static: true,
+          //   static: false,
           // },
           // {
           //   accessor: 'type',

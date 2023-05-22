@@ -5,11 +5,13 @@ import { get_transaction_stats } from '../api/transactions';
 
 export const get_transaction_list_querry = (
   page: number,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => ({
-  queryKey: ['transactionList', page, filter, filters],
-  queryFn: async () => await get_all_transactions(page, filter, filters),
+  queryKey: ['transactionList', page, page_size, filter, filters],
+  queryFn: async () =>
+    await get_all_transactions(page, page_size, filter, filters),
 });
 
 export const get_transaction_stats_query = () => ({
@@ -19,9 +21,11 @@ export const get_transaction_stats_query = () => ({
 
 export const get_trans_location_query = (
   page: number,
+  page_size: number = 0,
   filter: string = '',
   filters: string = ''
 ) => ({
-  queryKey: ['transactionLocation'],
-  queryFn: async () => await get_trans_locations(page, filter, filters),
+  queryKey: ['transactionLocation', page, page_size, filter, filters],
+  queryFn: async () =>
+    await get_trans_locations(page, page_size, filter, filters),
 });

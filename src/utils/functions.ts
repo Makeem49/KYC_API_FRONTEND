@@ -1,5 +1,8 @@
 import { saveAs } from 'file-saver';
 import { json2csv } from 'json-2-csv';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 import React from 'react';
 import { toast } from 'react-toastify';
 
@@ -173,7 +176,7 @@ export function exportToCSV(
     (err, csv) => {
       if (err) {
         // handle Error
-        console.log(err);
+
         // Hide loading toast and show error toast
         toast.error('Error exporting data');
       } else {
@@ -190,6 +193,234 @@ export function exportToCSV(
     }
   );
 }
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+export function exportToPDF(
+  array: Record<string, any>[],
+  keysToHide: string[]
+) {
+  // Display loading toast
+  const toastId = toast.info('Exporting data...', { autoClose: false });
+
+  const newArray = array.map((el) => omit(el, keysToHide));
+
+  const documentDefinition = {
+    content: [
+      {
+        table: {
+          headerRows: 1,
+
+          widths: Object.keys(newArray[0]).map(() => 'auto'),
+          body: [
+            Object.keys(newArray[0]).map((key) => key), // Table header
+            ...newArray.map((item) =>
+              Object.values(item).map((value) => value.toString())
+            ), // Table data
+          ],
+        },
+      },
+    ],
+  };
+
+  const pdf = pdfMake.createPdf(documentDefinition);
+  pdf.download('data.pdf', () => {
+    // Hide loading toast and show success toast
+    toast.success('Data exported successfully');
+    // Remove the loading toast
+    toast.dismiss(toastId);
+  });
+}
+
+interface ExportData {
+  [key: string]: any;
+}
+
+export async function exportToPDF2(
+  array: ExportData[],
+  keysToHide: string[]
+): Promise<void> {
+  // Display loading toast
+  const toastId = toast.info('Exporting data...', { autoClose: false });
+
+  const newArray = array.map((el) => omit(el, keysToHide));
+
+  const pdfDoc = await PDFDocument.create();
+  const page = pdfDoc.addPage();
+
+  const { width, height } = page.getSize();
+  const tableWidth = width - 40;
+  const cellPadding = 5;
+  const headerBackgroundColor = rgb(0.2, 0.4, 0.6);
+  const headerTextColor = rgb(1, 1, 1);
+  const rowBackgroundColor = rgb(1, 1, 1);
+  const rowTextColor = rgb(0, 0, 0);
+
+  const headerFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const dataFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+  const headerTextSize = 12;
+  const rowTextSize = 10;
+
+  let currentY = height - 30;
+
+  // Draw table headers
+  Object.keys(newArray[0]).forEach((key, columnIndex) => {
+    const textWidth = headerFont.widthOfTextAtSize(key, headerTextSize);
+    const columnWidth = tableWidth / Object.keys(newArray[0]).length;
+    const x = 20 + columnIndex * columnWidth + (columnWidth - textWidth) / 2;
+
+    // Draw header background
+    page.drawRectangle({
+      x: x - cellPadding,
+      y: currentY,
+      width: columnWidth,
+      height: headerTextSize + 5 * cellPadding,
+      color: headerBackgroundColor,
+    });
+
+    page.drawText(key, {
+      x,
+      y: currentY + headerTextSize + cellPadding,
+      font: headerFont,
+      size: headerTextSize,
+      color: headerTextColor,
+    });
+  });
+
+  currentY -= 20;
+
+  // Draw table rows
+  newArray.forEach((item, rowIndex) => {
+    Object.values(item).forEach((value, columnIndex) => {
+      const textWidth = dataFont.widthOfTextAtSize(
+        value.toString(),
+        rowTextSize
+      );
+      const columnWidth = tableWidth / Object.keys(newArray[0]).length;
+      const x = 20 + columnIndex * columnWidth + (columnWidth - textWidth) / 2;
+
+      // Draw row background
+      page.drawRectangle({
+        x: x - cellPadding,
+        y: currentY,
+        width: columnWidth,
+        height: rowTextSize + 2 * cellPadding,
+        color: rowIndex % 2 === 0 ? rowBackgroundColor : rgb(1, 1, 1),
+      });
+
+      page.drawText(value.toString(), {
+        x: x + cellPadding,
+        y: currentY + rowTextSize + cellPadding,
+        font: dataFont,
+        size: rowTextSize,
+        color: rowTextColor,
+      });
+    });
+
+    currentY -= rowTextSize + 2 * cellPadding;
+  });
+
+  // Draw table borders
+  // page.drawRectangle({
+  //   x: 20,
+  //   y: currentY + cellPadding,
+  //   width: tableWidth,
+  //   height: height - currentY + cellPadding,
+  //   borderWidth: 1,
+  //   borderColor,
+  // });
+
+  // Object.keys(newArray[0]).forEach((_, columnIndex) => {
+  //   const columnWidth = tableWidth / Object.keys(newArray[0]).length;
+  //   const x = 20 + columnIndex * columnWidth;
+
+  //   page.drawLine({
+  //     start: { x, y: currentY + cellPadding },
+  //     end: { x, y: height },
+  //     thickness: 1,
+  //     color: borderColor,
+  //   });
+  // });
+
+  // Hide loading toast and show success toast
+  toast.success('Data exported successfully');
+  // Remove the loading toast
+  toast.dismiss(toastId);
+
+  const pdfBytes = await pdfDoc.save();
+
+  // Trigger file download
+  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'data.pdf';
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+// export async function exportToPDF2(
+//   array: ExportData[],
+//   keysToHide: string[]
+// ): Promise<void> {
+//   // Display loading toast
+//   const toastId = toast.info('Exporting data...', { autoClose: false });
+
+//   const newArray = array.map((el) => omit(el, keysToHide));
+
+//   const pdfDoc = await PDFDocument.create();
+
+//   const page = pdfDoc.addPage();
+//   const { width, height } = page.getSize();
+
+//   const headerTextSize = 16;
+//   const rowTextSize = 12;
+//   const padding = 10;
+
+//   let currentY = height - padding;
+
+//   // Add table header
+//   const headerFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+//   page.drawText('', {
+//     x: padding,
+//     y: currentY,
+//     font: headerFont,
+//     size: headerTextSize,
+//     color: rgb(0, 0, 0),
+//   });
+//   currentY -= headerTextSize + padding;
+
+//   // Add table data
+//   const dataFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+//   newArray.forEach((item) => {
+//     const rowText = Object.values(item).join(', ');
+//     page.drawText(rowText, {
+//       x: padding,
+//       y: currentY,
+//       font: dataFont,
+//       size: rowTextSize,
+//       color: rgb(0, 0, 0),
+//     });
+//     currentY -= rowTextSize + padding;
+//   });
+
+//   const pdfBytes = await pdfDoc.save();
+
+//   // Hide loading toast and show success toast
+//   toast.success('Data exported successfully');
+//   // Remove the loading toast
+//   toast.dismiss(toastId);
+
+//   // Trigger file download
+//   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+//   const url = URL.createObjectURL(blob);
+//   const link = document.createElement('a');
+//   link.href = url;
+//   link.download = 'data.pdf';
+//   link.click();
+//   URL.revokeObjectURL(url);
+// }
 
 export function paramsSerializer(params: Record<string, unknown>) {
   return Object.entries(Object.assign({}, params))

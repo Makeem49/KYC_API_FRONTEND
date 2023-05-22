@@ -8,25 +8,32 @@ import { shortDateFormatter } from '../../../../utils';
 
 const TransactionTable = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
 
-  const { data, isError } = useGetTransactionList(currentPage, filter, filters);
+  const { data, isError } = useGetTransactionList(
+    currentPage,
+    pageSize,
+    filter,
+    filters
+  );
 
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
-  const searchText = t('Search by client name, id');
+  const searchText = t('Search by client name');
 
-  if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   return (
     <>
-      <div className='p-4 bg-white dark:bg-afexdark-darkest w-full'>
+      <div className="p-4 bg-white dark:bg-afexdark-darkest w-full">
         <DataGrid
           loadMore={setCurrentPage}
           lastPage={data?.lastPage!}
           total={data?.total!}
           setSearch={setSearch}
           setFilters={setFilters}
+          setSelectedEntries={setPageSize}
           title={searchText}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
@@ -57,14 +64,13 @@ const TransactionTable = () => {
               hidden: false,
               name: `${t('Client Name')}`,
               sortable: true,
-              static: true,
-              secondary_key: 'lastName',
-              tertiary_key: 'platformId',
+              static: false,
+              secondary_key: 'clientId',
+
               row: (val, second) => (
-                <span className='flex flex-col'>
-                  <span>
-                    {val} {second}{' '}
-                  </span>
+                <span className="flex flex-col">
+                  <span className=" text-afexpurple-regular">{val}</span>
+                  <span className="w-[140px]">{second}</span>
                 </span>
               ),
             },
@@ -98,11 +104,11 @@ const TransactionTable = () => {
               row: (val) => {
                 if (val === 'Credit') {
                   return (
-                    <span className=' text-afexgreen-regular'>{t(val)}</span>
+                    <span className=" text-afexgreen-regular">{t(val)}</span>
                   );
                 } else {
                   return (
-                    <span className=' text-afexred-regular'>{t(val)}</span>
+                    <span className=" text-afexred-regular">{t(val)}</span>
                   );
                 }
               },
@@ -115,7 +121,7 @@ const TransactionTable = () => {
               sortable: true,
               static: false,
               row: (val, second) => (
-                <span className='flex w-[250px]'>{val}</span>
+                <span className="flex w-[250px]">{val}</span>
               ),
             },
 
@@ -129,13 +135,13 @@ const TransactionTable = () => {
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight text-afexgreen-darker dark:bg-afexdark-verydark dark:text-afexgreen-regular rounded-lg p-2'>
+                    <span className=" bg-afexgreen-extralight text-afexgreen-darker dark:bg-afexdark-verydark dark:text-afexgreen-regular rounded-lg p-2">
                       {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
+                    <span className=" bg-afexred-extralight dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2">
                       {t(val)}
                     </span>
                   );

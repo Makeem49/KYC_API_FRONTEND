@@ -46,32 +46,12 @@ export const timeFormatter = (value: string | Date): string => {
     minute: '2-digit',
     hour12: true,
   });
-  const formattedTime = minutes;
+  const formattedTime = minutes.replace(/\b([ap]m)\b/gi, (match) =>
+    match.toUpperCase()
+  );
 
-  // console.log(`${formattedTime}`); // Output: "14:54:0"
   return `${formattedTime}`;
 };
-
-// const dateString = '2023-02-15T14:54:00.457Z';
-// const date = new Date(dateString);
-
-// const hours = date.getUTCHours();
-// const minutes = date.getUTCMinutes();
-// const seconds = date.getUTCSeconds();
-
-// let formattedHours = hours % 12;
-// if (formattedHours === 0) {
-//   formattedHours = 12;
-// }
-// const amPm = hours >= 12 ? 'PM' : 'AM';
-
-// const formattedTime = `${formattedHours}:${minutes}:${seconds} ${amPm}`;
-
-// console.log(formattedTime); // Output: "2:54:0 PM"
-
-// const m = moment(new Date('2019/06/01 14:04:03'));
-
-// m.format('h:mma'); // '2:04pm'
 
 export const generateInitials = (fullname: string): string => {
   const firstname = fullname.split(' ')[0];

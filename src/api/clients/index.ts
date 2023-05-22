@@ -1,8 +1,8 @@
-import { apiRequest, paramsSerializer, shortDateFormatter } from '../../utils';
-
 import { AxiosResponse } from 'axios';
-import { currentNumberFormatter } from '../../utils/formatter';
 import { t } from 'i18next';
+
+import { apiRequest, paramsSerializer, shortDateFormatter } from '../../utils';
+import { currentNumberFormatter } from '../../utils/formatter';
 
 export function create_client(
   data: ClientIntegration[]
@@ -25,6 +25,7 @@ export function create_client(
 
 export async function get_client_list(
   page: number,
+  page_size?: number,
   filter?: string,
   filters?: any
 ): Promise<{
@@ -35,7 +36,7 @@ export async function get_client_list(
   const resp = await apiRequest.get(`clients`, {
     params: {
       page,
-      page_size: 10,
+      page_size: page_size ?? 0,
       filter: filter ?? '',
       ...filters,
     },
@@ -71,6 +72,59 @@ export async function get_client_list(
             ? el.valueOfTransactions
             : ',',
           platformId: el.providers[0].clientProviderClient.platformId,
+          location: el.location.name,
+        } as ClientList)
+    ),
+    total: resp.data.total,
+    lastPage: resp.data.lastPage,
+  };
+}
+
+export async function get_unverified_client_list(
+  page: number,
+  page_size?: number,
+  filter?: string,
+  filters?: any
+): Promise<{
+  data: ClientList[];
+  total: number;
+  lastPage: number;
+}> {
+  const resp = await apiRequest.get(`client-providers/1/onboarding/logs`, {
+    params: {
+      page,
+      page_size: page_size ?? 0,
+      filter: filter ?? '',
+      ...filters,
+    },
+    paramsSerializer: paramsSerializer,
+  });
+
+  if (!resp.data)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+  if (resp.data.data.length < 1)
+    return {
+      data: [],
+      total: 0,
+      lastPage: 1,
+    };
+
+  return {
+    data: resp.data.data.map(
+      (el: any) =>
+        ({
+          id: el.id,
+          createdAt: shortDateFormatter(el.createdAt) ?? '',
+          clientName: `${el.payload.firstName} ${el.payload.lastName}` ?? '',
+          phoneNumber: el.phoneNumber ?? '',
+          platformId: el.platformId ?? '',
+          comment: el.comment ?? '',
+          status: el.status ?? '',
+          providerName: el.client_provider.name ?? '',
         } as ClientList)
     ),
     total: resp.data.total,
@@ -107,15 +161,15 @@ export async function get_top_clients_by_transactions(): Promise<
   if (!resp.data) return null;
 
   return resp.data.topClientsByNoOfTransactions.map((el: any) => ({
-    id: el.id,
-    platformId: el.platformId,
-    firstName: el.firstName,
-    lastName: el.lastName,
-    otherNames: el.otherNames,
-    phoneNumber: el.phoneNumber,
-    noOfTransactions: el.noOfTransactions,
-    valueOfTransactions: el.valueOfTransactions,
-    searchAppearances: el.searchAppearances,
+    id: el.id ?? 0,
+    platformId: el.platformId ?? '',
+    firstName: el.firstName ?? '',
+    lastName: el.lastName ?? '',
+    otherNames: el.otherNames ?? '',
+    phoneNumber: el.phoneNumber ?? '',
+    noOfTransactions: el.noOfTransactions ?? '',
+    valueOfTransactions: el.valueOfTransactions ?? '',
+    searchAppearances: el.searchAppearances ?? '',
   }));
 }
 
@@ -125,14 +179,14 @@ export async function get_clients_by_value_of_transactions(): Promise<
   const resp = await apiRequest.get('admin/stats/clients?page_size=10');
   if (!resp.data) return [];
   return resp.data.topClientsByValueOfTransactions.map((el: any) => ({
-    id: el.id,
-    platformId: el.platformId,
-    firstName: el.firstName,
-    lastName: el.lastName,
-    otherNames: el.otherNames,
-    phoneNumber: el.phoneNumber,
-    noOfTransactions: el.noOfTransactions,
-    valueOfTransactions: el.valueOfTransactions,
-    searchAppearances: el.searchAppearances,
+    id: el.id ?? 0,
+    platformId: el.platformId ?? '',
+    firstName: el.firstName ?? '',
+    lastName: el.lastName ?? '',
+    otherNames: el.otherNames ?? '',
+    phoneNumber: el.phoneNumber ?? '',
+    noOfTransactions: el.noOfTransactions ?? '',
+    valueOfTransactions: el.valueOfTransactions ?? '',
+    searchAppearances: el.searchAppearances ?? '',
   }));
 }

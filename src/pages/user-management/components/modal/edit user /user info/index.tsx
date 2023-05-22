@@ -1,18 +1,20 @@
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+
 import { faker } from '@faker-js/faker';
-import { Formik, Form } from 'formik';
-// import { useSingleUserCtx } from '../../../context/single_user.ctx';
 
 import { update_user } from '../../../../../../api';
+import Button from '../../../../../../components/button';
 import {
   FormImage,
   FormInput,
   FormMultiSelect,
 } from '../../../../../../components/form';
-import Button from '../../../../../../components/button';
-import { useMutation, useQueryClient } from 'react-query';
-import { toast } from '../../../../../../utils';
 import { useGetPermissions, useGetRoles } from '../../../../../../queries';
+import { toast } from '../../../../../../utils';
+
+// import { useSingleUserCtx } from '../../../context/single_user.ctx';
 
 interface AddUserProps extends ModalControllerType {
   data: User;
@@ -31,9 +33,9 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
   const { data: itemTwo } = useGetRoles();
 
   const [loading, setLoading] = useState(false);
-
+  console.log(data, 'heree');
   return (
-    <div className='w-full flex flex-col gap-3 p-6'>
+    <div className="w-full flex flex-col gap-3 p-6">
       {/* INPUT FIELDS */}
 
       <Formik
@@ -43,6 +45,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
           username: `${data?.username}`,
           email: `${data.email}`,
           roles: data.roles,
+          providers: data.providerId,
           permissions: data.permissions,
           image: `${data.image}`,
         }}
@@ -52,55 +55,55 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
             email: values.email,
             firstName: values.fullName.split(' ')[0],
             lastName: values.fullName.split(' ')[1],
-            password: values.password,
             roles: values.roles,
+            providers: data.providerId,
             permissions: values.permissions,
             image: faker.image.people(640, 640),
           };
 
           setLoading(true);
           mutation.mutate(updateUser);
+
           setLoading(false);
           toast('success', 'User created successfully');
-          console.log(updateUser);
         }}>
         {({ resetForm }) => (
-          <Form className='flex flex-col gap-y-4'>
+          <Form className="flex flex-col gap-y-4">
             <FormImage
-              label='Avatar'
+              label="Avatar"
               accepted={['.jpeg', '.jpg', '.png']}
-              id='image'
-              name='image'
+              id="image"
+              name="image"
             />
             <FormInput
-              id='fullName'
-              name='fullName'
-              label='Full Name'
-              placeholder='Full name'
+              id="fullName"
+              name="fullName"
+              label="Full Name"
+              placeholder="Full name"
               required
-              type='text'
-              autocomplete='name'
+              type="text"
+              autocomplete="name"
             />
             <FormInput
-              id='email'
-              name='email'
-              label='Email'
-              placeholder='Email address'
+              id="email"
+              name="email"
+              label="Email"
+              placeholder="Email address"
               required
-              type='email'
-              autocomplete='email'
+              type="email"
+              autocomplete="email"
             />
 
-            <div className='flex items-center space-x-4'>
-              <div className='flex-1'>
+            <div className="flex items-center space-x-4">
+              <div className="flex-1">
                 <FormInput
-                  id='username'
-                  name='username'
-                  label='Username'
-                  placeholder='Username'
+                  id="username"
+                  name="username"
+                  label="Username"
+                  placeholder="Username"
                   required
-                  type='text'
-                  autocomplete='username'
+                  type="text"
+                  autocomplete="username"
                 />
               </div>
               {/* <div className='flex-1'>
@@ -120,27 +123,27 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
               data={item!?.map((a) => {
                 return { value: a.id, label: a.name };
               })}
-              id='permissions'
-              name='permissions'
-              label='Permissions'
+              id="permissions"
+              name="permissions"
+              label="Permissions"
               required
-              placeholder=''
+              placeholder=""
             />
             <FormMultiSelect
               data={itemTwo!?.map((b) => {
                 return { value: b.id, label: b.name };
               })}
-              id='roles'
-              name='roles'
-              label='Roles'
+              id="roles"
+              name="roles"
+              label="Roles"
               required
-              placeholder=''
+              placeholder=""
             />
 
-            <div className='flex items-center justify-center pt-8 space-x-6'>
+            <div className="flex items-center justify-center pt-8 space-x-6">
               <button
-                type='button'
-                className='bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                type="button"
+                className="bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg"
                 onClick={() => {
                   resetForm();
                   close();
@@ -148,9 +151,9 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
                 Discard
               </button>
               <Button
-                type='submit'
+                type="submit"
                 text={
-                  <span className='flex items-center space-x-6'>Submit</span>
+                  <span className="flex items-center space-x-6">Submit</span>
                 }
                 loading={loading}
               />

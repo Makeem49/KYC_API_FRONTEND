@@ -1,11 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
-
-import { authenticate } from '../api';
 import decodeJwt from 'jwt-decode';
+import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// import { toast } from '../utils';
-// import UseInvalidateAll from '../hooks/useInvalidateAll';
+import { authenticate } from '../api';
 
 interface AuthInterface {
   isAuthenticated: boolean;
@@ -48,16 +45,12 @@ const AuthProvider = (props: WithChildren) => {
       // toast('error', 'Request failed!!!', 'invalid username or password');
       return;
     }
-    // toast('success', 'Sucess!!', 'Login successfully');
-
-    // Drop success toast
 
     const decodedToken: any = decodeJwt(resp.access_token);
     decodedToken.providers.sort((a: any, b: any) => {
       return a.id > b.id ? 1 : -1;
     });
 
-    console.log(decodedToken, 'here');
     localStorage.setItem(
       'decoded-token_providers',
       decodedToken.providers[0].id

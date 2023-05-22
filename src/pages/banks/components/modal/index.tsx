@@ -30,13 +30,13 @@ const EditPaymentCode = ({ show, close, data }: AddUserProps) => {
   return (
     <>
       <Modal
-        size='25%'
+        size="25%"
         withCloseButton={false}
         centered
         opened={show}
         onClose={close}>
         {/* Map Component */}
-        <div className='flex flex-col mt-0 items-center gap-4 text-center p-8'>
+        <div className="flex flex-col mt-0 items-center gap-4 text-center p-8">
           <Formik
             initialValues={{
               ...data,
@@ -47,7 +47,6 @@ const EditPaymentCode = ({ show, close, data }: AddUserProps) => {
                 id: data.id,
                 paymentPortalCode: values.paymentPortalCode,
               };
-              console.log(updatePaymentCode);
 
               setLoading(true);
               mutation.mutate(updatePaymentCode);
@@ -57,21 +56,21 @@ const EditPaymentCode = ({ show, close, data }: AddUserProps) => {
               code: Yup.string().required('Code cannot be empty'),
             })}>
             {({ resetForm }) => (
-              <Form className='flex overflow-y-auto flex-col gap-y-4'>
+              <Form className="flex overflow-y-auto flex-col gap-y-4">
                 <FormInput
-                  id='paymentPortalCode'
-                  name='paymentPortalCode'
-                  label='Payment Portal Code'
-                  placeholder='Enter code'
+                  id="paymentPortalCode"
+                  name="paymentPortalCode"
+                  label="Payment Portal Code"
+                  placeholder="Enter code"
                   required
-                  type='text'
-                  autocomplete='URL'
+                  type="text"
+                  autocomplete="URL"
                 />
 
-                <div className='flex items-center mb-6 justify-center space-x-6'>
+                <div className="flex items-center mb-6 justify-center space-x-6">
                   <button
-                    type='button'
-                    className='bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg'
+                    type="button"
+                    className="bg-gray-200 dark:bg-afexdark-verydark p-4 rounded-lg px-5 text-base font-semibold text-gray-600 hover:shadow-lg"
                     onClick={() => {
                       resetForm();
                       close();
@@ -79,9 +78,9 @@ const EditPaymentCode = ({ show, close, data }: AddUserProps) => {
                     Discard
                   </button>
                   <Button
-                    type='submit'
+                    type="submit"
                     text={
-                      <span className='flex items-center space-x-6'>
+                      <span className="flex items-center space-x-6">
                         Submit
                       </span>
                     }

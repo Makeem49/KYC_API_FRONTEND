@@ -68,15 +68,15 @@ const CustomizedTable = ({ data, headers }: TableProps) => {
   }, [data]);
 
   return (
-    <div className=''>
+    <div className="">
        {/* Search */}
       {/* Date Filter */}
       {/* Column Filter */}     
       <ul>
         {headers.map((header) => (
-          <li className='flex items-center'>
+          <li className="flex items-center">
             <input
-              type='checkbox'
+              type="checkbox"
               name={header.accessor}
               id={header.accessor}
               disabled={header.static}
@@ -111,7 +111,7 @@ const CustomizedTable = ({ data, headers }: TableProps) => {
               {Object.keys(row).map((entry, index) => {
                 const data = row[entry];
                 const header = headers.find((el) => el.accessor === entry);
-                console.log(row);
+
                 return (
                   <td
                     key={index}

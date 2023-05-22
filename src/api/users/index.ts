@@ -1,6 +1,11 @@
-import { apiRequest, paramsSerializer, shortDateFormatter } from '../../utils';
-
 import { AxiosResponse } from 'axios';
+
+import {
+  apiRequest,
+  paramsSerializer,
+  shortDateFormatter,
+  toast,
+} from '../../utils';
 
 /**
  * =================================================================
@@ -55,6 +60,7 @@ export async function get_users(
           user: `${el.firstName} ${el.lastName}`,
           username: el.username,
           providers: el.providers.map((el: any) => el.name) ?? '',
+          providerId: el.providers.map((el: any) => el.id) ?? '',
           lastLogin: el.lastLogin,
           twoStepEnabled: false,
           isActive: el.isActive ? 'Active' : 'Inactive',
@@ -132,21 +138,38 @@ export async function get_roles(): Promise<User[]> {
  */
 
 export async function create_user(data: Partial<User>): Promise<string> {
-  const resp = await apiRequest.post('users', {
-    username: data.username,
-    email: data.email,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    password: data.password,
-    permissions: data.permissions,
-    providers: data.providers,
-    roles: data.roles,
-    image: data.image,
-  });
+  try {
+    const resp = await apiRequest.post('users', {
+      username: data.username,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
 
-  if (!resp.data) return 'unable to create user';
+      permissions: data.permissions,
+      providers: data.providers,
+      roles: data.roles,
+      image: data.image,
+    });
+    if (!resp.data) return 'unable to create user';
+    if (resp && resp.status === 200) {
+      toast('success', 'User account created successfully');
+    }
+    return resp.data.message;
+  } catch (error: any) {
+    if (error.response) {
+      // This error was caused by a server response that returned a non 2xx status code
+      const message = error.message ? error.message : 'Unknown error';
+      toast('error', 'Unable to create a new user', message);
+    } else if (error.code === 'ERR_NETWORK') {
+      // This error was caused by a network error
 
-  return resp.data.message;
+      toast('error', 'no internet connection');
+    } else {
+      // This error was caused by something else
+      toast('error', 'Something went wrong');
+    }
+    return error;
+  }
 }
 
 // export async function create_user(data: Partial<User>): Promise<string> {
@@ -179,21 +202,37 @@ export async function update_user(
   username: string,
   data: Partial<User>
 ): Promise<string> {
-  const resp = await apiRequest.put(`users/${username}`, {
-    username: data.username,
-    email: data.email,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    password: data.password,
-    permissions: data.permissions,
-    providers: data.providers,
-    roles: data.roles,
-    image: data.image,
-  });
+  try {
+    const resp = await apiRequest.put(`users/${username}`, {
+      username: data.username,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
+      permissions: data.permissions,
+      providers: data.providers,
+      roles: data.roles,
+      image: data.image,
+    });
 
-  if (!resp.data) return 'unable to create user';
+    if (!resp.data) return 'unable to update user';
 
-  return resp.data.message;
+    return resp.data.message;
+  } catch (error: any) {
+    if (error.response) {
+      // This error was caused by a server response that returned a non 2xx status code
+      const message = error.message ? error.message : 'Unknown error';
+      toast('error', 'Unable to update user', message);
+    } else if (error.code === 'ERR_NETWORK') {
+      // This error was caused by a network error
+
+      toast('error', 'no internet connection');
+    } else {
+      // This error was caused by something else
+      toast('error', 'Something went wrong');
+    }
+    return error;
+  }
 }
 
 export async function disable_enable_user(
@@ -208,6 +247,7 @@ export async function disable_enable_user(
 
   return resp.data.message;
 }
+
 /**
  *
  * @param username username of the user

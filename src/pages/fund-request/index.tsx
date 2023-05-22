@@ -13,7 +13,6 @@ import Table from './components/table';
 const FundRequest = () => {
   const [getRequestId, setGetRequestId] = useState<any[]>([]);
   const arrayOfIds = getRequestId?.map((el: any) => el.id);
-  console.log(arrayOfIds);
 
   // const approveFundRequestMutation = useMutation(approve_fund_request);
   const queryFundRequests = useQueryClient();
@@ -27,33 +26,33 @@ const FundRequest = () => {
 
   return (
     <AnimatePresence>
-      <div className='w-full h-[100vh]  overflow-y-auto flex'>
-        <div className='w-full h-[100vh] flex flex-col gap-14 overflow-y-auto p-10'>
+      <div className="w-full h-[100vh] flex">
+        <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
           {/* Title */}
-          <div className='flex w-full justify-between items-center'>
-            <div className='flex justify-between items-center'>
-              <div className='flex w-full flex-col'>
-                <h2 className='dark:text-afexdark-lighter text-[18px] font-bold '>
+          <div className="flex w-full justify-between items-center">
+            <div className="flex justify-between items-center">
+              <div className="flex w-full flex-col">
+                <h2 className="dark:text-afexdark-lighter text-[18px] font-bold ">
                   {t('Fund Request')}
                 </h2>
-                <div className='flex items-center gap-1 text-textgrey-normal'>
+                <div className="flex items-center gap-1 text-textgrey-normal">
                   <span>
-                    <Link className='flex items-center gap-1' to='/'>
+                    <Link className="flex items-center gap-1" to="/">
                       {' '}
-                      <ArrowLeft className=' w-5' />
+                      <ArrowLeft className=" w-5" />
                       <span>{t('Home')}</span>
                     </Link>{' '}
                   </span>
                   <span>/</span>
 
-                  <span className=' min-w-[180px] text-textgrey-dark'>
+                  <span className=" min-w-[180px] text-textgrey-dark">
                     {t('Fund Request')}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className='flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center '>
+            <div className="flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center ">
               <button
                 onClick={() => {
                   if (getRequestId.length > 0) {
@@ -64,7 +63,7 @@ const FundRequest = () => {
                       'please select one or more columns to approve'
                     );
                 }}
-                className=' bg-afexpurple-regular  text-white p-3 rounded-lg cursor-pointer hover:shadow text-base'>
+                className=" bg-afexpurple-regular  text-white p-3 rounded-lg cursor-pointer hover:shadow text-base">
                 Approve Fund Request
               </button>
             </div>
@@ -77,7 +76,7 @@ const FundRequest = () => {
             animate={{ transform: 'translateY(0%)', opacity: 1 }}
             exit={{ opacity: 0, transform: 'translate(0,0)' }}
             transition={{ duration: 2 }}>
-            <div className='w-full flex flex-col gap-4 p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg'>
+            <div className="w-full flex flex-col gap-4 p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg">
               <Table setGetRequestId={setGetRequestId} />
             </div>{' '}
           </motion.div>

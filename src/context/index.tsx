@@ -1,10 +1,10 @@
-import { ColumnProvider, useColumnCtx } from './column_context';
-
-import { toast } from '../utils';
-import { useAuthCtx } from './auth_context';
 import { useEffect } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
 import { useNavigate } from 'react-router-dom';
+
+import { toast } from '../utils';
+import { useAuthCtx } from './auth_context';
+import { ColumnProvider, useColumnCtx } from './column_context';
 
 // Context wrapper for all the context managers
 const ContextProvider = (props: WithChildren) => {
@@ -28,8 +28,9 @@ const ContextProvider = (props: WithChildren) => {
   }
   function performLogout() {
     // action('signout')
+    localStorage.clear();
     navigate('/login');
-    // console.log('hello');
+    window.location.reload(); // Reloads the page to reflect the changes
   }
   function handleOnActive() {
     clearTimeout(idleTimeout);
@@ -41,6 +42,7 @@ const ContextProvider = (props: WithChildren) => {
     }
     //eslint-disable-next-line
   }, [isAuthenticated]);
+
   return <ColumnProvider>{props.children}</ColumnProvider>;
 };
 

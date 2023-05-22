@@ -1,5 +1,4 @@
 export {
-  forgot_password,
   activateUser,
   request_password_reset,
   reset__user_Password,
@@ -14,6 +13,7 @@ export {
   create_client,
   get_client_stats,
   get_client_list,
+  get_unverified_client_list,
   get_top_clients_by_search,
   get_top_clients_by_transactions,
   get_clients_by_value_of_transactions,
@@ -54,5 +54,10 @@ export {
 
 export { get_banks, update_remote_banks, refresh_bank_list } from './banks';
 export { get_dashboard_stats, get_admin_name } from './dashboard';
-export { get_tracker_stats, get_activity_log } from './tracker';
+export {
+  get_tracker_stats,
+  get_activity_log,
+  failed_fund_request,
+  no_virtual_account,
+} from './tracker';
 export { get_single_client, get_a_client } from './single-client';
