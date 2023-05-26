@@ -8,6 +8,7 @@ import { Skeleton } from '@mantine/core';
 import greenDot from '../../../assets/images/Dot.svg';
 import redDot from '../../../assets/images/_Dot.svg';
 import { Change } from '../../../components';
+import { useGetClientList } from '../../../queries';
 import { get_client_stats_query } from '../../../queries/clients_stats';
 import { get_dashboard_stats_query } from '../../../queries/dash_board';
 import { calculatePercentageChange } from '../../../utils';
@@ -22,6 +23,7 @@ const Card = () => {
   // console.log(list, 'for countrycode');
 
   const { data } = useQuery(get_client_stats_query());
+  const { data: total_clients } = useGetClientList();
   const { t } = useTranslation();
 
   if (isLoading)
@@ -56,7 +58,7 @@ const Card = () => {
         </div>
         <div className="w-full flex flex-col gap-2 mb-3 mt-6">
           <p className=" flex items-center gap-1 text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
-            {commaformatter(data?.sectionOne?.totalClients?.today ?? 0)}
+            {commaformatter(total_clients!?.total ?? 0)}
           </p>
         </div>
 

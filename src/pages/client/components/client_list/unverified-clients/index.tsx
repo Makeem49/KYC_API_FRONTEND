@@ -128,7 +128,7 @@ const UnverifiedClients = () => {
         // withActions // enable action column
         // ActionComponent={ActionComponent} // action component
         // withNavigation // enable row navigation
-        // navigationProps={{ baseRoute: 'client', accessor: 'id' }} // define navigation
+        // navigationProps={{ baseRoute: 'client', accessor: 'id' }}
       />
     </>
   );

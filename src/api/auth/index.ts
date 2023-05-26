@@ -61,10 +61,9 @@ export async function activateUser(
     if (resp && resp.status === 200) {
       toast('success', 'User account activated successfully');
     }
-    console.log(resp.data, 'here');
+
     return resp.data.message;
   } catch (error: any) {
-    console.log(error);
     if (error.response) {
       // This error was caused by a server response that returned a non 2xx status code
       const message = error.message ? error.message : 'Unknown error';

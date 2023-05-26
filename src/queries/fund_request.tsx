@@ -1,4 +1,8 @@
-import { approve_fund_request, get_fund_request } from '../api';
+import {
+  approve_fund_request,
+  get_fund_request,
+  get_pending_fund_request,
+} from '../api';
 
 export const get_fund_request_query = (
   page: number,
@@ -8,6 +12,17 @@ export const get_fund_request_query = (
 ) => ({
   queryKey: ['fundRequest', page, page_size, filter, filters],
   queryFn: async () => await get_fund_request(page, page_size, filter, filters),
+});
+
+export const get_pending_fund_request_query = (
+  page: number,
+  page_size: number = 0,
+  filter: string = '',
+  filters: string = ''
+) => ({
+  queryKey: ['pendingRequest', page, page_size, filter, filters],
+  queryFn: async () =>
+    await get_pending_fund_request(page, page_size, filter, filters),
 });
 
 export const get_approve_fund_request = (id: number[] = []) => ({

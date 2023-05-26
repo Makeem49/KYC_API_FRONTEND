@@ -12,6 +12,11 @@ const Table = () => {
   const [filters, setFilters] = React.useState('');
   const { data } = useGetTransLocation(currentPage, pageSize, filter, filters);
 
+  const filteredData = data!?.data.filter((item) => {
+    const totalValue = parseFloat(item.total_transactions_value);
+    return totalValue > 0;
+  });
+
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
   const searchText = t('Search by client name, id');
   return (
@@ -26,7 +31,7 @@ const Table = () => {
         title={searchText}
         rows={10}
         dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
-        data={data!?.data}
+        data={filteredData}
         headerFilter={[
           { name: '', accessor: '' },
           { name: '', accessor: '' },

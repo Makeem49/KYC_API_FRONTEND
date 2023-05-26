@@ -34,7 +34,7 @@ const ProfileBoard = () => {
         <div className="flex flex-col justify-center py-3 items-center gap-1 dark:text-textgrey-normal">
           <img src={userImg} alt="profimg" className="w-32 rounded" />
           <p>
-            {stats!.firstName} {stats!.lastName}
+            {stats!?.firstName} {stats!?.lastName}
           </p>
           <span className="text-[#1863BF] bg-[#E8F1FC]  dark:bg-afexdark-verydark px-3 rounded">
             {t('Client')}
@@ -68,12 +68,12 @@ const ProfileBoard = () => {
                 )}{' '}
               </span>
             </p>
-            {/* <p className=" text-textgrey-darker  dark:text-textgrey-normal font-bold">
+            <p className=" text-textgrey-darker  dark:text-textgrey-normal font-bold">
               {t('Location')}: <br />{' '}
               <span className=" text-textgrey-normal font-normal">
-                {stats!?.location.name}{' '}
+                {stats!?.location.name ?? 'none'}{' '}
               </span>
-            </p> */}
+            </p>
           </div>
 
           <div className="w-full flex flex-col gap-5">
@@ -96,7 +96,7 @@ const ProfileBoard = () => {
               {t('Phone No')}:
               <br />{' '}
               <span className=" text-textgrey-normal font-normal">
-                {stats!.phoneNumber}
+                {stats!?.phoneNumber}
               </span>
             </p>
             {/* <p className=' text-textgrey-darker font-bold'>
@@ -139,7 +139,7 @@ const ProfileBoard = () => {
               BVN:
               <br />{' '}
               <span className=" text-textgrey-normal font-normal">
-                {stats!.bvn ? stats!.bvn : t('none')}
+                {stats!?.bvn ? stats!.bvn : t('none')}
               </span>
             </p>
             {/* <span className='p-2 flex justify-between rounded-lg bg-[#E7F9F0] text-[#076D3A]'>
@@ -152,7 +152,7 @@ const ProfileBoard = () => {
           <p className=" text-textgrey-darker dark:text-textgrey-normal font-bold">
             {t('Virtual Account')}: <br />
             <span className=" text-textgrey-normal font-normal">
-              {stats!.bankAccount ? stats!.bankAccount : t('none')}
+              {stats!?.bankAccount ? stats!.bankAccount : t('none')}
             </span>
           </p>
 

@@ -595,3 +595,13 @@ interface QueryArgs {
   fromDate?: Date;
   toDate?: Date;
 }
+
+interface SingleUser {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  image: string;
+  isActive: boolean;
+}

@@ -11,13 +11,17 @@ import { useQuery } from 'react-query';
 import { Skeleton } from '@mantine/core';
 
 import { Change } from '../../../../components';
-import { useGetUnVerifiedClientList } from '../../../../queries';
+import {
+  useGetClientList,
+  useGetUnVerifiedClientList,
+} from '../../../../queries';
 import { get_client_stats_query } from '../../../../queries/clients_stats';
 import { calculatePercentageChange, commaformatter } from '../../../../utils';
 
 const ClientCard = () => {
   const { data: stats, isLoading } = useQuery(get_client_stats_query());
   const { data } = useGetUnVerifiedClientList();
+  const { data: total_clients } = useGetClientList();
 
   if (isLoading)
     return (
@@ -41,7 +45,7 @@ const ClientCard = () => {
         </div>
         <div className="w-full mb-3 mt-2">
           <p className="flex items-center gap-1 text-[18px] font-bold text-textgrey-dark dark:text-textgrey-normal">
-            {commaformatter(stats?.sectionOne?.totalClients?.today ?? 0)}
+            {commaformatter(total_clients!?.total ?? 0)}
           </p>
 
           <span>{t('All')}</span>

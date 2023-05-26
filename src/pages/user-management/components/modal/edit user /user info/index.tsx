@@ -33,7 +33,7 @@ const UserInfo = ({ data, close, show }: AddUserProps) => {
   const { data: itemTwo } = useGetRoles();
 
   const [loading, setLoading] = useState(false);
-  console.log(data, 'heree');
+
   return (
     <div className="w-full flex flex-col gap-3 p-6">
       {/* INPUT FIELDS */}

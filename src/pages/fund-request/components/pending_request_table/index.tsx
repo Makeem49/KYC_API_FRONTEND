@@ -5,24 +5,20 @@ import { Navigate } from 'react-router-dom';
 import { Skeleton } from '@mantine/core';
 
 import { DataGrid } from '../../../../components';
-import { useGetFundRequest } from '../../../../queries';
+import { useGetPendingFundRequest } from '../../../../queries';
 import { shortDateFormatter } from '../../../../utils';
 
-const FundRequestList = () => {
+const PendingRequest = ({ setGetRequestId }: any) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
   const [filter, setSearch] = React.useState('');
   const [filters, setFilters] = React.useState('');
 
-  const { data, isError, isLoading } = useGetFundRequest(
+  const { data, isError, isLoading } = useGetPendingFundRequest(
     currentPage,
     pageSize,
     filter,
     filters
-  );
-
-  const filteredData = data!?.data.filter(
-    (entry) => entry.status === 'Failed' || entry.status === 'Successful'
   );
 
   if (isLoading)
@@ -48,9 +44,10 @@ const FundRequestList = () => {
           setSearch={setSearch}
           setFilters={setFilters}
           setSelectedEntries={setPageSize}
+          setSelectedData={setGetRequestId}
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
-          data={filteredData}
+          data={data!?.data}
           headerFilter={[
             { name: 'Request Type', accessor: 'requestType' },
             { name: 'Status', accessor: 'status' },
@@ -166,4 +163,4 @@ const FundRequestList = () => {
   );
 };
 
-export default FundRequestList;
+export default PendingRequest;

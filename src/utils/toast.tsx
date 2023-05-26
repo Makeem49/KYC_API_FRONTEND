@@ -17,18 +17,18 @@ const toast = (
       : 'rgb(250, 232, 76)';
   const icon =
     id === 'success' ? (
-      <div className=' bg-afexgreen-lighter z-50 rounded-full p-3'>
-        <RiShieldCheckFill color='#38CB89' size={30} />
+      <div className=" bg-afexgreen-lighter dark:bg-[#ffff] z-50 rounded-full p-3">
+        <RiShieldCheckFill color="#38CB89" size={30} />
       </div>
     ) : id === 'error' ? (
       'error' && (
-        <div className=' bg-afexred-lighter z-50 rounded-full p-3'>
-          <RiErrorWarningLine color='#FE1F11' size={30} />
+        <div className=" bg-afexred-lighter dark:bg-[#ffff] z-50 rounded-full p-3">
+          <RiErrorWarningLine color="#FE1F11" size={30} />
         </div>
       )
     ) : (
-      <div className=' bg-afexwarning-lighter z-50 rounded-full p-3'>
-        <RiErrorWarningLine color='#dce775' size={30} />
+      <div className=" bg-afexwarning-lighter dark:bg-[#ffff] z-50 rounded-full p-3">
+        <RiErrorWarningLine color="#dce775" size={30} />
       </div>
     );
   //id = 'success' | 'warning' | 'error'
@@ -60,7 +60,7 @@ const toast = (
     icon: icon,
     message: (
       <div
-        className={`flex  items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
+        className={`flex z-50  items-start top-1 rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
           id === 'success'
             ? 'before:bg-[#FFFFFF] dark:before:bg-afexdark-darkest'
             : id === 'error'
@@ -68,11 +68,11 @@ const toast = (
             : 'before:bg-[#FFFFFF] dark:before:bg-afexdark-darkest'
         }`}>
         {heading.length > 0 && (
-          <div className='pl-5 z-50 pr-4 child:py-1'>
-            <p className='font-bold text-md dark:text-textgrey-normal '>
+          <div className="pl-5 z-50 pr-4 child:py-1">
+            <p className="font-bold text-md dark:text-textgrey-normal ">
               {heading}
             </p>
-            <p className=' dark:text-textgrey-normal'>{text}</p>
+            <p className=" dark:text-textgrey-normal">{text}</p>
           </div>
         )}
       </div>

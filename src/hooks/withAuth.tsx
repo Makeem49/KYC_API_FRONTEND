@@ -52,7 +52,6 @@ const withPermission = (
       );
 
     if (!hasPermission) {
-      console.log(Permissions, 'here');
       return <div>You don't have permission to access this page.</div>;
     }
 

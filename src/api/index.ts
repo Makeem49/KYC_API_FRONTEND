@@ -19,7 +19,11 @@ export {
   get_clients_by_value_of_transactions,
 } from './clients';
 
-export { get_fund_request, approve_fund_request } from '../api/fund_request';
+export {
+  get_fund_request,
+  get_pending_fund_request,
+  approve_fund_request,
+} from '../api/fund_request';
 
 export {
   create_client_provider,

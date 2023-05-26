@@ -73,7 +73,6 @@ export async function refresh_bank_list(): Promise<any | null> {
       toast('success', `${resp.data.message}`);
     }
   } catch (error: any) {
-    console.log(error);
     toast('error', 'Unable to refresh banks', `${error.response.data.message}`);
   }
 }

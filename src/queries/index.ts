@@ -21,7 +21,10 @@ import {
   get_audit_query,
   get_dashboard_stats_query,
 } from './dash_board';
-import { get_fund_request_query } from './fund_request';
+import {
+  get_fund_request_query,
+  get_pending_fund_request_query,
+} from './fund_request';
 import {
   get_a_client_query,
   get_client_transactions_query,
@@ -67,6 +70,17 @@ export const useGetFundRequest = (
   filters: string = ''
 ) => {
   return useQuery(get_fund_request_query(page, page_size, filter, filters));
+};
+
+export const useGetPendingFundRequest = (
+  page: number = 1,
+  page_size: number = 0,
+  filter: string = '',
+  filters: string = ''
+) => {
+  return useQuery(
+    get_pending_fund_request_query(page, page_size, filter, filters)
+  );
 };
 
 export const useGetClientList = (

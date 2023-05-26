@@ -61,6 +61,7 @@ export function Root() {
   useEffect(() => {
     const isAuthorised = localStorage.getItem('cuddie-access-token');
     if (!isAuthorised) navigate('/login');
+    // throw new Error('This is an error message');
   }, [navigate, pathname]);
 
   return (

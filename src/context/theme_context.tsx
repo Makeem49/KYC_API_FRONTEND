@@ -42,7 +42,6 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, [enabled]);
 
   const disable = () => {
-    console.log('setting enabled', enabled);
     setEnabled(false);
     localStorage.removeItem('theme');
   };

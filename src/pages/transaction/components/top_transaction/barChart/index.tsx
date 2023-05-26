@@ -10,6 +10,22 @@ const BarChart = () => {
   const { theme } = useThemeCtx();
   const { data: stats } = useGetTransLocation();
 
+  // Sort the data array in descending order based on total_transactions_value
+  // Filter out items with null total_transactions_value
+  const filteredData = stats!?.data.filter(
+    (item) => item.total_transactions_value !== null
+  );
+
+  // Sort the filteredData array in descending order based on total_transactions_value
+  const sortedData = filteredData?.sort(
+    (a, b) =>
+      parseFloat(b.total_transactions_value) -
+      parseFloat(a.total_transactions_value)
+  );
+
+  // Get the top 5 highest items
+  const topFive = sortedData?.slice(0, 5);
+
   const OPTIONS = {
     plugins: {
       legend: {
@@ -60,7 +76,7 @@ const BarChart = () => {
     },
   };
   const data = {
-    labels: stats?.data.map((el): string => t(el.name)),
+    labels: topFive?.map((el): string => t(el.name)),
 
     datasets: [
       {
@@ -69,7 +85,7 @@ const BarChart = () => {
         borderWidth: 1,
         hoverBackgroundColor: ['#38CB89', '#38CB89', '#38CB89', '#38CB89'],
         hoverBorderColor: ['#38CB89', '#38CB89', '#38CB89', '#38CB89'],
-        data: stats?.data.map(
+        data: topFive?.map(
           (el): string | number => el.total_transactions_value
         ),
         borderRadius: Number.MAX_VALUE,
@@ -77,7 +93,7 @@ const BarChart = () => {
     ],
   };
   return (
-    <div className=' w-[100%]'>
+    <div className=" w-[100%]">
       <Bar options={OPTIONS} data={data} />
     </div>
   );

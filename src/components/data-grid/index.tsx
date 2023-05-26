@@ -549,7 +549,7 @@ const DataGrid = ({
       </div>
 
       <div className="flex items-center">
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-1 items-center">
           {/* GENERAL SEARCH */}
           <div className="relative flex items-center w-72 2xl:w-96 ">
             <input
@@ -604,7 +604,7 @@ const DataGrid = ({
           {/* COLUMN VISIBILITY FILTER */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
-              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark  gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg hover:shadow w-28 2xl:w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:border-0 capitalize ${
                 showColOpts
                   ? ' border-afexpurple-regular  '
                   : ' border-transparent'
@@ -659,7 +659,7 @@ const DataGrid = ({
           {/* FILTER ACTION */}
           <div className="" onClick={(e) => e.stopPropagation()}>
             <button
-              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-2 text-[14px] p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
                 showAllComp
                   ? ' border-afexpurple-regular  '
                   : ' border-transparent'
@@ -781,7 +781,7 @@ const DataGrid = ({
             position={'bottom-end'}>
             <Popover.Target>
               <button
-                className="py-6 px-3 flex font-semibold gap-2 items-center rounded-lg text-afexpurple-regular text-sm xl:text-[14px] bg-afexpurple-lighter  dark:bg-afexdark-verydark xl:h-[40px] w-[100px]"
+                className="flex font-semibold  items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg text-afexpurple-regular  bg-afexpurple-lighter  dark:bg-afexdark-verydark"
                 onClick={() => {
                   setOpened((o) => !o);
                 }}>
@@ -883,7 +883,7 @@ const DataGrid = ({
           {/* DATE FILTER ACTION */}
           {dateFilter.enabled && (
             <button
-              className="flex gap-6 items-center py-3 mx-2 text-base rounded-xl px-4 focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer"
+              className="flex items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-xl focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer"
               onClick={() => setShowDateCalendar((s) => !s)}>
               {/* <span className='capitalize whitespace-nowrap'>
                 {dateFilter.label}{' '}

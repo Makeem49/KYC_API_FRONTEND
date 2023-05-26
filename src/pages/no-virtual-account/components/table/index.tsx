@@ -32,7 +32,7 @@ const NoVirtualAccount = () => {
     );
 
   if (isError) return <Navigate to="/login" />;
-  console.log(data);
+
   return (
     <>
       <div className="bg-white dark:bg-afexdark-darkest px-6 py-3">
