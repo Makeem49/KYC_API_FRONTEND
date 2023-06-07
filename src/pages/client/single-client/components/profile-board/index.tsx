@@ -72,7 +72,7 @@ const ProfileBoard = () => {
             <p className=" text-textgrey-darker  dark:text-textgrey-normal font-bold">
               {t('Location')}: <br />{' '}
               <span className=" text-textgrey-normal font-normal">
-                {stats?.location.name || 'none'}{' '}
+                {stats?.location?.name || 'no location'}{' '}
               </span>
             </p>
           </div>
