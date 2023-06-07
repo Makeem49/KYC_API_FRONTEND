@@ -4,7 +4,7 @@ import {
   paramsSerializer,
   shortDateFormatter,
 } from '../../utils';
-import { checkCountryCode } from '../../utils/formatter';
+import { checkCountryCode, timeFormatter } from '../../utils/formatter';
 
 /**
  * =================================================================
@@ -60,23 +60,24 @@ export async function get_single_client(
       (el: any) =>
         ({
           id: el.id,
-          createdAt: shortDateFormatter(el.createdAt),
-          amount: commaformatter(el.amount),
-          amountBefore: commaformatter(el.amountBefore),
-          amountAfter: commaformatter(el.amountAfter),
-          transactionType: el.transactionType,
-          ref: el.ref.substr(0, 10) + '...',
-          channel: el.channel,
-          description: el.description,
+          createdAt: shortDateFormatter(el.createdAt) ?? '',
+          time: timeFormatter(el.createdAt) ?? '',
+          amount: commaformatter(el.amount) ?? '',
+          amountBefore: commaformatter(el.amountBefore) ?? '',
+          amountAfter: commaformatter(el.amountAfter) ?? '',
+          transactionType: el.transactionType ?? '',
+          ref: el.ref.substr(0, 10) + '...' ?? '',
+          channel: el.channel ?? '',
+          description: el.description ?? '',
           comment: el.comment ? el.comment : '',
-          status: el.status,
-          sessionId: el.sessionId,
+          status: el.status ?? '',
+          sessionId: el.sessionId ?? '',
           isPlatformSynced: el.isPlatformSynced ? el.isPlatformSynced : '',
-          updatedAt: el.updatedAt,
+          updatedAt: el.updatedAt ?? '',
           deletedAt: el.deletedAt ? el.deletedAt : '',
-          clientId: el.clientId,
-          client: el.client,
-          countryCode: checkCountryCode(el.client.countryCode),
+          clientId: el.clientId ?? '',
+          client: el.client ?? '',
+          countryCode: checkCountryCode(el.client?.countryCode) ?? '',
         } as SingleClient)
     ),
     total: resp.data.total,

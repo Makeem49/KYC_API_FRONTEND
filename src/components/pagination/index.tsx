@@ -21,7 +21,7 @@ const Pagination = (props: PaginationProps) => {
   };
   return (
     <div className="bottom-0 right-0 left-0 w-full">
-      <div className="flex justify-between dark:text-textgrey-normal items-center px-6 rounded-md">
+      <div className="md:flex md:justify-between dark:text-textgrey-normal items-center md:px-6 rounded-md">
         {/* <span>
           {t('showing')} &nbsp;
           {10 * currentPage + 1} -&nbsp;

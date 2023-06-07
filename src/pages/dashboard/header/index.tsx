@@ -37,20 +37,24 @@ const Header = () => {
   });
 
   return (
-    <div className="relative flex justify-between text-[14px] items-center rounded-lg bg-[#54289D] dark:bg-afexdark-darkest w-full h-[94px] p-5 text-[#F1EBFC] ">
-      <img src={hafCirc} alt="" className=" absolute top-0 left-[20%]" />
+    <div className="relative flex justify-between text-[14px] items-center rounded-lg bg-[#54289D] dark:bg-afexdark-darkest w-full h-[94px] md:p-5 text-[#F1EBFC] ">
       <img
         src={hafCirc}
         alt=""
-        className=" absolute bottom-[-0%] left-[0%] rotate-180"
+        className=" absolute w-10 md:w-[100px] top-0 left-[20%]"
       />
       <img
         src={hafCirc}
         alt=""
-        className=" dark:hidden dark:z-0 absolute top-0 right-[-2%]  rotate-45"
+        className=" absolute w-10 md:w-[100px] bottom-[-0%] left-[0%] rotate-180"
+      />
+      <img
+        src={hafCirc}
+        alt=""
+        className=" dark:hidden dark:z-0 absolute w-10 md:w-[100px] top-0 right-[-2%]  rotate-45"
       />
 
-      <div className="hidden dark:block w-[120px] h-[60px] absolute top-2 right-[-3%] -rotate-150 dark:border-afexdark-verydark rounded-t-full border-[22px] border-b-0"></div>
+      <div className="hidden md:dark:block md:w-[120px] md:h-[60px] absolute top-2 md:right-[-3%] -rotate-150 dark:border-afexdark-verydark rounded-t-full border-[22px] border-b-0"></div>
 
       <div>
         <h2 className="text-[20px] flex items-center text-[#ffff]">

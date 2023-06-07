@@ -20,7 +20,11 @@ const Card = () => {
     isLoading,
     isError,
   } = useQuery(get_dashboard_stats_query());
-  // console.log(list, 'for countrycode');
+  // const [isHovered, setIsHovered] = useState(false);
+
+  // const handleHover = () => {
+  //   setIsHovered(!isHovered);
+  // };
 
   const { data } = useQuery(get_client_stats_query());
   const { data: total_clients } = useGetClientList();
@@ -47,7 +51,7 @@ const Card = () => {
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
-    <div className="flex gap-6 child:h-[134px]">
+    <div className="grid md:grid-cols-2 lg:flex gap-6 child:h-[134px]">
       {/* Card One */}
       <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark  border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
         <div className="flex items-center justify-between w-full">
@@ -57,7 +61,7 @@ const Card = () => {
           <UserSquare size="25" color="#A982EA" variant="Bulk" />
         </div>
         <div className="w-full flex flex-col gap-2 mb-3 mt-6">
-          <p className=" flex items-center gap-1 text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
+          <p className=" flex items-center gap-1 text-[18px] 2xl:text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
             {commaformatter(total_clients!?.total ?? 0)}
           </p>
         </div>
@@ -86,7 +90,7 @@ const Card = () => {
           <Wallet1 size="25" color="#A982EA" variant="Bulk" />
         </div>
         <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-          <p className="flex items-center gap-1 text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
+          <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
             {commaformatter(list?.sectionOne?.transactions?.today ?? 0)}
             <Change
               value={calculatePercentageChange(
@@ -100,7 +104,9 @@ const Card = () => {
       </div>
 
       {/* Card Three */}
-      <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
+
+      {/* TOTAL VALUE */}
+      <div className="relative h-full flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
         <div className="flex items-center justify-between w-full">
           <p className=" font-normal text-textgrey-normal">
             {t('TOTAL VALUE')}
@@ -108,7 +114,7 @@ const Card = () => {
           <Receipt size="25" color="#A982EA" variant="Bulk" />
         </div>
         <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-          <p className="flex items-center gap-1 text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
+          <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
             {defaultCountryCode === 'NG'
               ? '₦'
               : defaultCountryCode === 'KE'
@@ -117,7 +123,7 @@ const Card = () => {
             <span> {commaformatter(list?.sectionOne?.values?.today ?? 0)}</span>
             <Change
               value={calculatePercentageChange(
-                list!.sectionOne.transactions.today ?? 0,
+                list!.sectionOne?.transactions?.today ?? 0,
                 list!?.sectionOne?.values?.previousDay ?? 0
               )}
             />
@@ -125,6 +131,84 @@ const Card = () => {
           <span>{t('vs previous day')}</span>
         </div>
       </div>
+      {/* <>
+        {!isHovered ? (
+          <div onMouseEnter={handleHover}>
+            
+            <div className="relative h-full flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
+              <div className="flex items-center justify-between w-full">
+                <p className=" font-normal text-textgrey-normal">
+                  {t('TOTAL VALUE')}
+                </p>
+                <Receipt size="25" color="#A982EA" variant="Bulk" />
+              </div>
+              <div className="w-full flex flex-col gap-2 mb-3 mt-2">
+                <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
+                  {defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'}
+                  <span>
+                    {' '}
+                    {commaformatter(list?.sectionOne?.values?.today ?? 0)}
+                  </span>
+                  <Change
+                    value={calculatePercentageChange(
+                      list!.sectionOne.transactions.today ?? 0,
+                      list!?.sectionOne?.values?.previousDay ?? 0
+                    )}
+                  />
+                </p>
+                <span>{t('vs previous day')}</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div onMouseLeave={handleHover}>
+         
+            <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-2 lg:w-[140px] xl:w-[200px] 2xl:w-[250px] ">
+              <div className="flex items-center justify-between w-full">
+                <p className=" font-normal text-textgrey-normal">
+                  {t('TOTAL CREDIT')}
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-2 mb-3 mt-2">
+                <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
+                  {defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'}
+                  <span>
+                    {' '}
+                    {commaformatter(list?.sectionOne?.values?.today ?? 0)}
+                  </span>
+                </p>
+              </div>
+              <div className="flex items-center justify-between w-full">
+                <p className=" font-normal text-textgrey-normal">
+                  {t('TOTAL DEBIT')}
+                </p>
+              </div>
+
+              <div className="w-full flex flex-col gap-2 mb-3 mt-2">
+                <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
+                  {defaultCountryCode === 'NG'
+                    ? '₦'
+                    : defaultCountryCode === 'KE'
+                    ? 'KES'
+                    : 'UGX'}
+                  <span>
+                    {' '}
+                    {commaformatter(list?.sectionOne?.values?.today ?? 0)}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </> */}
 
       {/* Card Four */}
       <div className="relative flex flex-col  border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">

@@ -4,6 +4,7 @@ import {
   paramsSerializer,
   toast,
 } from '../../utils';
+import { timeFormatter } from '../../utils/formatter';
 
 export async function get_fund_request(
   page: number,
@@ -46,14 +47,17 @@ export async function get_fund_request(
       (el: any) =>
         ({
           id: el.id,
-          createdAt: el.createdAt,
-          amount: commaformatter(el.amount),
-          ref: el.ref,
-          description: el.description,
-          requestType: el.requestType,
-          status: el.status,
-          clientName: `${el.client.firstName} ${el.client.lastName}`,
-          phoneNumber: el.client.phoneNumber,
+          createdAt: el.createdAt ?? '',
+          time: timeFormatter(el.createdAt) ?? '',
+          amount: commaformatter(el.amount) ?? '',
+          ref: el.ref ?? '',
+          description: el.description ?? '',
+          requestType: el.requestType ?? '',
+          status: el.status ?? '',
+          clientName: `${el.client?.firstName ?? ''} ${
+            el.client?.lastName ?? ''
+          }`,
+          phoneNumber: el.client?.phoneNumber ?? '',
         } as FundRequest)
     ),
     total: resp.data.total,
@@ -99,14 +103,17 @@ export async function get_pending_fund_request(
       (el: any) =>
         ({
           id: el.id,
-          createdAt: el.createdAt,
-          amount: commaformatter(el.amount),
-          ref: el.ref,
-          description: el.description,
-          requestType: el.requestType,
-          status: el.status,
-          clientName: `${el.client.firstName} ${el.client.lastName}`,
-          phoneNumber: el.client.phoneNumber,
+          createdAt: el.createdAt ?? '',
+          time: timeFormatter(el.createdAt) ?? '',
+          amount: commaformatter(el.amount) ?? '',
+          ref: el.ref ?? '',
+          description: el.description ?? '',
+          requestType: el.requestType ?? '',
+          status: el.status ?? '',
+          clientName: `${el.client?.firstName ?? ''} ${
+            el.client?.lastName ?? ''
+          }`,
+          phoneNumber: el.client?.phoneNumber ?? '',
         } as FundRequest)
     ),
     total: resp.data.total,

@@ -34,7 +34,7 @@ const ClientCard = () => {
     );
 
   return (
-    <div className="flex gap-8 child:h-[134px]">
+    <div className="grid md:grid-cols-2 lg:flex gap-6 child:h-[134px]">
       {/* Card One */}
       <div className="relative flex flex-col border-[#DECFF7]  dark:border-afexdark-dark  border-b-4 bg-white  dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
         <div className="flex items-center justify-between w-full">

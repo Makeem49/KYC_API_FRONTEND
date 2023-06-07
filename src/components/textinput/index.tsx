@@ -46,7 +46,7 @@ const TextInput = ({
         autoFocus={props.autoFocus}
         autoComplete={props.autocomplete}
         pattern={props.pattern}
-        className={`block w-full appearance-none outline-none dark:bg-afexdark-verydark dark:text-textgrey-normal tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 lg:h-10 xl:h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91] ${inputClass} `}
+        className={`block w-full appearance-none outline-none dark:bg-afexdark-verydark dark:text-textgrey-normal tracking-wider rounded-lg ring-1 ring-[#DAD9DA] focus:ring-afexpurple-lighter focus:ring-2 h-16 xl:h-16 transition duration-150 py-3 px-4 placeholder:text-[#8F8E91] ${inputClass} `}
         placeholder={props.placeholder}
         {...field}
       />

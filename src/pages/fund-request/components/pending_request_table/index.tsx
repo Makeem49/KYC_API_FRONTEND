@@ -61,6 +61,13 @@ const PendingRequest = ({ setGetRequestId }: any) => {
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
             },
+            {
+              accessor: 'time',
+              hidden: false,
+              name: `${t('Time')}`,
+              sortable: true,
+              static: false,
+            },
 
             {
               accessor: 'clientName',

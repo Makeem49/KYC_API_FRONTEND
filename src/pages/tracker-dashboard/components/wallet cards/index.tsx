@@ -23,11 +23,11 @@ const WalletCards = () => {
 
   return (
     <>
-      <div className="flex gap-14 child:h-[200px]">
+      <div className="grid md:grid-cols-2 lg:flex gap-6 child:h-[200px]">
         {/* Card One */}
         <Link to="#">
           {' '}
-          <div className="relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[300px] xl:w-[400px]  gap-8">
+          <div className="relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-full md:w-[300px] xl:w-[400px]  gap-8">
             <div className="flex items-center justify-between w-full">
               <p className=" font-medium text-[24px] text-[#8F8E91]">
                 {t('Clients with no wallet')}
@@ -56,7 +56,7 @@ const WalletCards = () => {
 
         {/* Card Two */}
         <Link to="/tracker-dashboard/failed-funding">
-          <div className="relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[300px] xl:w-[400px]  gap-8">
+          <div className="relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-full md:w-[300px] xl:w-[400px]  gap-8">
             <div className="flex items-center justify-between w-full">
               <p className=" font-medium text-[24px] text-[#8F8E91]">
                 {t('Failed Funding')}
@@ -87,7 +87,7 @@ const WalletCards = () => {
         {/* Card Three */}
         <Link to="/tracker-dashboard/unsynced-wallet-transfer">
           {' '}
-          <div className="relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[300px] xl:w-[400px]  gap-8">
+          <div className="relative  flex flex-col border-[#DBD9D9] dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-full md:w-[300px] xl:w-[400px]  gap-8">
             <div className="flex items-center justify-between w-full">
               <p className=" font-medium text-[24px] text-[#8F8E91]">
                 {t('Unsynced Wallet Transfer')}

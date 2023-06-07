@@ -13,6 +13,7 @@ export {
   create_client,
   get_client_stats,
   get_client_list,
+  re_on_board_clients,
   get_unverified_client_list,
   get_top_clients_by_search,
   get_top_clients_by_transactions,

@@ -15,7 +15,7 @@ const ClientProvider = () => {
     <AnimatePresence>
       <SingleClientProvider>
         <div className="w-full h-[100vh] flex">
-          <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
+          <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll md:p-10">
             {/* Title */}
             <div className="flex w-full justify-between items-center">
               {/* <div className='flex w-full flex-col'>
@@ -38,14 +38,14 @@ const ClientProvider = () => {
                     </span>
                     <span>/</span>
 
-                    <span className=" min-w-[180px] text-textgrey-dark">
+                    <span className=" md:min-w-[180px] text-textgrey-dark">
                       {t('Client Providers')}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex w-full px-3 justify-end gap-4 text-[14px] font-normal items-center ">
+              <div className="hidden md:flex md:w-full md:px-3 md:justify-end gap-4 text-[14px] font-normal items-center ">
                 <AddUser />
               </div>
             </div>

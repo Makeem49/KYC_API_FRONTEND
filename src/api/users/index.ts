@@ -57,21 +57,21 @@ export async function get_users(
       (el: any) =>
         ({
           id: el.id,
-          user: `${el.firstName} ${el.lastName}`,
-          username: el.username,
-          providers: el.providers.map((el: any) => el.name) ?? '',
-          providerId: el.providers.map((el: any) => el.id) ?? '',
-          lastLogin: el.lastLogin,
+          user: `${el.firstName ?? ''} ${el.lastName ?? ''}`,
+          username: el.username ?? '',
+          providers: el.providers?.map((el: any) => el.name) ?? '',
+          providerId: el.providers?.map((el: any) => el.id) ?? '',
+          lastLogin: el.lastLogin ?? '',
           twoStepEnabled: false,
-          isActive: el.isActive ? 'Active' : 'Inactive',
-          createdAt: el.createdAt,
-          email: el.email,
-          image: el.image,
-          lastName: el.lastName,
-          firstName: el.firstName,
-          permissions: el.permissions.map((el: any) => el.id) ?? '',
-          roles: el.roles.map((el: any) => el.id) ?? '',
-          updatedAt: el.updatedAt,
+          isActive: el.isActive ? 'Active' : 'Inactive' ?? '',
+          createdAt: el.createdAt ?? '',
+          email: el.email ?? '',
+          image: el.image ?? '',
+          lastName: el.lastName ?? '',
+          firstName: el.firstName ?? '',
+          permissions: el.permissions?.map((el: any) => el.id) ?? '',
+          roles: el.roles?.map((el: any) => el.id) ?? '',
+          updatedAt: el.updatedAt ?? '',
         } as User)
     ),
     total: resp.data.total,
@@ -94,11 +94,11 @@ export async function get_permissions(): Promise<User[]> {
     (el: any) =>
       ({
         id: el.id,
-        name: el.name,
-        description: el.description,
-        group: el.group,
-        createdAt: shortDateFormatter(el.createdAt),
-        updatedAt: shortDateFormatter(el.updatedAt),
+        name: el.name ?? '',
+        description: el.description ?? '',
+        group: el.group ?? '',
+        createdAt: shortDateFormatter(el.createdAt) ?? '',
+        updatedAt: shortDateFormatter(el.updatedAt) ?? '',
       } as User)
   );
 }
@@ -118,7 +118,7 @@ export async function get_roles(): Promise<User[]> {
     (el: any) =>
       ({
         id: el.id,
-        name: el.name,
+        name: el.name ?? '',
       } as User)
   );
 }
@@ -149,6 +149,7 @@ export async function create_user(data: Partial<User>): Promise<string> {
       providers: data.providers,
       roles: data.roles,
       image: data.image,
+      onBoard: data.onBoard,
     });
     if (!resp.data) return 'unable to create user';
     if (resp && resp.status === 200) {

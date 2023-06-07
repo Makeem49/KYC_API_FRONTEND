@@ -1,8 +1,8 @@
-import { paramsSerializer, shortDateFormatter } from '../../utils';
-
-import { apiRequest } from '../../utils';
 // import { AxiosResponse } from 'axios';
 import { t } from 'i18next';
+
+import { paramsSerializer, shortDateFormatter } from '../../utils';
+import { apiRequest } from '../../utils';
 
 /**
  * =================================================================
@@ -56,11 +56,11 @@ export async function get_token_list(
       (el: any) =>
         ({
           id: el.id,
-          createdAt: shortDateFormatter(el.createdAt),
-          apiKey: el.apiKey.substr(0, 15) + '...',
-          noOfRequests: el.noOfRequests ? el.noOfRequests : '0',
-          lastUsedAt: el.lastUsedAt ? el.lastUsedAt : 'unavailable',
-          isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}`,
+          createdAt: shortDateFormatter(el.createdAt) ?? '',
+          apiKey: el.apiKey.substr(0, 15) + '...' ?? '',
+          noOfRequests: el.noOfRequests ? el.noOfRequests : '0' ?? '',
+          lastUsedAt: el.lastUsedAt ? el.lastUsedAt : 'unavailable' ?? '',
+          isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}` ?? '',
         } as ClientProviderToken)
     ),
     total: resp.data.total,

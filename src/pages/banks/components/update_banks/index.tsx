@@ -30,7 +30,7 @@ const UpdateRemoteBanks = () => {
         onClick={() => {
           setOpened((s) => !s);
         }}
-        className=" bg-afexpurple-regular text-white p-3 rounded-lg cursor-pointer hover:shadow text-base">
+        className=" bg-afexpurple-regular text-white p-3 rounded-lg cursor-pointer hover:shadow text-[7px] md:text-base">
         UPDATE REMOTE BANKS
       </button>
 

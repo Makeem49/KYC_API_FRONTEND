@@ -17,6 +17,7 @@ const ProfileBoard = () => {
   const { data: stats, isLoading } = useQuery(
     get_a_client_query(parseInt(clientId, 10))
   );
+
   if (isLoading)
     return (
       <Skeleton
@@ -28,7 +29,7 @@ const ProfileBoard = () => {
     );
 
   return (
-    <div className=" w-full flex flex-col gap-10">
+    <div className=" md:w-full flex flex-col gap-10">
       {/* FIrst Card */}
       <div className=" bg-white  dark:bg-afexdark-darkest rounded-lg p-8">
         <div className="flex flex-col justify-center py-3 items-center gap-1 dark:text-textgrey-normal">
@@ -71,27 +72,12 @@ const ProfileBoard = () => {
             <p className=" text-textgrey-darker  dark:text-textgrey-normal font-bold">
               {t('Location')}: <br />{' '}
               <span className=" text-textgrey-normal font-normal">
-                {stats!?.location.name ?? 'none'}{' '}
+                {stats?.location.name || 'none'}{' '}
               </span>
             </p>
           </div>
 
           <div className="w-full flex flex-col gap-5">
-            {/* <p className=' text-textgrey-darker dark:text-textgrey-normal font-bold'>
-              Email: <br />{' '}
-              <span className=' text-textgrey-normal font-normal'>
-                {' '}
-                aadamu@afexnigeria.com
-              </span>
-            </p> */}
-            {/* <p className=' text-textgrey-darker dark:text-textgrey-normal font-bold'>
-              Address:
-              <br />{' '}
-              <span className=' text-textgrey-normal font-normal'>
-                {' '}
-                No 3234, Ralph Shodeinde street, Abuja
-              </span>
-            </p> */}
             <p className=" text-textgrey-darker  dark:text-textgrey-normal font-bold">
               {t('Phone No')}:
               <br />{' '}
@@ -99,23 +85,6 @@ const ProfileBoard = () => {
                 {stats!?.phoneNumber}
               </span>
             </p>
-            {/* <p className=' text-textgrey-darker font-bold'>
-              Location: <br />{' '}
-              <span className=' text-textgrey-normal font-normal'>
-                {' '}
-                Kaduna 1
-              </span>
-            </p>
-            <p className=' text-textgrey-darker font-bold'>
-              Warehouse: <br />{' '}
-              <span className=' text-textgrey-normal font-normal'>Anchau </span>
-            </p>
-            <p className=' text-textgrey-darker font-bold'>
-              Last Transaction: <br />{' '}
-              <span className=' text-textgrey-normal font-normal'>
-                Last Transaction: 10 Nov 2022, 6:05 pm
-              </span>
-            </p> */}
           </div>
         </div>
       </div>

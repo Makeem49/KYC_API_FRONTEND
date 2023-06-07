@@ -50,7 +50,7 @@ function App() {
 
 const rollbarConfig: Configuration = {
   accessToken: process.env.REACT_APP_ROLLBAR_CLIENT_TOKEN,
-  // enabled: process.env.NODE_ENV === 'production',
+  enabled: process.env.NODE_ENV === 'production',
   environment: process.env.NODE_ENV,
 };
 

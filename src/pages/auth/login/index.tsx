@@ -27,28 +27,10 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 2 }}>
-          {/* <motion.div
-            initial={{ transform: 'translateY(-100%)', opacity: 0 }}
-            animate={{ transform: 'translateY(0%)', opacity: 1 }}
-            exit={{ opacity: 0, transform: 'translate(0,0)' }}
-            transition={{ duration: 2 }}></motion.div> */}
-
-          <div className="flex flex-1 h-full w-full flex-col space-y-14 px-20">
-            <motion.img
-              // src={cuddieLogo}
-              initial={{
-                transform: 'translateX(-100%) translateY(-100%)',
-              }}
-              animate={{
-                transform: 'translateX(0) translateY(30%)',
-              }}
-              transition={{ duration: 1 }}
-              className="w-32"
-            />
-
+          <div className="flex h-full w-full flex-col px-20">
             <div className="relative xl:p-8 ">
               <motion.div
-                className="absolute lg:top-[-100%] xl:top-0 "
+                className="absolute top-8 xl:top-10 left-[-20%] md:left-0 lg:left-0 "
                 initial={{ transform: 'translateX(100%)', opacity: 0 }}
                 animate={{ transform: 'translateX(0%)', opacity: 1 }}
                 exit={{ opacity: 0, transform: 'translate(0,0)' }}
@@ -56,7 +38,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                 <img src={cudiLogo} alt="cudi" className="w-24" />
               </motion.div>
 
-              <h3 className=" xl:mt-20 text-center dark:text-textgrey-normal text-2xl font-semibold">
+              <h3 className="mt-10 lg:mt-0 xl:mt-20 py-8 text-center dark:text-textgrey-normal text-2xl font-semibold">
                 Welcome to Cudie!
               </h3>
             </div>
@@ -74,7 +56,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                 animate={{ transform: 'translateY(0%)', opacity: 1 }}
                 exit={{ opacity: 0, transform: 'translate(0,0)' }}
                 transition={{ duration: 2 }}>
-                <Form className="w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-4 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative">
+                <Form className="w-full md:w-6/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-4 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative">
                   <TextInput
                     id="username"
                     name="username"
@@ -108,7 +90,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center flex-col xl:pt-12 2xl:pt-12 space-y-4">
+                  <div className="flex items-center justify-center flex-col xl:pt-12 space-y-4">
                     <Button
                       type="submit"
                       text={
@@ -119,12 +101,6 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
                       }
                       loading={loading}
                     />
-                    {/* <button
-                    className='bg-[#E1261C] text-white flex justify-center  font-bold px-5 p-4 rounded-lg items-center w-1/2 hover:shadow-md'
-                    type='submit'>
-                    Sign in
-                    <MdKeyboardArrowRight className='text-3xl ' />
-                  </button> */}
 
                     <span
                       onClick={() => {
@@ -140,7 +116,7 @@ const LoginOverlay = (props: { isVisible: boolean }) => {
           </div>
 
           <motion.div
-            className="flex items-end justify-center absolute bottom-0 w-full flex-1 h-2/3"
+            className="flex items-end justify-center absolute bottom-0 w-full flex-1 h-2/4 lg:h-2/3"
             style={{
               background: `url(${flap}) top/cover no-repeat`,
             }}

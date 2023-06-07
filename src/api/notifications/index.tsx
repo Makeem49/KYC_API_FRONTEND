@@ -12,13 +12,13 @@ export async function get_notifications(
     (el: any) =>
       ({
         id: el.id,
-        title: el.title,
-        summary: el.summary,
-        module: el.module,
-        targetId: el.targetId,
-        userId: el.userId,
-        isRead: el.isRead,
-        createdAt: el.createdAt,
+        title: el.title ?? '',
+        summary: el.summary ?? '',
+        module: el.module ?? '',
+        targetId: el.targetId ?? '',
+        userId: el.userId ?? '',
+        isRead: el.isRead ?? '',
+        createdAt: el.createdAt ?? '',
       } as Notifications)
   );
 }

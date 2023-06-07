@@ -37,11 +37,11 @@ export async function get_banks(
       (el: any) =>
         ({
           id: el.id,
-          name: el.name,
-          code: el.code,
-          paymentPortalCode: el.paymentPortalCode,
-          countryCode: el.countryCode === 'NG' ? 'Nigeria' : '',
-          createdAt: el.createdAt,
+          name: el.name ?? '',
+          code: el.code ?? '',
+          paymentPortalCode: el.paymentPortalCode ?? '',
+          countryCode: el.countryCode === 'NG' ? 'Nigeria' : '' ?? '',
+          createdAt: el.createdAt ?? '',
         } as Banks)
     ),
     total: resp.data.total,

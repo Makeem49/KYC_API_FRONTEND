@@ -23,17 +23,17 @@ const RecentTransaction = () => {
       />
     );
 
-  if (isError) return <Navigate to='/login' />;
+  // if (isError) return <Navigate to='/login' />;
   return (
-    <div className='w-full p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg'>
-      <div className='flex justify-between mb-6 items-center text-[#000000] text-[16px] font-normal'>
-        <p className=' dark:text-afexdark-lighter'>
+    <div className="w-full p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg">
+      <div className="flex justify-between mb-6 items-center text-[#000000] text-[16px] font-normal">
+        <p className=" dark:text-afexdark-lighter">
           {t('Top 10 Recent Transactions')}
         </p>
-        <div className='flex items-center text-sm text-afexpurple-regular font-bold rounded-md gap-1 bg-afexpurple-lighter dark:bg-afexdark-verydark p-2'>
+        <div className="flex items-center text-sm text-afexpurple-regular font-bold rounded-md gap-1 bg-afexpurple-lighter dark:bg-afexdark-verydark p-2">
           {' '}
-          <Eye size='20' color='#7738DD' variant='Bulk' />
-          <Link to='/transaction'>
+          <Eye size="20" color="#7738DD" variant="Bulk" />
+          <Link to="/transaction">
             <p>{t('VIEW ALL')}</p>
           </Link>
         </div>
@@ -41,10 +41,10 @@ const RecentTransaction = () => {
       {data!?.data?.length > 0 ? (
         <Table />
       ) : (
-        <div className=' p-10 h-[500px] flex flex-col gap-10 items-center'>
+        <div className=" p-10 h-[500px] flex flex-col gap-10 items-center">
           {' '}
-          <img src={Box} alt='' className='animate-bounce h-[80px]' />
-          <p className='dark:text-textgrey-normal text-[18px] font-semibold'>
+          <img src={Box} alt="" className="animate-bounce h-[80px]" />
+          <p className="dark:text-textgrey-normal text-[18px] font-semibold">
             {t('No data to display')}
           </p>{' '}
         </div>

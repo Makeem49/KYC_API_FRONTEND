@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from 'react-query';
 
-import ActionSelect from '../../components/action-select';
+// import ActionSelect from '../../components/action-select';
 import { useDebouncedEffect } from '../../utils/functions';
 import Card from './cards';
 import ChanneSource from './channe-source';
@@ -25,7 +25,7 @@ const Dashboard = () => {
   const Decoded: any = localStorage.getItem('decoded-arrays');
   const providersArray = JSON.parse(Decoded);
   const { i18n, t } = useTranslation();
-  const [locale, setLocale] = useState<string>(i18n.language);
+  const [, setLocale] = useState<string>(i18n.language);
 
   const changeLanguage = [
     {
@@ -64,18 +64,18 @@ const Dashboard = () => {
   );
   return (
     <AnimatePresence>
-      <div className="w-full h-[100vh]  flex">
+      <div className="w-full overflow-y-scroll h-[100vh] md:flex">
         {/* Left Section */}
-        <div className="w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
+        <div className="w-full md:w-[68%] md:h-[100vh] flex flex-col gap-14 overflow-y-scroll p-2 md:p-10">
           {/* Title */}
-          <div className="flex w-full justify-between items-center">
-            <h2 className=" text-textgrey-darker dark:text-afexdark-extralight min-w-[200px] text-[18px] font-bold ">
+          <div className="flex w-full md:justify-between items-center">
+            <h2 className=" text-textgrey-darker dark:text-afexdark-extralight  text-[14px] md:text-[18px] font-bold ">
               {t('Dashboard')}
             </h2>
             {/* SWITCHER DROPDOWN */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className="flex relative w-full px-3 dark:text-textgrey-normal  justify-end gap-2 text-[14px] font-normal items-center ">
+              className="flex relative w-full px-3 dark:text-textgrey-normal  justify-end gap-2 text-[10px] md:text-[14px] font-normal items-center ">
               <p>{t('Switch Provider')} </p>
 
               <button
@@ -86,7 +86,7 @@ const Dashboard = () => {
                   setShowProviderOpt((s) => !s);
                 }}>
                 {decodedDefaultVal}
-                <ArrowDown2 size="14" color="#2B2930" variant="Bold" />
+                <ArrowDown2 size="10" color="#2B2930" variant="Bold" />
               </button>
 
               <ul
@@ -108,10 +108,10 @@ const Dashboard = () => {
                       );
                       window.location.reload();
                       queryClient.invalidateQueries();
-                      console.log(localStorage);
+
                       setShowProviderOpt((s) => !s);
                     }}
-                    className="flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap dark:text-textgrey-normal  text-base cursor-pointer m-1 py-2 px-2 capitalize">
+                    className="flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap dark:text-textgrey-normal text-[10px] md:text-[14px] cursor-pointer m-1 py-2 px-2 capitalize">
                     {' '}
                     {el.name}
                   </span>
@@ -156,28 +156,6 @@ const Dashboard = () => {
                 ))}
               </ul>
             </div>
-            <ActionSelect
-              className="hidden"
-              data={[
-                {
-                  label: 'EN',
-                  function: () => {
-                    setLocale('en');
-                    i18n.changeLanguage('en');
-                  },
-                },
-
-                {
-                  label: 'FR',
-                  function: () => {
-                    setLocale('fr');
-                    i18n.changeLanguage('fr');
-                  },
-                },
-              ]}
-              label={locale?.toUpperCase()}
-              type="button"
-            />
           </div>
           <Header />
 
@@ -203,14 +181,13 @@ const Dashboard = () => {
         </div>
 
         {/* Right Section */}
-
         <motion.div
-          className="bg-white dark:bg-afexdark-darkest flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]"
+          className="bg-white dark:bg-afexdark-darkest md:flex md:flex-col gap-14 md:p-8 md:h-[100%] overflow-y-auto w-full md:w-[32%]"
           initial={{ transform: 'translateX(100%)', opacity: 0 }}
           animate={{ transform: 'translateX(0%)', opacity: 1 }}
           exit={{ opacity: 0, transform: 'translate(0,0)' }}
           transition={{ duration: 2 }}>
-          <div className="bg-white  dark:bg-afexdark-darkest flex flex-col gap-14">
+          <div className="bg-white dark:bg-afexdark-verydark md:dark:bg-afexdark-darkest flex flex-col gap-14">
             <WalletBallance />
             <TransactionStatus />
             <ChanneSource />

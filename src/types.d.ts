@@ -42,6 +42,7 @@ type ClientList = {
   bankAccount?: null;
   balance: string;
   createdAt: string;
+  time: string | Date;
   updatedAt: string;
   deletedAt?: null;
   accountId: number;
@@ -150,6 +151,7 @@ type User = {
   group: string;
   description: null;
   name: string;
+  onBoard: string[];
 };
 
 type Permission = {
@@ -297,6 +299,7 @@ type SingleClient = {
   sessionId: string;
   ref: string;
   isPlatformSynced: null;
+  time: string | Date;
   createdAt: string;
   updatedAt: string;
   deletedAt: null;
@@ -563,6 +566,7 @@ interface TrackerBoardLists {
   noOfTransactions: number;
   lastTransactionDate: string | Date;
   createdAt: string | Date;
+  time: string | Date;
 }
 
 type Me = {

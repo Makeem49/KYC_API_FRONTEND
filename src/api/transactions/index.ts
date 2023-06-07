@@ -68,16 +68,18 @@ export async function get_all_transactions(
       (el: any) =>
         ({
           id: el.id,
-          createdAt: shortDateFormatter(el.createdAt),
-          time: timeFormatter(el.createdAt),
-          clientName: `${el.client.firstName} ${el.client.lastName}` ?? '',
+          createdAt: shortDateFormatter(el.createdAt) ?? '',
+          time: timeFormatter(el.createdAt) ?? '',
+          clientName: `${el.client?.firstName ?? ''} ${
+            el.client?.lastName ?? ''
+          }`,
           sessionId: el.sessionId.substr(0, 15) + '' ?? '',
           amount: currentNumberFormatter(el.amount) ?? '',
           transactionType: el.transactionType ?? '',
           description: el.description ?? '',
-          status: el.status ? `${t('Active')}` : `${t('Inactive')}`,
-          countryCode: checkCountryCode(el.client.countryCode) ?? '',
-          clientId: el.clientId ? el.clientId : '',
+          status: el.status ? `${t('Active')}` : `${t('Inactive')}` ?? '',
+          countryCode: checkCountryCode(el.client?.countryCode) ?? '',
+          clientId: el.clientId ? el.clientId : '' ?? '',
         } as TransactionList)
     ),
     total: resp.data.total,

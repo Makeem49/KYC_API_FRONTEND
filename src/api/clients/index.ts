@@ -1,8 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { t } from 'i18next';
 
-import { apiRequest, paramsSerializer, shortDateFormatter } from '../../utils';
-import { currentNumberFormatter } from '../../utils/formatter';
+import {
+  apiRequest,
+  paramsSerializer,
+  shortDateFormatter,
+  toast,
+} from '../../utils';
+import { currentNumberFormatter, timeFormatter } from '../../utils/formatter';
 
 export function create_client(
   data: ClientIntegration[]
@@ -61,18 +66,21 @@ export async function get_client_list(
       (el: any) =>
         ({
           id: el.id,
-          createdAt: shortDateFormatter(el.createdAt),
-          clientName: `${el.firstName} ${el.lastName}`,
-          balance: currentNumberFormatter(el.balance),
-          phoneNumber: el.phoneNumber,
-          isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}`,
-          providerName: el.providers[0].name,
-          isVerified: el.isVerified ? `${t('Verified')}` : `${t('Unverified')}`,
+          createdAt: shortDateFormatter(el.createdAt ?? ''),
+          time: timeFormatter(el.createdAt ?? ''),
+          clientName: `${el.firstName} ${el.lastName ?? ''}`,
+          balance: currentNumberFormatter(el.balance ?? ''),
+          phoneNumber: el.phoneNumber ?? '',
+          isActive: el.isActive ? `${t('Active')}` : `${t('Inactive')}` ?? '',
+          providerName: el.providers[0].name ?? '',
+          isVerified: el.isVerified
+            ? `${t('Verified')}`
+            : `${t('Unverified')}` ?? '',
           valueOfTransactions: el.valueOfTransactions
             ? el.valueOfTransactions
             : ',',
-          platformId: el.providers[0].clientProviderClient.platformId,
-          location: el.location.name,
+          platformId: el.providers[0]?.clientProviderClient?.platformId ?? '',
+          location: el.location?.name ?? '',
         } as ClientList)
     ),
     total: resp.data.total,
@@ -119,12 +127,13 @@ export async function get_unverified_client_list(
         ({
           id: el.id,
           createdAt: shortDateFormatter(el.createdAt) ?? '',
+          time: timeFormatter(el.createdAt) ?? '',
           clientName: `${el.payload.firstName} ${el.payload.lastName}` ?? '',
           phoneNumber: el.phoneNumber ?? '',
           platformId: el.platformId ?? '',
           comment: el.comment ?? '',
           status: el.status ?? '',
-          providerName: el.client_provider.name ?? '',
+          providerName: el.client_provider?.name ?? '',
         } as ClientList)
     ),
     total: resp.data.total,
@@ -143,14 +152,14 @@ export async function get_top_clients_by_search(): Promise<ClientSSS[] | null> {
 
   return resp.data.topClientsBySearch.map((el: any) => ({
     id: el.id,
-    platformId: el.platformId,
-    firstName: el.firstName,
-    lastName: el.lastName,
-    otherNames: el.otherNames,
-    phoneNumber: el.phoneNumber,
-    noOfTransactions: el.noOfTransactions,
-    valueOfTransactions: el.valueOfTransactions,
-    searchAppearances: el.searchAppearances,
+    platformId: el.platformId ?? '',
+    firstName: el.firstName ?? '',
+    lastName: el.lastName ?? '',
+    otherNames: el.otherNames ?? '',
+    phoneNumber: el.phoneNumber ?? '',
+    noOfTransactions: el.noOfTransactions ?? '',
+    valueOfTransactions: el.valueOfTransactions ?? '',
+    searchAppearances: el.searchAppearances ?? '',
   }));
 }
 
@@ -189,4 +198,33 @@ export async function get_clients_by_value_of_transactions(): Promise<
     valueOfTransactions: el.valueOfTransactions ?? '',
     searchAppearances: el.searchAppearances ?? '',
   }));
+}
+
+export async function re_on_board_clients(
+  data: Partial<User>
+): Promise<string> {
+  try {
+    const resp = await apiRequest.post('admin/clients-reonboarding', {
+      onBoard: data.onBoard,
+    });
+    if (!resp.data) return 'unable to onboard user';
+    if (resp && resp.status === 200) {
+      toast('success', 'User account created successfully');
+    }
+    return resp.data.message;
+  } catch (error: any) {
+    if (error.response) {
+      // This error was caused by a server response that returned a non 2xx status code
+      const message = error.message ? error.message : 'Unknown error';
+      toast('error', 'Onboarding unsuccessful', message);
+    } else if (error.code === 'ERR_NETWORK') {
+      // This error was caused by a network error
+
+      toast('error', 'no internet connection');
+    } else {
+      // This error was caused by something else
+      toast('error', 'Something went wrong');
+    }
+    return error;
+  }
 }

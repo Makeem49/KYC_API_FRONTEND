@@ -39,13 +39,13 @@ export async function get_admin_name(): Promise<User | null> {
 
   const el = resp.data.data;
   return {
-    id: el.id,
-    firstName: el.firstName,
-    lastName: el.lastName,
-    username: el.username,
-    name: el.name,
-    email: el.email,
-    roles: el.roles,
-    permissions: el.permissions,
+    id: el.id ?? '',
+    firstName: el.firstName ?? '',
+    lastName: el.lastName ?? '',
+    username: el.username ?? '',
+    name: el.name ?? '',
+    email: el.email ?? '',
+    roles: el.roles ?? '',
+    permissions: el.permissions ?? '',
   } as User;
 }

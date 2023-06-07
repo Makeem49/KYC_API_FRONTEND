@@ -7,7 +7,7 @@ import { Skeleton } from '@mantine/core';
 
 import DataGrid from '../../../../components/data-grid';
 import { get_client_provider_query } from '../../../../queries/client_provider';
-import { shortDateFormatter } from '../../../../utils';
+import { commaformatter, shortDateFormatter } from '../../../../utils';
 import UserAction from '../drop-down';
 
 const Table = () => {
@@ -27,7 +27,7 @@ const Table = () => {
         }}
       />
     );
-  if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
 
   const ActionComponent = ({ data }: { data: ClientProvider }) => (
     <UserAction data={data} />
@@ -35,12 +35,12 @@ const Table = () => {
 
   return (
     <>
-      <div className='bg-white dark:bg-afexdark-darkest p-3'>
+      <div className="bg-white dark:bg-afexdark-darkest p-3">
         <DataGrid
           loadMore={setCurrentPage}
           lastPage={1}
           total={data?.data.length!}
-          title='Search'
+          title="Search"
           rows={10}
           dateFilter={{ enabled: true, label: '', accessor: 'createdAt' }}
           data={data?.data!}
@@ -77,6 +77,7 @@ const Table = () => {
               name: 'Number of Clients',
               sortable: true,
               static: false,
+              row: (val) => <span>{commaformatter(val)} </span>,
             },
 
             {
@@ -85,7 +86,7 @@ const Table = () => {
               name: `${t('Api Keys')}`,
               sortable: true,
               static: false,
-              row: (val) => <span className=' underline'>{t(val)}</span>,
+              row: (val) => <span className=" underline">{t(val)}</span>,
             },
 
             {
@@ -97,13 +98,13 @@ const Table = () => {
               row: (val) => {
                 if (val === 'Active') {
                   return (
-                    <span className=' bg-afexgreen-extralight  dark:bg-afexdark-verydark  dark:text-afexgreen-regular text-afexgreen-darker rounded-lg p-2'>
+                    <span className=" bg-afexgreen-extralight  dark:bg-afexdark-verydark  dark:text-afexgreen-regular text-afexgreen-darker rounded-lg p-2">
                       {t(val)}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=' bg-afexred-extralight  dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2'>
+                    <span className=" bg-afexred-extralight  dark:bg-afexdark-verydark text-afexred-dark dark:text-afexred-regular rounded-lg p-2">
                       {t(val)}
                     </span>
                   );

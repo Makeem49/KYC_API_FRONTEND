@@ -30,15 +30,15 @@ const SingleClientCard = () => {
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
-    <div className='flex gap-4'>
+    <div className="lg:flex grid gap-4">
       {/* Card One */}
-      <div className='flex flex-col gap-8 border-textgrey-light border-b-4 bg-white dark:bg-afexdark-darkest   dark:border-afexdark-dark rounded-lg  text-[#8F8E91] text-[16px] h-[200px] p-5 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <Wallet1 size='30' color='#A982EA' variant='Bulk' />
+      <div className="flex flex-col gap-8 border-textgrey-light border-b-4 bg-white dark:bg-afexdark-darkest   dark:border-afexdark-dark rounded-lg  text-[#8F8E91] text-[16px] h-[200px] p-5 w-full">
+        <div className="flex items-center justify-between w-full">
+          <Wallet1 size="30" color="#A982EA" variant="Bulk" />
         </div>
 
         <span>{t('TOTAL BALANCE')}</span>
-        <p className='text-[40px] font-bold text-textgrey-darker  dark:text-textgrey-normal'>
+        <p className="text-[40px] font-bold text-textgrey-darker  dark:text-textgrey-normal">
           {defaultCountryCode === 'NG'
             ? '₦'
             : defaultCountryCode === 'KE'
@@ -49,13 +49,13 @@ const SingleClientCard = () => {
       </div>
 
       {/* Card Two */}
-      <div className='flex flex-col gap-8  border-textgrey-light border-b-4 bg-white  dark:bg-afexdark-darkest dark:border-afexdark-dark  rounded-lg  text-[#8F8E91] text-[16px]  h-[200px] p-5 w-full'>
-        <div className='flex items-center justify-between w-full'>
-          <Wallet1 size='30' color='#A982EA' variant='Bulk' />
+      <div className="flex flex-col gap-8  border-textgrey-light border-b-4 bg-white  dark:bg-afexdark-darkest dark:border-afexdark-dark  rounded-lg  text-[#8F8E91] text-[16px]  h-[200px] p-5 w-full">
+        <div className="flex items-center justify-between w-full">
+          <Wallet1 size="30" color="#A982EA" variant="Bulk" />
         </div>
 
         <span>{t('AVAILABLE BALANCE')}</span>
-        <p className='text-[40px] font-bold text-textgrey-darker dark:text-textgrey-normal'>
+        <p className="text-[40px] font-bold text-textgrey-darker dark:text-textgrey-normal">
           {defaultCountryCode === 'NG'
             ? '₦'
             : defaultCountryCode === 'KE'

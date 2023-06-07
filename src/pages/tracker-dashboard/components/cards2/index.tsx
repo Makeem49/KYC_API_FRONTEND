@@ -28,11 +28,11 @@ const VirtualCards = () => {
   if (isError) return <Navigate to="/login" />;
   return (
     <>
-      <div className="w-[66%] flex gap-14 child:h-[200px]">
+      <div className="md:w-[66%] grid md:grid-cols-2 lg:flex gap-6 child:h-[200px]">
         {/* Card One */}
         <NavLink to="/tracker-dashboard/no-virtual-account">
           {' '}
-          <div className="relative flex flex-col border-textgrey-light  dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-[300px] xl:w-[400px] gap-8 first:">
+          <div className="relative flex flex-col border-textgrey-light  dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 w-full md:w-[300px] xl:w-[400px] gap-8 first:">
             <div className="flex items-center justify-between w-full">
               <p className=" font-medium text-[24px] text-[#8F8E91]">
                 {t('No Virtual Account')}
@@ -61,7 +61,7 @@ const VirtualCards = () => {
 
         {/* Card Two */}
         <NavLink to="/tracker-dashboard/unsynced-withdrawal">
-          <div className="relativew-[300px] xl:w-[400px] flex flex-col border-textgrey-light  dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 gap-8 first:">
+          <div className="relative w-full md:w-[300px] xl:w-[400px] flex flex-col border-textgrey-light  dark:border-afexdark-dark dark:bg-afexdark-darkest border-b-4 bg-white rounded-lg  text-[#8F8E91] text-[24px]  p-6 gap-8 first:">
             <div className="flex items-center justify-between w-full">
               <p className=" font-medium text-[24px] text-[#8F8E91]">
                 {t('Unsynced Withdrawal')}

@@ -27,40 +27,41 @@ const TransactionValue = () => {
   const defaultCountryCode = localStorage.getItem('decoded-country-code');
 
   return (
-    <div className='flex flex-col border border-afexpurple-lighter  dark:border-afexdark-dark  rounded-lg'>
-      <div className='relative text-sm  bg-afexpurple-dark dark:bg-afexdark-darkest rounded-t text-white dark:text-textgrey-normal p-5'>
+    <div className="flex flex-col border border-afexpurple-lighter  dark:border-afexdark-dark  rounded-lg">
+      <div className="relative text-sm  bg-afexpurple-dark dark:bg-afexdark-darkest rounded-t text-white dark:text-textgrey-normal p-5">
         <img
           src={halfCirc}
-          alt=''
-          className=' dark:hidden absolute -rotate-90 left-[-7%] top-[-30%] '
+          alt=""
+          className=" dark:hidden absolute -rotate-90 left-[-7%] top-[-30%] "
         />
         <img
           src={halfCirc}
-          alt=''
-          className=' dark:hidden absolute rotate-140 left-[40%] bottom-[-65%] '
+          alt=""
+          className=" dark:hidden absolute rotate-140 left-[40%] bottom-[-65%] "
         />
 
         <img
           src={halfCirc}
-          alt=''
-          className=' dark:hidden absolute rotate-20 right-[-7%] top-[-30%] '
+          alt=""
+          className=" dark:hidden absolute rotate-20 right-[-7%] top-[-30%] "
         />
-        <p className='text-xl font-bold'>
+        <p className="text-xl font-bold">
           {t('Transaction Values')} ({t('Top Users')})
         </p>
       </div>
 
-      <div className='h-full rounded pb-2'>
+      <div className="h-full rounded pb-2">
         {topVal!?.length > 0 ? (
-          <div className='overflow-auto w-full rounded'>
-            <table className='overflow-auto w-full align-top text-[12px] xl:text-[14px]'>
-              <thead className='text-[10px] bg-[#F5F5F5] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]'>
-                <tr className=' border-b  dark:border-afexdark-dark  child:p-2 bg-afexpurple-lighter dark:bg-afexdark-darkest  child:text-[14px] dark:text-[#C1C0C2] child:font-normal child:cursor-default child:align-middle'>
+          <div className="overflow-auto w-full rounded">
+            <table className="overflow-auto w-full align-top text-[12px] xl:text-[14px]">
+              <thead className="text-[10px] bg-[#F5F5F5] rounded-t sticky top-0 text-left whitespace-nowrap z-[5]">
+                <tr className=" border-b  dark:border-afexdark-dark  child:p-2 bg-afexpurple-lighter dark:bg-afexdark-darkest  child:text-[14px] dark:text-[#C1C0C2] child:font-normal child:cursor-default child:align-middle">
                   <th>S/N</th>
                   <th>{t("Client's Name")}</th>
                   <th>{t("Client's Id")}</th>
                   <th>
                     {t('Value')}
+                    &nbsp;
                     {defaultCountryCode === 'NG'
                       ? '₦'
                       : defaultCountryCode === 'KE'
@@ -69,11 +70,11 @@ const TransactionValue = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className='text-[12px] xl:text-[14px]'>
+              <tbody className="text-[12px] xl:text-[14px]">
                 {topVal!?.map((el: any, index) => (
                   <tr
                     key={index}
-                    className=' text-left child:p-2 border-b border-dashed  dark:text-textgrey-normal dark:border-afexdark-dark  '>
+                    className=" text-left child:p-2 border-b border-dashed  dark:text-textgrey-normal dark:border-afexdark-dark  ">
                     <td>
                       <span>{topVal!.indexOf(el) + 1}.</span>
                     </td>
@@ -85,8 +86,8 @@ const TransactionValue = () => {
                       </span>
                     </td>
 
-                    <td className=' overflow-x-auto '>
-                      <span className='font-medium break-words text-[#C1C0C2]'>
+                    <td className=" overflow-x-auto ">
+                      <span className="font-medium break-words text-[#C1C0C2]">
                         {el.id}
                       </span>
                     </td>
@@ -100,10 +101,10 @@ const TransactionValue = () => {
             </table>
           </div>
         ) : (
-          <div className=' p-16 flex flex-col gap-6 items-center'>
+          <div className=" p-16 flex flex-col gap-6 items-center">
             {' '}
-            <img src={Box} alt='' className='animate-bounce h-[60px]' />
-            <p className=' text-[16px] font-semibold'>
+            <img src={Box} alt="" className="animate-bounce h-[60px]" />
+            <p className=" text-[16px] font-semibold">
               No data to display
             </p>{' '}
           </div>

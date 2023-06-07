@@ -44,14 +44,14 @@ function Transaction() {
 
   return (
     <AnimatePresence>
-      <div className="w-full h-[100vh] flex">
+      <div className="w-full overflow-y-scroll h-[100vh] md:flex">
         {/* Left Section */}
-        <div className="w-[68%] h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
+        <div className="w-full md:w-[68%] md:h-[100vh] flex flex-col gap-14 overflow-y-scroll p-2 md:p-10">
           {/* Title */}
 
-          <div className="flex w-full justify-between items-center">
+          <div className="flex w-full md:justify-between items-center">
             <div className="flex w-full flex-col">
-              <h2 className="  text-textgrey-darker dark:text-afexdark-lighter text-[18px] font-bold ">
+              <h2 className="  text-textgrey-darker dark:text-afexdark-lighter text-[14px] md:text-[18px]  font-bold ">
                 {t('Transactions')}
               </h2>
               <p className="flex items-center gap-1 text-textgrey-normal">
@@ -65,20 +65,20 @@ function Transaction() {
               </p>
             </div>
 
-            <div className="flex w-full items-center">
+            <div className="flex gap-2 w-full items-center">
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="flex relative w-full px-3 justify-end gap-2 text-[14px] dark:text-textgrey-normal font-normal items-center ">
-                <p>{t('Switch Provider')} </p>
+                className="flex relative w-full md:px-3 md:justify-end md:gap-2 text-[14px] dark:text-textgrey-normal font-normal items-center ">
+                <p className="text-[9px]">{t('Switch Provider')} </p>
                 <button
-                  className={`border flex items-center border-[#BABABA] text-textgrey-darker dark:text-afexdark-lighter p-2 rounded-lg ${
+                  className={`border flex items-center border-[#BABABA] text-textgrey-darker dark:text-afexdark-lighter p-2 text-[10px] md:text-[14px] rounded-lg ${
                     showProviderOpt ? 'border-[#BABABA]' : 'border-[#BABABA]'
                   }`}
                   onClick={() => {
                     setShowProviderOpt((s) => !s);
                   }}>
                   {decodedDefaultVal}
-                  <ArrowDown2 size="14" color="#2B2930" variant="Bold" />
+                  <ArrowDown2 size="10" color="#2B2930" variant="Bold" />
                 </button>
 
                 <ul
@@ -138,12 +138,12 @@ function Transaction() {
         {/* Right Section */}
 
         <motion.div
-          className="bg-white dark:bg-afexdark-darkest flex flex-col gap-14 p-8 h-[100%] overflow-y-auto w-[32%]"
+          className="bg-white dark:bg-afexdark-darkest flex flex-col mt-8 md:mt-0  gap-14 p-8 h-[100%] overflow-y-auto md:w-[32%]"
           initial={{ transform: 'translateX(100%)', opacity: 0 }}
           animate={{ transform: 'translateX(0%)', opacity: 1 }}
           exit={{ opacity: 0, transform: 'translate(0,0)' }}
           transition={{ duration: 2 }}>
-          <div className="flex flex-col gap-14">
+          <div className="bg-white  dark:bg-afexdark-darkest flex flex-col gap-14">
             <TransactionCount />
             <TransactionValue />
             <TopTransaction />

@@ -16,7 +16,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
-import { Sidebar } from '../components';
+import cudiLogo from '../assets/brand/Cudi-Logo.png';
+import { MobileSideBar, Sidebar } from '../components';
 import {
   ApiRequest,
   Authentication,
@@ -68,9 +69,15 @@ export function Root() {
     <AuthProvider>
       <ContextProvider>
         <ColumnProvider>
-          <div className="flex bg-white dark:bg-afexdark-verydark text-[#54565B] text-sm xl:text-base">
-            <Sidebar />
-            <div className="w-[94%] bg-hero bg-[#F5F5F5] dark:bg-afexdark-verydark">
+          <div className="md:flex bg-white dark:bg-afexdark-verydark h-[100vh] text-[#54565B] text-sm xl:text-base">
+            <div className=" z-50 p-3 flex items-center md:hidden ">
+              <MobileSideBar />
+              <img src={cudiLogo} alt="cudiLogo" className="w-20 mx-auto" />
+            </div>
+            <div className="hidden md:block w-[6%] h-[100vh]">
+              <Sidebar />
+            </div>
+            <div className="w-full md:w-[94%] h-[100vh] py-4 px-3 md:px-0 md:py-0 bg-hero bg-[#F5F5F5] dark:bg-afexdark-verydark">
               <Outlet />
             </div>
           </div>
@@ -90,7 +97,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <HomeHashtag
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         element: <Dashboard />,
@@ -101,7 +108,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <People
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         element: <Client />,
@@ -118,7 +125,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <Book1
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         label: 'Transactions',
@@ -130,7 +137,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <MoneyArchive
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         label: 'Fund Requests',
@@ -142,7 +149,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <Bank
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         label: 'Banks',
@@ -155,7 +162,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <ArrowSwapHorizontal
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         label: 'Client Providers',
@@ -173,7 +180,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <UserCirlceAdd
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         label: 'User Management',
@@ -186,7 +193,7 @@ export const ROUTES: Routes[] = [
         icon: (
           <KeyboardOpen
             variant="Bulk"
-            className="h-[16px] w-[16px] xl:w-[25px] xl:h-[25px]"
+            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         label: 'Tracker Dashboard',

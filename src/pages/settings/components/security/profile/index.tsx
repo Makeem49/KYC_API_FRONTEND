@@ -61,20 +61,56 @@ const Profile = () => {
       </div>
 
       <Modal
+        className="hidden md:block"
         size="25%"
         withCloseButton={false}
         centered
         opened={opened}
         onClose={() => setOpened((s) => !s)}>
         {/* Map Component */}
-        <div className="flex flex-col mt-0 items-center gap-4 text-center p-8">
+        <div className="flex w-full flex-col mt-0 items-center gap-4 text-center p-8">
           <BsQuestionCircle color="#E1891C" size={70} />
 
-          <p className="text-[14px] text-gray-400 rounded-md">
+          <p className="md:text-[14px] text-gray-400 rounded-md">
             Are you sure you would like to reset your Password?
           </p>
 
-          <div className="flex w-full px-10 justify-center gap-4">
+          <div className="flex w-full md:px-10 justify-center gap-4">
+            <button
+              onClick={() => {
+                mutation.mutate(user!?.email);
+
+                setOpened((s) => !s);
+              }}
+              className="w-full bg-[#7738DD] p-4 rounded-lg text-white">
+              yes, please
+            </button>
+            <button
+              onClick={() => {
+                setOpened((s) => !s);
+              }}
+              className="w-full p-4 hover:shadow rounded-lg">
+              no, return
+            </button>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        className="block md:hidden"
+        size="75%"
+        withCloseButton={false}
+        centered
+        opened={opened}
+        onClose={() => setOpened((s) => !s)}>
+        {/* Map Component */}
+        <div className="flex w-full flex-col mt-0 items-center gap-4 text-center p-8">
+          <BsQuestionCircle color="#E1891C" size={70} />
+
+          <p className="md:text-[14px] text-gray-400 rounded-md">
+            Are you sure you would like to reset your Password?
+          </p>
+
+          <div className="flex w-full md:px-10 justify-center gap-4">
             <button
               onClick={() => {
                 mutation.mutate(user!?.email);

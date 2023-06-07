@@ -43,33 +43,33 @@ const UserManagement = () => {
     <AnimatePresence>
       <SingleUserProvider>
         <div className="w-full h-[100vh] flex">
-          <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
+          <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll md:p-10">
             {/* Title */}
-            <div className="flex w-full justify-between p-5 items-center">
+            <div className="flex w-full justify-between md:p-5 items-center">
               <div className="flex w-full flex-col">
-                <h2 className=" dark:text-afexdark-lighter text-[18px] font-bold ">
+                <h2 className=" dark:text-afexdark-lighter md:text-[18px] font-bold ">
                   {t('User Management')}
                 </h2>
-                <p className="flex items-center gap-1 text-textgrey-normal">
+                <p className="flex items-center text-[9px] md:text-[14px] gap-1 text-textgrey-normal">
                   <Link className="flex items-center gap-1" to="/">
                     {' '}
-                    <ArrowLeft className=" w-5" />
+                    <ArrowLeft className="w-5" />
                     <span> {t('Home')} </span>
                   </Link>
                   <span>/</span>
-                  <span className=" text-textgrey-dark">
+                  <span className="  text-textgrey-dark">
                     {t('User Management')}
                   </span>
                 </p>
               </div>
 
-              <div className="flex w-full justify-between px-3 text-[14px] font-normal items-center ">
+              <div className="flex w-full md:justify-between gap-2 md:px-3 text-[14px] font-normal items-center ">
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="flex relative w-full px-3 justify-end gap-2 text-[14px] dark:text-textgrey-normal font-normal items-center ">
+                  className="flex relative w-full md:px-3 justify-end gap-2 text-xs md:text-[14px] dark:text-textgrey-normal font-normal items-center ">
                   <p>{t('Switch Provider')}</p>
                   <button
-                    className={`border flex items-center border-[#BABABA] text-textgrey-darker  dark:text-afexdark-lighter p-2 rounded-lg ${
+                    className={`border flex items-center border-[#BABABA] text-textgrey-darker text-[10px] dark:text-afexdark-lighter p-2 rounded-lg ${
                       showProviderOpt ? 'border-[#BABABA]' : 'border-[#BABABA]'
                     }`}
                     onClick={() => {
@@ -123,7 +123,7 @@ const UserManagement = () => {
               animate={{ transform: 'translateY(0%)', opacity: 1 }}
               exit={{ opacity: 0, transform: 'translate(0,0)' }}
               transition={{ duration: 2 }}>
-              <div className="w-full flex flex-col gap-4 p-8 bg-[#ffff]  dark:bg-afexdark-darkest rounded-lg">
+              <div className="w-full flex flex-col gap-4 md:p-8 bg-[#ffff]  dark:bg-afexdark-darkest rounded-lg">
                 {/* <TaskBar /> */}
                 <Table />
               </div>

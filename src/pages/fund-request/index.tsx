@@ -34,7 +34,7 @@ const FundRequest = () => {
   return (
     <AnimatePresence>
       <div className="w-full h-[100vh] flex">
-        <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll p-10">
+        <div className="w-full h-[100vh] flex flex-col gap-14 overflow-y-scroll md:p-10">
           {/* Title */}
           <div className="flex w-full justify-between items-center">
             <div className="flex justify-between items-center">
@@ -71,7 +71,7 @@ const FundRequest = () => {
                         'please select one or more columns to approve'
                       );
                   }}
-                  className=" bg-afexpurple-regular  text-white p-3 rounded-lg cursor-pointer hover:shadow text-base">
+                  className=" bg-afexpurple-regular  text-white p-3 rounded-lg cursor-pointer hover:shadow text-[10px] md:text-base">
                   Approve Fund Request
                 </button>
               )}
@@ -85,19 +85,19 @@ const FundRequest = () => {
             animate={{ transform: 'translateY(0%)', opacity: 1 }}
             exit={{ opacity: 0, transform: 'translate(0,0)' }}
             transition={{ duration: 2 }}>
-            <div className="w-full flex flex-col gap-4 p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg">
+            <div className="w-full flex flex-col gap-4 md:p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg">
               <Tabs defaultValue="fund-request">
                 <Tabs.List className="">
                   <Tabs.Tab
                     onClick={() => setShowButton(false)}
-                    className="text-afexdark-darkest dark:text-afexdark-light text-lg"
+                    className="text-afexdark-darkest dark:text-afexdark-light text-sm md:text-lg"
                     value="fund-request">
                     Approved Requests
                   </Tabs.Tab>
                   <Tabs.Tab
                     onClick={() => setShowButton(true)}
                     value="pending-request"
-                    className="text-afexdark-darkest dark:text-afexdark-light text-lg">
+                    className="text-afexdark-darkest dark:text-afexdark-light text-sm md:text-lg">
                     Pending Requests
                   </Tabs.Tab>
                 </Tabs.List>

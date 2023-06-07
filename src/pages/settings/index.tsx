@@ -5,12 +5,12 @@ import Security from './components/security';
 
 const Settings = () => {
   return (
-    <div className='w-full h-[100vh]  overflow-y-auto flex'>
+    <div className="w-full h-[100vh]  overflow-y-auto md:flex">
       {/* Left Section */}
-      <div className='w-[35%] h-[100vh] flex flex-col gap-10 overflow-y-auto p-10'>
+      <div className="md:w-[35%] md:h-[100vh] flex flex-col gap-10 overflow-y-auto md:p-10">
         {/* Title */}
-        <div className='flex w-full dark:text-textgrey-normal flex-col'>
-          <h2 className='dark:text-afexdark-lighter text-[18px] font-bold '>
+        <div className="flex w-full dark:text-textgrey-normal flex-col">
+          <h2 className="dark:text-afexdark-lighter text-[18px] font-bold ">
             User Profile
           </h2>
           <p>
@@ -21,7 +21,7 @@ const Settings = () => {
       </div>
 
       {/* Right Section */}
-      <div className='flex flex-col gap-14 pr-8 h-[100%] overflow-y-auto w-[65%]'>
+      <div className="flex flex-col gap-14 md:pr-8 md:h-[100%] overflow-y-auto md:w-[65%]">
         <Security />
       </div>
     </div>

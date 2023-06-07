@@ -60,14 +60,14 @@ const FailedFunding = () => {
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
             },
+            {
+              accessor: 'time',
+              hidden: false,
+              name: `${t('Time')}`,
+              sortable: true,
+              static: false,
+            },
 
-            // {
-            //   accessor: 'clientName',
-            //   hidden: false,
-            //   name: `${t('Client Name')}`,
-            //   sortable: true,
-            //   static: false,
-            // },
             {
               accessor: 'accountName',
               hidden: false,

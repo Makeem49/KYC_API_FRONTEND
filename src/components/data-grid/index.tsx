@@ -305,6 +305,7 @@ const DataGrid = ({
         setShowColOpts(false);
         setshowAllComp(false);
         setShowEntriesOpt(false);
+        setShowFilterColOpts(false);
       });
 
       return () => {
@@ -312,6 +313,7 @@ const DataGrid = ({
           setShowColOpts(false);
           setshowAllComp(false);
           setShowEntriesOpt(false);
+          setShowFilterColOpts(false);
         });
       };
     },
@@ -572,6 +574,9 @@ const DataGrid = ({
               }`}
               onClick={() => {
                 setShowEntriesOpt((s) => !s);
+                setShowColOpts(false);
+                setshowAllComp(false);
+                setShowDateCalendar(false);
               }}>
               {entries}
               <ArrowDown2 size="14" color="#2B2930" variant="Bold" />
@@ -600,7 +605,7 @@ const DataGrid = ({
 
         {/* RIGHT SIDE ACTIONS */}
 
-        <div className="text-gray-300 flex flex-1 items-center gap-2 relative justify-end">
+        <div className="hidden text-gray-300 md:flex flex-1 items-center gap-2 relative justify-end">
           {/* COLUMN VISIBILITY FILTER */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
@@ -609,7 +614,12 @@ const DataGrid = ({
                   ? ' border-afexpurple-regular  '
                   : ' border-transparent'
               }`}
-              onClick={() => setShowColOpts((s) => !s)}>
+              onClick={() => {
+                setShowColOpts((s) => !s);
+                setshowAllComp(false);
+                setShowEntriesOpt(false);
+                setShowDateCalendar(false);
+              }}>
               <RowHorizontal
                 size="16"
                 color="#7738DD"
@@ -664,7 +674,12 @@ const DataGrid = ({
                   ? ' border-afexpurple-regular  '
                   : ' border-transparent'
               }`}
-              onClick={() => setshowAllComp((s) => !s)}>
+              onClick={() => {
+                setshowAllComp((s) => !s);
+                setShowColOpts(false);
+                setShowEntriesOpt(false);
+                setShowDateCalendar(false);
+              }}>
               <Filter
                 size="16"
                 color="#7738DD"
@@ -884,7 +899,12 @@ const DataGrid = ({
           {dateFilter.enabled && (
             <button
               className="flex items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-xl focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer"
-              onClick={() => setShowDateCalendar((s) => !s)}>
+              onClick={() => {
+                setShowDateCalendar((s) => !s);
+                setShowColOpts(false);
+                setshowAllComp(false);
+                setShowEntriesOpt(false);
+              }}>
               {/* <span className='capitalize whitespace-nowrap'>
                 {dateFilter.label}{' '}
               </span> */}

@@ -12,7 +12,7 @@ const TrackerDashboard = () => {
     <AnimatePresence>
       <div className="w-full h-[100vh]  flex">
         {/* Left Section */}
-        <div className="w-full h-[100vh] flex flex-col gap-6  overflow-y-scroll p-10">
+        <div className="w-full h-[100vh] flex flex-col gap-6  overflow-y-scroll md:p-10">
           {/* Title */}
 
           <div className="flex justify-between items-center">
