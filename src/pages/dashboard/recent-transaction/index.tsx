@@ -23,7 +23,7 @@ const RecentTransaction = () => {
       />
     );
 
-  // if (isError) return <Navigate to='/login' />;
+  if (isError) return <Navigate to="/login" />;
   return (
     <div className="w-full p-8 bg-[#ffff] dark:bg-afexdark-darkest rounded-lg">
       <div className="flex justify-between mb-6 items-center text-[#000000] text-[16px] font-normal">
