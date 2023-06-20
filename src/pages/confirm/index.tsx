@@ -1,32 +1,23 @@
 import { Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import { BrifecaseCross } from 'iconsax-react';
+import { useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import cudiLogo from '../././../assets/brand/Cudi-Logo.png';
-import { activateUser } from '../../api';
-import afexLogo from '../../assets/brand/AFEX-logo.png';
-// import cuddieLogo from '../../../assets/brand/Cuddie 2.svg';
-import flap from '../../assets/brand/flap.svg';
+import { createNewUser } from '../../api';
 import { TextInput } from '../../components';
 import Button from '../../components/button';
-// import { useAuthCtx } from '../../context';
 import AuthProvider from '../../context/auth_context';
 
 const ConfirmOverlay = () => {
-  const { search } = useLocation();
-  const token = search.split('=')[1];
-
-  // const accessRoken = pathname.split('/')[2];
   const navigate = useNavigate();
 
   const queryProvider = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: activateUser,
+    mutationFn: createNewUser,
     onSuccess: () => {
       queryProvider.invalidateQueries({ queryKey: ['activate-user'] }); // To  invalidate and refetch
     },
@@ -37,28 +28,39 @@ const ConfirmOverlay = () => {
   return (
     <>
       <AuthProvider>
-        <div className='bg-afexgray dark:bg-afexdark-verydark w-screen h-screen absolute top-0 left-0 right-0 flex items-center'>
-          <div className='flex flex-1 h-full w-full flex-col space-y-14 px-20'>
-            <div className='relative p-8 '>
-              <div className='top-[30%] absolute'>
-                <img src={cudiLogo} alt='' className=' w-20 ' />
-              </div>
-
-              <h3 className='mt-20 text-center dark:text-textgrey-normal text-2xl font-semibold'>
-                Activate User Account!
-              </h3>
+        <div className=" bg-sinbadKYC-grey w-screen h-screen absolute top-0 left-0 right-0 flex items-center">
+          <div className="flex flex-1 h-full w-full flex-col space-y-14 px-20">
+            <div className="relative px-8 ">
+              <h2 className=" flex mt-4 items-center gap-1 text-sinbadKYC-white text-3xl font-bold">
+                <BrifecaseCross
+                  size="25"
+                  variant="Bold"
+                  className=" text-sinbadKYC-background"
+                />
+                SinbadKYC
+              </h2>
+              <p className="mt- lg:mt-0 xl:mt-20 text-center  text-sinbadKYC-white text-3xl font-bold">
+                Create new user
+              </p>
             </div>
 
             <Formik
-              initialValues={{ username: '', password: '', token: '' }}
+              initialValues={{
+                first_name: '',
+                last_name: '',
+                email: '',
+                password: '',
+              }}
               onSubmit={(values) => {
-                const activated = {
-                  ...values,
-                  token,
+                setLoading(true);
+                const User = {
+                  first_name: values.first_name,
+                  last_name: values.last_name,
+                  email: values.email,
+                  password: values.password,
                 };
 
-                setLoading(true);
-                mutation.mutate(activated);
+                mutation.mutate(User);
                 setLoading(false);
               }}
               validationSchema={Yup.object({
@@ -75,83 +77,85 @@ const ConfirmOverlay = () => {
                   'Passwords must match'
                 ),
               })}>
-              <Form className='w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-8 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative'>
-                <TextInput
-                  id='username'
-                  name='username'
-                  type='text'
-                  autocomplete='username'
-                  autoFocus
-                  placeholder='Username'
-                  label='Username'
-                />
-
-                <TextInput
-                  id='password'
-                  name='password'
-                  type='password'
-                  autocomplete='current-password'
-                  placeholder='Password'
-                  label='Enter new password'
-                />
-
-                <TextInput
-                  id='passwordConfirmation'
-                  name='passwordConfirmation'
-                  type='password'
-                  autocomplete=''
-                  placeholder='Password'
-                  label='Confirm Password'
-                />
-                {/* 
-              <div className='flex justify-between items-center'>
-                <div className='flex items-center space-x-4'>
-                  <input
-                    type='checkbox'
-                    id='remember'
-                    className='checkbox white'
+              {({ handleSubmit }) => (
+                <Form className="w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-4 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative">
+                  <TextInput
+                    id="first_name"
+                    name="first_name"
+                    type="text"
+                    autocomplete="text"
+                    required
+                    autoFocus
+                    placeholder="Enter name"
+                    label="Firstname"
                   />
-                  <label htmlFor='remember'>Remember me</label>
-                </div>
-              </div> */}
 
-                <div className='flex items-center justify-center flex-col pt-12 space-y-4'>
-                  <Button
-                    type='submit'
-                    text={
-                      <span className='flex items-center space-x-6'>
-                        Activate
-                        <MdKeyboardArrowRight />{' '}
-                      </span>
-                    }
-                    loading={loading}
+                  <TextInput
+                    id="last_name"
+                    name="last_name"
+                    type="text"
+                    required
+                    autocomplete="text"
+                    autoFocus
+                    placeholder="Enter name"
+                    label="Lastname"
                   />
-                  {/* <button
-                    className='bg-[#E1261C] text-white flex justify-center  font-bold px-5 p-4 rounded-lg items-center w-1/2 hover:shadow-md'
-                    type='submit'>
-                    Sign in
-                    <MdKeyboardArrowRight className='text-3xl ' />
-                  </button> */}
 
-                  <span
-                    onClick={() => {
-                      navigate('/login');
-                    }}
-                    className='text-bg-afexpurple text-red-400 font-semibole hover:underline cursor-pointer'>
-                    Log in
-                  </span>
-                </div>
-              </Form>
+                  <TextInput
+                    id="email"
+                    name="email"
+                    type="text"
+                    autocomplete="text"
+                    autoFocus
+                    required
+                    placeholder="e-mail"
+                    label="E-mail"
+                  />
+                  <div className="flex gap-3 justify-between">
+                    <TextInput
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                      autocomplete="text"
+                      placeholder="Password"
+                      label="Enter password"
+                    />
+
+                    <TextInput
+                      id="passwordConfirmation"
+                      name="passwordConfirmation"
+                      type="password"
+                      autocomplete="text"
+                      placeholder="Password"
+                      label="Confirm Password"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-center flex-col pt-5 space-y-4">
+                    <Button
+                      type="submit"
+                      text={
+                        <span className="flex items-center space-x-6">
+                          Submit
+                          <MdKeyboardArrowRight />{' '}
+                        </span>
+                      }
+                      loading={loading}
+                      onClick={handleSubmit}
+                    />
+
+                    <span
+                      onClick={() => {
+                        navigate('/login');
+                      }}
+                      className=" underline text-red-400 font-semibole hover:underline cursor-pointer">
+                      Log in
+                    </span>
+                  </div>
+                </Form>
+              )}
             </Formik>
-          </div>
-          <div
-            className='flex items-end justify-center pb-16 absolute bottom-0 w-full flex-1 h-2/3'
-            style={{
-              background: `url(${flap}) top/cover no-repeat`,
-            }}>
-            <p className='text-white flex items-center space-x-4 uppercase text-sm'>
-              Powered by <img src={afexLogo} alt='AFEX' />
-            </p>
           </div>
         </div>
       </AuthProvider>

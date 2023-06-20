@@ -3,14 +3,12 @@ import axios, { AxiosInstance } from 'axios';
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 const setAuthHeader = () => {
-  const token = localStorage.getItem('cuddie-access-token');
-  const providerId: any = localStorage.getItem('decoded-token_providers');
+  const token = localStorage.getItem('sinbad-kyc-token');
 
   if (!token) return;
 
   return {
     Authorization: `Bearer ${token}`,
-    providerId,
   };
 };
 

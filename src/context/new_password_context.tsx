@@ -39,18 +39,18 @@ const AuthProvider = (props: WithChildren) => {
     setLoading(true);
     const resp = await authenticate(username, password);
 
-    if (resp.message !== 'Authenticated') {
-      toast('error', 'Request failed!!!', 'invalid username or password');
-      setLoading(false);
+    // if (resp.message !== 'Authenticated') {
+    //   toast('error', 'Request failed!!!', 'invalid username or password');
+    //   setLoading(false);
 
-      return;
-    }
+    //   return;
+    // }
     // toast('success', 'Sucess!!', 'Login successfully');
 
     // Drop success toast
 
-    localStorage.setItem('cuddie-access-token', resp.access_token);
-    localStorage.setItem('cuddie-auth-status', 'true');
+    // localStorage.setItem('cuddie-access-token', resp.access_token);
+    // localStorage.setItem('cuddie-auth-status', 'true');
     setIsAuthenticated(true);
     setLoading(false);
     return window.location.assign('/');

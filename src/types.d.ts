@@ -26,36 +26,18 @@ type Client = {
 
 type ClientList = {
   id: number;
-  platformId: string;
-  firstName: string;
-  lastName: string;
-  otherNames: string;
-  phoneNumber: string;
-  image: string;
-  bvn: string;
-  countryCode: string;
-  idCardType: string;
-  idCardNumber: string;
-  expiry: string;
-  isVerified: boolean | string;
-  isActive: boolean | string;
-  bankAccount?: null;
-  balance: string;
-  createdAt: string;
-  time: string | Date;
-  updatedAt: string;
-  deletedAt?: null;
-  accountId: number;
-  clientProviderId?: number;
-  providerId: number;
-  providerName: string;
-  isVerified: boolean | string;
-  clientId: number;
-  valueOfTransactions: string;
-  clientName: string;
+  name: string;
+  verification_country: string;
+  available_balance: string;
   status: string;
-  comment: string;
-  location: string;
+  last_year_income: number;
+  average_monthly_income: number;
+  account_age_months: number;
+  monthly_amount: string;
+  source: number;
+  last_two_years_income: number;
+  confidence: number;
+  phone: string;
 };
 
 type ClientProvider = {
@@ -99,10 +81,11 @@ type ClientProvider = {
 };
 
 type ActivateUser = {
-  username: string;
+  first_name: string;
+  last_name: string;
   password: string;
-  token: string;
   email: string;
+  token: string;
 };
 
 type ClientIntegration = {
@@ -151,6 +134,7 @@ type User = {
   group: string;
   description: null;
   name: string;
+  phone: string;
   onBoard: string[];
 };
 
@@ -176,6 +160,9 @@ type Roles = {
 type Audit = {
   inflow: number;
   outflow: number;
+  withdrawals: number;
+  deposit: number;
+  transfer: number;
 };
 
 type LocationStats = {
@@ -285,61 +272,29 @@ type TransactionList = {
   time: string;
 };
 
-type SingleClient = {
-  id: number;
-  amount: string;
-  transactionType: string;
-  phoneNumber: string;
-  channel: string;
-  amountBefore: string;
-  amountAfter: string;
-  description: string;
-  comment: null;
-  status: string;
-  sessionId: string;
-  ref: string;
-  isPlatformSynced: null;
-  time: string | Date;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: null;
-  clientId: null;
-  client: null;
-  countryCode: string;
-};
-
 type ClientBio = {
-  accountId: number;
-  balance: string;
-  bankAccount: string;
-  bankName: string;
-  bvn: string;
-  clientProviderId: null;
-  createdAt: string;
-  expiry: null;
-  firstName: string;
   id: number;
-  idCardNumber: string;
-  idCardType: string;
-  image: null;
-  isActive: boolean;
-  isVerified: boolean;
-  lastName: string;
-  lastSearchAppearance: string;
-  locationId: number;
-  noOfTransactions: number;
-  otherNames: string;
-  location: {
-    name: string;
-  };
-  name: string;
-  phoneNumber: string;
-  platformId: string;
-  providers: {
-    map(arg0: (el: any) => any): React.ReactNode;
-    clientProviderClient: {};
-  };
-  clientProviderClient: string[];
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  is_verify: boolean;
+  bvn: string;
+  phone: string;
+  email: string;
+  address: string;
+  marital_status: string;
+  photo_id: string;
+  dob: string;
+  gender: string;
+  verification_country: string;
+  customer_id: string;
+  status: string;
+  is_invited: bolean;
+  created_at: string;
+  bank_name: string;
+  bank_id: string;
+  available_balance: string;
+  complete_onboarding: bolean;
 };
 
 type Notifications = {

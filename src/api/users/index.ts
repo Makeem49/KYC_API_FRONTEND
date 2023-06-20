@@ -125,36 +125,22 @@ export async function get_roles(): Promise<User[]> {
 /**
  *
  * @param data
- *  "username": "gemdajs221",
- *  "email": "gemdajs221@gmail.com",
- *  "firstName": "Nasirudeen",
- *  "lastName": "Lasisi",
- *  "password": "passwprd@1",
- *  "permissions": [1, 2, 5],
- *  "roles": [1],
- *  "image": "path/to/image"
+ *
+ *  "phone": "+234",
+ *
  *
  * @returns
  */
 
 export async function create_user(data: Partial<User>): Promise<string> {
   try {
-    const resp = await apiRequest.post('users', {
-      username: data.username,
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-
-      permissions: data.permissions,
-      providers: data.providers,
-      roles: data.roles,
-      image: data.image,
-      onBoard: data.onBoard,
+    const resp = await apiRequest.post('user/sms/', {
+      phone: data.phone,
     });
     if (!resp.data) return 'unable to create user';
-    if (resp && resp.status === 200) {
-      toast('success', 'User account created successfully');
-    }
+
+    toast('success', resp.data);
+
     return resp.data.message;
   } catch (error: any) {
     if (error.response) {

@@ -1,4 +1,3 @@
-import decodeJwt from 'jwt-decode';
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,13 +5,7 @@ import { authenticate } from '../api';
 
 interface AuthInterface {
   isAuthenticated: boolean;
-  login: ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => void;
+  login: ({ email, password }: { email: string; password: string }) => void;
 
   logout: () => void;
   loading: boolean;
@@ -24,70 +17,37 @@ const AuthProvider = (props: WithChildren) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const authStatus: string =
-    localStorage.getItem('cuddie-auth-status') ?? 'false';
+    localStorage.getItem('sinbad-kyc-auth-status') ?? 'false';
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     authStatus === 'true'
   );
 
   const login = async ({
-    username,
+    email,
     password,
   }: {
-    username: string;
+    email: string;
     password: string;
   }) => {
     setLoading(true);
-    const resp = await authenticate(username, password);
+    const resp = await authenticate(email, password);
     setLoading(false);
 
-    if (resp.message !== 'Authenticated') {
-      // toast('error', 'Request failed!!!', 'invalid username or password');
-      return;
-    }
+    localStorage.setItem('sinbad-kyc-token', resp.access);
+    console.log(resp.data, 'is responding');
 
-    const decodedToken: any = decodeJwt(resp.access_token);
-    decodedToken.providers.sort((a: any, b: any) => {
-      return a.id > b.id ? 1 : -1;
-    });
-
-    localStorage.setItem(
-      'decoded-token_providers',
-      decodedToken.providers[0].id
-    );
-
-    localStorage.setItem(
-      'decoded-token_providers_name',
-      decodedToken.providers[0].name
-    );
-
-    localStorage.setItem(
-      'decoded-country-code',
-      decodedToken.providers[0].countryCode
-    );
-
-    localStorage.setItem('decoded-user-permissions', decodedToken.permissions);
-
-    localStorage.setItem('default_lang', 'EN');
-
-    const myArrayString = JSON.stringify(decodedToken);
-    localStorage.setItem('decoded-arrays', myArrayString);
-
-    localStorage.setItem('cuddie-access-token', resp.access_token);
-
-    localStorage.setItem('cuddie-auth-status', 'true');
+    localStorage.setItem('sinbad-kyc-auth-status', 'true');
     setIsAuthenticated(true);
     setLoading(false);
-    return window.location.assign('/');
-    // UseInvalidateAll(decodedToken.providers[0].id)
 
-    // console.log(username, password);
+    return window.location.assign('/');
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    // localStorage.removeItem('permissions');
-    localStorage.removeItem('cuddie-auth-status');
+
+    localStorage.removeItem('sinbad-kyc-auth-status');
     setIsAuthenticated(false);
 
     navigate('/login');

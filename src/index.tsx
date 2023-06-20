@@ -6,12 +6,10 @@ import ReactDOM from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider } from 'react-router-dom';
-import { Configuration } from 'rollbar';
 
 // import ContextProvider from './context';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-import { ErrorBoundary, Provider } from '@rollbar/react';
 
 import { router } from './context/routes';
 import { ThemeProvider, useThemeCtx } from './context/theme_context';
@@ -48,25 +46,15 @@ function App() {
   );
 }
 
-const rollbarConfig: Configuration = {
-  accessToken: process.env.REACT_APP_ROLLBAR_CLIENT_TOKEN,
-  enabled: process.env.NODE_ENV === 'production',
-  environment: process.env.NODE_ENV,
-};
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
   <React.StrictMode>
-    <Provider config={rollbarConfig}>
-      <ErrorBoundary>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </ErrorBoundary>
-    </Provider>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

@@ -10,7 +10,7 @@ import { ColumnProvider, useColumnCtx } from './column_context';
 const ContextProvider = (props: WithChildren) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthCtx();
-  const token = localStorage.getItem('cuddie-access-token');
+  const token = localStorage.getItem('sinbad-kyc-token');
 
   let idleTimeout: any;
   useIdleTimer({
@@ -38,7 +38,7 @@ const ContextProvider = (props: WithChildren) => {
 
   useEffect(() => {
     if (!isAuthenticated || !token) {
-      return navigate('login');
+      return;
     }
     //eslint-disable-next-line
   }, [isAuthenticated]);

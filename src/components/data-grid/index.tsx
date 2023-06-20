@@ -14,7 +14,6 @@ import { useReactToPrint } from 'react-to-print';
 
 import { Popover } from '@mantine/core';
 
-import Box from '../../assets/images/box.png';
 import {
   addToObj,
   exportToCSV,
@@ -71,6 +70,7 @@ interface ActionComponentProps {
 // Table properties (Optional)
 interface DataGridOptionalProps {
   title?: string;
+  tableTitle?: string;
   withGlobalFilters?: boolean;
   filterKeys?: string[];
   withHeaderActionComponent?: boolean;
@@ -544,13 +544,15 @@ const DataGrid = ({
         </table>
       </div>
       {/* Top Task Bar */}
-      <div className="flex justify-between items-center border-[#F3F3F3] dark:border-wdark-300 relative">
-        <h2 className="text-xl font-bold ml-3 capitalize">{''}</h2>
+      <div className=" hidden  justify-between items-center relative">
+        <h2 className="text-xl pb-5 text-textgrey-normal font-bold ml-3 capitalize">
+          {props.tableTitle}
+        </h2>
 
         <div className="flex items-center space-x-5 relative text-base"></div>
       </div>
 
-      <div className="flex items-center">
+      <div className="hidden items-center">
         <div className="flex gap-1 items-center">
           {/* GENERAL SEARCH */}
           <div className="relative flex items-center w-72 2xl:w-96 ">
@@ -951,8 +953,8 @@ const DataGrid = ({
           </style>
           <div className="h-[100%] table-auto overflow-auto w-full my-3">
             <table className="overflow-auto p-5 w-full mb-10 align-top">
-              <thead className="sticky top-0 text-left whitespace-nowrap bg-white dark:bg-afexdark-darkest  z-[5]">
-                <tr className="child:px-3 border-b dark:border-[#333233] child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize">
+              <thead className="sticky top-0 text-left whitespace-nowrap bg-sinbadKYC-background/80 rounded-lg  z-[5]">
+                <tr className="child:px-3 border-b  child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize">
                   {props?.withCheck && (
                     <th className="align-middle w-8 ">
                       <input
@@ -989,7 +991,7 @@ const DataGrid = ({
               </thead>
 
               {data!?.length > 0 ? (
-                <tbody className="bg-white dark:bg-afexdark-darkest ">
+                <tbody className="bg-white ">
                   {data?.map((row: any, index) => (
                     <tr
                       onClick={
@@ -1003,7 +1005,7 @@ const DataGrid = ({
                           : undefined
                       }
                       key={index}
-                      className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter  dark:hover:bg-afexdark-darker dark:bg-afexdark-darkest child:text-ellipsis child:text-[#49474D] dark:child:text-textgrey-normal  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
+                      className={`child:py-6 child:px-3 child:space-y-2 child:text-ellipsis child:text-[#49474D] dark:child:text-textgrey-normal  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
                       {props?.withCheck && (
                         <td onClick={(e) => e.stopPropagation()}>
                           <input
@@ -1074,12 +1076,11 @@ const DataGrid = ({
                   ))}
                 </tbody>
               ) : (
-                <tbody className="bg-white dark:bg-afexdark-darkest flex justify-center ">
+                <tbody className="bg-white flex justify-center ">
                   {' '}
                   <tr className="absolute gap-2 top-[50%] left-[45%] flex flex-col items-center w-40">
-                    <img src={Box} alt="" className="animate-bounce h-[50px]" />
                     <p className=" text-[16px] font-semibold dark:text-textgrey-normal">
-                      {t('No data to display')}
+                      {t('Nothing to display')}
                     </p>{' '}
                   </tr>
                 </tbody>

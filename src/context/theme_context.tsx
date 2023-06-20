@@ -34,7 +34,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       setTheme(isStored as 'dark' | 'light');
     } else {
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        setTheme('dark');
+        setTheme('light');
       } else {
         setTheme('light');
       }

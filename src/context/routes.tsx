@@ -1,13 +1,4 @@
-import {
-  ArrowSwapHorizontal,
-  Bank,
-  Book1,
-  HomeHashtag,
-  KeyboardOpen,
-  MoneyArchive,
-  People,
-  UserCirlceAdd,
-} from 'iconsax-react';
+import { BrifecaseCross, HomeHashtag, Profile2User } from 'iconsax-react';
 import { ReactNode, useEffect } from 'react';
 import {
   Outlet,
@@ -16,30 +7,16 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
-import cudiLogo from '../assets/brand/Cudi-Logo.png';
 import { MobileSideBar, Sidebar } from '../components';
 import {
-  ApiRequest,
   Authentication,
-  Banks,
-  Client,
-  ClientProvider,
+  ClientProfile,
   ConfirmOverlay,
   Dashboard,
   ErrorElement,
-  FailedFunding,
-  FundRequest,
-  NoVirtualAccount,
-  Settings,
-  SingleClient,
-  TrackerDashboard,
-  Transaction,
-  UnsyncedWalletTransfer,
-  UnsyncedWithdrawal,
-  UserManagement,
+  IDENTITY,
 } from '../pages';
 import ForgotPassword from '../pages/forgotPassword';
-import ResetPassword from '../pages/resetPassword';
 import AuthProvider from './auth_context';
 import { ColumnProvider } from './column_context';
 import ContextProvider from '.';
@@ -60,7 +37,7 @@ export function Root() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const isAuthorised = localStorage.getItem('cuddie-access-token');
+    const isAuthorised = localStorage.getItem('sinbad-kyc-token');
     if (!isAuthorised) navigate('/login');
     // throw new Error('This is an error message');
   }, [navigate, pathname]);
@@ -69,15 +46,22 @@ export function Root() {
     <AuthProvider>
       <ContextProvider>
         <ColumnProvider>
-          <div className="md:flex bg-white dark:bg-afexdark-verydark h-[100vh] text-[#54565B] text-sm xl:text-base">
-            <div className=" z-50 p-3 flex items-center md:hidden ">
+          <div className="md:flex bg-sinbadKYC-background  h-[100vh] text-[#54565B] text-sm xl:text-base">
+            <div className="w-full fixed z-50 p-3 flex items-center bg-sinbadKYC-grey md:hidden ">
               <MobileSideBar />
-              <img src={cudiLogo} alt="cudiLogo" className="w-20 mx-auto" />
+              <h2 className="absolute flex items-center gap-1 left-[30%] font-bold text-2xl text-sinbadKYC-background">
+                <BrifecaseCross
+                  size="25"
+                  variant="Bold"
+                  className=" text-sinbadKYC-background"
+                />
+                SinbadKYC
+              </h2>
             </div>
-            <div className="hidden md:block w-[6%] h-[100vh]">
+            <div className="hidden md:block w-[15%] bg-sinbadKYC-grey shadow rounded-r-xl h-[100vh]">
               <Sidebar />
             </div>
-            <div className="w-full md:w-[94%] h-[100vh] py-4 px-3 md:px-0 md:py-0 bg-hero bg-[#F5F5F5] dark:bg-afexdark-verydark">
+            <div className="w-full md:w-[85%] h-[100vh] py-4 px-3 md:px-0 md:py-0">
               <Outlet />
             </div>
           </div>
@@ -96,137 +80,29 @@ export const ROUTES: Routes[] = [
         path: '/',
         icon: (
           <HomeHashtag
-            variant="Bulk"
+            variant="Bold"
             className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         element: <Dashboard />,
         label: 'Dashboard',
       },
+
       {
-        path: 'client',
-        icon: (
-          <People
-            variant="Bulk"
-            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
-          />
-        ),
-        element: <Client />,
-        permissions: ['View Clients'],
-        label: 'Clients',
-      },
-      {
-        path: 'client/:clientId',
-        element: <SingleClient />,
-        permissions: ['View Client Profile'],
-      },
-      {
-        path: 'transaction',
-        icon: (
-          <Book1
-            variant="Bulk"
-            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
-          />
-        ),
-        label: 'Transactions',
-        permissions: ['View Client Transactions'],
-        element: <Transaction />,
-      },
-      {
-        path: 'fund-request',
-        icon: (
-          <MoneyArchive
-            variant="Bulk"
-            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
-          />
-        ),
-        label: 'Fund Requests',
-        permissions: ['View Fund Wallet Requests'],
-        element: <FundRequest />,
-      },
-      {
-        path: 'banks',
-        icon: (
-          <Bank
-            variant="Bulk"
-            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
-          />
-        ),
-        label: 'Banks',
-        permissions: ['Sync Banks'],
-        element: <Banks />,
+        path: '/:clientId',
+        element: <ClientProfile />,
       },
 
       {
-        path: 'client-provider',
+        path: '/identity',
         icon: (
-          <ArrowSwapHorizontal
-            variant="Bulk"
+          <Profile2User
+            variant="Bold"
             className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
-        label: 'Client Providers',
-        permissions: ['View Client Provider'],
-        element: <ClientProvider />,
-      },
-
-      {
-        path: 'client-provider/api-keys/:providerId',
-        element: <ApiRequest />,
-        permissions: ['View Client Provider'],
-      },
-      {
-        path: 'user-management',
-        icon: (
-          <UserCirlceAdd
-            variant="Bulk"
-            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
-          />
-        ),
-        label: 'User Management',
-        permissions: ['View Users'],
-        element: <UserManagement />,
-      },
-
-      {
-        path: 'tracker-dashboard',
-        icon: (
-          <KeyboardOpen
-            variant="Bulk"
-            className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
-          />
-        ),
-        label: 'Tracker Dashboard',
-        permissions: ['View System Logs'],
-        element: <TrackerDashboard />,
-      },
-
-      {
-        path: 'tracker-dashboard/failed-funding',
-        element: <FailedFunding />,
-        permissions: ['View System Logs'],
-      },
-      {
-        path: 'tracker-dashboard/no-virtual-account',
-        element: <NoVirtualAccount />,
-        permissions: ['View System Logs'],
-      },
-
-      {
-        path: 'tracker-dashboard/unsynced-wallet-transfer',
-        element: <UnsyncedWalletTransfer />,
-        permissions: ['View System Logs'],
-      },
-
-      {
-        path: 'tracker-dashboard/unsynced-withdrawal',
-        element: <UnsyncedWithdrawal />,
-        permissions: ['View System Logs'],
-      },
-
-      {
-        path: 'settings',
-        element: <Settings />,
+        element: <IDENTITY />,
+        label: 'Identity',
       },
     ],
   },
@@ -235,16 +111,12 @@ export const ROUTES: Routes[] = [
     element: <Authentication />,
   },
   {
-    path: 'activate-account',
+    path: 'create-account',
     element: <ConfirmOverlay />,
   },
   {
     path: 'forgot-password',
     element: <ForgotPassword />,
-  },
-  {
-    path: 'reset-password',
-    element: <ResetPassword />,
   },
 ];
 
@@ -258,11 +130,7 @@ export const ROUTES: Routes[] = [
 //       id: 1,
 //     },
 //   ],
-//   permissions: [
-//     { id: 1, name: 'View Clients' },
-//     { id: 2, name: 'View Fund Wallet Requests' },
-//     { id: 2, name: 'View Client Provider' },
-//   ],
+//   permissions: [{ id: 2, name: 'View Client Provider' }],
 //   providers: [
 //     {
 //       countryCode: 'NG',

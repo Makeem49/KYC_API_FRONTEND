@@ -7,8 +7,8 @@ module.exports = withMT({
   darkMode: 'class',
   theme: {
     fontFamily: {
-      body: ['Switzer', 'sans-serif'],
-      display: ['Switzer', 'sans-serif'],
+      body: ['Open Sans', 'sans-serif'],
+      display: ['Open Sans', 'sans-serif'],
     },
     extend: {
       rotate: {
@@ -51,13 +51,15 @@ module.exports = withMT({
       },
 
       colors: {
-        afexpurple: {
-          darker: '#44207E',
-          dark: '#54289D',
-          DEFAULT: '#7737dd',
-          regular: '#7738DD',
-          light: '#C5A9F0',
-          lighter: '#F1EBFC',
+        sinbadKYC: {
+          background: '#ebf0fa',
+          orange: '#f35e5d',
+          purple: '#e9108c',
+          grey: '#415b72',
+          normalGrey: '#5e7488',
+          darkGrey: '#18213f',
+          lightGrey: '#a2adb8',
+          white: '#ffffff',
         },
 
         afexgreen: {
@@ -87,8 +89,8 @@ module.exports = withMT({
           extralight: '#FDEEEE',
         },
         afexdark: {
-          darkest: '#1A171F',
-          verydark: '#2b2930',
+          darkest: '#fffff',
+          verydark: '#ebf0fa',
           darker: '#2B2930',
           dark: '#5D5B60',
           regular: '#49474D',

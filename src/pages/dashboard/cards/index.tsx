@@ -1,240 +1,73 @@
-import { Chart, Receipt, UserSquare, Wallet1 } from 'iconsax-react';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
-
-import { Skeleton } from '@mantine/core';
-
-import greenDot from '../../../assets/images/Dot.svg';
-import redDot from '../../../assets/images/_Dot.svg';
-import { Change } from '../../../components';
-import { useGetClientList } from '../../../queries';
-import { get_client_stats_query } from '../../../queries/clients_stats';
-import { get_dashboard_stats_query } from '../../../queries/dash_board';
-import { calculatePercentageChange } from '../../../utils';
-import { commaformatter } from '../../../utils';
+import { UserSquare } from 'iconsax-react';
 
 const Card = () => {
-  const {
-    data: list,
-    isLoading,
-    isError,
-  } = useQuery(get_dashboard_stats_query());
-  // const [isHovered, setIsHovered] = useState(false);
+  const Activities = [
+    {
+      id: 1,
+      name: 'Waiting',
+      number: 100,
+      icon: (
+        <UserSquare
+          variant="Bold"
+          className="md:h-[30px] md:w-[30px] bg-[#f2f5eb] text-[#c2cda0] p-2 rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
+        />
+      ),
+    },
 
-  // const handleHover = () => {
-  //   setIsHovered(!isHovered);
-  // };
+    {
+      id: 2,
+      name: 'Pending',
+      number: 100,
+      icon: (
+        <UserSquare
+          variant="Bold"
+          className="md:h-[30px] md:w-[30px] bg-[#fbf3ec] p-2 text-[#e1b778] rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
+        />
+      ),
+    },
 
-  const { data } = useQuery(get_client_stats_query());
-  const { data: total_clients } = useGetClientList();
-  const { t } = useTranslation();
+    {
+      id: 3,
+      name: 'Approved',
+      number: 100,
+      icon: (
+        <UserSquare
+          variant="Bold"
+          className="md:h-[30px] md:w-[30px] bg-[#ebf4f1] text-[#85b9ab] p-2 rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
+        />
+      ),
+    },
 
-  if (isLoading)
-    return (
-      <Skeleton
-        height={150}
-        style={{
-          borderRadius: '25px',
-        }}
-      />
-    );
-
-  if (isError) return <p>Error!!!</p>;
-
-  const inactive = data;
-
-  const inactiveClients =
-    (inactive!?.sectionOne?.totalClients?.today ?? 0) -
-    (inactive!?.sectionOne?.totalClients?.previousDay ?? 0);
-
-  const defaultCountryCode = localStorage.getItem('decoded-country-code');
-
+    {
+      id: 4,
+      name: 'Rejected',
+      number: 100,
+      icon: (
+        <UserSquare
+          variant="Bold"
+          className="md:h-[30px] md:w-[30px] bg-[#fee3e2] text-[#f75252] p-2 rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
+        />
+      ),
+    },
+  ];
   return (
-    <div className="grid md:grid-cols-2 lg:flex gap-6 child:h-[134px]">
+    <div className="grid md:grid-cols-2 lg:flex gap-6">
       {/* Card One */}
-      <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark  border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
-        <div className="flex items-center justify-between w-full">
-          <p className=" font-normal text-textgrey-normal">
-            {t('TOTAL CLIENTS')}
-          </p>
-          <UserSquare size="25" color="#A982EA" variant="Bulk" />
-        </div>
-        <div className="w-full flex flex-col gap-2 mb-3 mt-6">
-          <p className=" flex items-center gap-1 text-[18px] 2xl:text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
-            {commaformatter(total_clients!?.total ?? 0)}
-          </p>
-        </div>
-
-        <div className="absolute bottom-[-10%]  gap-2 flex item-center justify-items-center w-full">
-          <p className="flex items-center gap-1 w-[45%]  text-afexgreen-regular bg-[#E7F9F0] dark:bg-afexdark-darker px-1 rounded-lg">
-            <img src={greenDot} alt="green" className="w-[6px]" />
-            {t('Active')}:{' '}
-            <span>
-              {commaformatter(data!?.sectionOne?.activeClients?.today ?? 0)}
-            </span>
-          </p>
-          <p className="flex items-cente w-[45%] gap-1 text-afexred-regular bg-[#FDEEEE] dark:bg-afexdark-darker px-1 rounded-lg">
-            <img src={redDot} alt="red" className="w-[6px]" />
-            {t('Inactive')}: <span>{inactiveClients}</span>
-          </p>
-        </div>
-      </div>
-
-      {/* Card Two */}
-      <div className="relative flex flex-col  border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
-        <div className="flex items-center justify-between w-full">
-          <p className=" font-normal text-textgrey-normal">
-            {t('TOTAL TRANSACTIONS')}
-          </p>
-          <Wallet1 size="25" color="#A982EA" variant="Bulk" />
-        </div>
-        <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-          <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] font-bold text-textgrey-dark dark:text-textgrey-normal">
-            {commaformatter(list?.sectionOne?.transactions?.today ?? 0)}
-            <Change
-              value={calculatePercentageChange(
-                list?.sectionOne?.transactions?.today ?? 0,
-                list?.sectionOne?.transactions?.previousDay ?? 0
-              )}
-            />
-          </p>
-          <span>{t('vs previous day')}</span>
-        </div>
-      </div>
-
-      {/* Card Three */}
-
-      {/* TOTAL VALUE */}
-      <div className="relative h-full flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
-        <div className="flex items-center justify-between w-full">
-          <p className=" font-normal text-textgrey-normal">
-            {t('TOTAL VALUE')}
-          </p>
-          <Receipt size="25" color="#A982EA" variant="Bulk" />
-        </div>
-        <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-          <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
-            {defaultCountryCode === 'NG'
-              ? '₦'
-              : defaultCountryCode === 'KE'
-              ? 'KES'
-              : 'UGX'}
-            <span> {commaformatter(list?.sectionOne?.values?.today ?? 0)}</span>
-            <Change
-              value={calculatePercentageChange(
-                list!.sectionOne?.transactions?.today ?? 0,
-                list!?.sectionOne?.values?.previousDay ?? 0
-              )}
-            />
-          </p>
-          <span>{t('vs previous day')}</span>
-        </div>
-      </div>
-      {/* <>
-        {!isHovered ? (
-          <div onMouseEnter={handleHover}>
-            
-            <div className="relative h-full flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
-              <div className="flex items-center justify-between w-full">
-                <p className=" font-normal text-textgrey-normal">
-                  {t('TOTAL VALUE')}
-                </p>
-                <Receipt size="25" color="#A982EA" variant="Bulk" />
-              </div>
-              <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-                <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
-                  {defaultCountryCode === 'NG'
-                    ? '₦'
-                    : defaultCountryCode === 'KE'
-                    ? 'KES'
-                    : 'UGX'}
-                  <span>
-                    {' '}
-                    {commaformatter(list?.sectionOne?.values?.today ?? 0)}
-                  </span>
-                  <Change
-                    value={calculatePercentageChange(
-                      list!.sectionOne.transactions.today ?? 0,
-                      list!?.sectionOne?.values?.previousDay ?? 0
-                    )}
-                  />
-                </p>
-                <span>{t('vs previous day')}</span>
-              </div>
-            </div>
+      {Activities.map((el) => (
+        <div
+          key={el.id}
+          className="flex items-center shadow bg-white rounded-lg p-3 w-full">
+          <div className="flex flex-col gap-2  w-full">
+            <p className=" font-normal text-base text-sinbadKYC-grey">
+              {el.name}
+            </p>
+            <p className=" text-sinbadKYC-grey font-bold text-2xl">
+              {el.number}
+            </p>
           </div>
-        ) : (
-          <div onMouseLeave={handleHover}>
-         
-            <div className="relative flex flex-col border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-2 lg:w-[140px] xl:w-[200px] 2xl:w-[250px] ">
-              <div className="flex items-center justify-between w-full">
-                <p className=" font-normal text-textgrey-normal">
-                  {t('TOTAL CREDIT')}
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-                <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
-                  {defaultCountryCode === 'NG'
-                    ? '₦'
-                    : defaultCountryCode === 'KE'
-                    ? 'KES'
-                    : 'UGX'}
-                  <span>
-                    {' '}
-                    {commaformatter(list?.sectionOne?.values?.today ?? 0)}
-                  </span>
-                </p>
-              </div>
-              <div className="flex items-center justify-between w-full">
-                <p className=" font-normal text-textgrey-normal">
-                  {t('TOTAL DEBIT')}
-                </p>
-              </div>
-
-              <div className="w-full flex flex-col gap-2 mb-3 mt-2">
-                <p className="flex items-center gap-1 text-[18px] 2xl:text-[22px] w-full font-bold  text-textgrey-dark dark:text-textgrey-normal">
-                  {defaultCountryCode === 'NG'
-                    ? '₦'
-                    : defaultCountryCode === 'KE'
-                    ? 'KES'
-                    : 'UGX'}
-                  <span>
-                    {' '}
-                    {commaformatter(list?.sectionOne?.values?.today ?? 0)}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </> */}
-
-      {/* Card Four */}
-      <div className="relative flex flex-col  border-[#DECFF7] dark:border-afexdark-dark border-b-4 bg-white dark:bg-afexdark-darkest rounded-lg text-[#8F8E91] text-[12px] p-3 w-full">
-        <div className="flex items-center justify-between w-full">
-          <p className=" font-normal text-textgrey-normal">
-            {t('CHANNEL SOURCE')}
-          </p>
-          <Chart size="25" color="#A982EA" variant="Bulk" />
+          <span> {el.icon}</span>
         </div>
-        <div className="flex flex-col gap-2 mb-3 mt-2">
-          <p className=" text-afexgreen-regular bg-[#E7F9F0] dark:bg-afexdark-verydark  px-2 rounded-md">
-            USD:{' '}
-            <span>
-              {commaformatter(list!?.sectionOne?.channels?.today?.ussd)}|{' '}
-              {commaformatter(list!?.sectionOne?.channels?.previousDay?.ussd)}
-            </span>
-          </p>
-          <p className=" text-afexred-regular bg-[#FDEEEE] dark:bg-afexdark-verydark px-2 rounded-md">
-            {t('Others')}:{' '}
-            <span>
-              {commaformatter(list!?.sectionOne?.channels?.today?.others)} |{' '}
-              {commaformatter(list!?.sectionOne?.channels?.previousDay?.others)}
-            </span>
-          </p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
