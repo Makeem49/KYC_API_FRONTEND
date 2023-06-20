@@ -1,11 +1,21 @@
 import { UserSquare } from 'iconsax-react';
 
+import { useGetWaitList } from '../../../queries';
+import { useGetApprovedtList } from '../../../queries';
+import { useGetClientList } from '../../../queries';
+import { useGetRejectedtList } from '../../../queries';
+
 const Card = () => {
+  const { data: pending } = useGetClientList();
+  const { data: approve } = useGetApprovedtList();
+  const { data: rejected } = useGetRejectedtList();
+  const { data: waitlist } = useGetWaitList();
+
   const Activities = [
     {
       id: 1,
       name: 'Waiting',
-      number: 100,
+      number: waitlist?.data.length,
       icon: (
         <UserSquare
           variant="Bold"
@@ -17,7 +27,7 @@ const Card = () => {
     {
       id: 2,
       name: 'Pending',
-      number: 100,
+      number: pending?.data.length,
       icon: (
         <UserSquare
           variant="Bold"
@@ -29,7 +39,7 @@ const Card = () => {
     {
       id: 3,
       name: 'Approved',
-      number: 100,
+      number: approve?.data.length,
       icon: (
         <UserSquare
           variant="Bold"
@@ -41,7 +51,7 @@ const Card = () => {
     {
       id: 4,
       name: 'Rejected',
-      number: 100,
+      number: rejected?.data.length,
       icon: (
         <UserSquare
           variant="Bold"

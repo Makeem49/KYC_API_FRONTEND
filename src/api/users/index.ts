@@ -137,7 +137,7 @@ export async function create_user(data: Partial<User>): Promise<string> {
     const resp = await apiRequest.post('user/sms/', {
       phone: data.phone,
     });
-    if (!resp.data) return 'unable to create user';
+    if (!resp.data) return 'unable to create client';
 
     toast('success', resp.data);
 

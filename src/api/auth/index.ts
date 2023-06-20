@@ -54,9 +54,11 @@ export async function createNewUser(
       password: data.password,
     });
 
-    if (!resp.data) return 'Bad request. Unable to activate account';
-    if (resp && resp.status === 200) {
-      toast('success', 'User account created successfully');
+    if (resp && resp.status === 400) {
+      toast('error', resp.data.email[0]);
+    }
+    if (resp && resp.status === 201) {
+      toast('success', resp.data.email[0]);
     }
 
     return resp.data.message;
@@ -64,7 +66,8 @@ export async function createNewUser(
     if (error.response) {
       // This error was caused by a server response that returned a non 2xx status code
       const message = error.message ? error.message : 'Unknown error';
-      toast('error', 'Activation failed', message);
+      toast('error', 'Activation failed');
+      return message;
     } else if (error.code === 'ERR_NETWORK') {
       // This error was caused by a network error
 

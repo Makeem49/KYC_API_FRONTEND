@@ -1,7 +1,6 @@
 import { Form, Formik } from 'formik';
 import { BrifecaseCross } from 'iconsax-react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { TextInput } from '../../../components';
@@ -10,8 +9,6 @@ import { useAuthCtx } from '../../../context';
 
 const LoginOverlay = () => {
   const { login, loading } = useAuthCtx();
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -85,7 +82,7 @@ const LoginOverlay = () => {
                     loading={loading}
                   />
 
-                  <p className="flex gap-2">
+                  {/* <p className="flex gap-2">
                     Dont have an account?
                     <span
                       onClick={() => {
@@ -94,34 +91,12 @@ const LoginOverlay = () => {
                       className="text-bg-afexpurple text-red-400 font-semibole hover:underline cursor-pointer">
                       Register here
                     </span>
-                  </p>
+                  </p> */}
                 </div>
               </Form>
             </div>
           </Formik>
         </div>
-
-        {/* <motion.div
-            className="flex items-end justify-center absolute bottom-0 w-full flex-1 h-2/4 lg:h-2/3"
-            style={{
-              background: `url(${flap}) top/cover no-repeat`,
-            }}
-            initial={{ transform: 'translateY(100%)', opacity: 0 }}
-            animate={{ transform: 'translateY(0%)', opacity: 1 }}
-            exit={{ opacity: 0, transform: 'translate(0,0)' }}
-            transition={{ duration: 2 }}>
-            <p className="text-white p-6 flex items-center space-x-4 uppercase text-sm">
-              Powered by <img src={afexLogo} alt="AFEX" />
-            </p>
-          </motion.div> */}
-
-        {/* <motion.div
-            initial={{ opacity: 0, transform: '(translateY(100%)' }}
-            animate={{ opacity: 1, transform: 'translateY(0)' }}
-            className='flex items-end justify-center pb-16 absolute bottom-0 w-full flex-1 h-2/3'
-            style={{
-              background: `url(${flap}) top/cover no-repeat`,
-            }}></motion.div> */}
       </div>
     </>
   );

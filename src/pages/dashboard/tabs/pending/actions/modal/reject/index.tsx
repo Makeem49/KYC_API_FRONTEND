@@ -13,7 +13,6 @@ interface AddUserProps extends ModalControllerType {
 const ApproveUser = ({ data, close, show }: AddUserProps) => {
   const queryClient = useQueryClient();
 
-  console.log(data, 'data');
   const mutation = useMutation({
     mutationFn: (payload: { id: number; status: string }) =>
       approve_user(payload.id, payload.status),

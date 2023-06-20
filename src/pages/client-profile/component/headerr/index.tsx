@@ -11,9 +11,8 @@ const ClientHeader = () => {
 
   const { data } = useQuery(get_a_client_query(parseInt(clientId, 10)));
 
-  console.log(data, 'herree');
   return (
-    <div className=" md:w-full mt-16 flex flex-col gap-4 px-40">
+    <div className=" md:w-full mt-16 flex flex-col gap-4 lg:px-40">
       {/* FIrst Card */}
       <div className=" bg-white  dark:bg-afexdark-darkest rounded-lg p-8">
         <div className="w-full py-4 gap-2 flex flex-col justify-center items-center text-[14px] border-dashed bg-sinbadKYC-grey rounded-lg dark:border-afexdark-dark border-b">

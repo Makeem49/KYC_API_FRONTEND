@@ -30,7 +30,7 @@ const UserAction = ({ data }: { data: ClientList }) => {
         <Popover.Dropdown className="child:cursor-pointer rounded-lg hover:child:bg-afexpurple-lighter child:p-2">
           <NavLink
             className="text-[14px] text-sinbadKYC-grey font-bold rounded-md"
-            to={'#'}>
+            to={`/${data.id}`}>
             View
           </NavLink>
 

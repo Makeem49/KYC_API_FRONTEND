@@ -35,7 +35,6 @@ const AuthProvider = (props: WithChildren) => {
     setLoading(false);
 
     localStorage.setItem('sinbad-kyc-token', resp.access);
-    console.log(resp.data, 'is responding');
 
     localStorage.setItem('sinbad-kyc-auth-status', 'true');
     setIsAuthenticated(true);
