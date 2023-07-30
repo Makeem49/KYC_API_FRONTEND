@@ -1,4 +1,4 @@
-import { BrifecaseCross, HomeHashtag, Profile2User } from 'iconsax-react';
+import { HomeHashtag, Setting2 } from 'iconsax-react';
 import { ReactNode, useEffect } from 'react';
 import {
   Outlet,
@@ -38,8 +38,8 @@ export function Root() {
 
   useEffect(() => {
     const isAuthorised = localStorage.getItem('sinbad-kyc-token');
-    if (!isAuthorised) navigate('/login');
-    // throw new Error('This is an error message');
+     if (!isAuthorised) navigate('/login');
+    
   }, [navigate, pathname]);
 
   return (
@@ -47,18 +47,14 @@ export function Root() {
       <ContextProvider>
         <ColumnProvider>
           <div className="md:flex bg-sinbadKYC-background  h-[100vh] text-[#54565B] text-sm xl:text-base">
-            <div className="w-full fixed z-50 p-3 flex items-center bg-sinbadKYC-grey md:hidden ">
+            <div className="w-full fixed z-50 p-3 flex items-center bg-sinbadKYC-darkgreen md:hidden ">
               <MobileSideBar />
-              <h2 className="absolute flex items-center gap-1 left-[30%] font-bold text-2xl text-sinbadKYC-background">
-                <BrifecaseCross
-                  size="25"
-                  variant="Bold"
-                  className=" text-sinbadKYC-background"
-                />
+              <h2 className="absolute flex items-center gap-1 left-[30%] font-bold text-2xl text-sinbadKYC-lemongreen">
+              
                 SinbadKYC
               </h2>
             </div>
-            <div className="hidden md:block w-[15%] bg-sinbadKYC-grey shadow h-[100vh]">
+            <div className="hidden md:block w-[15%] bg-sinbadKYC-darkgreen shadow h-[100vh]">
               <Sidebar />
             </div>
             <div className="w-full md:w-[85%] h-[100vh] py-4 px-1 md:px-0 md:py-0">
@@ -80,12 +76,12 @@ export const ROUTES: Routes[] = [
         path: '/',
         icon: (
           <HomeHashtag
-            variant="Bold"
+       
             className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         element: <Dashboard />,
-        label: 'Dashboard',
+        label: 'Home',
       },
 
       {
@@ -96,13 +92,13 @@ export const ROUTES: Routes[] = [
       {
         path: '/identity',
         icon: (
-          <Profile2User
-            variant="Bold"
+          <Setting2
+           
             className="md:h-[14px] md:w-[14px] 2xl:w-[25px] 2xl:h-[25px]"
           />
         ),
         element: <IDENTITY />,
-        label: 'Identity',
+        label: 'Risk Engine',
       },
     ],
   },

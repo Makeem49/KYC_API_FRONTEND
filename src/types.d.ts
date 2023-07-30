@@ -38,6 +38,8 @@ type ClientList = {
   last_two_years_income: number;
   confidence: number;
   phone: string;
+  nationality: string;
+  created_at: string;
 };
 
 type ClientProvider = {

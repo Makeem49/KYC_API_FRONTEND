@@ -159,31 +159,6 @@ export async function create_user(data: Partial<User>): Promise<string> {
   }
 }
 
-// export async function create_user(data: Partial<User>): Promise<string> {
-//   try {
-//     const resp = await apiRequest.post('users', {
-//       username: data.username,
-//       email: data.email,
-//       firstName: data.firstName,
-//       lastName: data.lastName,
-//       password: data.password,
-//       permissions: data.permissions,
-//       providers: data.providers,
-//       roles: data.roles,
-//       image: data.image,
-//     });
-
-//     // console.log(resp.data, 'is okay');
-
-//     if (!resp.data) return 'unable to create user';
-
-//     return resp.data.message;
-//   } catch (error: any) {
-//     console.error(error);
-//     toast('error', 'unable to create user', `${error.response.data.error}`);
-//     return 'error creating user';
-//   }
-// }
 
 export async function update_user(
   username: string,

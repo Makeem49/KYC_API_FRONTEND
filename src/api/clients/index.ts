@@ -59,6 +59,8 @@ export async function get_wait_list(
         ({
           id: el.id,
           phone: el.phone,
+          created_at: el.created_at,
+            nationality: el.nationality,
           status: el.status,
         } as ClientList)
     ),

@@ -52,7 +52,7 @@ const MultiSelect = (props: MultiSelectInterface) => {
 
       <FieldArray
         name={props.name}
-        render={({ push, remove }) => (
+        render={({ push, remove }:any) => (
           <div className='relative gap-y-1'>
             <div
               className='relative w-full'

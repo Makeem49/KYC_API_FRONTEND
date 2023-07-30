@@ -52,14 +52,20 @@ module.exports = withMT({
 
       colors: {
         sinbadKYC: {
-          background: '#ebf0fa',
-          orange: '#f35e5d',
-          purple: '#e9108c',
-          grey: '#415b72',
-          normalGrey: '#5e7488',
-          darkGrey: '#18213f',
-          lightGrey: '#a2adb8',
-          white: '#ffffff',
+          background: '#FAF7F2',
+          darkgreen: '#064F32',
+          green: '#8FF6A6',
+          lemongreen_lighter: '#DEFF8C',
+          lemongreen: '#D4E277',
+          grey: '#101828',
+          textGrey: "#1B293A",
+          bordergrey: '#D0D5DD',
+          lightGrey: '#475467',
+          primaryGrey: '#EAECF0',
+          basewhite: '#FFFFFF',
+          lightred: '#FFC8B7',
+          red: '#F66536',
+        
         },
 
         afexgreen: {

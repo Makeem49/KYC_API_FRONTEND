@@ -1,37 +1,117 @@
-import { Profile2User } from 'iconsax-react';
-import React from 'react';
+import { Form, Formik } from "formik";
+import { FormInput2 } from "../../../../components/form";
 
 const ClientHeader = () => {
   return (
-    <div className=" md:w-full mt-16 flex flex-col gap-4 lg">
-      {/* FIrst Card */}
-      <div className=" bg-white  dark:bg-afexdark-darkest rounded-lg p-8">
-        <div className="w-full py-4 gap-2 flex flex-col justify-center items-center text-[14px] border-dashed bg-sinbadKYC-grey rounded-lg dark:border-afexdark-dark border-b">
-          <Profile2User
-            variant="Bold"
-            className=" bg-sinbadKYC-grey border-2 border-sinbadKYC-background p-2 rounded-full h-20 w-20 text-sinbadKYC-white"
-          />
-          <p className="text-white font-bold">admin</p>
-        </div>
+    <div className=" bg-white rounded-lg md:w-full p-4 flex flex-col gap-4">
+      <Formik
+        initialValues={{
+          first_name: "",
+          last_name: "",
+          email: "",
+          password: "",
+        }}
+        onSubmit={(values) => {
+          const User = {
+            first_name: values.first_name,
+            last_name: values.last_name,
+            email: values.email,
+            password: values.password,
+          };
+          alert(User);
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form className=" w-full px-5">
+           
+            <div className=" flex flex-col gap-4">
+            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey p-4">
+              Nigeria
+            </p>
+              {" "}
+              <FormInput2
+                label="Account Balance (3 Month)"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Free text"
+              />
+              <FormInput2
+                label="Employed:"
+                id="balance"
+                name="yes"
+                type="text"
+                placeholder="Free text"
+              />
+              <FormInput2
+                label="Monthly Salary (Equal or More than):"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Free text"
+              />
+            </div>
 
-        <div className="w-full flex flex-col gap-5 py-5">
-          <p className="flex gap-2 items-center text-textgrey-darker dark:text-textgrey-normal font-bold">
-            Permissions:
-            <span className=" text-textgrey-normal font-normal">can add</span>
-          </p>
-          <p className="flex gap-2 items-center text-textgrey-darker  dark:text-textgrey-normal font-bold">
-            Roles:
-            <span className=" text-textgrey-normal font-normal">
-              Can view, Can add user, Can update user,
-            </span>
-          </p>
+            <div className=" flex flex-col gap-4">
+            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey p-4">
+              India
+            </p>
+              {" "}
+              <FormInput2
+                label="Account Balance (3 Month)"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Free text"
+              />
+              <FormInput2
+                label="Employed:"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Yes"
+              />
+              <FormInput2
+                label="Salary (Equal or More than):"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Free Text"
+              />
+            </div>
 
-          <p className="flex gap-2 items-center text-textgrey-darker  dark:text-textgrey-normal font-bold">
-            Number of users
-            <span className=" text-green-400 font-normal"> 5</span>
-          </p>
-        </div>
-      </div>
+            <div className=" flex flex-col gap-4">
+            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey p-4">
+            Indonesia 
+            </p>
+              {" "}
+              <FormInput2
+                label="Account Balance (3 Month)"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Free text"
+              />
+              <FormInput2
+                label="Employed:"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Yes"
+              />
+              <FormInput2
+                label="Salary (Equal or More than):"
+                id="balance"
+                name="balance"
+                type="text"
+                placeholder="Free Text"
+              />
+            </div>
+          </Form>
+     
+
+        )}
+      </Formik>
     </div>
   );
 };

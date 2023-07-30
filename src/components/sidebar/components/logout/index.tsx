@@ -1,6 +1,6 @@
 import { Logout } from 'iconsax-react';
 import React from 'react';
-import { AiOutlineEllipsis } from 'react-icons/ai';
+
 
 import { Popover } from '@mantine/core';
 
@@ -19,7 +19,11 @@ const LogoutModule = () => {
           },
         }}>
         <Popover.Target>
-          <AiOutlineEllipsis className=" rotate-90 text-sinbadKYC-white font-bold h-4 w-4 lg:w-6 lg:h-6 2xl:h-8 2xl:w-8" />
+        <Logout
+              size="16"
+              className="w-[25px] h-[25px] text-sinbadKYC-bordergrey p-1 rounded-lg"
+              variant="Bulk"
+            />
         </Popover.Target>
         <Popover.Dropdown className="flex flex-col gap-2">
           <p

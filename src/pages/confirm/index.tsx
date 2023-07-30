@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import { BrifecaseCross } from 'iconsax-react';
+
 import { useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useMutation, useQueryClient } from 'react-query';
@@ -9,7 +9,8 @@ import * as Yup from 'yup';
 import { createNewUser } from '../../api';
 import { TextInput } from '../../components';
 import Button from '../../components/button';
-import AuthProvider from '../../context/auth_context';
+
+
 
 const ConfirmOverlay = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const ConfirmOverlay = () => {
     mutationFn: createNewUser,
     onSuccess: () => {
       queryProvider.invalidateQueries({ queryKey: ['activate-user'] }); // To  invalidate and refetch
+      setLoading(false);
     },
   });
 
@@ -27,19 +29,12 @@ const ConfirmOverlay = () => {
 
   return (
     <>
-      <AuthProvider>
-        <div className=" bg-sinbadKYC-grey w-screen h-screen absolute top-0 left-0 right-0 flex items-center">
-          <div className="flex flex-1 h-full w-full flex-col space-y-14 px-20">
+     
+        <div className=" bg-sinbadKYC-background w-screen h-screen absolute top-0 left-0 right-0 flex items-center">
+          <div className="flex h-full w-full flex-col space-y-1 px-20">
             <div className="relative px-8 ">
-              <h2 className=" flex mt-4 items-center gap-1 text-sinbadKYC-white text-3xl font-bold">
-                <BrifecaseCross
-                  size="25"
-                  variant="Bold"
-                  className=" text-sinbadKYC-background"
-                />
-                SinbadKYC
-              </h2>
-              <p className="mt- lg:mt-0 xl:mt-20 text-center  text-sinbadKYC-white text-3xl font-bold">
+             
+              <p className="mt- lg:mt-0 xl:mt-20 text-center text-sinbadKYC-grey text-2xl font-bold">
                 Create new user
               </p>
             </div>
@@ -51,7 +46,8 @@ const ConfirmOverlay = () => {
                 email: '',
                 password: '',
               }}
-              onSubmit={(values) => {
+
+              onSubmit={async (values) => {
                 setLoading(true);
                 const User = {
                   first_name: values.first_name,
@@ -59,12 +55,19 @@ const ConfirmOverlay = () => {
                   email: values.email,
                   password: values.password,
                 };
-
-                mutation.mutate(User);
-                setLoading(false);
+              
+                console.log(User, 'user'); // The typo is fixed here ('usre' to 'user')
+              
+                await mutation.mutate(User);
+             
               }}
+              
+              
+             
               validationSchema={Yup.object({
-                username: Yup.string().required('Username is required'),
+                first_name: Yup.string().required('First name is required'),
+                last_name: Yup.string().required('Last name is required'),
+                email: Yup.string().email('Invalid email address').required('Email is required'),
                 password: Yup.string()
                   .min(8, 'Password must be 8 characters long')
                   .matches(/[0-9]/, 'Password requires a number')
@@ -76,9 +79,12 @@ const ConfirmOverlay = () => {
                   [Yup.ref('password'), null],
                   'Passwords must match'
                 ),
-              })}>
-              {({ handleSubmit }) => (
-                <Form className="w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-4 bg-white dark:bg-afexdark-darkest m-auto rounded-xl shadow-lg drop-shadow-lg z-[2] relative">
+              })}
+
+              
+              >
+              
+                <Form className="w-full md:w-8/12 xl:w-5/12 2xl:w-4/12 p-8 space-y-4 m-auto rounded-xl z-[2] relative">
                   <TextInput
                     id="first_name"
                     name="first_name"
@@ -141,24 +147,25 @@ const ConfirmOverlay = () => {
                           <MdKeyboardArrowRight />{' '}
                         </span>
                       }
+                 
                       loading={loading}
-                      onClick={handleSubmit}
+             
                     />
 
                     <span
                       onClick={() => {
                         navigate('/login');
                       }}
-                      className=" underline text-red-400 font-semibole hover:underline cursor-pointer">
+                      className=" underline text-sinbadKYC-grey font-semibole hover:underline cursor-pointer">
                       Log in
                     </span>
                   </div>
                 </Form>
-              )}
+              
             </Formik>
           </div>
         </div>
-      </AuthProvider>
+
     </>
   );
 };

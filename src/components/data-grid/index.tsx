@@ -1,18 +1,18 @@
-import { t } from 'i18next';
+import { t } from "i18next";
 import {
   ArrowDown2,
   Calendar,
   ExportSquare,
-  Filter,
   RowHorizontal,
   SearchNormal,
-} from 'iconsax-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+} from "iconsax-react";
+import { BsFilter } from "react-icons/bs";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import { useAsyncDebounce } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
-import { useReactToPrint } from 'react-to-print';
+import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 
-import { Popover } from '@mantine/core';
+import { Popover } from "@mantine/core";
 
 import {
   addToObj,
@@ -21,8 +21,8 @@ import {
   insert,
   isDeepEqual,
   useDebouncedEffect,
-} from '../../utils/functions';
-import { DateRanges, Pagination } from '..';
+} from "../../utils/functions";
+import { DateRanges, Pagination } from "..";
 
 // Data Headers
 export interface Header {
@@ -34,9 +34,9 @@ export interface Header {
   secondary_key?: string;
   tertiary_key?: string;
   cell?: (val: any, second?: any) => JSX.Element;
-  cellAlign?: 'left' | 'right' | 'center';
+  cellAlign?: "left" | "right" | "center";
   row?: (val: any, second?: any, third?: any) => JSX.Element;
-  rowAlign?: 'left' | 'right' | 'center';
+  rowAlign?: "left" | "right" | "center";
   actionCell?: (data: ArrayElement<any[]>) => JSX.Element;
 }
 
@@ -88,7 +88,7 @@ interface DataGridOptionalProps {
 
 type DataGridProps = DataGridRequiredProps & DataGridOptionalProps;
 
-const EntryList = [{ id: 10 }, { id: 50 }, { id: 100 }, { id: 500 }];
+
 
 const DataGrid = ({
   data,
@@ -113,14 +113,14 @@ const DataGrid = ({
   const [start, setStart] = useState<Date | null>(null); // Date Range Start
   const [end, setEnd] = useState<Date | null>(null); // Date Range End
   const [showDateCalendar, setShowDateCalendar] = useState<boolean>(false); // Show Date Calendar
-  const [showEntriesOpt, setShowEntriesOpt] = useState<boolean>(false);
-  const [entries, setEntries] = useState<number>(10);
+
+
   //filter parameters state
   const [checkboxState, setCheckboxState] = useState({
     isChecked: false,
-    value: '',
+    value: "",
   });
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const filterData = addToObj(checkboxState.value, inputValue);
 
   // useEffect(() => {
@@ -145,32 +145,32 @@ const DataGrid = ({
 
           if (aValueIsNumber && bValueIsNumber) {
             // If both values are numbers, compare them numerically
-            return parseFloat(a[sortConfig.key].replace(/,/g, '')) -
-              parseFloat(b[sortConfig.key].replace(/,/g, '')) >
+            return parseFloat(a[sortConfig.key].replace(/,/g, "")) -
+              parseFloat(b[sortConfig.key].replace(/,/g, "")) >
               0
-              ? sortConfig.direction === 'ascending'
+              ? sortConfig.direction === "ascending"
                 ? 1
                 : -1
-              : sortConfig.direction === 'ascending'
+              : sortConfig.direction === "ascending"
               ? -1
               : 1;
           } else if (aValueIsNumber) {
             // If only the first value is a number, sort it before the second value
-            return sortConfig.direction === 'ascending' ? -1 : 1;
+            return sortConfig.direction === "ascending" ? -1 : 1;
           } else if (bValueIsNumber) {
             // If only the second value is a number, sort it before the first value
-            return sortConfig.direction === 'ascending' ? 1 : -1;
+            return sortConfig.direction === "ascending" ? 1 : -1;
           } else {
             // If neither value is a number, compare them as strings
             const aVal =
-              a[sortConfig.key] !== undefined ? a[sortConfig.key] : '';
+              a[sortConfig.key] !== undefined ? a[sortConfig.key] : "";
             const bVal =
-              b[sortConfig.key] !== undefined ? b[sortConfig.key] : '';
+              b[sortConfig.key] !== undefined ? b[sortConfig.key] : "";
             if (aVal < bVal) {
-              return sortConfig.direction === 'ascending' ? -1 : 1;
+              return sortConfig.direction === "ascending" ? -1 : 1;
             }
             if (aVal > bVal) {
-              return sortConfig.direction === 'ascending' ? 1 : -1;
+              return sortConfig.direction === "ascending" ? 1 : -1;
             }
             return 0;
           }
@@ -180,13 +180,13 @@ const DataGrid = ({
     }, [items, sortConfig]);
 
     const requestSort = (key: any) => {
-      let direction = 'ascending';
+      let direction = "ascending";
       if (
         sortConfig &&
         sortConfig.key === key &&
-        sortConfig.direction === 'ascending'
+        sortConfig.direction === "ascending"
       ) {
-        direction = 'descending';
+        direction = "descending";
       }
       setSortConfig({ key, direction });
     };
@@ -194,14 +194,14 @@ const DataGrid = ({
     return { items: sortedItems, requestSort, sortConfig };
   };
 
-  const { requestSort, sortConfig } = useSortableData(availableData, '');
+  const { requestSort, sortConfig } = useSortableData(availableData, "");
   const getClassNamesFor = (name: any) => {
     if (!sortConfig) {
       return;
     }
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
-  getClassNamesFor('');
+  getClassNamesFor("");
 
   // Pagination Controls // Rows per page // Current list displayed
 
@@ -301,18 +301,18 @@ const DataGrid = ({
 
   useDebouncedEffect(
     () => {
-      document.addEventListener('click', () => {
+      document.addEventListener("click", () => {
         setShowColOpts(false);
         setshowAllComp(false);
-        setShowEntriesOpt(false);
+    
         setShowFilterColOpts(false);
       });
 
       return () => {
-        document.removeEventListener('click', () => {
+        document.removeEventListener("click", () => {
           setShowColOpts(false);
           setshowAllComp(false);
-          setShowEntriesOpt(false);
+      
           setShowFilterColOpts(false);
         });
       };
@@ -325,10 +325,10 @@ const DataGrid = ({
     target: { value: React.SetStateAction<string> };
   }) => {
     const newValue = event.target.value;
-    const isActive = newValue === 'active';
+    const isActive = newValue === "active";
 
     setInputValue(
-      isActive ? 'true' : newValue === 'inactive' ? 'false' : newValue
+      isActive ? "true" : newValue === "inactive" ? "false" : newValue
     );
   };
 
@@ -354,7 +354,7 @@ const DataGrid = ({
 
   const handlePrint = useReactToPrint({
     content: () => printCurrent.current,
-    documentTitle: 'cuddie_client_table',
+    documentTitle: "cuddie_client_table",
   });
   // const handlePrintAllData = useReactToPrint({
   //   content: () => printAllData.current,
@@ -362,23 +362,25 @@ const DataGrid = ({
   // });
   const handlePrintSelected = useReactToPrint({
     content: () => printSelected.current,
-    documentTitle: 'cuddie_client_table',
+    documentTitle: "cuddie_client_table",
   });
 
   return (
-    <section className="h-full relative space-y-5">
+    <section className="h-full relative space-y-3">
       <div className="hidden">
-        {/* all data */}{' '}
+        {/* all data */}{" "}
         <table
           ref={printAllData}
-          className="overflow-auto p-5 w-full mb-10 align-top">
+          className="overflow-auto p-5 w-full mb-10 align-top"
+        >
           <thead className="sticky top-0 text-left whitespace-nowrap bg-white z-[5]">
             <tr className="child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize">
               <th className="w-8">S/N</th>
               {selectedColumns?.map((column) => (
                 <th
                   key={column.accessor}
-                  className={`${column.hidden && 'hidden'}`}>
+                  className={`${column.hidden && "hidden"}`}
+                >
                   {column.cell
                     ? column.cell(column.name)
                     : column.name.toLowerCase()}
@@ -390,7 +392,8 @@ const DataGrid = ({
             {data?.map((row, index) => (
               <tr
                 key={index}
-                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}
+              >
                 <td className="py-4">{index + 1}</td>
                 {headers
                   .sort((a, b) => {
@@ -406,24 +409,25 @@ const DataGrid = ({
 
                     const secondary_data = header?.secondary_key
                       ? get_nested_value(row, header?.secondary_key)
-                      : '';
+                      : "";
 
                     const data =
                       get_nested_value(row, header?.accessor) ??
-                      'Not Specified';
+                      "Not Specified";
 
                     return (
                       <React.Fragment key={i}>
                         {header && !header.hidden && (
                           <td
                             key={index}
-                            className={`text-${header?.rowAlign ?? 'left'}  ${
+                            className={`text-${header?.rowAlign ?? "left"}  ${
                               selectedColumns.findIndex(
                                 (el) => el.accessor === header?.accessor
                               ) >= 0
-                                ? 'visible'
-                                : 'hidden'
-                            }`}>
+                                ? "visible"
+                                : "hidden"
+                            }`}
+                          >
                             {header?.row
                               ? header?.row(data, secondary_data, index)
                               : data}
@@ -439,14 +443,16 @@ const DataGrid = ({
         {/* selected */}
         <table
           ref={printSelected}
-          className="overflow-auto p-5 w-full mb-10 align-top">
+          className="overflow-auto p-5 w-full mb-10 align-top"
+        >
           <thead className="sticky top-0 text-left whitespace-nowrap bg-white z-[5]">
             <tr className="child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize">
               <th className="w-8">S/N</th>
               {selectedColumns?.map((column) => (
                 <th
                   key={column.accessor}
-                  className={`${column.hidden && 'hidden'}`}>
+                  className={`${column.hidden && "hidden"}`}
+                >
                   {column.cell
                     ? column.cell(column.name)
                     : column.name.toLowerCase()}
@@ -458,14 +464,15 @@ const DataGrid = ({
             {selectedRows?.map((row, index) => (
               <tr
                 key={index}
-                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}
+              >
                 <td className="py-4">{index + 1}</td>
 
                 {Object?.keys(row).map((entry, index) => {
                   const header = headers.find((el) => el.accessor === entry);
                   const secondary_data = header?.secondary_key
                     ? row[header.secondary_key]
-                    : '';
+                    : "";
                   const data = row[entry];
                   return (
                     <td
@@ -474,14 +481,15 @@ const DataGrid = ({
                         selectedColumns.findIndex(
                           (el) => el.accessor === header?.accessor
                         ) >= 0
-                          ? 'visible'
-                          : 'hidden'
-                      }`}>
+                          ? "visible"
+                          : "hidden"
+                      }`}
+                    >
                       {header?.row && data !== null
                         ? header?.row(data, secondary_data)
                         : data?.length > 0
                         ? data
-                        : '--------'}
+                        : "--------"}
                     </td>
                   );
                 })}
@@ -492,14 +500,16 @@ const DataGrid = ({
         {/* current */}
         <table
           ref={printCurrent}
-          className="overflow-auto p-5 w-full mb-10 align-top">
+          className="overflow-auto p-5 w-full mb-10 align-top"
+        >
           <thead className="sticky top-0 text-left whitespace-nowrap bg-white z-[5]">
             <tr className="child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize">
               <th className="w-8">S/N</th>
               {selectedColumns?.map((column) => (
                 <th
                   key={column.accessor}
-                  className={`${column.hidden && 'hidden'}`}>
+                  className={`${column.hidden && "hidden"}`}
+                >
                   {column.cell
                     ? column.cell(column.name)
                     : column.name.toLowerCase()}
@@ -511,14 +521,15 @@ const DataGrid = ({
             {data?.map((row, index) => (
               <tr
                 key={index}
-                className={`child:py-2 child:px-2 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}>
+                className={`child:py-2 child:px-2 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}
+              >
                 <td className="py-4">{index + 1}</td>
 
                 {Object?.keys(row).map((entry, index) => {
                   const header = headers.find((el) => el.accessor === entry);
                   const secondary_data = header?.secondary_key
                     ? row[header.secondary_key]
-                    : '';
+                    : "";
                   const data = row[entry];
                   return (
                     <td
@@ -527,14 +538,15 @@ const DataGrid = ({
                         selectedColumns.findIndex(
                           (el) => el.accessor === header?.accessor
                         ) >= 0
-                          ? 'visible'
-                          : 'hidden'
-                      }`}>
+                          ? "visible"
+                          : "hidden"
+                      }`}
+                    >
                       {header?.row && data !== null
                         ? header?.row(data, secondary_data)
                         : data?.length > 0
                         ? data
-                        : '--------'}
+                        : "--------"}
                     </td>
                   );
                 })}
@@ -544,96 +556,61 @@ const DataGrid = ({
         </table>
       </div>
       {/* Top Task Bar */}
-      <div className=" hidden  justify-between items-center relative">
+      <div className=" hidden justify-between items-center relative">
         <h2 className="text-xl pb-5 text-textgrey-normal font-bold ml-3 capitalize">
           {props.tableTitle}
         </h2>
-
-        <div className="flex items-center space-x-5 relative text-base"></div>
+       
       </div>
 
-      <div className="hidden items-center">
-        <div className="flex gap-1 items-center">
+      <div className= "w-full flex justify-end items-center">
+        <div className=" w-full">
           {/* GENERAL SEARCH */}
-          <div className="relative flex items-center w-72 2xl:w-96 ">
+          <div className="relative flex items-center w-72 2xl:w-96 ml-[68%] ">
             <input
               type="text"
               placeholder={props.title}
-              className="py-3 mx-2 w-full text-base dark:text-textgrey-normal rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-gray-100 dark:ring-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest "
+              className="py-2 mx-2 w-full text-base bg-white placeholder:text-sinbadKYC-lightGrey rounded-lg px-10 pr-14 border border-sinbadKYC-bordergrey focus:ring-1 outline-none  focus:ring-gray-100  hover:shadow "
               onChange={(e) => props.setSearch(e.currentTarget.value)}
             />
             <span className="absolute left-4 text-2xl">
-              <SearchNormal size="20" color="#8f8e91" variant="Bulk" />
+              <SearchNormal size="18" color="#8f8e91" />
             </span>
           </div>
-          {/* ENTRIES */}
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="flex relative justify-end gap-2 text-[14px] dark:text-textgrey-normal font-normal items-center ">
-            <button
-              className={`border flex items-center border-[#BABABA] text-textgrey-darker  dark:text-afexdark-lighter p-2 rounded-lg ${
-                showEntriesOpt ? 'border-[#BABABA]' : 'border-[#BABABA]'
-              }`}
-              onClick={() => {
-                setShowEntriesOpt((s) => !s);
-                setShowColOpts(false);
-                setshowAllComp(false);
-                setShowDateCalendar(false);
-              }}>
-              {entries}
-              <ArrowDown2 size="14" color="#2B2930" variant="Bold" />
-            </button>
-
-            <ul
-              className={`flex gap-1 w-[80px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest dark:text-textgrey-normal z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
-                showEntriesOpt && 'max-h-[300px] opacity-100 overflow-scroll'
-              }`}>
-              {EntryList.map((el: any, index: any) => (
-                <span
-                  key={index}
-                  onClick={() => {
-                    props.setSelectedEntries!(el.id);
-                    setEntries(el.id);
-                    setShowEntriesOpt((s) => !s);
-                  }}
-                  className="flex gap-1 hover:bg-afexpurple-lighter rounded-lg whitespace-nowrap  text-gray-900 dark:text-textgrey-normal text-base cursor-pointer m-1 py-2 px-2 capitalize">
-                  {' '}
-                  {el.id}
-                </span>
-              ))}
-            </ul>
-          </div>
+          
         </div>
 
         {/* RIGHT SIDE ACTIONS */}
 
-        <div className="hidden text-gray-300 md:flex flex-1 items-center gap-2 relative justify-end">
+        <div className="hidden text-gray-300 md:flex flex-1 items-center gap-2 relative ">
           {/* COLUMN VISIBILITY FILTER */}
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
+          <div className="relative hidden" onClick={(e) => e.stopPropagation()}>
             <button
               className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg hover:shadow w-28 2xl:w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:border-0 capitalize ${
                 showColOpts
-                  ? ' border-afexpurple-regular  '
-                  : ' border-transparent'
+                  ? " border-afexpurple-regular  "
+                  : " border-transparent"
               }`}
               onClick={() => {
                 setShowColOpts((s) => !s);
                 setshowAllComp(false);
-                setShowEntriesOpt(false);
+            
                 setShowDateCalendar(false);
-              }}>
+              }}
+            >
               <RowHorizontal
                 size="16"
                 color="#7738DD"
                 variant="Bulk"
                 className="shrink-0 "
               />
-              {t('COLUMNS')}
+              {t("COLUMNS")}
             </button>
             <ul
               className={`flex gap-2 w-[200px] px-1 py-2 flex-col absolute top-[110%] ring-1 ring-white shadow-md dark:ring-afexdark-verydark  rounded-xl opacity-0 bg-white dark:bg-afexdark-darkest  z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
-                showColOpts && 'max-h-[300px] opacity-100 overflow-scroll'
-              }`}>
+                showColOpts && "max-h-[300px] opacity-100 overflow-scroll"
+              }`}
+            >
               {headers.map((header) => (
                 <label
                   key={header.name}
@@ -642,13 +619,14 @@ const DataGrid = ({
                     selectedColumns.findIndex(
                       (el) => el.name === header.name && !el.hidden
                     ) >= 0 && !header.static
-                      ? 'bg-afexpurple-lighter dark:bg-afexdark-verydark'
+                      ? "bg-afexpurple-lighter dark:bg-afexdark-verydark"
                       : selectedColumns.findIndex(
                           (el) => el.name === header.name
                         ) >= 0 && header.static
-                      ? ' bg-afexpurple-lighter dark:bg-afexdark-verydark  cursor-not-allowed'
+                      ? " bg-afexpurple-lighter dark:bg-afexdark-verydark  cursor-not-allowed"
                       : undefined
-                  }`}>
+                  }`}
+                >
                   <input
                     className="checkbox"
                     type="checkbox"
@@ -662,49 +640,46 @@ const DataGrid = ({
                     }
                     onChange={() => toggleVisibility(header)}
                   />
-                  {header.name}{' '}
+                  {header.name}{" "}
                 </label>
               ))}
             </ul>
           </div>
 
           {/* FILTER ACTION */}
-          <div className="" onClick={(e) => e.stopPropagation()}>
+          <div  onClick={(e) => e.stopPropagation()}>
             <button
-              className={`h-full whitespace-nowrap bg-afexpurple-lighter dark:bg-afexdark-verydark gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg hover:shadow w-full hover:cursor-pointer text-afexpurple-regular font-semibold flex justify-center  items-center border dark:bg-wdark-400 dark:border-0 capitalize ${
+              className={`h-full whitespace-nowrap bg-white  gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 rounded-lg  w-full hover:cursor-pointer text-sinbadKYC-grey font-medium flex justify-center  items-center border  border-sinbadKYC-bordergrey capitalize ${
                 showAllComp
-                  ? ' border-afexpurple-regular  '
-                  : ' border-transparent'
+                  ? " border-sinbadKYC-bordergrey"
+                  : "border-sinbadKYC-bordergrey"
               }`}
               onClick={() => {
-                setshowAllComp((s) => !s);
+                setshowAllComp(false);
                 setShowColOpts(false);
-                setShowEntriesOpt(false);
                 setShowDateCalendar(false);
-              }}>
-              <Filter
-                size="16"
-                color="#7738DD"
-                variant="Bulk"
-                className="shrink-0 "
-              />
-              {t('FILTERS')}
+              }}
+            >
+              <BsFilter />
+              {t("Filters")}
             </button>
             {/* ALL COMPONENTS TO BE DISPLAYED */}
             <div
-              className={`flex gap-2  w-[340px] bg-white  dark:bg-afexdark-darkest px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md dark:ring-afexdark-dark rounded-xl opacity-0  dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
-                showAllComp && 'max-h-[450px] opacity-100 overflow-scroll'
-              }`}>
+              className={`flex gap-2  w-[340px] bg-white px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md rounded-xl opacity-0  z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                showAllComp && "max-h-[450px] opacity-100 overflow-scroll"
+              }`}
+            >
               {/* COLUMNS HEADER */}
               <div className="relative" onClick={(e) => e.stopPropagation()}>
                 <button
                   className={`h-full w-full dark:text-textgrey-normal whitespace-nowrap gap-2 text-base p-4 rounded-lg hover:shadow hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-afexdark-verydark dark:border-0 capitalize ${
                     showFilterColOpts
-                      ? ' border-[#DAD9DA]'
-                      : '  border-[#DAD9DA]'
+                      ? " border-[#DAD9DA]"
+                      : "  border-[#DAD9DA]"
                   }`}
-                  onClick={() => setShowFilterColOpts((s) => !s)}>
-                  {'SELECT COLUMNS'}
+                  onClick={() => setShowFilterColOpts((s) => !s)}
+                >
+                  {"SELECT COLUMNS"}
                   <ArrowDown2
                     size="16"
                     color="#7738DD"
@@ -714,16 +689,18 @@ const DataGrid = ({
                 </button>
                 <ul
                   className={`flex gap-1 w-full px-1 py-2 flex-col absolute  dark:bg-afexdark-darkest bg-white top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
-                    showFilterColOpts && 'max-h-[300px] opacity-100 '
-                  }`}>
+                    showFilterColOpts && "max-h-[300px] opacity-100 "
+                  }`}
+                >
                   {headerFilter.map((header) => (
                     <label
                       key={header.name}
                       htmlFor={header.name}
                       className={`flex items-center gap-1 whitespace-nowrap  text-gray-900 dark:text-textgrey-normal text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize ${
                         checkboxState.value === header.accessor &&
-                        'bg-afexpurple-lighter'
-                      }`}>
+                        "bg-afexpurple-lighter"
+                      }`}
+                    >
                       <input
                         type="checkbox"
                         className="checkbox"
@@ -737,7 +714,7 @@ const DataGrid = ({
                           });
                         }}
                       />
-                      {header.name}{' '}
+                      {header.name}{" "}
                     </label>
                   ))}
                 </ul>
@@ -759,22 +736,24 @@ const DataGrid = ({
                 <div className="flex justify-end gap-2 py-5 w-full">
                   <span
                     onClick={() => {
-                      setCheckboxState({ isChecked: false, value: '' });
-                      props.setFilters('');
-                      setInputValue('');
+                      setCheckboxState({ isChecked: false, value: "" });
+                      props.setFilters("");
+                      setInputValue("");
                       setAvailableData(data);
                       setshowAllComp((s) => !s);
                     }}
-                    className="p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker dark:text-textgrey-normal">
-                    {t('Clear')}
+                    className="p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker dark:text-textgrey-normal"
+                  >
+                    {t("Clear")}
                   </span>
                   <span
                     onClick={() => {
                       props.setFilters(filterData);
                       setshowAllComp((s) => !s);
                     }}
-                    className="p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white ">
-                    {t('Add')}
+                    className="p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white "
+                  >
+                    {t("Add")}
                   </span>
                 </div>
               </div>
@@ -795,15 +774,17 @@ const DataGrid = ({
             opened={opened}
             onChange={setOpened}
             width={100}
-            position={'bottom-end'}>
+            position={"bottom-end"}
+          >
             <Popover.Target>
               <button
-                className="flex font-semibold  items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg text-afexpurple-regular  bg-afexpurple-lighter  dark:bg-afexdark-verydark"
+                className="hidden font-semibold  items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg text-afexpurple-regular  bg-afexpurple-lighter  dark:bg-afexdark-verydark"
                 onClick={() => {
                   setOpened((o) => !o);
-                }}>
+                }}
+              >
                 <ExportSquare size="18" color="#7738DD" variant="Bulk" />
-                <span>{t('EXPORT')}</span>
+                <span>{t("EXPORT")}</span>
               </button>
             </Popover.Target>
 
@@ -813,13 +794,15 @@ const DataGrid = ({
                 opened={openPdf}
                 onChange={setOpenPdf}
                 width={140}
-                position="left-start">
+                position="left-start"
+              >
                 <Popover.Target>
                   <button
                     className=" flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter  rounded-lg py-4 px-2 font-normal text-[14px] text-left"
                     onClick={() => {
                       setOpenPdf((o) => !o);
-                    }}>
+                    }}
+                  >
                     PDF
                   </button>
                 </Popover.Target>
@@ -832,8 +815,9 @@ const DataGrid = ({
 
                       setOpenPdf((o) => !o);
                       setOpened((o) => !o);
-                    }}>
-                    {t('Export Selected')}
+                    }}
+                  >
+                    {t("Export Selected")}
                   </span>
                   <span
                     className="text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark"
@@ -841,8 +825,9 @@ const DataGrid = ({
                       handlePrint();
                       setOpenPdf((o) => !o);
                       setOpened((o) => !o);
-                    }}>
-                    {t('Export Page')}
+                    }}
+                  >
+                    {t("Export Page")}
                   </span>
                 </Popover.Dropdown>
               </Popover>
@@ -851,14 +836,16 @@ const DataGrid = ({
                 opened={openCsv}
                 onChange={setOpenCsv}
                 width={140}
-                position="left-start">
+                position="left-start"
+              >
                 <Popover.Target>
                   <button
                     className=" flex items-center gap-1 cursor-pointer text-textgrey-dark hover:bg-afexpurple-lighter rounded-lg py-4 px-2 font-normal text-[14px] text-left"
                     onClick={() => {
                       setOpenCsv((o) => !o);
-                    }}>
-                    {' '}
+                    }}
+                  >
+                    {" "}
                     CSV
                   </button>
                 </Popover.Target>
@@ -875,8 +862,9 @@ const DataGrid = ({
                       );
                       setOpenCsv((o) => !o);
                       setOpened((o) => !o);
-                    }}>
-                    {t('Export Selected')}
+                    }}
+                  >
+                    {t("Export Selected")}
                   </span>
                   <span
                     className="text-[12px] cursor-pointer p-2 hover:bg-afexpurple-lighter rounded text-textgrey-dark"
@@ -889,8 +877,9 @@ const DataGrid = ({
                       );
                       setOpenCsv((o) => !o);
                       setOpened((o) => !o);
-                    }}>
-                    {t('Export Page')}
+                    }}
+                  >
+                    {t("Export Page")}
                   </span>
                 </Popover.Dropdown>
               </Popover>
@@ -900,13 +889,14 @@ const DataGrid = ({
           {/* DATE FILTER ACTION */}
           {dateFilter.enabled && (
             <button
-              className="flex items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-xl focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer"
+              className="hidden items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-xl focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer"
               onClick={() => {
                 setShowDateCalendar((s) => !s);
                 setShowColOpts(false);
                 setshowAllComp(false);
-                setShowEntriesOpt(false);
-              }}>
+            
+              }}
+            >
               {/* <span className='capitalize whitespace-nowrap'>
                 {dateFilter.label}{' '}
               </span> */}
@@ -951,10 +941,10 @@ const DataGrid = ({
           }
         `}
           </style>
-          <div className="h-[100%] table-auto overflow-auto w-full my-3">
+          <div className="h-[100%] table-auto border border-sinbadKYC-bordergrey rounded-lg overflow-auto w-full my-1">
             <table className="overflow-auto p-5 w-full mb-10 align-top">
-              <thead className="sticky top-0 text-left whitespace-nowrap bg-sinbadKYC-background/80 rounded-lg  z-[5]">
-                <tr className="child:px-3 border-b  child:py-3 child:text-[#C1C0C2] child:cursor-default child:align-middle capitalize">
+              <thead className="sticky top-0 text-left whitespace-nowrap bg-sinbadKYC-primaryGrey rounded-lg  z-[5]">
+                <tr className="child:px-3 border-b  child:py-3 child:text-sinbadKYC-lightGrey  font-normal child:cursor-default child:align-middle capitalize">
                   {props?.withCheck && (
                     <th className="align-middle w-8 ">
                       <input
@@ -972,26 +962,28 @@ const DataGrid = ({
                   {selectedColumns?.map((column) => (
                     <th
                       key={column.accessor}
-                      className={`${column.hidden && 'hidden'}`}>
+                      className={`${column.hidden && "hidden"}`}
+                    >
                       {column.cell
                         ? column.cell(column.name)
                         : column.name.toLowerCase()}
                       {
                         <span
                           className="#C1C0C2"
-                          onClick={() => requestSort(`${column.accessor}`)}>
-                          {' '}
+                          onClick={() => requestSort(`${column.accessor}`)}
+                        >
+                          {" "}
                           &uarr;&darr;
                         </span>
                       }
                     </th>
                   ))}
-                  {props?.withActions && <th>{'action'}</th>}
+                  {props?.withActions && <th>{"action"}</th>}
                 </tr>
               </thead>
 
               {data!?.length > 0 ? (
-                <tbody className="bg-white ">
+                <tbody>
                   {data?.map((row: any, index) => (
                     <tr
                       onClick={
@@ -1005,12 +997,13 @@ const DataGrid = ({
                           : undefined
                       }
                       key={index}
-                      className={`child:py-6 child:px-3 child:space-y-2 child:text-ellipsis child:text-[#49474D] dark:child:text-textgrey-normal  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}>
+                      className={`child:py-6 child:px-3 child:space-y-2 child:text-ellipsis child:text-[#49474D] dark:child:text-textgrey-normal  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}
+                    >
                       {props?.withCheck && (
                         <td onClick={(e) => e.stopPropagation()}>
                           <input
                             type="checkbox"
-                            className="checkbox dark:darkcheckbox"
+                            className="checkbox"
                             checked={
                               selectedRows.findIndex((el) =>
                                 isDeepEqual(el, row)
@@ -1038,7 +1031,7 @@ const DataGrid = ({
                           const header = selectedColumns[i];
                           const secondary_data = header?.secondary_key
                             ? get_nested_value(row, header?.secondary_key)
-                            : '';
+                            : "";
                           const data = get_nested_value(row, header?.accessor);
                           return (
                             <React.Fragment key={i}>
@@ -1051,9 +1044,10 @@ const DataGrid = ({
                                     selectedColumns.findIndex(
                                       (el) => el.accessor === header?.accessor
                                     ) >= 0
-                                      ? 'visible'
-                                      : 'hidden'
-                                  }`}>
+                                      ? "visible"
+                                      : "hidden"
+                                  }`}
+                                >
                                   {header?.row
                                     ? header.row(data, secondary_data, index)
                                     : data}
@@ -1066,7 +1060,8 @@ const DataGrid = ({
                         <td
                           onClick={(e) => {
                             e.stopPropagation();
-                          }}>
+                          }}
+                        >
                           {props?.ActionComponent && (
                             <props.ActionComponent data={row} />
                           )}
@@ -1077,23 +1072,26 @@ const DataGrid = ({
                 </tbody>
               ) : (
                 <tbody className="bg-white flex justify-center ">
-                  {' '}
+                  {" "}
                   <tr className="absolute gap-2 top-[50%] left-[45%] flex flex-col items-center w-40">
                     <p className=" text-[16px] font-semibold dark:text-textgrey-normal">
-                      {t('Nothing to display')}
-                    </p>{' '}
+                      {t("Nothing to display")}
+                    </p>{" "}
                   </tr>
                 </tbody>
               )}
             </table>
           </div>
 
-          <Pagination
-            pageSize={entries}
-            dataLength={props.total}
-            pageCount={props.lastPage!}
-            loadMore={props.loadMore}
-          />
+          <div className=" hidden">
+            {" "}
+            <Pagination
+              pageSize={10}
+              dataLength={props.total}
+              pageCount={props.lastPage!}
+              loadMore={props.loadMore}
+            />
+          </div>
         </div>
       </div>
     </section>

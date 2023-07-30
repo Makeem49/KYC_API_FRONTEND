@@ -55,10 +55,10 @@ export async function createNewUser(
     });
 
     if (resp && resp.status === 400) {
-      toast('error', resp.data.email[0]);
+      toast('error',  'Account created Successfully');
     }
     if (resp && resp.status === 201) {
-      toast('success', resp.data.email[0]);
+      toast('success',  'Account created Successfully');
     }
 
     return resp.data.message;

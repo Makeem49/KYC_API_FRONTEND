@@ -5,6 +5,7 @@ import { Skeleton } from '@mantine/core';
 import { DataGrid } from '../../../../components';
 import { useGetWaitList } from '../../../../queries';
 import UserAction from './actions/drop down';
+import { shortDateFormatter } from '../../../../utils';
 
 function WatingList() {
   const { data: list, isLoading } = useGetWaitList();
@@ -24,7 +25,7 @@ function WatingList() {
   );
   return (
     <>
-      <div className="bg-white dark:bg-afexdark-darkest px-6 py-3">
+      <div className="px-6 py-3">
         <DataGrid
           lastPage={1}
           total={list!?.count}
@@ -38,6 +39,23 @@ function WatingList() {
               name: 'Phone Number',
               sortable: true,
               static: false,
+            },
+
+            {
+              accessor: 'nationality',
+              hidden: false,
+              name: 'Nationality',
+              sortable: true,
+              static: false,
+            },
+
+            {
+              accessor: 'created_at',
+              hidden: false,
+              name: 'Submission date',
+              sortable: true,
+              static: false,
+              row: (val) => <span>{shortDateFormatter(val)} </span>,
             },
 
             {

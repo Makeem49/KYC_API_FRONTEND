@@ -1,9 +1,8 @@
-import { UserSquare } from 'iconsax-react';
-
-import { useGetWaitList } from '../../../queries';
-import { useGetApprovedtList } from '../../../queries';
-import { useGetClientList } from '../../../queries';
-import { useGetRejectedtList } from '../../../queries';
+import { FaEllipsisV } from "react-icons/fa";
+import { useGetWaitList } from "../../../queries";
+import { useGetApprovedtList } from "../../../queries";
+import { useGetClientList } from "../../../queries";
+import { useGetRejectedtList } from "../../../queries";
 
 const Card = () => {
   const { data: pending } = useGetClientList();
@@ -14,49 +13,37 @@ const Card = () => {
   const Activities = [
     {
       id: 1,
-      name: 'Waiting',
-      number: waitlist?.data.length,
+      name: "Que",
+      number: waitlist?.data.length ?? 45,
       icon: (
-        <UserSquare
-          variant="Bold"
-          className="md:h-[30px] md:w-[30px] bg-[#f2f5eb] text-[#c2cda0] p-2 rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
-        />
+        <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
       ),
     },
 
     {
       id: 2,
-      name: 'Pending',
-      number: pending?.data.length,
+      name: "Pending",
+      number: pending?.data.length ?? 30,
       icon: (
-        <UserSquare
-          variant="Bold"
-          className="md:h-[30px] md:w-[30px] bg-[#fbf3ec] p-2 text-[#e1b778] rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
-        />
+        <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
       ),
     },
 
     {
       id: 3,
-      name: 'Approved',
-      number: approve?.data.length,
+      name: "Approved",
+      number: approve?.data.length ?? 80,
       icon: (
-        <UserSquare
-          variant="Bold"
-          className="md:h-[30px] md:w-[30px] bg-[#ebf4f1] text-[#85b9ab] p-2 rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
-        />
+        <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
       ),
     },
 
     {
       id: 4,
-      name: 'Rejected',
-      number: rejected?.data.length,
+      name: "Rejected",
+      number: rejected?.data.length ?? 12,
       icon: (
-        <UserSquare
-          variant="Bold"
-          className="md:h-[30px] md:w-[30px] bg-[#fee3e2] text-[#f75252] p-2 rounded-3xl  2xl:w-[40px] 2xl:h-[40px]"
-        />
+        <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
       ),
     },
   ];
@@ -66,16 +53,17 @@ const Card = () => {
       {Activities.map((el) => (
         <div
           key={el.id}
-          className="flex items-center shadow bg-white rounded-lg p-3 w-full">
-          <div className="flex flex-col gap-2  w-full">
+          className=" relative flex items-center shadow bg-white  h-32 rounded-lg px-2 w-full"
+        >
+          <div className="flex flex-col gap-1 w-full">
             <p className=" font-normal text-base text-sinbadKYC-grey">
               {el.name}
             </p>
-            <p className=" text-sinbadKYC-grey font-bold text-2xl">
+            <p className=" text-sinbadKYC-grey font-bold text-4xl">
               {el.number}
             </p>
           </div>
-          <span> {el.icon}</span>
+          <span className="absolute top-8 right-3"> {el.icon}</span>
         </div>
       ))}
     </div>
