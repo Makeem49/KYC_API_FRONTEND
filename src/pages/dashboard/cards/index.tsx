@@ -41,7 +41,7 @@ const Card = () => {
     {
       id: 4,
       name: "Rejected",
-      number: rejected?.data.length ?? 12,
+      number: rejected?.data.length  ?? 12,
       icon: (
         <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
       ),

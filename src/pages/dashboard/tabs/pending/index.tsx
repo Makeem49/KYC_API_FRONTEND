@@ -1,23 +1,25 @@
 import React from 'react';
-
-import { Skeleton } from '@mantine/core';
+import pendingList from '../../../../dummyData/pendingList.json'
+// import { Skeleton } from '@mantine/core';
 
 import { DataGrid } from '../../../../components';
-import { useGetClientList } from '../../../../queries';
+// import { useGetClientList } from '../../../../queries';
 import UserAction from './actions/drop down';
 
 function PendingList() {
-  const { data: list, isLoading } = useGetClientList();
+  // const { data: list, isLoading } = useGetClientList();
 
-  if (isLoading)
-    return (
-      <Skeleton
-        height={500}
-        style={{
-          borderRadius: '25px',
-        }}
-      />
-    );
+  // if (isLoading)
+  //   return (
+  //     <Skeleton
+  //       height={500}
+  //       style={{
+  //         borderRadius: '25px',
+  //       }}
+  //     />
+  //   );
+  const data = pendingList
+  console.log(data)
 
   const ActionComponent = ({ data }: { data: ClientList }) => (
     <UserAction data={data} />
@@ -30,7 +32,7 @@ function PendingList() {
           total={1}
           title="Search"
           rows={10}
-          data={list!?.data}
+          data={data!?.items}
           headers={[
             {
               accessor: 'name',
@@ -38,46 +40,55 @@ function PendingList() {
               name: 'Name',
               sortable: true,
               static: false,
+              secondary_key: "phone number",
+              row: (val, second) => (
+                <span className="flex flex-col">
+                  <span className=" text-afexpurple-regular">{val}</span>
+                  <span className="w-[140px]">{second}</span>
+                </span>
+              ),
+            
             },
             {
-              accessor: 'verification_country',
+              accessor: 'country',
               hidden: false,
-              name: 'Country',
+              name: 'Nationality',
               sortable: true,
               static: false,
             },
 
             {
-              accessor: 'average_monthly_income',
+              accessor: 'date',
               hidden: false,
-              name: 'Income',
+              name: 'Submission Date',
               sortable: true,
               static: false,
             },
 
             {
-              accessor: 'source',
-              hidden: false,
-              name: 'Employer',
-              sortable: true,
-              static: false,
-            },
-
-            {
-              accessor: 'available_balance',
-              hidden: false,
-              name: 'Account Balance',
-              sortable: true,
-              static: false,
-            },
-
-            {
-              accessor: 'confidence',
+              accessor: 'riskLevel',
               hidden: false,
               name: 'Risk Level',
               sortable: true,
               static: false,
+              row: (val) => {
+                if (val === "Low Risk") {
+                  return (
+                    <span className=" bg-afexgreen-extralight  text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2">
+                      {(val)}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className=" bg-afexred-extralight  text-afexred-dark  dark:text-afexred-regular rounded-lg p-2">
+                      {(val)}
+                    </span>
+                  );
+                }
+              },
             },
+
+           
           ]}
           // withExport
           // withGlobalFilters

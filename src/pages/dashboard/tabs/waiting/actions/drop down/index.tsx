@@ -1,9 +1,12 @@
-import { ArrowDown2 } from 'iconsax-react';
+
 import React, { useState } from 'react';
 
 import { Popover } from '@mantine/core';
 
 import DeactivateUser from '../modal/deactivate';
+import eyeIcon from '../../../../../../assets/svgs/eye.svg';
+import chatIcon from '../../../../../../assets/svgs/chat2.svg';
+import dotIcon from '../../../../../../assets/svgs/three-dots-vertical.svg';
 
 const UserAction = ({ data }: { data: User }) => {
   const [opened, setOpened] = useState(false);
@@ -14,14 +17,22 @@ const UserAction = ({ data }: { data: User }) => {
     <>
       <Popover opened={opened} onChange={setOpened} width={150}>
         <Popover.Target>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpened((s) => !s);
-            }}
-            className=" flex items-center rounded-lg border border-sinbadKYC-background p-2 text-sinbadKYC-darkGrey relative">
-            Action <ArrowDown2 size="16" color="#8F8E91" variant="Bold" />
-          </button>
+        <div className=' flex items-center gap-3'>
+            
+            <img src={eyeIcon} alt=''/>
+            
+            <img src={chatIcon} alt=''/>
+  
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpened((s) => !s);
+              }}
+              className=" flex items-center rounded-lg text-sinbadKYC-darkGrey relative">
+            
+              <img src={dotIcon} alt=''/>
+            </button>
+            </div>
         </Popover.Target>
 
         <Popover.Dropdown className="child:cursor-pointer rounded-lg hover:child:bg-afexpurple-lighter child:p-2">

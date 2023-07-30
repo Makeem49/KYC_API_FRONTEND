@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { TextInput } from "../../../components";
 import Button from "../../../components/button";
 import { useAuthCtx } from "../../../context";
-
+import socialIcon from '../../../assets/svgs/Social icon.svg'
 const LoginOverlay = () => {
   const navigate = useNavigate();
   const { login, loading } = useAuthCtx();
@@ -94,9 +94,10 @@ const LoginOverlay = () => {
 
                   <button
                     type="button"
-                    className=" w-full font-semibold text-sinbadKYC-grey text-xl bg-white py-4 rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center"
+                    className=" w-full font-semibold text-sinbadKYC-grey text-xl bg-white py-4 rounded-lg hover:shadow inline-flex gap-2 space-x-2 items-center justify-center"
                    
                   >
+                    <img src={socialIcon} alt=""/>
                    Sign in with Google
                   </button>
 
