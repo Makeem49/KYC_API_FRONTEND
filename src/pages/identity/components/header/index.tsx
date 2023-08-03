@@ -25,7 +25,7 @@ const ClientHeader = () => {
           <Form className=" w-full px-5">
            
             <div className=" flex flex-col gap-4">
-            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey p-4">
+            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey py-4">
               Nigeria
             </p>
               {" "}
@@ -53,7 +53,7 @@ const ClientHeader = () => {
             </div>
 
             <div className=" flex flex-col gap-4">
-            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey p-4">
+            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey py-4">
               India
             </p>
               {" "}
@@ -81,7 +81,7 @@ const ClientHeader = () => {
             </div>
 
             <div className=" flex flex-col gap-4">
-            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey p-4">
+            <p className="font-bold text-sinbadKYC-grey border-b border-sinbadKYC-bordergrey py-4">
             Indonesia 
             </p>
               {" "}

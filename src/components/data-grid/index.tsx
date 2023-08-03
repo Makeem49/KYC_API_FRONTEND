@@ -737,8 +737,8 @@ const DataGrid = ({
           }
         `}
           </style>
-          <div className="h-[100%] table-auto border border-sinbadKYC-bordergrey rounded-lg overflow-auto w-full my-1">
-            <table className="overflow-auto p-5 w-full mb-10 align-top">
+          <div className="h-[96%] table-auto border border-sinbadKYC-bordergrey  rounded-lg overflow-auto  w-full my-1">
+            <table className="overflow-auto p-5  w-full mb-10 align-top">
               <thead className="sticky top-0 text-left whitespace-nowrap bg-sinbadKYC-primaryGrey rounded-lg  z-[5]">
                 <tr className="child:px-3 border-b  child:py-3 child:text-sinbadKYC-lightGrey  font-normal child:cursor-default child:align-middle capitalize">
                   {props?.withCheck && (
