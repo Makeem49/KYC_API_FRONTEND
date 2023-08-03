@@ -38,15 +38,15 @@ const ClientHeader = () => {
               />
               <FormInput2
                 label="Employed:"
-                id="balance"
-                name="yes"
+                id="employed1"
+                name="employed1"
                 type="text"
                 placeholder="Free text"
               />
               <FormInput2
                 label="Monthly Salary (Equal or More than):"
-                id="balance"
-                name="balance"
+                id="salary1"
+                name="salary1"
                 type="text"
                 placeholder="Free text"
               />
@@ -59,22 +59,22 @@ const ClientHeader = () => {
               {" "}
               <FormInput2
                 label="Account Balance (3 Month)"
-                id="balance"
-                name="balance"
+                id="balance2"
+                name="balance2"
                 type="text"
                 placeholder="Free text"
               />
               <FormInput2
                 label="Employed:"
-                id="balance"
-                name="balance"
+                id="employed2"
+                name="employed2"
                 type="text"
                 placeholder="Yes"
               />
               <FormInput2
                 label="Salary (Equal or More than):"
-                id="balance"
-                name="balance"
+                id="salary2"
+                name="salary2"
                 type="text"
                 placeholder="Free Text"
               />
@@ -87,22 +87,22 @@ const ClientHeader = () => {
               {" "}
               <FormInput2
                 label="Account Balance (3 Month)"
-                id="balance"
-                name="balance"
+                id="balance3"
+                name="balance3"
                 type="text"
                 placeholder="Free text"
               />
               <FormInput2
                 label="Employed:"
-                id="balance"
-                name="balance"
+                id="employed3"
+                name="employed3"
                 type="text"
                 placeholder="Yes"
               />
               <FormInput2
                 label="Salary (Equal or More than):"
-                id="balance"
-                name="balance"
+                id="salary3"
+                name="salary3"
                 type="text"
                 placeholder="Free Text"
               />

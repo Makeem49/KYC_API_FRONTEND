@@ -11,28 +11,10 @@
   background-color: rgb(233, 230, 230);
 }
 
-html.dark ::-webkit-scrollbar-thumb {
-  @apply bg-afexdark-regular;
-}
-html.dark ::selection {
-  background-color: #b0b7c3;
-  color: #4b5568;
-}
 body {
   @apply !text-textgrey-normal dark:!text-afexdark-regular transition-all duration-200;
 }
-html.dark .mantine-Paper-root {
-  background-color: #ffffff !important;
-  color: #b0b7c3 !important;
-}
 
-html.dark .mantine-Popover-dropdown {
-  background-color: #ebf0fa !important;
-}
-
-html.dark .mantine-Modal-title {
-  color: #ffffff !important;
-}
 
 .mantine-Modal-modal {
   padding: 0;
@@ -53,19 +35,25 @@ html.dark .mantine-Modal-title {
 }
 .mantine-Tabs-tab[data-active='true'] {
   border: none !important;
+  color: #064F32;
+  font-size: larger;
+  font-weight: 700;
+  border: 2px solid  #D4E277;
 }
 .mantine-Tabs-tabsList {
-  padding-bottom: 8px;
+  padding-bottom: 0px;
 }
 .mantine-Tabs-tab[data-active='true']::after {
   content: '';
   position: absolute;
-  bottom: -8px;
+  bottom: -3px;
   left: 50%;
   transform: translateX(-50%);
   width: 50px;
-  height: 2px;
-  background-color: #415b72;
+  /* height: 2px; */
+  border: 3px solid  #D4E277;
+
+
 }
 
 .mantine-Modal-overlay,
@@ -96,10 +84,7 @@ a[aria-current='page'] svg path {
   cursor: pointer;
   margin-right: 20px;
 }
-html.dark .checkbox.checkbox.white::before,
-html.dark .checkbox::before {
-  background-color: #ebf0fa;
-}
+
 .checkbox:hover::before {
   background-color: #f1ebfc;
 }

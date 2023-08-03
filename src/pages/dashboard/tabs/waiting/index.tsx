@@ -25,7 +25,7 @@ function WatingList() {
   );
   return (
     <>
-      <div className="px-6 py-3">
+      <div className="px-6">
         <DataGrid
           lastPage={1}
           total={list!?.count}

@@ -26,7 +26,7 @@ function PendingList() {
   );
   return (
     <>
-      <div className="bg-white dark:bg-afexdark-darkest px-6 py-3">
+      <div className="bg-white dark:bg-afexdark-darkest px-6">
         <DataGrid
           lastPage={1}
           total={1}

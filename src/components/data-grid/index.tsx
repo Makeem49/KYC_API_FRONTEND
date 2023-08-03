@@ -88,8 +88,6 @@ interface DataGridOptionalProps {
 
 type DataGridProps = DataGridRequiredProps & DataGridOptionalProps;
 
-
-
 const DataGrid = ({
   data,
   headers,
@@ -113,7 +111,6 @@ const DataGrid = ({
   const [start, setStart] = useState<Date | null>(null); // Date Range Start
   const [end, setEnd] = useState<Date | null>(null); // Date Range End
   const [showDateCalendar, setShowDateCalendar] = useState<boolean>(false); // Show Date Calendar
-
 
   //filter parameters state
   const [checkboxState, setCheckboxState] = useState({
@@ -304,7 +301,7 @@ const DataGrid = ({
       document.addEventListener("click", () => {
         setShowColOpts(false);
         setshowAllComp(false);
-    
+
         setShowFilterColOpts(false);
       });
 
@@ -312,7 +309,7 @@ const DataGrid = ({
         document.removeEventListener("click", () => {
           setShowColOpts(false);
           setshowAllComp(false);
-      
+
           setShowFilterColOpts(false);
         });
       };
@@ -350,7 +347,6 @@ const DataGrid = ({
   // PDF EXPORT
   const printCurrent = useRef(null);
   const printSelected = useRef(null);
-  const printAllData = useRef(null);
 
   const handlePrint = useReactToPrint({
     content: () => printCurrent.current,
@@ -366,223 +362,138 @@ const DataGrid = ({
   });
 
   return (
-    <section className="h-full relative space-y-3">
-      <div className="hidden">
-        {/* all data */}{" "}
-        <table
-          ref={printAllData}
-          className="overflow-auto p-5 w-full mb-10 align-top"
-        >
-          <thead className="sticky top-0 text-left whitespace-nowrap bg-white z-[5]">
-            <tr className="child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize">
-              <th className="w-8">S/N</th>
-              {selectedColumns?.map((column) => (
-                <th
-                  key={column.accessor}
-                  className={`${column.hidden && "hidden"}`}
-                >
-                  {column.cell
-                    ? column.cell(column.name)
-                    : column.name.toLowerCase()}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white">
-            {data?.map((row, index) => (
-              <tr
-                key={index}
-                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}
-              >
-                <td className="py-4">{index + 1}</td>
-                {headers
-                  .sort((a, b) => {
-                    const headerKeys = headers.map((header) => header.accessor);
-
-                    return (
-                      headerKeys.indexOf(a.accessor) -
-                      headerKeys.indexOf(b.accessor)
-                    );
-                  })
-                  .map((_, i) => {
-                    const header = selectedColumns[i];
-
-                    const secondary_data = header?.secondary_key
-                      ? get_nested_value(row, header?.secondary_key)
-                      : "";
-
-                    const data =
-                      get_nested_value(row, header?.accessor) ??
-                      "Not Specified";
-
-                    return (
-                      <React.Fragment key={i}>
-                        {header && !header.hidden && (
-                          <td
-                            key={index}
-                            className={`text-${header?.rowAlign ?? "left"}  ${
-                              selectedColumns.findIndex(
-                                (el) => el.accessor === header?.accessor
-                              ) >= 0
-                                ? "visible"
-                                : "hidden"
-                            }`}
-                          >
-                            {header?.row
-                              ? header?.row(data, secondary_data, index)
-                              : data}
-                          </td>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* selected */}
-        <table
-          ref={printSelected}
-          className="overflow-auto p-5 w-full mb-10 align-top"
-        >
-          <thead className="sticky top-0 text-left whitespace-nowrap bg-white z-[5]">
-            <tr className="child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize">
-              <th className="w-8">S/N</th>
-              {selectedColumns?.map((column) => (
-                <th
-                  key={column.accessor}
-                  className={`${column.hidden && "hidden"}`}
-                >
-                  {column.cell
-                    ? column.cell(column.name)
-                    : column.name.toLowerCase()}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white">
-            {selectedRows?.map((row, index) => (
-              <tr
-                key={index}
-                className={`child:py-6 child:px-3 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}
-              >
-                <td className="py-4">{index + 1}</td>
-
-                {Object?.keys(row).map((entry, index) => {
-                  const header = headers.find((el) => el.accessor === entry);
-                  const secondary_data = header?.secondary_key
-                    ? row[header.secondary_key]
-                    : "";
-                  const data = row[entry];
-                  return (
-                    <td
-                      key={index}
-                      className={`text-${header?.rowAlign}  ${
-                        selectedColumns.findIndex(
-                          (el) => el.accessor === header?.accessor
-                        ) >= 0
-                          ? "visible"
-                          : "hidden"
-                      }`}
-                    >
-                      {header?.row && data !== null
-                        ? header?.row(data, secondary_data)
-                        : data?.length > 0
-                        ? data
-                        : "--------"}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* current */}
-        <table
-          ref={printCurrent}
-          className="overflow-auto p-5 w-full mb-10 align-top"
-        >
-          <thead className="sticky top-0 text-left whitespace-nowrap bg-white z-[5]">
-            <tr className="child:px-3 border-b child:py-3 child:text-[#F5F5F5] child:cursor-default child:align-middle capitalize">
-              <th className="w-8">S/N</th>
-              {selectedColumns?.map((column) => (
-                <th
-                  key={column.accessor}
-                  className={`${column.hidden && "hidden"}`}
-                >
-                  {column.cell
-                    ? column.cell(column.name)
-                    : column.name.toLowerCase()}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white">
-            {data?.map((row, index) => (
-              <tr
-                key={index}
-                className={`child:py-2 child:px-2 child:space-y-2 hover:bg-afexpurple-lighter child:text-ellipsis child:overflow-hidden border-solid border-b border-gray-100  cursor-default`}
-              >
-                <td className="py-4">{index + 1}</td>
-
-                {Object?.keys(row).map((entry, index) => {
-                  const header = headers.find((el) => el.accessor === entry);
-                  const secondary_data = header?.secondary_key
-                    ? row[header.secondary_key]
-                    : "";
-                  const data = row[entry];
-                  return (
-                    <td
-                      key={index}
-                      className={`text-${header?.rowAlign}  ${
-                        selectedColumns.findIndex(
-                          (el) => el.accessor === header?.accessor
-                        ) >= 0
-                          ? "visible"
-                          : "hidden"
-                      }`}
-                    >
-                      {header?.row && data !== null
-                        ? header?.row(data, secondary_data)
-                        : data?.length > 0
-                        ? data
-                        : "--------"}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <section className="h-full relative">
       {/* Top Task Bar */}
-      <div className=" hidden justify-between items-center relative">
-        <h2 className="text-xl pb-5 text-textgrey-normal font-bold ml-3 capitalize">
-          {props.tableTitle}
-        </h2>
-       
-      </div>
 
-      <div className= "w-full flex justify-end items-center">
-        <div className=" w-full">
-          {/* GENERAL SEARCH */}
-          <div className="relative flex items-center w-72 2xl:w-96 ml-[68%] ">
-            <input
-              type="text"
-              placeholder={props.title}
-              className="py-2 mx-2 w-full text-base bg-white placeholder:text-sinbadKYC-lightGrey rounded-lg px-10 pr-14 border border-sinbadKYC-bordergrey focus:ring-1 outline-none  focus:ring-gray-100  hover:shadow "
-              onChange={(e) => props.setSearch(e.currentTarget.value)}
-            />
-            <span className="absolute left-4 text-2xl">
-              <SearchNormal size="18" color="#8f8e91" />
-            </span>
+      <div className="w-full flex justify-end gap-3 pb-2 items-center">
+        {/* GENERAL SEARCH */}
+        <div className="relative flex items-center w-72 2xl:w-96 ml-[60%] ">
+          <input
+            type="text"
+            placeholder={props.title}
+            className="py-2 mx-2 w-full text-base bg-white placeholder:text-sinbadKYC-lightGrey rounded-lg px-10 pr-14 border border-sinbadKYC-bordergrey focus:ring-1 outline-none  focus:ring-gray-100  hover:shadow "
+            onChange={(e) => props.setSearch(e.currentTarget.value)}
+          />
+          <span className="absolute left-4 text-2xl">
+            <SearchNormal size="18" color="#8f8e91" />
+          </span>
+        </div>
+
+        {/* FILTER ACTION */}
+        <div onClick={(e) => e.stopPropagation()}>
+          <button
+            className={`h-full whitespace-nowrap bg-white  gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 rounded-lg  w-full hover:cursor-pointer text-sinbadKYC-grey font-medium flex justify-center  items-center border  border-sinbadKYC-bordergrey capitalize ${
+              showAllComp
+                ? " border-sinbadKYC-bordergrey"
+                : "border-sinbadKYC-bordergrey"
+            }`}
+            onClick={() => {
+              setshowAllComp(false);
+              setShowColOpts(false);
+              setShowDateCalendar(false);
+            }}
+          >
+            <BsFilter />
+            {t("Filters")}
+          </button>
+          {/* ALL COMPONENTS TO BE DISPLAYED */}
+          <div
+            className={`flex gap-2  w-[340px] bg-white px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md rounded-xl opacity-0  z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+              showAllComp && "max-h-[450px] opacity-100 overflow-scroll"
+            }`}
+          >
+            {/* COLUMNS HEADER */}
+            <div className="relative" onClick={(e) => e.stopPropagation()}>
+              <button
+                className={`h-full w-full dark:text-textgrey-normal whitespace-nowrap gap-2 text-base p-4 rounded-lg hover:shadow hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-afexdark-verydark dark:border-0 capitalize ${
+                  showFilterColOpts ? " border-[#DAD9DA]" : "  border-[#DAD9DA]"
+                }`}
+                onClick={() => setShowFilterColOpts((s) => !s)}
+              >
+                {"SELECT COLUMNS"}
+                <ArrowDown2
+                  size="16"
+                  color="#7738DD"
+                  variant="Bulk"
+                  className="shrink-0 "
+                />
+              </button>
+              <ul
+                className={`flex gap-1 w-full px-1 py-2 flex-col absolute  dark:bg-afexdark-darkest bg-white top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
+                  showFilterColOpts && "max-h-[300px] opacity-100 "
+                }`}
+              >
+                {headerFilter.map((header) => (
+                  <label
+                    key={header.name}
+                    htmlFor={header.name}
+                    className={`flex items-center gap-1 whitespace-nowrap  text-gray-900 dark:text-textgrey-normal text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize ${
+                      checkboxState.value === header.accessor &&
+                      "bg-afexpurple-lighter"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      name={header.accessor}
+                      id={header.accessor}
+                      checked={checkboxState.value === header.accessor}
+                      onClick={() => {
+                        setCheckboxState({
+                          isChecked: true,
+                          value: header.accessor,
+                        });
+                      }}
+                    />
+                    {header.name}{" "}
+                  </label>
+                ))}
+              </ul>
+            </div>
+
+            {/* SEARCH SECTION */}
+            <div className="w-full">
+              <div className="w-full">
+                <input
+                  type="text"
+                  placeholder="Input Query Value"
+                  className="py-3  w-full text-base rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA] hover:shadow bg-white"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  // onChange={(e) => props.setSearch(e.currentTarget.value)}
+                />
+              </div>
+              {/* BUTTONS */}
+              <div className="flex justify-end gap-2 py-5 w-full">
+                <span
+                  onClick={() => {
+                    setCheckboxState({ isChecked: false, value: "" });
+                    props.setFilters("");
+                    setInputValue("");
+                    setAvailableData(data);
+                    setshowAllComp((s) => !s);
+                  }}
+                  className="p-3 rounded-lg text-center w-[80px] bg-textgrey-light   text-textgrey-darker"
+                >
+                  {t("Clear")}
+                </span>
+                <span
+                  onClick={() => {
+                    props.setFilters(filterData);
+                    setshowAllComp((s) => !s);
+                  }}
+                  className="p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white "
+                >
+                  {t("Add")}
+                </span>
+              </div>
+            </div>
           </div>
-          
         </div>
 
         {/* RIGHT SIDE ACTIONS */}
 
-        <div className="hidden text-gray-300 md:flex flex-1 items-center gap-2 relative ">
+        <div className="hidden text-gray-300 flex-1 items-center gap-2 relative ">
           {/* COLUMN VISIBILITY FILTER */}
           <div className="relative hidden" onClick={(e) => e.stopPropagation()}>
             <button
@@ -594,7 +505,7 @@ const DataGrid = ({
               onClick={() => {
                 setShowColOpts((s) => !s);
                 setshowAllComp(false);
-            
+
                 setShowDateCalendar(false);
               }}
             >
@@ -646,120 +557,6 @@ const DataGrid = ({
             </ul>
           </div>
 
-          {/* FILTER ACTION */}
-          <div  onClick={(e) => e.stopPropagation()}>
-            <button
-              className={`h-full whitespace-nowrap bg-white  gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 rounded-lg  w-full hover:cursor-pointer text-sinbadKYC-grey font-medium flex justify-center  items-center border  border-sinbadKYC-bordergrey capitalize ${
-                showAllComp
-                  ? " border-sinbadKYC-bordergrey"
-                  : "border-sinbadKYC-bordergrey"
-              }`}
-              onClick={() => {
-                setshowAllComp(false);
-                setShowColOpts(false);
-                setShowDateCalendar(false);
-              }}
-            >
-              <BsFilter />
-              {t("Filters")}
-            </button>
-            {/* ALL COMPONENTS TO BE DISPLAYED */}
-            <div
-              className={`flex gap-2  w-[340px] bg-white px-4 py-2 flex-col absolute top-[100%] right-[30%] ring-1 ring-white shadow-md rounded-xl opacity-0  z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
-                showAllComp && "max-h-[450px] opacity-100 overflow-scroll"
-              }`}
-            >
-              {/* COLUMNS HEADER */}
-              <div className="relative" onClick={(e) => e.stopPropagation()}>
-                <button
-                  className={`h-full w-full dark:text-textgrey-normal whitespace-nowrap gap-2 text-base p-4 rounded-lg hover:shadow hover:cursor-pointer font-semibold flex justify-between items-center border dark:bg-afexdark-verydark dark:border-0 capitalize ${
-                    showFilterColOpts
-                      ? " border-[#DAD9DA]"
-                      : "  border-[#DAD9DA]"
-                  }`}
-                  onClick={() => setShowFilterColOpts((s) => !s)}
-                >
-                  {"SELECT COLUMNS"}
-                  <ArrowDown2
-                    size="16"
-                    color="#7738DD"
-                    variant="Bulk"
-                    className="shrink-0 "
-                  />
-                </button>
-                <ul
-                  className={`flex gap-1 w-full px-1 py-2 flex-col absolute  dark:bg-afexdark-darkest bg-white top-[110%] ring-1 ring-white shadow-md dark:ring-wdark-500 rounded-xl opacity-0 dark:bg-wdark-300 z-10 max-h-0 overflow-hidden transition-[max-height] duration-300 ${
-                    showFilterColOpts && "max-h-[300px] opacity-100 "
-                  }`}
-                >
-                  {headerFilter.map((header) => (
-                    <label
-                      key={header.name}
-                      htmlFor={header.name}
-                      className={`flex items-center gap-1 whitespace-nowrap  text-gray-900 dark:text-textgrey-normal text-base cursor-pointer m-1 rounded-md py-2 px-4 capitalize ${
-                        checkboxState.value === header.accessor &&
-                        "bg-afexpurple-lighter"
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        className="checkbox"
-                        name={header.accessor}
-                        id={header.accessor}
-                        checked={checkboxState.value === header.accessor}
-                        onClick={() => {
-                          setCheckboxState({
-                            isChecked: true,
-                            value: header.accessor,
-                          });
-                        }}
-                      />
-                      {header.name}{" "}
-                    </label>
-                  ))}
-                </ul>
-              </div>
-
-              {/* SEARCH SECTION */}
-              <div className="w-full">
-                <div className="w-full">
-                  <input
-                    type="text"
-                    placeholder="Input Query Value"
-                    className="py-3  w-full text-base dark:text-textgrey-normal rounded-lg px-10 pr-14 border focus:ring-1 outline-none  focus:ring-[#DAD9DA]  dark:border-afexdark-dark  hover:shadow bg-white dark:bg-afexdark-darkest "
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    // onChange={(e) => props.setSearch(e.currentTarget.value)}
-                  />
-                </div>
-                {/* BUTTONS */}
-                <div className="flex justify-end gap-2 py-5 w-full">
-                  <span
-                    onClick={() => {
-                      setCheckboxState({ isChecked: false, value: "" });
-                      props.setFilters("");
-                      setInputValue("");
-                      setAvailableData(data);
-                      setshowAllComp((s) => !s);
-                    }}
-                    className="p-3 rounded-lg text-center w-[80px] bg-textgrey-light  dark:bg-afexdark-verydark text-textgrey-darker dark:text-textgrey-normal"
-                  >
-                    {t("Clear")}
-                  </span>
-                  <span
-                    onClick={() => {
-                      props.setFilters(filterData);
-                      setshowAllComp((s) => !s);
-                    }}
-                    className="p-3 rounded-lg text-center w-[80px] bg-afexpurple cursor-pointer text-white "
-                  >
-                    {t("Add")}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* {props.withGlobalFilters && (
             <button
               className='flex bg-afexpurple-lighter font-semibold justify-between items-center rounded-lg py-4 px-4 text-sm  gap-2 border-[1px] border-none  text-afexpurple-regular  hover:shadow p-2  hover:text-afex-regular'
@@ -778,7 +575,7 @@ const DataGrid = ({
           >
             <Popover.Target>
               <button
-                className="hidden font-semibold  items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg text-afexpurple-regular  bg-afexpurple-lighter  dark:bg-afexdark-verydark"
+                className="hidden font-semibold  items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-lg text-afexpurple-regular  bg-afexpurple-lighter"
                 onClick={() => {
                   setOpened((o) => !o);
                 }}
@@ -889,12 +686,11 @@ const DataGrid = ({
           {/* DATE FILTER ACTION */}
           {dateFilter.enabled && (
             <button
-              className="hidden items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-xl focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter  dark:bg-afexdark-verydark cursor-pointer"
+              className="hidden items-center gap-1 2xl:gap-2 text-[12px] 2xl:text-[14px] p-3 2xl:p-4 rounded-xl focus:outline-none focus:border-afexgreen hover:shadow bg-afexpurple-lighter cursor-pointer"
               onClick={() => {
                 setShowDateCalendar((s) => !s);
                 setShowColOpts(false);
                 setshowAllComp(false);
-            
               }}
             >
               {/* <span className='capitalize whitespace-nowrap'>
@@ -922,7 +718,7 @@ const DataGrid = ({
 
       {/* Table */}
       <div className="h-full">
-        <div className="h-[40rem] xl:h-[50rem] relative pb-24">
+        <div className="h-[40rem] xl:h-[50rem] relative">
           <style type="text/css">
             {`
           @media print {
@@ -997,7 +793,7 @@ const DataGrid = ({
                           : undefined
                       }
                       key={index}
-                      className={`child:py-6 child:px-3 child:space-y-2 child:text-ellipsis child:text-[#49474D] dark:child:text-textgrey-normal  child:overflow-hidden  border-b border-gray-100 dark:border-[#333233]  cursor-default`}
+                      className={`child:py-6 child:px-3 child:space-y-2 child:text-ellipsis child:text-[#49474D] child:overflow-hidden  border-b border-gray-100 cursor-default`}
                     >
                       {props?.withCheck && (
                         <td onClick={(e) => e.stopPropagation()}>
@@ -1014,9 +810,7 @@ const DataGrid = ({
                           />
                         </td>
                       )}
-                      <td className="py-4 dark:text-textgrey-normal">
-                        {index + 1}
-                      </td>
+                      <td className="py-4">{index + 1}</td>
                       {headers
                         .sort((a, b) => {
                           const headerKeys = headers.map(
@@ -1074,7 +868,7 @@ const DataGrid = ({
                 <tbody className="bg-white flex justify-center ">
                   {" "}
                   <tr className="absolute gap-2 top-[50%] left-[45%] flex flex-col items-center w-40">
-                    <p className=" text-[16px] font-semibold dark:text-textgrey-normal">
+                    <p className=" text-[16px] font-semibold">
                       {t("Nothing to display")}
                     </p>{" "}
                   </tr>

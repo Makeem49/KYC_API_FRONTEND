@@ -40,7 +40,7 @@ function Sidebar() {
           );
         })}
       </div>
-      <div className=" w-full text-base font-medium text-white absolute flex items-center gap-2 py-2 px-4 md:bottom-[16%] 2xl:bottom-[12%]">
+      <div className=" w-full text-base font-medium text-white absolute flex items-center gap-2 py-2 px-4 left-[4%] md:bottom-[16%] 2xl:bottom-[12%]">
       
         <img
             src={headset}
@@ -50,14 +50,14 @@ function Sidebar() {
             <p>Support</p>
       </div>
 
-      <div className="flex items-center absolute md:bottom-[6%] border-t  py-2  w-[95%] border-t-sinbadKYC-background 2xl:bottom-[3%]">
+      <div className="flex items-center absolute md:bottom-[6%] left-[6%] border-t  py-2  w-[95%] border-t-sinbadKYC-background 2xl:bottom-[3%]">
         <div className="w-full flex items-center gap-2 ">
           <img
             src={avatar}
             alt=""
-            className=" bg-sinbadKYC-normalGrey p-1 rounded-full w-[15px] h-[15px] lg:w-[25px] lg:h-[25px] xl:w-[50px] xl:h-[50px] text-sinbadKYC-white"
+            className=" bg-sinbadKYC-normalGrey p-1 rounded-full w-[15px] h-[15px] lg:w-[20px] lg:h-[20px] xl:w-[40px] xl:h-[40px] text-sinbadKYC-white"
           />
-          <div className=" text-[9px] lg:text-[10px] xl:text-[14px]">
+          <div className=" text-[9px] xl:text-[12px]">
             {" "}
             <p className=" text-white font-semibold">Olivia Rhye</p>
             <p className=" text-sinbadKYC-bordergrey">olivia@untitledui.com</p>

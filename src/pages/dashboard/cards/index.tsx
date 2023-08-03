@@ -53,9 +53,9 @@ const Card = () => {
       {Activities.map((el) => (
         <div
           key={el.id}
-          className=" relative flex items-center shadow bg-white  h-32 rounded-lg px-2 w-full"
+          className=" relative flex items-center shadow bg-white  h-32 rounded-lg p-4 w-full"
         >
-          <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-col gap-1 px-2 w-full">
             <p className=" font-normal text-base text-sinbadKYC-grey">
               {el.name}
             </p>
@@ -63,7 +63,7 @@ const Card = () => {
               {el.number}
             </p>
           </div>
-          <span className="absolute top-8 right-3"> {el.icon}</span>
+          {/* <span className="absolute top-8 right-3"> {el.icon}</span> */}
         </div>
       ))}
     </div>
