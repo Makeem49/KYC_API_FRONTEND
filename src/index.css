@@ -1,19 +1,20 @@
-@import url('https://www.fontshare.com/fonts/switzer');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
 * {
-  font-family: 'Switzer', 'sans-serif';
+  font-family: "Inter", "sans-serif";
   margin: 0;
   padding: 0;
 }
 html {
-  font-family: 'Switzer', 'sans-serif';
+  font-family: "Inter", "sans-serif";
   font-size: 14px !important;
   /* color: #54565b; */
   @apply dark:text-afexdark-dark text-textgrey-dark;
 }
 
 @font-face {
-  font-family: 'Switzer';
-  src: url('../src/assets/fonts/Switzer-Regular.otf');
+  font-family: "Inter";
+  src: url("./assets/Inter/static/Inter-Regular.ttf");
 }
 .svg-box2-active + ul {
   display: block;

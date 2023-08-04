@@ -54,10 +54,10 @@ export function Root() {
                 SinbadKYC
               </h2>
             </div>
-            <div className="hidden md:block w-[15%] bg-sinbadKYC-darkgreen shadow h-[100vh]">
+            <div className="hidden md:block w-[18%] bg-sinbadKYC-darkgreen shadow h-[100vh]">
               <Sidebar />
             </div>
-            <div className="w-full md:w-[85%] h-[100vh] py-4 px-1 md:px-0 md:py-0">
+            <div className="w-full md:w-[82%] h-[100vh] py-4 px-1 md:px-0 md:py-0">
               <Outlet />
             </div>
           </div>

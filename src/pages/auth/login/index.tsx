@@ -16,7 +16,7 @@ const LoginOverlay = () => {
       <div className=" bg-sinbadKYC-background  w-screen h-screen absolute top-0 left-0 right-0 flex items-center">
         <div className="flex h-full w-full flex-col px-20">
           <div className=" flex flex-col justify-center text-center p-4 mt-4 ">
-            <h2 className="text-sinbadKYC-darkgreen text-3xl font-bold p-5">
+            <h2 className="text-sinbadKYC-darkgreen font-montserrat text-3xl font-bold p-5">
               Sindbad HQ
             </h2>
             <p className="text-center p-4 text-sinbadKYC-grey text-3xl font-bold">

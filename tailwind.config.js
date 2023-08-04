@@ -9,6 +9,7 @@ module.exports = withMT({
     fontFamily: {
       body: ['Open Sans', 'sans-serif'],
       display: ['Open Sans', 'sans-serif'],
+      montserrat: ['Montserrat', 'sans-serif'],
     },
     extend: {
       rotate: {
