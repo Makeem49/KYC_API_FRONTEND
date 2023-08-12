@@ -1,18 +1,16 @@
-import { saveAs } from 'file-saver';
-import { json2csv } from 'json-2-csv';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-import React from 'react';
-import { toast } from 'react-toastify';
+import { saveAs } from "file-saver";
+import { json2csv } from "json-2-csv";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import React from "react";
+import { toast } from "react-toastify";
 
 export async function fetchAll<T>(
   fn: (pageNo: number) => Promise<T[]>,
   pageNo = 1
 ) {
   const data = await fn(pageNo);
-
-  // console.log(data);
 
   if (data.length > 0) {
     return data.concat(await fn(pageNo + 1));
@@ -37,13 +35,13 @@ export function searchText(array: any[], searchTerm: string) {
   let matches = [];
   for (let i = 0; i < array.length; i++) {
     for (let key in array[i]) {
-      if (typeof array[i][key] === 'string') {
+      if (typeof array[i][key] === "string") {
         if (array[i][key].toLowerCase().includes(searchTerm.toLowerCase())) {
           matches.push(array[i]);
           break;
         }
       }
-      if (typeof array[i][key] === 'number') {
+      if (typeof array[i][key] === "number") {
         if (array[i][key].toString().includes(searchTerm.toString())) {
           matches.push(array[i]);
           break;
@@ -58,13 +56,13 @@ export function searchSpecificText(array: any[], searchTerm: string) {
   let matches = [];
   for (let i = 0; i < array.length; i++) {
     for (let key in array[i]) {
-      if (typeof array[i][key] === 'string') {
+      if (typeof array[i][key] === "string") {
         if (array[i][key].toLowerCase().startsWith(searchTerm.toLowerCase())) {
           matches.push(array[i]);
           break;
         }
       }
-      if (typeof array[i][key] === 'number') {
+      if (typeof array[i][key] === "number") {
         if (array[i][key].toString().startsWith(searchTerm.toString())) {
           matches.push(array[i]);
           break;
@@ -80,7 +78,7 @@ export const isDeepEqual = (
   object2: { [key: string]: any }
 ) => {
   const isObject = (object: Object) => {
-    return object != null && typeof object === 'object';
+    return object != null && typeof object === "object";
   };
   const objKeys1 = Object.keys(object1);
   const objKeys2 = Object.keys(object2);
@@ -111,9 +109,9 @@ export function get_nested_value(
   obj: { [key: string]: any },
   accessors?: string
 ): string {
-  if (!accessors) return '';
+  if (!accessors) return "";
 
-  const keys = accessors.split('.');
+  const keys = accessors.split(".");
 
   for (let i = 0; i < keys.length; i++) {
     obj = obj[keys[i]];
@@ -130,7 +128,7 @@ function omit(obj: Record<string, any>, arr: string[]) {
         for (let i = 0; i < obj[key].length; i++) {
           omit(obj[key][i], arr);
         }
-      } else if (typeof obj[key] === 'object') {
+      } else if (typeof obj[key] === "object") {
         omit(obj[key], arr);
       }
     }
@@ -167,7 +165,7 @@ export function exportToCSV(
   keysToHide: string[]
 ) {
   // Display loading toast
-  const toastId = toast.info('Exporting data...', { autoClose: false });
+  const toastId = toast.info("Exporting data...", { autoClose: false });
 
   const newArray = array.map((el) => omit(el, keysToHide));
 
@@ -178,12 +176,12 @@ export function exportToCSV(
         // handle Error
 
         // Hide loading toast and show error toast
-        toast.error('Error exporting data');
+        toast.error("Error exporting data");
       } else {
-        const blob = new Blob([csv!], { type: 'text/csv;charset=utf-8;' });
-        saveAs(blob, 'data.csv');
+        const blob = new Blob([csv!], { type: "text/csv;charset=utf-8;" });
+        saveAs(blob, "data.csv");
         // Hide loading toast and show success toast
-        toast.success('Data exported successfully');
+        toast.success("Data exported successfully");
       }
       // Remove the loading toast
       toast.dismiss(toastId);
@@ -201,7 +199,7 @@ export function exportToPDF(
   keysToHide: string[]
 ) {
   // Display loading toast
-  const toastId = toast.info('Exporting data...', { autoClose: false });
+  const toastId = toast.info("Exporting data...", { autoClose: false });
 
   const newArray = array.map((el) => omit(el, keysToHide));
 
@@ -211,7 +209,7 @@ export function exportToPDF(
         table: {
           headerRows: 1,
 
-          widths: Object.keys(newArray[0]).map(() => 'auto'),
+          widths: Object.keys(newArray[0]).map(() => "auto"),
           body: [
             Object.keys(newArray[0]).map((key) => key), // Table header
             ...newArray.map((item) =>
@@ -224,9 +222,9 @@ export function exportToPDF(
   };
 
   const pdf = pdfMake.createPdf(documentDefinition);
-  pdf.download('data.pdf', () => {
+  pdf.download("data.pdf", () => {
     // Hide loading toast and show success toast
-    toast.success('Data exported successfully');
+    toast.success("Data exported successfully");
     // Remove the loading toast
     toast.dismiss(toastId);
   });
@@ -241,7 +239,7 @@ export async function exportToPDF2(
   keysToHide: string[]
 ): Promise<void> {
   // Display loading toast
-  const toastId = toast.info('Exporting data...', { autoClose: false });
+  const toastId = toast.info("Exporting data...", { autoClose: false });
 
   const newArray = array.map((el) => omit(el, keysToHide));
 
@@ -344,18 +342,18 @@ export async function exportToPDF2(
   // });
 
   // Hide loading toast and show success toast
-  toast.success('Data exported successfully');
+  toast.success("Data exported successfully");
   // Remove the loading toast
   toast.dismiss(toastId);
 
   const pdfBytes = await pdfDoc.save();
 
   // Trigger file download
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
-  link.download = 'data.pdf';
+  link.download = "data.pdf";
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -425,14 +423,14 @@ export async function exportToPDF2(
 export function paramsSerializer(params: Record<string, unknown>) {
   return Object.entries(Object.assign({}, params))
     .map(([key, value]) => `${key}=${value}`)
-    .join('&');
+    .join("&");
 }
 
 export function addToObj(key: string, value: unknown) {
-  if (value === 'active') {
-    return Object.assign({}, { [key]: 'true' });
-  } else if (value === 'inactive') {
-    return Object.assign({}, { [key]: 'false' });
+  if (value === "active") {
+    return Object.assign({}, { [key]: "true" });
+  } else if (value === "inactive") {
+    return Object.assign({}, { [key]: "false" });
   } else {
     return Object.assign({}, { [key]: value });
   }

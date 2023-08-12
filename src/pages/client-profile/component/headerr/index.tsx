@@ -1,15 +1,8 @@
 import Profile2User from "../../../../assets/svgs/prof.svg";
-import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
 
-import { get_a_client_query } from "../../../../queries/clients_stats";
+import { commaformatter } from "../../../../utils";
 
-const ClientHeader = () => {
-  const { pathname } = useLocation();
-  const clientId = pathname.split("/")[1];
-
-  const { data } = useQuery(get_a_client_query(parseInt(clientId, 10)));
-
+const ClientHeader = ({ data }: any) => {
   return (
     <div className="md:w-full">
       {/* FIrst Card */}
@@ -37,7 +30,7 @@ const ClientHeader = () => {
             <p className="w-80"> Mobile Number:</p>
             <span className="font-normal">
               {" "}
-              {data?.status ?? "+20 323423 43"}
+              {data?.phone ?? "+20 323423 43"}
             </span>
           </div>
 
@@ -94,7 +87,9 @@ const ClientHeader = () => {
             <div className="w-full flex flex-col gap-5 py-5">
               <div className="w-full flex items-center text-sinbadKYC-textGrey font-bold">
                 <p className="w-80"> Account Balance (Last 3 month):</p>
-                <span className="font-normal"> N 32,323,323</span>
+                <span className="font-normal">
+                  {commaformatter(data?.balance ?? "N 32,323,323")}
+                </span>
               </div>
               <div className="w-full flex items-center text-sinbadKYC-textGrey font-bold">
                 <p className="w-80">Employed:</p>
@@ -102,8 +97,11 @@ const ClientHeader = () => {
               </div>
 
               <div className="w-full flex items-center text-sinbadKYC-textGrey font-bold">
-                <p className="w-80"> Avg. Salary:</p>
-                <span className="font-normal"> N 2,000,000</span>
+                <p className="w-80"> Avg Monthly Salary:</p>
+                <span className="font-normal">
+                  {" "}
+                  {commaformatter(data?.avarage_monthly_income ?? "0.00")}
+                </span>
               </div>
             </div>
           </div>

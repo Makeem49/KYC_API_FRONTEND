@@ -1,11 +1,11 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 
-import { apiRequest, paramsSerializer, toast } from '../../utils';
+import { apiRequest, paramsSerializer, toast } from "../../utils";
 
 export function create_client(
   data: ClientIntegration[]
 ): Promise<AxiosResponse<any, any>> {
-  return apiRequest.post('integrations/client', data);
+  return apiRequest.post("integrations/client", data);
 }
 
 /**
@@ -34,7 +34,7 @@ export async function get_wait_list(
     params: {
       page,
       page_size: page_size ?? 0,
-      filter: filter ?? '',
+      filter: filter ?? "",
       ...filters,
     },
     paramsSerializer: paramsSerializer,
@@ -60,7 +60,7 @@ export async function get_wait_list(
           id: el.id,
           phone: el.phone,
           created_at: el.created_at,
-            nationality: el.nationality,
+          nationality: el.nationality,
           status: el.status,
         } as ClientList)
     ),
@@ -83,7 +83,7 @@ export async function get_client_list(
     params: {
       page,
       page_size: page_size ?? 0,
-      filter: filter ?? '',
+      filter: filter ?? "",
       ...filters,
     },
     paramsSerializer: paramsSerializer,
@@ -108,16 +108,16 @@ export async function get_client_list(
         ({
           id: el.id,
           name: el.name,
-          verification_country: el.verification_country,
-          available_balance: el.available_balance,
+          verification_country: el.verification_country ?? "unavailable",
+          available_balance: el.available_balance ?? "unavailable",
           status: el.status,
-          last_year_income: el.last_year_income,
-          average_monthly_income: el.average_monthly_income,
-          account_age_months: el.account_age_months,
-          monthly_amount: el.monthly_amount,
-          source: el.source,
-          last_two_years_income: el.last_two_years_income,
-          confidence: el.confidence,
+          last_year_income: el.last_year_income ?? "unavailable",
+          average_monthly_income: el.average_monthly_income ?? "unavailable",
+          account_age_months: el.account_age_months ?? "unavailable",
+          monthly_amount: el.monthly_amount ?? "unavailable",
+          source: el.source ?? "unavailable",
+          last_two_years_income: el.last_two_years_income ?? "unavailable",
+          confidence: el.confidence ?? "unavailable",
         } as ClientList)
     ),
     count: resp.data.total,
@@ -139,7 +139,7 @@ export async function get_approved_list(
     params: {
       page,
       page_size: page_size ?? 0,
-      filter: filter ?? '',
+      filter: filter ?? "",
       ...filters,
     },
     paramsSerializer: paramsSerializer,
@@ -195,7 +195,7 @@ export async function get_rejected_list(
     params: {
       page,
       page_size: page_size ?? 0,
-      filter: filter ?? '',
+      filter: filter ?? "",
       ...filters,
     },
     paramsSerializer: paramsSerializer,
@@ -245,21 +245,21 @@ export async function approve_user(
     const resp = await apiRequest.put(`customers/${id}/update/`, {
       status,
     });
-    if (!resp.data) return 'unable to create user';
-    toast('success', resp.data.status);
+    if (!resp.data) return "unable to create user";
+    toast("success", resp.data.status);
     return resp.data.status;
   } catch (error: any) {
     if (error.response) {
       // This error was caused by a server response that returned a non 2xx status code
-      const message = error.message ? error.message : 'Unknown error';
-      toast('error', 'Unable to create a new user', message);
-    } else if (error.code === 'ERR_NETWORK') {
+      const message = error.message ? error.message : "Unknown error";
+      toast("error", "Unable to create a new user", message);
+    } else if (error.code === "ERR_NETWORK") {
       // This error was caused by a network error
 
-      toast('error', 'no internet connection');
+      toast("error", "no internet connection");
     } else {
       // This error was caused by something else
-      toast('error', 'Something went wrong');
+      toast("error", "Something went wrong");
     }
     return error;
   }

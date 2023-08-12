@@ -13,7 +13,7 @@ const Card = () => {
   const Activities = [
     {
       id: 1,
-      name: "Que",
+      name: "Pending",
       number: waitlist?.data.length ?? 45,
       icon: (
         <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
@@ -22,7 +22,7 @@ const Card = () => {
 
     {
       id: 2,
-      name: "Pending",
+      name: "Que",
       number: pending?.data.length ?? 30,
       icon: (
         <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
@@ -41,7 +41,7 @@ const Card = () => {
     {
       id: 4,
       name: "Rejected",
-      number: rejected?.data.length  ?? 12,
+      number: rejected?.data.length ?? 12,
       icon: (
         <FaEllipsisV className="md:h-[10px] md:w-[10px] 2xl:w-[18px] 2xl:h-[18px] text-sinbadKYC-bordergrey font-normal" />
       ),

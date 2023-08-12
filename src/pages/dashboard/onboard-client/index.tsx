@@ -16,19 +16,25 @@ const data = [
   { id: 3, countryCode: "+234", country: "Nigeria" },
 ];
 
-const options = data.map((item) => ({
-  value: item?.countryCode,
-  label: `${item?.country} (${item?.countryCode})`,
-}));
-
 function OnBoardClients() {
   const queryClient = useQueryClient();
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<any | null>(null);
+
+  const options = data.map((item) => ({
+    value: item?.countryCode,
+    country: item.country,
+    code: item.countryCode,
+    label: `${item?.country} (${item?.countryCode})`,
+  }));
+
   const mutation = useMutation({
     mutationFn: create_user,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["waitList"] });
+      setLoading(false);
+      setOpened(false);
       // To  invalidate and refetch
     },
   });
@@ -42,7 +48,7 @@ function OnBoardClients() {
         }}
       >
         <span className="md:w-full text-sinbadKYC-darkgreen text-lg">
-          {("Invite Members")}
+          {"Invite Members"}
         </span>
         <Add />
       </Button>
@@ -72,14 +78,15 @@ function OnBoardClients() {
           <Formik
             initialValues={{
               phone: "",
+              bvn: "",
             }}
             onSubmit={async (values) => {
-              const newUser = { phone: values.phone };
+              const newUser = {
+                phone: `${selectedOption.code}${values.phone.slice(-10)}`,
+                bvn: values.bvn,
+              };
               setLoading(true);
               mutation.mutate(newUser);
-
-              setLoading(false);
-              setOpened(false);
             }}
           >
             {({ resetForm }) => (
@@ -87,10 +94,16 @@ function OnBoardClients() {
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-1">
                     {" "}
-                    <p className="font-normal text-base text-sinbadKYC-textGrey">Search</p>
+                    <p className="font-normal text-base text-sinbadKYC-textGrey">
+                      Search
+                    </p>
                     <Select
                       unstyled
                       options={options}
+                      value={selectedOption}
+                      onChange={(selectedOption) =>
+                        setSelectedOption(selectedOption)
+                      }
                       isSearchable={true}
                       placeholder="Search Country"
                       required
@@ -113,17 +126,36 @@ function OnBoardClients() {
 
                   <div className="flex flex-col gap-1">
                     {" "}
-                    <p className=" font-normal text-base text-sinbadKYC-textGrey">Mobile Number</p>
+                    <p className=" font-normal text-base text-sinbadKYC-textGrey">
+                      Mobile Number
+                    </p>
                     <FormInput
                       id="phone"
                       name="phone"
                       label=""
-                      placeholder=''
+                      placeholder=""
                       required
                       type="text"
                       autocomplete="phoneNumber"
                     />
                   </div>
+                  {selectedOption?.country === "Nigeria" ? (
+                    <div className="flex flex-col gap-1">
+                      {" "}
+                      <p className=" font-normal text-base text-sinbadKYC-textGrey">
+                        BVN
+                      </p>
+                      <FormInput
+                        id="bvn"
+                        name="bvn"
+                        label=""
+                        placeholder=""
+                        required
+                        type="text"
+                        autocomplete="phoneNumber"
+                      />
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center justify-center pt-8 space-x-6">
@@ -141,7 +173,7 @@ function OnBoardClients() {
                     type="submit"
                     text={
                       <span className="flex items-center space-x-6">
-                        {("Invite")}
+                        {"Invite"}
                       </span>
                     }
                     loading={loading}

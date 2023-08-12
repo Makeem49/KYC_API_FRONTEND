@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { Skeleton } from '@mantine/core';
+import { Skeleton } from "@mantine/core";
 
-import { DataGrid } from '../../../../components';
-import { useGetWaitList } from '../../../../queries';
-import UserAction from './actions/drop down';
-import { shortDateFormatter } from '../../../../utils';
+import { DataGrid } from "../../../../components";
+import { useGetWaitList } from "../../../../queries";
+import UserAction from "./actions/drop down";
+import { shortDateFormatter } from "../../../../utils";
 
 function WatingList() {
   const { data: list, isLoading } = useGetWaitList();
@@ -15,7 +15,7 @@ function WatingList() {
       <Skeleton
         height={500}
         style={{
-          borderRadius: '25px',
+          borderRadius: "25px",
         }}
       />
     );
@@ -34,34 +34,34 @@ function WatingList() {
           data={list!?.data}
           headers={[
             {
-              accessor: 'phone',
+              accessor: "phone",
               hidden: false,
-              name: 'Phone Number',
+              name: "Phone Number",
               sortable: true,
               static: false,
             },
 
             {
-              accessor: 'nationality',
+              accessor: "nationality",
               hidden: false,
-              name: 'Nationality',
+              name: "Nationality",
               sortable: true,
               static: false,
             },
 
             {
-              accessor: 'created_at',
+              accessor: "created_at",
               hidden: false,
-              name: 'Submission date',
+              name: "Submission date",
               sortable: true,
               static: false,
               row: (val) => <span>{shortDateFormatter(val)} </span>,
             },
 
             {
-              accessor: 'status',
+              accessor: "status",
               hidden: false,
-              name: 'status',
+              name: "status",
               sortable: true,
               static: false,
             },
@@ -71,18 +71,18 @@ function WatingList() {
           withCheck // enable checkbox
           dateFilter={{
             enabled: false,
-            accessor: '',
-            label: '',
+            accessor: "",
+            label: "",
           }}
           headerFilter={[]}
           loadMore={function (page: number): void {
-            throw new Error('Function not implemented.');
+            throw new Error("Function not implemented.");
           }}
           setSearch={function (value: React.SetStateAction<string>): void {
-            throw new Error('Function not implemented.');
+            throw new Error("Function not implemented.");
           }}
           setFilters={function (value: any): void {
-            throw new Error('Function not implemented.');
+            throw new Error("Function not implemented.");
           }}
           withActions // enable action column
           ActionComponent={ActionComponent} // action component

@@ -1,10 +1,10 @@
-import React from 'react';
-import { BsQuestionCircle } from 'react-icons/bs';
-import { useMutation, useQueryClient } from 'react-query';
+import React from "react";
+import { BsQuestionCircle } from "react-icons/bs";
+import { useMutation, useQueryClient } from "react-query";
 
-import { Group, Modal } from '@mantine/core';
+import { Group, Modal } from "@mantine/core";
 
-import { approve_user } from '../../../../../../../api';
+import { approve_user } from "../../../../../../../api";
 
 interface AddUserProps extends ModalControllerType {
   data: ClientList;
@@ -13,7 +13,6 @@ interface AddUserProps extends ModalControllerType {
 const ApproveUser = ({ data, close, show }: AddUserProps) => {
   const queryClient = useQueryClient();
 
-  console.log(data, 'data');
   const mutation = useMutation({
     mutationFn: (payload: { id: number; status: string }) =>
       approve_user(payload.id, payload.status),
@@ -29,7 +28,8 @@ const ApproveUser = ({ data, close, show }: AddUserProps) => {
         onClose={close}
         size="25%"
         withCloseButton={false}
-        centered>
+        centered
+      >
         {/* Map Component */}
         <div className="flex flex-col mt-0 items-center gap-4 text-center p-8">
           <BsQuestionCircle className=" text-sinbadKYC-orange" size={70} />
@@ -42,17 +42,19 @@ const ApproveUser = ({ data, close, show }: AddUserProps) => {
               onClick={() => {
                 const newUser = {
                   id: data.id,
-                  status: 'APPROVE',
+                  status: "APPROVE",
                 };
 
                 mutation.mutate(newUser);
                 close();
-              }}>
+              }}
+            >
               yes, please
             </button>
             <button
               className="w-full p-4 hover:shadow rounded-lg"
-              onClick={close}>
+              onClick={close}
+            >
               no, return
             </button>
           </div>

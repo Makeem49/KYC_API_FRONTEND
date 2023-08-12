@@ -42,46 +42,6 @@ type ClientList = {
   created_at: string;
 };
 
-type ClientProvider = {
-  id: number;
-  name: string;
-  code: string;
-  logo: string;
-  isActive: boolean | string;
-  clientRepoUrl: string;
-  walletTransactionCallbackUrl: string;
-  inventoryPositionUrl: string;
-  inventoryTradeUrl: string;
-  locationsUrl: string;
-  loanCallbackUrl: string;
-  transactionPhrase: string;
-  checkInventoryPositionEnabled: boolean;
-  checkInventoryPositionEnabled: boolean;
-  tradeInventoryTransactionEnabled: boolean;
-  checkWalletBalanceEnabled: boolean;
-  bankTransferEnabled: boolean;
-  clientTransferEnabled: boolean;
-  checkInventoryPositionEnabled: boolean;
-  tradeInventoryTransactionEnabled: boolean;
-  requestHeaders: {
-    API_KEY: string;
-    REQUEST_TS: string;
-    HASH_KEY: string;
-  };
-  allowAutoApproveFundRequest: booleen;
-  countryCode: string;
-  header: any;
-
-  countryCode: string;
-  apiKey: string;
-  createdBy: string;
-  image: string;
-  noOfClients: string;
-  clientProviderToken: ClientProviderToken;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-};
-
 type ActivateUser = {
   first_name: string;
   last_name: string;
@@ -180,73 +140,6 @@ type LocationStats = {
   total_clients: string;
 };
 
-type ClientProviderToken = {
-  id: number;
-  apiKey: string;
-  providerId: string;
-  lastUsedAt: string | null;
-  isActive: boolean | string;
-  noOfRequests: string;
-  createdAt: string | Date;
-  createdBy: string | null;
-  updatedAt: string | Date;
-  deletedAt: string | null;
-  clientProviderId: number;
-  tokenClientProviderId;
-};
-
-type clientProviderApiKey = {
-  id: number;
-  apiKey: string;
-  providerId: string;
-  lastUsedAt: string | null;
-  isActive: boolean;
-  createdAt: string | Date;
-  createdBy: string | null;
-  updatedAt: string | Date;
-  deletedAt: string | null;
-  clientProviderId: number;
-  tokenClientProviderId;
-};
-
-type WX = {
-  previousDay: number;
-  today: number;
-  active: number;
-};
-
-type CUSSD = {
-  ussd: number;
-  others: number;
-};
-
-type PerformanceOverview = {
-  dayOfWeekAndDateInMonth: string;
-  stats: {
-    withdrawals: number;
-    deposit: number;
-    transfer: number;
-  };
-};
-
-type LocationOverview = {
-  name: string;
-  value: string | number;
-};
-
-const serviceProviders = {
-  'Globacom (GLO)': '',
-  MTN: '',
-  Airtel: '',
-  '9Mobile': '',
-  VMobile: '',
-};
-
-type ServiceProviderStatus = {
-  name: keyof typeof serviceProviders;
-  value: number;
-};
-
 type TransactionList = {
   id: number;
   amount: string;
@@ -296,7 +189,9 @@ type ClientBio = {
   bank_name: string;
   bank_id: string;
   available_balance: string;
+  avarage_monthly_income: number;
   complete_onboarding: bolean;
+  balance: number;
 };
 
 type Notifications = {
@@ -322,18 +217,6 @@ interface SpecificContextInterface<T> {
   item: T;
   loading: boolean;
   refreshContext: () => void;
-}
-
-interface SpecificClientInterface<T> {
-  list: T;
-  loading: boolean;
-  refreshContext: () => void;
-  stats: ClientSSS;
-  topSearch: ClientSSS[];
-  topTranc: ClientSSS[];
-  topVal: ClientSSS[];
-  pageNo: any;
-  handleSearch: (value) => void;
 }
 
 interface SpecificTransactionInterface<T> {
@@ -364,166 +247,6 @@ interface SpecificUserContextInterface<T> {
 interface SingleEntityCtx<T> {
   data: T;
   setData: React.Dispatch<React.SetStateAction<T>>;
-}
-
-interface ResponseSect {
-  sectionOne: {
-    users: WX;
-    transactions: Partial<WX>;
-
-    activeClients: {
-      previousDay: number;
-      today: number;
-      active: number;
-    };
-    totalClients: {
-      previousDay: number;
-      today: number;
-      active: number;
-    };
-    verifiedClients: {
-      previousDay: number;
-      today: number;
-      active: number;
-    };
-    totalClients: Partial<Wx>;
-    verifiedClients: Partial<Wx>;
-    values: Partial<WX>;
-    channels: {
-      previousDay: CUSSD;
-      today: CUSSD;
-    };
-  };
-  performanceOverview: PerformanceOverview[];
-  transactionStatus: {
-    successful: number;
-    failed: number;
-    pending: number;
-  };
-  others: {
-    walletBalance: number;
-    numberOfUsers: number;
-    deposit: number;
-    withdrawals: number;
-    transfer: number;
-  };
-  serviceProviderStatus: ServiceProviderStatus[];
-}
-
-interface ClientSSS extends Partial<ResponseSect> {
-  [x: string]: any;
-  topClientsBySearch: [
-    platformId: string,
-    firstName: string,
-    lastName: string,
-    otherNames: string,
-    phoneNumber: string,
-    noOfTransactions: number,
-    valueOfTransactions: string,
-    searchAppearances: number
-  ];
-  topClientsByNoOfTransactions: [
-    platformId: string,
-    firstName: string,
-    lastName: string,
-    otherNames: string,
-    phoneNumber: string,
-    noOfTransactions: number,
-    valueOfTransactions: string,
-    searchAppearances: number
-  ];
-  topClientsByValueOfTransactions: [
-    platformId: string,
-    firstName: string,
-    lastName: string,
-    otherNames: string,
-    phoneNumber: string,
-    noOfTransactions: number,
-    valueOfTransactions: string,
-    searchAppearances: number
-  ];
-  platformId: string;
-  firstName: string;
-  lastName: string;
-  otherNames: string;
-  phoneNumber: string;
-  noOfTransactions: number;
-  valueOfTransactions: string;
-  searchAppearances: number;
-}
-
-interface TransactionSect {
-  transactionCounts: {
-    withdrawals: number;
-    deposit: number;
-    transfer: number;
-  };
-
-  transactionValues: {
-    withdrawals: number;
-    deposit: number;
-    transfer: number;
-  };
-
-  dailyTransactions: {
-    withdrawals: {
-      today: number;
-      yesterday: number;
-    };
-    deposit: {
-      today: number;
-      yesterday: number;
-    };
-    transfer: {
-      today: number;
-      yesterday: number;
-    };
-  };
-
-  transactionLocations: LocationOverview[];
-}
-
-interface TrackerSect {
-  overview: {
-    noWallets: number;
-    failedFunding: number;
-    unSyncedWalletTransfer: number;
-    noVirtualAccount: number;
-    unsyncedWithdrawal: number;
-  };
-  id: number;
-  key: string;
-  type: string;
-  action: string;
-  description: string;
-  actionTime: string;
-  ref: string;
-  time: string;
-}
-
-interface TrackerBoardLists {
-  id: number;
-  clientName: string;
-  accountName: string;
-  bankAccount: string;
-  bankName: string;
-  bankCode: string;
-  idCardType: string;
-  idCardNumber: string;
-  platformId: string;
-  location: string;
-  phoneNumber: string;
-  amount: string;
-  ref: string;
-  description: string;
-  requestType: string;
-  status: string;
-  isVerified: string;
-  balance: string;
-  noOfTransactions: number;
-  lastTransactionDate: string | Date;
-  createdAt: string | Date;
-  time: string | Date;
 }
 
 type Me = {
@@ -565,4 +288,13 @@ interface SingleUser {
   email: string;
   image: string;
   isActive: boolean;
+}
+
+interface RiskEngine {
+  id: number;
+  account_balance: string;
+  employed: boolean;
+  minimum_monthly_salary: string;
+  country: string;
+  Countries: [];
 }
