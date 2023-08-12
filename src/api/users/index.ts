@@ -1,11 +1,11 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 
 import {
   apiRequest,
   paramsSerializer,
   shortDateFormatter,
   toast,
-} from '../../utils';
+} from "../../utils";
 
 /**
  * =================================================================
@@ -29,11 +29,11 @@ export async function get_users(
   total: number;
   lastPage: number;
 }> {
-  const resp = await apiRequest.get('users', {
+  const resp = await apiRequest.get("users", {
     params: {
       page,
       page_size: 10,
-      filter: filter ?? '',
+      filter: filter ?? "",
       ...filters,
     },
     paramsSerializer: paramsSerializer,
@@ -57,21 +57,21 @@ export async function get_users(
       (el: any) =>
         ({
           id: el.id,
-          user: `${el.firstName ?? ''} ${el.lastName ?? ''}`,
-          username: el.username ?? '',
-          providers: el.providers?.map((el: any) => el.name) ?? '',
-          providerId: el.providers?.map((el: any) => el.id) ?? '',
-          lastLogin: el.lastLogin ?? '',
+          user: `${el.firstName ?? ""} ${el.lastName ?? ""}`,
+          username: el.username ?? "",
+          providers: el.providers?.map((el: any) => el.name) ?? "",
+          providerId: el.providers?.map((el: any) => el.id) ?? "",
+          lastLogin: el.lastLogin ?? "",
           twoStepEnabled: false,
-          isActive: el.isActive ? 'Active' : 'Inactive' ?? '',
-          createdAt: el.createdAt ?? '',
-          email: el.email ?? '',
-          image: el.image ?? '',
-          lastName: el.lastName ?? '',
-          firstName: el.firstName ?? '',
-          permissions: el.permissions?.map((el: any) => el.id) ?? '',
-          roles: el.roles?.map((el: any) => el.id) ?? '',
-          updatedAt: el.updatedAt ?? '',
+          isActive: el.isActive ? "Active" : "Inactive" ?? "",
+          createdAt: el.createdAt ?? "",
+          email: el.email ?? "",
+          image: el.image ?? "",
+          lastName: el.lastName ?? "",
+          firstName: el.firstName ?? "",
+          permissions: el.permissions?.map((el: any) => el.id) ?? "",
+          roles: el.roles?.map((el: any) => el.id) ?? "",
+          updatedAt: el.updatedAt ?? "",
         } as User)
     ),
     total: resp.data.total,
@@ -84,7 +84,7 @@ export async function get_users(
  * @returns
  */
 export async function get_permissions(): Promise<User[]> {
-  const resp = await apiRequest.get('roles-permissions/permissions');
+  const resp = await apiRequest.get("roles-permissions/permissions");
 
   if (!resp.data) return [];
 
@@ -94,11 +94,11 @@ export async function get_permissions(): Promise<User[]> {
     (el: any) =>
       ({
         id: el.id,
-        name: el.name ?? '',
-        description: el.description ?? '',
-        group: el.group ?? '',
-        createdAt: shortDateFormatter(el.createdAt) ?? '',
-        updatedAt: shortDateFormatter(el.updatedAt) ?? '',
+        name: el.name ?? "",
+        description: el.description ?? "",
+        group: el.group ?? "",
+        createdAt: shortDateFormatter(el.createdAt) ?? "",
+        updatedAt: shortDateFormatter(el.updatedAt) ?? "",
       } as User)
   );
 }
@@ -108,7 +108,7 @@ export async function get_permissions(): Promise<User[]> {
  * @returns
  */
 export async function get_roles(): Promise<User[]> {
-  const resp = await apiRequest.get('roles-permissions/roles');
+  const resp = await apiRequest.get("roles-permissions/roles");
 
   if (!resp.data) return [];
 
@@ -118,7 +118,7 @@ export async function get_roles(): Promise<User[]> {
     (el: any) =>
       ({
         id: el.id,
-        name: el.name ?? '',
+        name: el.name ?? "",
       } as User)
   );
 }
@@ -134,31 +134,30 @@ export async function get_roles(): Promise<User[]> {
 
 export async function create_user(data: Partial<User>): Promise<string> {
   try {
-    const resp = await apiRequest.post('user/sms/', {
-      phone: data.phone,
+    const resp = await apiRequest.post("user/sms/", {
+      ...data,
     });
-    if (!resp.data) return 'unable to create client';
+    if (!resp.data) return "unable to create client";
 
-    toast('success', resp.data);
+    toast("success", resp.data);
 
     return resp.data.message;
   } catch (error: any) {
     if (error.response) {
       // This error was caused by a server response that returned a non 2xx status code
-      const message = error.message ? error.message : 'Unknown error';
-      toast('error', 'Unable to create a new user', message);
-    } else if (error.code === 'ERR_NETWORK') {
+      const message = error.message ? error.message : "Unknown error";
+      toast("error", "Unable to create a new user", message);
+    } else if (error.code === "ERR_NETWORK") {
       // This error was caused by a network error
 
-      toast('error', 'no internet connection');
+      toast("error", "no internet connection");
     } else {
       // This error was caused by something else
-      toast('error', 'Something went wrong');
+      toast("error", "Something went wrong");
     }
     return error;
   }
 }
-
 
 export async function update_user(
   username: string,
@@ -177,21 +176,21 @@ export async function update_user(
       image: data.image,
     });
 
-    if (!resp.data) return 'unable to update user';
+    if (!resp.data) return "unable to update user";
 
     return resp.data.message;
   } catch (error: any) {
     if (error.response) {
       // This error was caused by a server response that returned a non 2xx status code
-      const message = error.message ? error.message : 'Unknown error';
-      toast('error', 'Unable to update user', message);
-    } else if (error.code === 'ERR_NETWORK') {
+      const message = error.message ? error.message : "Unknown error";
+      toast("error", "Unable to update user", message);
+    } else if (error.code === "ERR_NETWORK") {
       // This error was caused by a network error
 
-      toast('error', 'no internet connection');
+      toast("error", "no internet connection");
     } else {
       // This error was caused by something else
-      toast('error', 'Something went wrong');
+      toast("error", "Something went wrong");
     }
     return error;
   }
@@ -205,7 +204,7 @@ export async function disable_enable_user(
     isActive,
   });
 
-  if (!resp.data) return 'unable to create user';
+  if (!resp.data) return "unable to create user";
 
   return resp.data.message;
 }

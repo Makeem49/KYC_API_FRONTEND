@@ -1,7 +1,5 @@
 import React from "react";
 
-// import { Skeleton } from '@mantine/core';
-
 import { DataGrid } from "../../../../components";
 import { useGetClientList } from "../../../../queries";
 import UserAction from "./actions/drop down";
@@ -39,7 +37,7 @@ function PendingList() {
               name: "Name",
               sortable: true,
               static: false,
-              secondary_key: "phone number",
+              secondary_key: "phone",
               row: (val, second) => (
                 <span className="flex flex-col">
                   <span className=" text-afexpurple-regular">{val}</span>
@@ -48,7 +46,7 @@ function PendingList() {
               ),
             },
             {
-              accessor: "verification_country",
+              accessor: "nationality",
               hidden: false,
               name: "Nationality",
               sortable: true,
@@ -56,37 +54,13 @@ function PendingList() {
             },
 
             {
-              accessor: "available_balance",
+              accessor: "risk_level",
               hidden: false,
-              name: "Available Balance",
-              sortable: true,
-              static: false,
-            },
-
-            {
-              accessor: "average_monthly_income",
-              hidden: false,
-              name: "Average monthly income",
-              sortable: true,
-              static: false,
-            },
-
-            {
-              accessor: "source",
-              hidden: false,
-              name: "Source",
-              sortable: true,
-              static: false,
-            },
-
-            {
-              accessor: "status",
-              hidden: false,
-              name: "Status",
+              name: "Risk Level",
               sortable: true,
               static: false,
               row: (val) => {
-                if (val === "Low Risk") {
+                if (val === "pass") {
                   return (
                     <span className=" bg-afexgreen-extralight  text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2">
                       {val}
@@ -94,7 +68,7 @@ function PendingList() {
                   );
                 } else {
                   return (
-                    <span className=" bg-afexblue-extralight text-afexblue-regular rounded-lg p-2">
+                    <span className=" bg-afexred-extralight text-afexred-regular rounded-lg p-2">
                       {val}
                     </span>
                   );

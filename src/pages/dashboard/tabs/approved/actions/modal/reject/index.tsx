@@ -44,7 +44,7 @@ const ApproveUser = ({ data, close, show }: AddUserProps) => {
                   id: data.id,
                   status: "REJECT",
                 };
-                // console.log(newUser, 'to be approved');
+
                 mutation.mutate(newUser);
                 close();
               }}

@@ -78,15 +78,20 @@ function OnBoardClients() {
           <Formik
             initialValues={{
               phone: "",
+              nationality: "",
               bvn: "",
             }}
             onSubmit={async (values) => {
               const newUser = {
                 phone: `${selectedOption.code}${values.phone.slice(-10)}`,
-                bvn: values.bvn,
+                nationality: selectedOption.country,
+                ...(selectedOption?.country === "Nigeria" && {
+                  bvn: values.bvn,
+                }),
               };
               setLoading(true);
               mutation.mutate(newUser);
+              console.log(newUser);
             }}
           >
             {({ resetForm }) => (

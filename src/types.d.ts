@@ -40,6 +40,8 @@ type ClientList = {
   phone: string;
   nationality: string;
   created_at: string;
+  risk_level: string;
+  submission_date: string;
 };
 
 type ActivateUser = {

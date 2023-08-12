@@ -1,24 +1,25 @@
-import React from 'react';
-import rejectedList from '../../../../dummyData/rejectedList.json'
-// import { Skeleton } from '@mantine/core';
+import React from "react";
 
-import { DataGrid } from '../../../../components';
-// import { useGetRejectedtList } from '../../../../queries';
-import UserAction from './actions/drop down';
+import { Skeleton } from "@mantine/core";
+
+import { DataGrid } from "../../../../components";
+import { useGetRejectedtList } from "../../../../queries";
+import UserAction from "./actions/drop down";
+import { shortDateFormatter } from "../../../..//utils";
 
 function PendingList() {
-  // const { data: list, isLoading } = useGetRejectedtList();
+  const { data: list, isLoading } = useGetRejectedtList();
 
-  // if (isLoading)
-  //   return (
-  //     <Skeleton
-  //       height={500}
-  //       style={{
-  //         borderRadius: '25px',
-  //       }}
-  //     />
-  //   );
- const data = rejectedList;
+  if (isLoading)
+    return (
+      <Skeleton
+        height={500}
+        style={{
+          borderRadius: "25px",
+        }}
+      />
+    );
+
   const ActionComponent = ({ data }: { data: ClientList }) => (
     <UserAction data={data} />
   );
@@ -30,15 +31,15 @@ function PendingList() {
           total={1}
           title="Search"
           rows={10}
-          data={data!?.items}
+          data={list!?.data}
           headers={[
             {
-              accessor: 'name',
+              accessor: "name",
               hidden: false,
-              name: 'Name',
+              name: "Name",
               sortable: true,
               static: false,
-              secondary_key: "phone number",
+              secondary_key: "phone",
               row: (val, second) => (
                 <span className="flex flex-col">
                   <span className=" text-afexpurple-regular">{val}</span>
@@ -47,63 +48,62 @@ function PendingList() {
               ),
             },
             {
-              accessor: 'country',
+              accessor: "nationality",
               hidden: false,
-              name: 'Country',
+              name: "Nationality",
               sortable: true,
               static: false,
             },
 
             {
-              accessor: 'Submission Date',
+              accessor: "risk_level",
               hidden: false,
-              name: 'date',
-              sortable: true,
-              static: false,
-            },
-
-            {
-              accessor: 'riskLevel',
-              hidden: false,
-              name: 'Risk Level',
+              name: "Risk Level",
               sortable: true,
               static: false,
               row: (val) => {
-                if (val === "Low Risk") {
+                if (val === "pass") {
                   return (
                     <span className=" bg-afexgreen-extralight  text-afexgreen-darker dark:text-afexgreen-regular rounded-lg p-2">
-                      {(val)}
+                      {val}
                     </span>
                   );
                 } else {
                   return (
-                    <span className=" bg-afexred-extralight  text-afexred-dark  dark:text-afexred-regular rounded-lg p-2">
-                      {(val)}
+                    <span className=" bg-afexred-extralight text-afexred-regular rounded-lg p-2">
+                      {val}
                     </span>
                   );
                 }
               },
             },
 
-        
+            {
+              accessor: "submission_date",
+              hidden: false,
+              name: "Submission date",
+              sortable: true,
+              static: false,
+              row: (val) => <span>{shortDateFormatter(val)} </span>,
+            },
           ]}
           // withExport
           // withGlobalFilters
           withCheck // enable checkbox
           dateFilter={{
             enabled: false,
-            accessor: '',
-            label: '',
+            accessor: "",
+            label: "",
           }}
           headerFilter={[]}
           loadMore={function (page: number): void {
-            throw new Error('Function not implemented.');
+            throw new Error("Function not implemented.");
           }}
           setSearch={function (value: React.SetStateAction<string>): void {
-            throw new Error('Function not implemented.');
+            throw new Error("Function not implemented.");
           }}
           setFilters={function (value: any): void {
-            throw new Error('Function not implemented.');
+            throw new Error("Function not implemented.");
           }}
           withActions // enable action column
           ActionComponent={ActionComponent} // action component
