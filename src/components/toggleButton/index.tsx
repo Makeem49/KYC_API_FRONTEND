@@ -3,7 +3,7 @@ import { useField } from "formik";
 import { t } from "i18next";
 
 const ToggleButton = (props: any) => {
-  const [field, meta] = useField(props);
+  const [field] = useField(props);
   const initialLabel = t(props.label);
 
   return (
