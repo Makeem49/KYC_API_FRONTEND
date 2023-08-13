@@ -38,7 +38,7 @@ const ApproveUser = ({ data, close, show }: AddUserProps) => {
 
           <div className="flex w-full px-10 justify-center gap-4">
             <button
-              className="w-full bg-sinbadKYC-orange  p-4 rounded-lg text-white"
+              className="w-full  bg-sinbadKYC-darkgreen p-4 rounded-lg text-white"
               onClick={() => {
                 const newUser = {
                   id: data.id,
