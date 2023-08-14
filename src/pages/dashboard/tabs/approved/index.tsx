@@ -20,7 +20,6 @@ function PendingList() {
       />
     );
 
-  console.log(list, "approved");
   const ActionComponent = ({ data }: { data: ClientList }) => (
     <UserAction data={data} />
   );

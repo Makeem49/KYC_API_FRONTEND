@@ -91,7 +91,6 @@ function OnBoardClients() {
               };
               setLoading(true);
               mutation.mutate(newUser);
-              console.log(newUser);
             }}
           >
             {({ resetForm }) => (

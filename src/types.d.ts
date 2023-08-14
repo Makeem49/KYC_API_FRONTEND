@@ -193,6 +193,8 @@ type ClientBio = {
   available_balance: string;
   avarage_monthly_income: number;
   complete_onboarding: bolean;
+  borrower_id: string;
+  photo_id: string;
   balance: number;
 };
 

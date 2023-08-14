@@ -79,7 +79,7 @@ export async function get_client_list(
   count: number;
   lastPage: number;
 }> {
-  const resp = await apiRequest.get(`customers/`, {
+  const resp = await apiRequest.get(`customers/?status=PENDING`, {
     params: {
       page,
       page_size: page_size ?? 0,

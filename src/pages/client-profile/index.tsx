@@ -24,18 +24,18 @@ const ClientProfile = () => {
         <span className=" text-sinbadKYC-grey">Details page</span>{" "}
       </p>
 
-      <div className="flex justify-between w-full">
+      <div className=" relative flex justify-between w-full">
         <p className=" font-bold text-2xl text-sinbadKYC-darkgreen flex flex-col">
-          Ahmed Noor: Passenger 1/1{" "}
+          {data?.first_name} {data?.last_name}: Passenger 1/1{" "}
           <span className=" text-sinbadKYC-lightGrey text-xl font-normal">
-            QE43REDDSSDSD
+            {data?.borrower_id}
           </span>
         </p>
-        <div>
+        <div className="absolute left-[40%]">
           <div>
-            {Stats === "APPROVED" ? (
+            {Stats === "APPROVE" ? (
               <button
-                className="w-full p-3 font-medium text-white bg-sinbadKYC-darkgreen rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center"
+                className="w-full p-3 font-medium text-sinbadKYC-darkgreen bg-[#8FF6A6] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center"
                 type="button"
               >
                 {" "}
@@ -45,9 +45,9 @@ const ClientProfile = () => {
               ""
             )}
 
-            {Stats === "REJECTED" ? (
+            {Stats === "REJECT" ? (
               <button
-                className="w-full p-3 bg-sinbadKYC-lightred font-medium text-sinbadKYC-red border border-sinbadKYC-red rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center"
+                className="w-full p-3 bg-[#FFC8B7] font-medium text-sinbadKYC-darkgreen rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center"
                 type="button"
               >
                 {" "}

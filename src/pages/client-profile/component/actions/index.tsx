@@ -7,8 +7,8 @@ const Actions = ({ data }: any) => {
     <div className="flex items-center gap-2">
       {" "}
       <MessageButton />
-      <RejectButton />
-      <ApproveButton />
+      <RejectButton data={data} />
+      <ApproveButton data={data} />
     </div>
   );
 };
